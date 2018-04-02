@@ -68,6 +68,10 @@ func select_rows(row_id):
 			clickedRow.set_selected(true)
 			clickedRow.set_color_select()
 			rows_selected.append(clickedRow)
+		else:
+			clickedRow.set_selected(false)
+			clickedRow.set_color_reset()
+			rows_selected.erase(clickedRow)
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
