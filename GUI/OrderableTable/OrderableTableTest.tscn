@@ -1,0 +1,377 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/OrderableTable/RowContainer.gd" type="Script" id=1]
+[ext_resource path="res://GUI/OrderableTable/OrderabelTableRow.tscn" type="PackedScene" id=2]
+
+[node name="ScrollBox" type="ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 59.0
+margin_top = 54.0
+margin_right = 674.0
+margin_bottom = 348.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Grow Direction", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 700.0
+margin_bottom = 282.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 0
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="TopRow" type="MarginContainer" parent="VBoxContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 700.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 700, 20 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+_sections_unfolded = [ "Margin", "Rect", "Size Flags", "custom_constants" ]
+
+[node name="Panel" type="Panel" parent="VBoxContainer/TopRow" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 700.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_sections_unfolded = [ "Margin", "Size Flags" ]
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/TopRow" index="1"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 700.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+split_offset = 0
+collapsed = false
+dragger_visibility = 0
+_sections_unfolded = [ "Margin", "Rect", "Size Flags" ]
+
+[node name="Button" type="Button" parent="VBoxContainer/TopRow/HSplitContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 73.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Column 1"
+flat = false
+align = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/TopRow/HSplitContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 85.0
+margin_right = 700.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+split_offset = 0
+collapsed = false
+dragger_visibility = 0
+
+[node name="Button2" type="Button" parent="VBoxContainer/TopRow/HSplitContainer/HSplitContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 73.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Column 2"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="VBoxContainer/TopRow/HSplitContainer/HSplitContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 85.0
+margin_right = 615.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+split_offset = 0
+collapsed = false
+dragger_visibility = 0
+
+[node name="Button3" type="Button" parent="VBoxContainer/TopRow/HSplitContainer/HSplitContainer/HSplitContainer2" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 73.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Column 3"
+flat = false
+align = 1
+
+[node name="HSplitContainer3" type="HSplitContainer" parent="VBoxContainer/TopRow/HSplitContainer/HSplitContainer/HSplitContainer2" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 85.0
+margin_right = 530.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+split_offset = 0
+collapsed = false
+dragger_visibility = 0
+
+[node name="Button4" type="Button" parent="VBoxContainer/TopRow/HSplitContainer/HSplitContainer/HSplitContainer2/HSplitContainer3" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 73.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Column 4"
+flat = false
+align = 1
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="Label" type="Label" parent="VBoxContainer/TopRow/HSplitContainer/HSplitContainer/HSplitContainer2/HSplitContainer3" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 85.0
+margin_top = 3.0
+margin_right = 445.0
+margin_bottom = 17.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 24.0
+margin_right = 700.0
+margin_bottom = 264.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+_sections_unfolded = [ "custom_constants" ]
+
+[node name="RowContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 700.0
+margin_bottom = 240.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 0
+alignment = 0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Mouse", "custom_constants" ]
+
+[node name="OrderabelTableRow" parent="VBoxContainer/MarginContainer/RowContainer" index="0" instance=ExtResource( 2 )]
+
+margin_top = 0.0
+margin_right = 700.0
+margin_bottom = 30.0
+row_id = 1
+cellHeight = 20
+
+[node name="OrderabelTableRow2" parent="VBoxContainer/MarginContainer/RowContainer" index="1" instance=ExtResource( 2 )]
+
+margin_top = 30.0
+margin_right = 700.0
+margin_bottom = 60.0
+row_id = 2
+cellHeight = 20
+
+[node name="OrderabelTableRow3" parent="VBoxContainer/MarginContainer/RowContainer" index="2" instance=ExtResource( 2 )]
+
+margin_top = 60.0
+margin_right = 700.0
+margin_bottom = 90.0
+row_id = 3
+cellHeight = 20
+
+[node name="OrderabelTableRow4" parent="VBoxContainer/MarginContainer/RowContainer" index="3" instance=ExtResource( 2 )]
+
+margin_top = 90.0
+margin_right = 700.0
+margin_bottom = 120.0
+row_id = 4
+cellHeight = 20
+
+[node name="OrderabelTableRow5" parent="VBoxContainer/MarginContainer/RowContainer" index="4" instance=ExtResource( 2 )]
+
+margin_top = 120.0
+margin_right = 700.0
+margin_bottom = 150.0
+row_id = 5
+cellHeight = 20
+
+[node name="OrderabelTableRow6" parent="VBoxContainer/MarginContainer/RowContainer" index="5" instance=ExtResource( 2 )]
+
+margin_top = 150.0
+margin_right = 700.0
+margin_bottom = 180.0
+row_id = 6
+cellHeight = 20
+
+[node name="OrderabelTableRow7" parent="VBoxContainer/MarginContainer/RowContainer" index="6" instance=ExtResource( 2 )]
+
+margin_top = 180.0
+margin_right = 700.0
+margin_bottom = 210.0
+row_id = 7
+cellHeight = 20
+
+[node name="OrderabelTableRow8" parent="VBoxContainer/MarginContainer/RowContainer" index="7" instance=ExtResource( 2 )]
+
+margin_top = 210.0
+margin_right = 700.0
+margin_bottom = 240.0
+row_id = 8
+cellHeight = 20
+
+
