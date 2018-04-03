@@ -3,9 +3,8 @@ tool
 extends MarginContainer
 
 
-export (int) var cellCount = 4 
+export (int) var cell_count = 4 
 export (int) var row_id
-export (int) var cellHeight = 20 
 
 #row colors
 export (Color) var row_color = Color("3c3c3c")
@@ -17,10 +16,10 @@ var row_color_selected_odd = row_color_selected.lightened(0.1)
 
 
 onready var HBoxForCells = $HBoxContainer
-onready var bg = $BackgroundColor
+onready var RowBackgroundColorRect = $BackgroundColor
 
-var cellsClipContainerArray
-var cellsMarginContainerArray = []
+var CellsClipContainerArray
+var CellsMarginContainerArray = []
 
 var even = false
 var selected = false
@@ -41,20 +40,20 @@ func _ready():
 	# assign column color
 	if selected:
 		if even:
-			bg.color = row_color_selected_even
+			RowBackgroundColorRect.color = row_color_selected_even
 			
 		else:
-			bg.color = row_color_selected_odd
+			RowBackgroundColorRect.color = row_color_selected_odd
 	
 	else:
 		if even:
-			bg.color = row_color_even
+			RowBackgroundColorRect.color = row_color_even
 			
 		else:
-			bg.color = row_color_odd
+			RowBackgroundColorRect.color = row_color_odd
 	
 	# create cells
-	createCells(cellCount)
+	create_cells(cell_count)
 	
 
 
@@ -67,56 +66,56 @@ func _process(delta):
 
 
 #create the cells
-func createCells(c):
+func create_cells(c):
 	
-	var oldCells = HBoxForCells.get_children()
+	var OldCells = HBoxForCells.get_children()
 	
-	for cell in oldCells:
-		cell.queue_free()
+	for Cell in OldCells:
+		Cell.queue_free()
 	
 	for i in range(c):
 		
-		var cellClipContainer = Container.new()
-		cellClipContainer.name = "cell_clip_container_" + String(i+1)
-		cellClipContainer.rect_clip_content = true
-		cellClipContainer.set_v_size_flags(3) # fill + expand
-		cellClipContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
+		var CellClipContainer = Container.new()
+		CellClipContainer.name = "cell_clip_container_" + String(i+1)
+		CellClipContainer.rect_clip_content = true
+		CellClipContainer.set_v_size_flags(3) # fill + expand
+		CellClipContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		
-		var cellMarginContainer = MarginContainer.new()
-		cellMarginContainer.name = "cell_margin_container"
-		cellMarginContainer.set_v_size_flags(3) # fill + expand
-		cellMarginContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
-		cellMarginContainer.margin_left = 3
-		cellMarginContainer.margin_top = 3
-		cellMarginContainer.margin_right = 3
-		cellMarginContainer.margin_bottom = 3
-		cellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - cellMarginContainer.margin_left - cellMarginContainer.margin_right
+		var CellMarginContainer = MarginContainer.new()
+		CellMarginContainer.name = "cell_margin_container"
+		CellMarginContainer.set_v_size_flags(3) # fill + expand
+		CellMarginContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
+		CellMarginContainer.margin_left = 3
+		CellMarginContainer.margin_top = 3
+		CellMarginContainer.margin_right = 3
+		CellMarginContainer.margin_bottom = 3
+		CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
 		
 		
 		
-		cellClipContainer.add_child(cellMarginContainer)
-		HBoxForCells.add_child(cellClipContainer)
+		CellClipContainer.add_child(CellMarginContainer)
+		HBoxForCells.add_child(CellClipContainer)
 		
 	update()
 	
 	# update the cells array
-	cellsClipContainerArray = HBoxForCells.get_children()
-	fill_cellsMarginContainerArray()
+	CellsClipContainerArray = HBoxForCells.get_children()
+	fill_CellsMarginContainerArray()
 	
-	set_cellHeight(30)
+	set_cell_height(30)
 	
 
 
 
 
 
-func fill_cellsMarginContainerArray ():
+func fill_CellsMarginContainerArray ():
 	
-	cellsMarginContainerArray.clear()
+	CellsMarginContainerArray.clear()
 	
-	for cell in cellsClipContainerArray:
-		var marginContainer = cell.get_child(0)
-		cellsMarginContainerArray.append(marginContainer)	
+	for Cell in CellsClipContainerArray:
+		var CellMarginContainer = Cell.get_child(0)
+		CellsMarginContainerArray.append(CellMarginContainer)	
 	
 
 ####### Getters for Variables #########		
@@ -138,64 +137,68 @@ func set_row_color_selected (color):
 	
 func set_selected (sel):
 	selected = sel
+	if selected:
+		update_row_color_select()
+	else:
+		update_row_color_reset()
 	
-func set_cellCount(count):
-	cellCount = count
+func set_cell_count(count):
+	cell_count = count
 	update()
 	
 	
 	
 ####### Modify Cells #########	
 
-func add_cellContent(column, child):
-	if column <= cellsMarginContainerArray.size():
-		cellsMarginContainerArray[column-1].add_child(child)
+func add_cell_content(column, child):
+	if column <= CellsMarginContainerArray.size():
+		CellsMarginContainerArray[column-1].add_child(child)
 	
 	
-func set_cellWidth(column, width):
-	if column <= cellsClipContainerArray.size():
-		cellsClipContainerArray[column-1].rect_min_size.x = width
+func set_cell_width(column, width):
+	if column <= CellsClipContainerArray.size():
+		CellsClipContainerArray[column-1].rect_min_size.x = width
 		
 		
-func set_cellHeight(height):
-	for cell in cellsClipContainerArray:
-		cell.rect_min_size.y = height
-	for cell in cellsMarginContainerArray:
-		cell.rect_min_size.y = HBoxForCells.rect_size.y - cell.margin_left - cell.margin_right
+func set_cell_height(height):
+	for Cell in CellsClipContainerArray:
+		Cell.rect_min_size.y = height
+	for Cell in CellsMarginContainerArray:
+		Cell.rect_min_size.y = HBoxForCells.rect_size.y - Cell.margin_left - Cell.margin_right
 
 
-func set_color_hover():
+func update_row_color_hover():
 	if selected:
 		if even:
-			bg.color = row_color_selected_even.lightened(0.2)
+			RowBackgroundColorRect.color = row_color_selected_even.lightened(0.2)
 		else:
-			bg.color = row_color_selected_odd.lightened(0.1)
+			RowBackgroundColorRect.color = row_color_selected_odd.lightened(0.1)
 	
 	else:
 		if even:
-			bg.color = row_color_even.lightened(0.15)
+			RowBackgroundColorRect.color = row_color_even.lightened(0.15)
 		else:
-			bg.color = row_color_odd.lightened(0.1)
+			RowBackgroundColorRect.color = row_color_odd.lightened(0.1)
 		
 
-func set_color_select():
+func update_row_color_select():
 	if even:
-		bg.color = row_color_selected_even
+		RowBackgroundColorRect.color = row_color_selected_even
 	else:
-		bg.color = row_color_selected_odd
+		RowBackgroundColorRect.color = row_color_selected_odd
 	
 	
-func set_color_reset():
+func update_row_color_reset():
 	if selected: 
 		if even:
-			bg.color = row_color_selected_even
+			RowBackgroundColorRect.color = row_color_selected_even
 		else:
-			bg.color = row_color_selected_odd
+			RowBackgroundColorRect.color = row_color_selected_odd
 	else:
 		if even:
-			bg.color = row_color_even
+			RowBackgroundColorRect.color = row_color_even
 		else:
-			bg.color = row_color_odd
+			RowBackgroundColorRect.color = row_color_odd
 
 
 
@@ -205,11 +208,11 @@ func set_color_reset():
 #### Signal handling ####
 
 func _on_SortabelTableRow_mouse_entered():
-	set_color_hover()
+	update_row_color_hover()
 
 
 func _on_SortabelTableRow_mouse_exited():
-	set_color_reset()
+	update_row_color_reset()
 	
 
 func _on_SortabelTableRow_gui_input(ev):
