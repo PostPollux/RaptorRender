@@ -79,8 +79,8 @@ func select_SortableRows(row_id):
 					SortableRowsSelected.append(SortableRows[i-1])
 		
 	else:
-		for row in SortableRows:
-			row.set_selected(false)
+		for Row in SortableRows:
+			Row.set_selected(false)
 		SortableRowsSelected.clear()
 		
 		ClickedRow.set_selected(true)

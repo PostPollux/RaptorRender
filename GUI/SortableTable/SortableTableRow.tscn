@@ -2,7 +2,7 @@
 
 [ext_resource path="res://GUI/SortableTable/SortableTableRow.gd" type="Script" id=1]
 
-[node name="SortabelTableRow" type="MarginContainer" index="0"]
+[node name="SortabelTableRow" type="MarginContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
