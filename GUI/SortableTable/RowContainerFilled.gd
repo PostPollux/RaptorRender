@@ -26,17 +26,15 @@ func _ready():
 	print (OS.get_model_name ( ))
 	print (OS.get_dynamic_memory_usage ( ))
 	
-	$OrderabelTableRow.connect("row_clicked", self, "select_SortableRows")
-	$OrderabelTableRow2.connect("row_clicked", self, "select_SortableRows")
-	$OrderabelTableRow3.connect("row_clicked", self, "select_SortableRows")
-	$OrderabelTableRow4.connect("row_clicked", self, "select_SortableRows")
-	$OrderabelTableRow5.connect("row_clicked", self, "select_SortableRows")
-	$OrderabelTableRow6.connect("row_clicked", self, "select_SortableRows")
-	$OrderabelTableRow7.connect("row_clicked", self, "select_SortableRows")
-	$OrderabelTableRow8.connect("row_clicked", self, "select_SortableRows")
+	
+	connect_row_clicked_signals()
 	
 	
 
+func connect_row_clicked_signals():
+	for Row in SortableRows:
+		Row.connect("row_clicked", self, "select_SortableRows")
+		
 
 func set_column_width(column, width):
 	

@@ -3,8 +3,8 @@ tool
 extends MarginContainer
 
 
-export (int) var cell_count = 4 
-export (int) var row_id
+export (int) var cell_count = 0 
+export (int) var row_id = 1
 
 #row colors
 export (Color) var row_color = Color("3c3c3c")
@@ -18,11 +18,12 @@ var row_color_selected_odd = row_color_selected.lightened(0.1)
 onready var HBoxForCells = $HBoxContainer
 onready var RowBackgroundColorRect = $BackgroundColor
 
-var CellsClipContainerArray
+var CellsClipContainerArray = []
 var CellsMarginContainerArray = []
 
 var even = false
 var selected = false
+var row_height = 30
 
 
 signal row_clicked
@@ -31,11 +32,11 @@ signal row_clicked
 
 func _ready():
 	
+	# set height of row
+	set_row_height(row_height)
+	
 	# determine if row id is even or odd
-	if (row_id % 2) == 0:
-		even = true
-	else:
-		even = false
+	update_row_even_or_odd()
 		
 	# assign column color
 	if selected:
@@ -63,6 +64,12 @@ func _process(delta):
 
 
 
+func update_row_even_or_odd():
+	if row_id:
+		if (row_id % 2) == 0:
+			even = true
+		else:
+			even = false
 
 
 #create the cells
@@ -128,6 +135,10 @@ func get_selected():
 	
 ####### Setters for Variables #########		
 	
+func set_row_id(id):
+	row_id = id
+	update_row_even_or_odd()
+	update_row_color_reset()
 	
 func set_row_color (color):
 	row_color = color
@@ -160,13 +171,21 @@ func set_cell_width(column, width):
 		CellsClipContainerArray[column-1].rect_min_size.x = width
 		
 		
+
+func set_row_height(height):
+	row_height = height
+	rect_min_size.y = height
+	set_cell_height(height)
+	
+
 func set_cell_height(height):
-	for Cell in CellsClipContainerArray:
-		Cell.rect_min_size.y = height
-	for Cell in CellsMarginContainerArray:
-		Cell.rect_min_size.y = HBoxForCells.rect_size.y - Cell.margin_left - Cell.margin_right
-
-
+	if CellsClipContainerArray.size() > 0:
+		for Cell in CellsClipContainerArray:
+			Cell.rect_min_size.y = height
+		for Cell in CellsMarginContainerArray:
+			Cell.rect_min_size.y = HBoxForCells.rect_size.y - Cell.margin_left - Cell.margin_right
+	
+	
 func update_row_color_hover():
 	if selected:
 		if even:
@@ -218,7 +237,4 @@ func _on_SortabelTableRow_mouse_exited():
 func _on_SortabelTableRow_gui_input(ev):
 	if ev.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("row_clicked", row_id)
-		#if !selected:
-			#selected = true;
-			#set_color_select()
 		
