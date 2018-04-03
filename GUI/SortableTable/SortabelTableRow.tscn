@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://GUI/OrderableTable/OrderabelTableRow.gd" type="Script" id=1]
+[ext_resource path="res://GUI/SortableTable/SortabelTableRow.gd" type="Script" id=1]
 
-[node name="OrderabelTableRow" type="MarginContainer"]
+[node name="SortabelTableRow" type="MarginContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -63,10 +63,10 @@ size_flags_vertical = 3
 alignment = 0
 _sections_unfolded = [ "Grow Direction", "Mouse", "Rect", "Size Flags", "Theme", "Visibility" ]
 
-[connection signal="gui_input" from="." to="." method="_on_OrderabelTableRow_gui_input"]
+[connection signal="gui_input" from="." to="." method="_on_SortabelTableRow_gui_input"]
 
-[connection signal="mouse_entered" from="." to="." method="_on_OrderabelTableRow_mouse_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_SortabelTableRow_mouse_entered"]
 
-[connection signal="mouse_exited" from="." to="." method="_on_OrderabelTableRow_mouse_exited"]
+[connection signal="mouse_exited" from="." to="." method="_on_SortabelTableRow_mouse_exited"]
 
 

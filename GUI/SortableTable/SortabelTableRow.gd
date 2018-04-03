@@ -204,15 +204,15 @@ func set_color_reset():
 
 #### Signal handling ####
 
-func _on_OrderabelTableRow_mouse_entered():
+func _on_SortabelTableRow_mouse_entered():
 	set_color_hover()
 
 
-func _on_OrderabelTableRow_mouse_exited():
+func _on_SortabelTableRow_mouse_exited():
 	set_color_reset()
 	
 
-func _on_OrderabelTableRow_gui_input(ev):
+func _on_SortabelTableRow_gui_input(ev):
 	if ev.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("row_clicked", row_id)
 		#if !selected:
