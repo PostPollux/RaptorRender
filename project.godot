@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="RaptorRender"
-run/main_scene="res://GUI/SortableTable/SortableTableTest.tscn"
+run/main_scene="res://Interface.tscn"
 config/icon="res://icon.png"
 
 [display]

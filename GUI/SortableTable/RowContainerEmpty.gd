@@ -8,7 +8,9 @@ onready var RowContainerFilled = $"../../RowContainerFilled"
 func _ready():
 	update_width_of_RowContainerEmpty()
 	fill_up_available_space_with_empty_rows()
+	update_ids_of_empty_rows()
 	connect_row_clicked_signals()
+
 
 
 func connect_row_clicked_signals():
@@ -17,17 +19,22 @@ func connect_row_clicked_signals():
 		
 
 func fill_up_available_space_with_empty_rows():
-	var filled_row_count = RowContainerFilled.SortableRows.size()
-	var height_of_clipcontainer = $"../../ClipContainerForEmptyRows".rect_size.y
-	var amount_of_needed_rows = int(height_of_clipcontainer/row_height)
+	var screen_size_y = OS.get_screen_size()[1]
+	var amount_of_needed_rows = int(screen_size_y/row_height)
 	
-	for i in range(1, amount_of_needed_rows + 3):
+	for i in range(1, amount_of_needed_rows):
 		var SortableTableRow = sortable_table_row.instance()
 		add_child(SortableTableRow)
-		SortableTableRow.set_row_id(filled_row_count + i)
 		SortableTableRow.set_row_height(row_height)
 		
-		
+	
+func update_ids_of_empty_rows():
+	var filled_row_count = RowContainerFilled.SortableRows.size()
+	var count = 1
+	for Row in get_children():
+		Row.set_row_id(filled_row_count + count)
+		count += 1
+
 
 func update_width_of_RowContainerEmpty():
 	var width_of_clipcontainer = $"../../ClipContainerForEmptyRows".rect_size.x
@@ -59,3 +66,9 @@ func select_SortableRows(row_id):
 		for Row in SortableRows:
 			Row.set_selected(false)
 		SortableRowsSelected.clear()
+
+
+func _on_ClipContainerForEmptyRows_resized():
+	update_width_of_RowContainerEmpty()
+	
+	
