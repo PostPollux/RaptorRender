@@ -62,21 +62,22 @@ func select_SortableRows(row_id):
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
-		var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].get_row_id()
-		
-		if row_id > previous_selected_row_id:
+		if SortableRowsSelected.size() > 0:
+			var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].get_row_id()
 			
-			for i in range(previous_selected_row_id, row_id + 1):
-				if SortableRows[i-1].get_selected() == false:
-					SortableRows[i-1].set_selected(true)
-					SortableRowsSelected.append(SortableRows[i-1])
-		
-		if row_id < previous_selected_row_id:
+			if row_id > previous_selected_row_id:
+				
+				for i in range(previous_selected_row_id, row_id + 1):
+					if SortableRows[i-1].get_selected() == false:
+						SortableRows[i-1].set_selected(true)
+						SortableRowsSelected.append(SortableRows[i-1])
 			
-			for i in range(row_id, previous_selected_row_id):
-				if SortableRows[i-1].get_selected() == false:
-					SortableRows[i-1].set_selected(true)
-					SortableRowsSelected.append(SortableRows[i-1])
+			if row_id < previous_selected_row_id:
+				
+				for i in range(row_id, previous_selected_row_id):
+					if SortableRows[i-1].get_selected() == false:
+						SortableRows[i-1].set_selected(true)
+						SortableRowsSelected.append(SortableRows[i-1])
 		
 	else:
 		for Row in SortableRows:
