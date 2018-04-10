@@ -2,7 +2,7 @@ extends VBoxContainer
 
 var row_height = 30
 
-var sortable_table_row = preload("res://GUI/SortableTable/SortableTableRow.tscn")
+var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
 onready var RowContainerFilled = $"../../RowContainerFilled"
 
 func _ready():
@@ -23,7 +23,7 @@ func fill_up_available_space_with_empty_rows():
 	var amount_of_needed_rows = int(screen_size_y/row_height)
 	
 	for i in range(1, amount_of_needed_rows):
-		var SortableTableRow = sortable_table_row.instance()
+		var SortableTableRow = SortableTableRowRes.instance()
 		add_child(SortableTableRow)
 		SortableTableRow.set_row_height(row_height)
 		

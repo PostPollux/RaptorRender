@@ -15,7 +15,7 @@ func _ready():
 	
 	var l = Label.new()
 	l.name = "label"
-	l.text = "text"
+	l.text = "Ein recht langer Text zum Testen"
 	#l.size_flags_vertical = 0
 	#l.set_v_size_flags(4)
 	
