@@ -3,23 +3,25 @@ extends VBoxContainer
 
 onready var SortableRows = get_children()
 onready var SortableRowsSelected = []
+onready var TopRow = $"../../../TopRow"
 
 func _ready():
 
-	set_column_width(1, 20)
-	set_column_width(2, 60)
-	set_column_width(3, 10)
-	set_column_width(4, 200)
+	TopRow.resize_columns()
 	
 	#create test labels
 	
 	var l = Label.new()
 	l.name = "label"
 	l.text = "Ein recht langer Text zum Testen"
+	var l2 = Label.new()
+	l2.name = "label"
+	l2.text = "Ein recht langer Text zum Testen"
 	#l.size_flags_vertical = 0
 	#l.set_v_size_flags(4)
 	
 	add_cell_content(1,1,l)
+	add_cell_content(1,2,l2)
 	
 	print (OS.get_name())
 	print ('Number of Threads: ' + String(OS.get_processor_count()) )

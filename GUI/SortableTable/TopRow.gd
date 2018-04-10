@@ -40,6 +40,7 @@ func _ready():
 #
 #		count += 1
 
+
 func _process(delta):
 	
 	if dragging_splitter:
@@ -60,19 +61,22 @@ func _process(delta):
 		else:
 			dragging_splitter = false
 
+
+
 func get_column_buttons_and_splitters ():
 	
 	var count = 1
 	
 	for CurrentNode in $HBoxContainer.get_children():
 		
-		if count%2 == 0:
+		if count % 2 == 0:
 			Splitters.append(CurrentNode)
 		else:
 			ColumnButtons.append(CurrentNode)
 			
 		
 		count += 1
+
 
 
 func assign_ids_to_splitters():
@@ -83,19 +87,32 @@ func assign_ids_to_splitters():
 		Splitter.splitter_id = count
 		count += 1
 		
+		
+		
 func connect_signals_of_splitters ():
 	
 	for Splitter in Splitters:
-		Splitter.connect("just_clicked", self, "resize_column")
+		Splitter.connect("just_clicked", self, "resize_column_by_drag")
 
 
-func resize_column(splitter_id):
+
+func resize_column_by_drag(splitter_id):
 	dragging_splitter_id = splitter_id
 	mouse_position_x_before_dragging = get_viewport().get_mouse_position().x
 	min_size_of_column_before_dragging = ColumnButtons[splitter_id - 1].rect_size.x
 	dragging_splitter = true
+
+
+func resize_columns():
 	
+	var count = 1
 	
+	for ColumnButton in ColumnButtons:
+		
+		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
+		RowContainerFilled.set_column_width(count, ColumnButton.rect_size.x)
+		
+		count += 1
 	
 	
 	
