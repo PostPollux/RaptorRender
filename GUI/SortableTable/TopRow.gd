@@ -59,6 +59,12 @@ func _process(delta):
 		
 		# Left mouse button released	
 		else:
+			
+			# apply the size of the ColumnButton of the TopRow to all the rows of the table
+			var column_width = ColumnButtons[dragging_splitter_id - 1].rect_size.x
+			RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
+			
+			# stop dragging logic
 			dragging_splitter = false
 
 
