@@ -7,7 +7,7 @@ onready var TopRow = $"../../../TopRow"
 
 func _ready():
 
-	TopRow.resize_columns()
+	resize_columns()
 	
 	#create test labels
 	
@@ -38,6 +38,18 @@ func connect_row_clicked_signals():
 		Row.connect("row_clicked", self, "select_SortableRows")
 		
 
+func resize_columns():
+	
+	var count = 1
+	
+	for ColumnButton in TopRow.ColumnButtons:
+		
+		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
+		set_column_width(count, ColumnButton.rect_size.x)
+		
+		count += 1
+		
+		
 func set_column_width(column, width):
 	
 	for Row in SortableRows:

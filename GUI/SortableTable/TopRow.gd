@@ -107,18 +107,3 @@ func resize_column_by_drag(splitter_id):
 	mouse_position_x_before_dragging = get_viewport().get_mouse_position().x
 	min_size_of_column_before_dragging = ColumnButtons[splitter_id - 1].rect_size.x
 	dragging_splitter = true
-
-
-func resize_columns():
-	
-	var count = 1
-	
-	for ColumnButton in ColumnButtons:
-		
-		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
-		RowContainerFilled.set_column_width(count, ColumnButton.rect_size.x)
-		
-		count += 1
-	
-	
-	
