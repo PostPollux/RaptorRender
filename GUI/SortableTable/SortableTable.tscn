@@ -1,13 +1,14 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/SortableTable/TopRow.gd" type="Script" id=2]
+[ext_resource path="res://GUI/SortableTable/TopRow/TopRow.gd" type="Script" id=2]
 [ext_resource path="res://GUI/SortableTable/TopRow/ColumnSplitter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/SortableTable/RowContainerFilled.gd" type="Script" id=4]
 [ext_resource path="res://GUI/SortableTable/SortableTableRow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=6]
 
-[node name="SortableTable" type="VBoxContainer"]
+
+[node name="SortableTable" type="VBoxContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -213,7 +214,6 @@ _sections_unfolded = [ "Size Flags", "custom_constants" ]
 
 [node name="RowContainerFilled" type="VBoxContainer" parent="ScrollContainer/VBoxContainer" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
