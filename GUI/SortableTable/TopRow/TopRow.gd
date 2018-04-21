@@ -21,7 +21,8 @@ func _ready():
 	get_column_buttons_and_splitters()
 	assign_ids_to_splitters()
 	connect_signals_of_splitters()
-	
+	set_last_column_to_expand()
+
 #	var count = 1
 #
 #	for column_name in column_names:
@@ -107,3 +108,7 @@ func resize_column_by_drag(splitter_id):
 	mouse_position_x_before_dragging = get_viewport().get_mouse_position().x
 	min_size_of_column_before_dragging = ColumnButtons[splitter_id - 1].rect_size.x
 	dragging_splitter = true
+	
+	
+func set_last_column_to_expand ():
+	ColumnButtons[ColumnButtons.size() - 1].set_h_size_flags(3) #set to "fill, expand"

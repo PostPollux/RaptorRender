@@ -11,8 +11,12 @@ config_version=3
 [application]
 
 config/name="RaptorRender"
-run/main_scene="res://Interface.tscn"
+run/main_scene="res://GUI/Interface.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+RaptorRender="*res://RaptorRender.gd"
 
 [display]
 
