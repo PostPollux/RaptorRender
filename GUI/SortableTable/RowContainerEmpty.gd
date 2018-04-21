@@ -27,6 +27,8 @@ func fill_up_available_space_with_empty_rows():
 		add_child(SortableTableRow)
 		SortableTableRow.set_row_height(row_height)
 		
+
+		
 	
 func update_ids_of_empty_rows():
 	var filled_row_count = RowContainerFilled.SortableRows.size()

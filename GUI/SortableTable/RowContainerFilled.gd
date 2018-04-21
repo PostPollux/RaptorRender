@@ -7,7 +7,9 @@ onready var TopRow = $"../../../TopRow"
 
 func _ready():
 
+	set_amount_of_columns()
 	resize_columns()
+	update_ids_of_rows()
 	
 	#create test labels
 	
@@ -37,6 +39,13 @@ func connect_row_clicked_signals():
 	for Row in SortableRows:
 		Row.connect("row_clicked", self, "select_SortableRows")
 		
+		
+		
+func set_amount_of_columns():
+	for Row in SortableRows:
+		Row.set_cell_count(TopRow.ColumnButtons.size())
+		Row.create_cells()
+	
 
 func resize_columns():
 	
@@ -60,7 +69,15 @@ func add_cell_content(row, column, child):
 	if row <= SortableRows.size():
 		SortableRows[row-1].add_cell_content(column, child)
 	
+	
 
+func update_ids_of_rows():
+	var count = 1
+	for Row in get_children():
+		Row.set_row_id(count)
+		count += 1
+		
+		
 
 func select_SortableRows(row_id):
 	

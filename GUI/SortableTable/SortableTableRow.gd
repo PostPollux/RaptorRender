@@ -3,8 +3,8 @@ tool
 extends MarginContainer
 
 
-export (int) var cell_count = 0 
-export (int) var row_id = 1
+var cell_count
+var row_id
 
 #row colors
 export (Color) var row_color = Color("3c3c3c")
@@ -53,8 +53,6 @@ func _ready():
 		else:
 			RowBackgroundColorRect.color = row_color_odd
 	
-	# create cells
-	create_cells(cell_count)
 	
 
 
@@ -73,14 +71,16 @@ func update_row_even_or_odd():
 
 
 #create the cells
-func create_cells(c):
+func create_cells():
 	
 	var OldCells = HBoxForCells.get_children()
 	
 	for Cell in OldCells:
 		Cell.queue_free()
 	
-	for i in range(c):
+	CellsClipContainerArray.clear()
+	
+	for i in range(cell_count):
 		
 		var CellClipContainer = Container.new()
 		CellClipContainer.name = "cell_clip_container_" + String(i+1)
@@ -98,15 +98,17 @@ func create_cells(c):
 		CellMarginContainer.margin_bottom = 3
 		CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
 		
-		
-		
+		# add the cell to the HBoxContainer and to the CellsClipContainerArray
 		CellClipContainer.add_child(CellMarginContainer)
 		HBoxForCells.add_child(CellClipContainer)
+		CellsClipContainerArray.append(CellClipContainer)
 		
-	update()
-	
-	# update the cells array
-	CellsClipContainerArray = HBoxForCells.get_children()
+		
+		# add a line to separate the individual cells visually
+		var VerticalLine = VSeparator.new()
+		HBoxForCells.add_child(VerticalLine)
+		
+		
 	fill_CellsMarginContainerArray()
 	
 	set_cell_height(30)
