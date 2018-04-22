@@ -109,6 +109,9 @@ func select_SortableRows(row_id):
 					if SortableRows[i-1].get_selected() == false:
 						SortableRows[i-1].set_selected(true)
 						SortableRowsSelected.append(SortableRows[i-1])
+		else:
+			ClickedRow.set_selected(true)
+			SortableRowsSelected.append(ClickedRow)
 		
 	else:
 		for Row in SortableRows:
