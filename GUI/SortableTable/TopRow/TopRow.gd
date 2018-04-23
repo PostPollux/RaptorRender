@@ -6,8 +6,8 @@ export (Array, String) var column_names
 
 var Splitters = []
 var ColumnButtons = []
-onready var RowContainerFilled = $"../ScrollContainer/VBoxContainer/RowContainerFilled"
-onready var RowContainerEmpty = $"../ScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
+onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContainerFilled"
+onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
 var dragging_splitter = false
 var dragging_splitter_id
 

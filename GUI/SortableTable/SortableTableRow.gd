@@ -27,6 +27,7 @@ var row_height = 30
 
 
 signal row_clicked
+signal row_clicked_rmb
 
 
 
@@ -240,4 +241,7 @@ func _on_SortabelTableRow_mouse_exited():
 func _on_SortabelTableRow_gui_input(ev):
 	if ev.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("row_clicked", row_id)
+	if ev.is_action_pressed("ui_right_mouse_button"):
+		emit_signal("row_clicked", row_id)
+		emit_signal("row_clicked_rmb")
 		

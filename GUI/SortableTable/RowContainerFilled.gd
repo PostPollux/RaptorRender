@@ -4,6 +4,7 @@ extends VBoxContainer
 onready var SortableRows = get_children()
 onready var SortableRowsSelected = []
 onready var TopRow = $"../../../TopRow"
+onready var RowScrollContainer = $"../.."
 
 func _ready():
 
@@ -31,13 +32,23 @@ func _ready():
 	print (OS.get_dynamic_memory_usage ( ))
 	
 	
-	connect_row_clicked_signals()
+	connect_row_signals()
+
+
+
+func _process(delta):
+	if Input.is_action_just_pressed("select_all"):
+		var mouse_pos = get_viewport().get_mouse_position()
+		var row_scroll_container_rect = RowScrollContainer.get_global_rect()
+		if row_scroll_container_rect.has_point(mouse_pos):
+			select_all()
 	
 	
 
-func connect_row_clicked_signals():
+func connect_row_signals():
 	for Row in SortableRows:
 		Row.connect("row_clicked", self, "select_SortableRows")
+		Row.connect("row_clicked_rmb", self, "open_context_menu")
 		
 		
 		
@@ -120,4 +131,23 @@ func select_SortableRows(row_id):
 		
 		ClickedRow.set_selected(true)
 		SortableRowsSelected.append(ClickedRow)
+		
+		
+func select_all():
+	
+	# select or deselect all rows depending on wheter all are already selected or not
+	if SortableRowsSelected.size() != SortableRows.size():
+		
+		SortableRowsSelected.clear()
+		for Row in SortableRows:
+			Row.set_selected(true)
+			SortableRowsSelected.append(Row)
+	else:
+		SortableRowsSelected.clear()
+		for Row in SortableRows:
+			Row.set_selected(false)
+		
+
+func open_context_menu():
+	print("some options to select")
 	
