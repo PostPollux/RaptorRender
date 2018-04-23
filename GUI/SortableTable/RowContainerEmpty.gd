@@ -4,12 +4,16 @@ var row_height = 30
 
 var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
 onready var RowContainerFilled = $"../../RowContainerFilled"
+onready var TopRow = $"../../../../TopRow"
+var EmptyRows = []
 
 func _ready():
 	update_width_of_RowContainerEmpty()
 	fill_up_available_space_with_empty_rows()
 	update_ids_of_empty_rows()
 	connect_row_clicked_signals()
+	set_amount_of_columns()
+	resize_columns()
 
 
 
@@ -26,6 +30,7 @@ func fill_up_available_space_with_empty_rows():
 		var SortableTableRow = SortableTableRowRes.instance()
 		add_child(SortableTableRow)
 		SortableTableRow.set_row_height(row_height)
+		EmptyRows.append(SortableTableRow)
 		
 
 		
@@ -43,6 +48,28 @@ func update_width_of_RowContainerEmpty():
 	rect_min_size.x = width_of_clipcontainer
 	
 	
+func set_amount_of_columns():
+	for Row in EmptyRows:
+		Row.set_cell_count(TopRow.ColumnButtons.size())
+		Row.create_cells()
+		
+		
+func resize_columns():
+	
+	var count = 1
+	
+	for ColumnButton in TopRow.ColumnButtons:
+		
+		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
+		set_column_width(count, ColumnButton.rect_size.x)
+		
+		count += 1
+		
+		
+func set_column_width(column, width):
+	
+	for Row in EmptyRows:
+		Row.set_cell_width(column,width)
 
 
 # empty rows are not selectable, but clicking them can have an effect on the selection of the filled ones
