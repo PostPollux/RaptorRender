@@ -148,6 +148,20 @@ func select_all():
 			Row.set_selected(false)
 		
 
-func open_context_menu():
+func open_context_menu(row_id):
+	
+	var ClickedRow = SortableRows[row_id - 1]
+	
+	#if clicked row is not selected, deselect all but this one
+	if ClickedRow.get_selected() == false:
+		
+		for Row in SortableRows:
+			Row.set_selected(false)
+		SortableRowsSelected.clear()
+		
+		ClickedRow.set_selected(true)
+		SortableRowsSelected.append(ClickedRow)
+	
+	
 	print("some options to select")
 	
