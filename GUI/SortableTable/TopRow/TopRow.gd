@@ -23,6 +23,9 @@ func _ready():
 	assign_ids_to_splitters()
 	connect_signals_of_splitters()
 	set_last_column_to_expand()
+	
+	#RowContainerFilled.highlight_column(1)
+	#RowContainerEmpty.highlight_column(1)
 
 #	var count = 1
 #

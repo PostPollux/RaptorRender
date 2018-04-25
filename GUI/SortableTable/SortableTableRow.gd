@@ -20,6 +20,7 @@ onready var RowBackgroundColorRect = $BackgroundColor
 
 var CellsClipContainerArray = []
 var CellsMarginContainerArray = []
+var CellsColorRectArray = []
 
 var even = false
 var selected = false
@@ -89,6 +90,14 @@ func create_cells():
 		CellClipContainer.set_v_size_flags(3) # fill + expand
 		CellClipContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		
+		var CellColorRect = ColorRect.new()
+		CellColorRect.name = "cell_color_rect"
+		CellColorRect.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
+		CellColorRect.set_v_size_flags(3) # fill + expand
+		CellColorRect.set_h_size_flags(3) # fill + expand
+		CellColorRect.rect_size.y = row_height
+		CellColorRect.set_modulate(Color("00ffffff"))
+		
 		var CellMarginContainer = MarginContainer.new()
 		CellMarginContainer.name = "cell_margin_container"
 		CellMarginContainer.set_v_size_flags(3) # fill + expand
@@ -100,6 +109,7 @@ func create_cells():
 		CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
 		
 		# add the cell to the HBoxContainer and to the CellsClipContainerArray
+		CellClipContainer.add_child(CellColorRect)
 		CellClipContainer.add_child(CellMarginContainer)
 		HBoxForCells.add_child(CellClipContainer)
 		CellsClipContainerArray.append(CellClipContainer)
@@ -111,7 +121,7 @@ func create_cells():
 			HBoxForCells.add_child(VerticalLine)
 		
 		
-	fill_CellsMarginContainerArray()
+	fill_CellArrays()
 	
 	set_cell_height(30)
 	
@@ -120,12 +130,14 @@ func create_cells():
 
 
 
-func fill_CellsMarginContainerArray ():
+func fill_CellArrays ():
 	
 	CellsMarginContainerArray.clear()
 	
 	for Cell in CellsClipContainerArray:
-		var CellMarginContainer = Cell.get_child(0)
+		var CellColorRect = Cell.get_child(0)
+		var CellMarginContainer = Cell.get_child(1)
+		CellsColorRectArray.append(CellColorRect)	
 		CellsMarginContainerArray.append(CellMarginContainer)	
 	
 
@@ -173,6 +185,7 @@ func add_cell_content(column, child):
 func set_cell_width(column, width):
 	if column <= CellsClipContainerArray.size():
 		CellsClipContainerArray[column-1].rect_min_size.x = width
+		CellsColorRectArray[column-1].rect_min_size.x = width
 		
 		
 
@@ -184,10 +197,15 @@ func set_row_height(height):
 
 func set_cell_height(height):
 	if CellsClipContainerArray.size() > 0:
-		for Cell in CellsClipContainerArray:
-			Cell.rect_min_size.y = height
-		for Cell in CellsMarginContainerArray:
-			Cell.rect_min_size.y = HBoxForCells.rect_size.y - Cell.margin_left - Cell.margin_right
+		for ClipContainer in CellsClipContainerArray:
+			ClipContainer.rect_min_size.y = height
+		for CellMarginContainer in CellsMarginContainerArray:
+			CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
+		for CellColorRect in CellsColorRectArray:
+			CellColorRect.rect_size.y = HBoxForCells.rect_size.y
+			
+func modulate_cell_color(column, color):
+	CellsColorRectArray[column-1].set_modulate( color )
 	
 	
 func update_row_color_hover():

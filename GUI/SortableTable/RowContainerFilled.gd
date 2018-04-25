@@ -87,6 +87,16 @@ func update_ids_of_rows():
 	for Row in get_children():
 		Row.set_row_id(count)
 		count += 1
+	
+	
+
+func highlight_column(column):
+	if column <= TopRow.ColumnButtons.size() and column > 0:
+		for i in range(1, TopRow.ColumnButtons.size()) :
+			for Row in SortableRows:
+				Row.modulate_cell_color(i,Color("00ffffff"))
+		for Row in SortableRows:
+			Row.modulate_cell_color(column,Color("07ffffff"))
 		
 		
 

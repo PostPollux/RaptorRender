@@ -70,6 +70,15 @@ func set_column_width(column, width):
 	
 	for Row in EmptyRows:
 		Row.set_cell_width(column,width)
+		
+
+func highlight_column(column):
+	if column <= TopRow.ColumnButtons.size() and column > 0:
+		for i in range(1, TopRow.ColumnButtons.size()) :
+			for Row in EmptyRows:
+				Row.modulate_cell_color(i,Color("00ffffff"))
+		for Row in EmptyRows:
+			Row.modulate_cell_color(column,Color("07ffffff"))
 
 
 # empty rows are not selectable, but clicking them can have an effect on the selection of the filled ones
