@@ -10,6 +10,7 @@ onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContai
 onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
 var dragging_splitter = false
 var dragging_splitter_id
+var current_highlighted_row = 1
 
 var mouse_position_x_before_dragging
 var min_size_of_column_before_dragging
@@ -24,8 +25,6 @@ func _ready():
 	connect_signals_of_splitters()
 	set_last_column_to_expand()
 	
-	#RowContainerFilled.highlight_column(1)
-	#RowContainerEmpty.highlight_column(1)
 
 #	var count = 1
 #

@@ -11,6 +11,7 @@ func _ready():
 	set_amount_of_columns()
 	resize_columns()
 	update_ids_of_rows()
+	highlight_column(TopRow.current_highlighted_row)
 	
 	#create test labels
 	
@@ -91,12 +92,13 @@ func update_ids_of_rows():
 	
 
 func highlight_column(column):
-	if column <= TopRow.ColumnButtons.size() and column > 0:
-		for i in range(1, TopRow.ColumnButtons.size()) :
+	if TopRow:
+		if column <= TopRow.ColumnButtons.size() and column > 0:
+			for i in range(1, TopRow.ColumnButtons.size()) :
+				for Row in SortableRows:
+					Row.modulate_cell_color(i,Color("00ffffff"))
 			for Row in SortableRows:
-				Row.modulate_cell_color(i,Color("00ffffff"))
-		for Row in SortableRows:
-			Row.modulate_cell_color(column,Color("07ffffff"))
+				Row.modulate_cell_color(column,Color("08ffffff"))
 		
 		
 
