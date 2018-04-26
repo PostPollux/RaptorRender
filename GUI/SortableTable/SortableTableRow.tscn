@@ -2,7 +2,7 @@
 
 [ext_resource path="res://GUI/SortableTable/SortableTableRow.gd" type="Script" id=1]
 
-[node name="SortabelTableRow" type="MarginContainer" index="0"]
+[node name="SortabelTableRow" type="MarginContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -58,8 +58,9 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 0
 alignment = 0
-_sections_unfolded = [ "Grow Direction", "Mouse", "Rect", "Size Flags", "Theme", "Visibility" ]
+_sections_unfolded = [ "Grow Direction", "Mouse", "Rect", "Size Flags", "Theme", "Visibility", "custom_constants" ]
 
 [connection signal="gui_input" from="." to="." method="_on_SortabelTableRow_gui_input"]
 
