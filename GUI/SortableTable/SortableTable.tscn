@@ -7,7 +7,7 @@
 [ext_resource path="res://GUI/SortableTable/SortableTableRow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=6]
 
-[node name="SortableTable" type="ScrollContainer" index="0"]
+[node name="SortableTable" type="ScrollContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -57,7 +57,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 0, 20 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -79,7 +79,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -96,7 +96,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -113,7 +113,7 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 24.0
+margin_top = 26.0
 margin_right = 615.0
 margin_bottom = 255.0
 rect_pivot_offset = Vector2( 0, 0 )
@@ -135,7 +135,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 231.0
+margin_bottom = 229.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -209,7 +209,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 150.0
 margin_right = 615.0
-margin_bottom = 231.0
+margin_bottom = 229.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
