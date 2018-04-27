@@ -1,6 +1,24 @@
+tool
+
 extends ScrollContainer
 
+
+export (Array, String) var column_names
+export (int) var sort_column = 1
+
+
+
+
+
 var previous_scroll_horizontal = 0
+
+
+
+#onready var TopRow = $"VBoxContainer/TopRow"
+#onready var RowContainerFilled = $"VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled"
+#onready var RowContainerEmpty = $"VBoxContainer/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
+
+
 
 func _ready():
 	pass

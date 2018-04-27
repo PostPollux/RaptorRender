@@ -14,7 +14,7 @@ func _ready():
 	connect_row_clicked_signals()
 	set_amount_of_columns()
 	resize_columns()
-	highlight_column(TopRow.current_highlighted_row)
+	highlight_column(TopRow.column_used_for_sort)
 
 
 

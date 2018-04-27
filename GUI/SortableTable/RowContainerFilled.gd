@@ -11,7 +11,7 @@ func _ready():
 	set_amount_of_columns()
 	resize_columns()
 	update_ids_of_rows()
-	highlight_column(TopRow.current_highlighted_row)
+	highlight_column(TopRow.column_used_for_sort)
 	
 	#create test labels
 	

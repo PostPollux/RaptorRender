@@ -2,15 +2,17 @@ tool
 
 extends MarginContainer
 
-export (Array, String) var column_names
+var column_names = []
 
 var Splitters = []
 var ColumnButtons = []
+onready var SortableTable = $"../.."
 onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContainerFilled"
 onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
 var dragging_splitter = false
 var dragging_splitter_id
-var current_highlighted_row = 1
+var column_used_for_sort = 1
+var sort_reversed = false
 
 var mouse_position_x_before_dragging
 var min_size_of_column_before_dragging
@@ -20,29 +22,20 @@ var ColumnSplitterRes = preload("res://GUI/SortableTable/TopRow/ColumnSplitter.t
 
 func _ready():
 	
-	get_column_buttons_and_splitters()
+	print (SortableTable.column_names)
+	column_names = SortableTable.column_names
+	column_used_for_sort = SortableTable.sort_column
+	
+	create_buttons_and_splitters()
+	#get_column_buttons_and_splitters()
 	assign_ids_to_splitters()
 	connect_signals_of_splitters()
 	set_last_column_to_expand()
 	
 
-#	var count = 1
-#
-#	for column_name in column_names:
-#		var ColumnButton = Button.new()
-#		ColumnButton.name = column_name
-#		ColumnButton.text = column_name
-#
-#		ColumnButtons.append(ColumnButton)
-#		$HBoxContainer.add_child(ColumnButton)
-#
-#		var Splitter = ColumnSplitterRes.instance()
-#		Splitter.splitter_id = count
-#		Splitter.connect("just_clicked", self, "resize_column")
-#		Splitters.append(Splitter)
-#		$HBoxContainer.add_child(Splitter)
-#
-#		count += 1
+#	
+
+
 
 
 func _process(delta):
@@ -74,6 +67,31 @@ func _process(delta):
 			dragging_splitter = false
 
 
+func create_buttons_and_splitters():
+	
+	# delete existing nodes
+	for CurrentNode in $HBoxContainer.get_children():
+		CurrentNode.queue_free()
+		
+	var count = 1
+
+	for column_name in column_names:
+		var ColumnButton = Button.new()
+		ColumnButton.name = column_name
+		ColumnButton.text = column_name
+
+		ColumnButtons.append(ColumnButton)
+		$HBoxContainer.add_child(ColumnButton)
+
+		var Splitter = ColumnSplitterRes.instance()
+		Splitter.splitter_id = count
+		Splitter.connect("just_clicked", self, "resize_column")
+		Splitters.append(Splitter)
+		$HBoxContainer.add_child(Splitter)
+
+		count += 1
+		
+		
 
 func get_column_buttons_and_splitters ():
 	

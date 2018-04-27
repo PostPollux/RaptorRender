@@ -1,12 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/SortableTable/SortableTable.gd" type="Script" id=2]
 [ext_resource path="res://GUI/SortableTable/TopRow/TopRow.gd" type="Script" id=3]
-[ext_resource path="res://GUI/SortableTable/TopRow/ColumnSplitter.tscn" type="PackedScene" id=4]
-[ext_resource path="res://GUI/SortableTable/RowContainerFilled.gd" type="Script" id=5]
-[ext_resource path="res://GUI/SortableTable/SortableTableRow.tscn" type="PackedScene" id=6]
-[ext_resource path="res://GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=7]
+[ext_resource path="res://GUI/SortableTable/RowContainerFilled.gd" type="Script" id=4]
+[ext_resource path="res://GUI/SortableTable/SortableTableRow.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=6]
 
 [node name="SortableTable" type="ScrollContainer" index="0"]
 
@@ -31,6 +30,8 @@ scroll_vertical_enabled = false
 scroll_vertical = 0
 script = ExtResource( 2 )
 _sections_unfolded = [ "Grow Direction", "Margin", "Mouse", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
+column_names = [ "Please set up your columns" ]
+sort_column = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." index="0"]
 
@@ -56,7 +57,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 22.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -70,7 +71,6 @@ custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
 script = ExtResource( 3 )
 _sections_unfolded = [ "Margin", "Mouse", "Rect", "Size Flags", "custom_constants" ]
-column_names = [ "First", "Second", "Third", "Forth", "Fith" ]
 
 [node name="Panel" type="Panel" parent="VBoxContainer/TopRow" index="0"]
 
@@ -79,7 +79,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 22.0
+margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -96,7 +96,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 22.0
+margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -107,74 +107,13 @@ custom_constants/separation = 0
 alignment = 0
 _sections_unfolded = [ "custom_constants" ]
 
-[node name="Button" type="Button" parent="VBoxContainer/TopRow/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 73.0
-margin_bottom = 22.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 3
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Column 1"
-flat = false
-align = 1
-_sections_unfolded = [ "Size Flags" ]
-
-[node name="ColumnSplitter" parent="VBoxContainer/TopRow/HBoxContainer" index="1" instance=ExtResource( 4 )]
-
-margin_left = 73.0
-margin_right = 77.0
-margin_bottom = 22.0
-
-[node name="Button2" type="Button" parent="VBoxContainer/TopRow/HBoxContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 77.0
-margin_right = 611.0
-margin_bottom = 22.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Column 2"
-flat = false
-align = 1
-_sections_unfolded = [ "Size Flags" ]
-
-[node name="ColumnSplitter2" parent="VBoxContainer/TopRow/HBoxContainer" index="3" instance=ExtResource( 4 )]
-
-margin_left = 611.0
-margin_right = 615.0
-margin_bottom = 22.0
-
 [node name="RowScrollContainer" type="ScrollContainer" parent="VBoxContainer" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 26.0
+margin_top = 24.0
 margin_right = 615.0
 margin_bottom = 255.0
 rect_pivot_offset = Vector2( 0, 0 )
@@ -196,7 +135,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 229.0
+margin_bottom = 231.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -224,38 +163,38 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_constants/separation = 0
 alignment = 0
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 _sections_unfolded = [ "Mouse", "custom_constants" ]
 
-[node name="SortabelTableRow" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="0" instance=ExtResource( 6 )]
+[node name="SortabelTableRow" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="0" instance=ExtResource( 5 )]
 
 margin_top = 0.0
 margin_right = 615.0
 margin_bottom = 30.0
 row_color_selected = Color( 0.784314, 0.537255, 0.411765, 1 )
 
-[node name="SortabelTableRow2" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="1" instance=ExtResource( 6 )]
+[node name="SortabelTableRow2" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="1" instance=ExtResource( 5 )]
 
 margin_top = 30.0
 margin_right = 615.0
 margin_bottom = 60.0
 row_color_selected = Color( 0.784314, 0.537255, 0.411765, 1 )
 
-[node name="SortabelTableRow3" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="2" instance=ExtResource( 6 )]
+[node name="SortabelTableRow3" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="2" instance=ExtResource( 5 )]
 
 margin_top = 60.0
 margin_right = 615.0
 margin_bottom = 90.0
 row_color_selected = Color( 0.784314, 0.537255, 0.411765, 1 )
 
-[node name="SortabelTableRow4" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="3" instance=ExtResource( 6 )]
+[node name="SortabelTableRow4" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="3" instance=ExtResource( 5 )]
 
 margin_top = 90.0
 margin_right = 615.0
 margin_bottom = 120.0
 row_color_selected = Color( 0.784314, 0.537255, 0.411765, 1 )
 
-[node name="SortabelTableRow5" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="4" instance=ExtResource( 6 )]
+[node name="SortabelTableRow5" parent="VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled" index="4" instance=ExtResource( 5 )]
 
 margin_top = 120.0
 margin_right = 615.0
@@ -270,7 +209,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 150.0
 margin_right = 615.0
-margin_bottom = 229.0
+margin_bottom = 231.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -295,7 +234,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_constants/separation = 0
 alignment = 0
-script = ExtResource( 7 )
+script = ExtResource( 6 )
 _sections_unfolded = [ "Mouse", "custom_constants" ]
 
 [connection signal="draw" from="." to="." method="_on_SortableTable_draw"]
