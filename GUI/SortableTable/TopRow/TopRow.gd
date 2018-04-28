@@ -3,6 +3,7 @@ tool
 extends MarginContainer
 
 var column_names = []
+var column_widths = []
 
 var Splitters = []
 var ColumnButtons = []
@@ -18,16 +19,16 @@ var mouse_position_x_before_dragging
 var min_size_of_column_before_dragging
 
 var ColumnSplitterRes = preload("res://GUI/SortableTable/TopRow/ColumnSplitter.tscn")
-
+var ColumnButtonRes = preload("res://GUI/SortableTable/TopRow/ColumnButton.tscn")
 
 func _ready():
 	
 	print (SortableTable.column_names)
 	column_names = SortableTable.column_names
+	column_widths = SortableTable.column_widths
 	column_used_for_sort = SortableTable.sort_column
 	
 	create_buttons_and_splitters()
-	#get_column_buttons_and_splitters()
 	assign_ids_to_splitters()
 	connect_signals_of_splitters()
 	set_last_column_to_expand()
@@ -76,9 +77,17 @@ func create_buttons_and_splitters():
 	var count = 1
 
 	for column_name in column_names:
-		var ColumnButton = Button.new()
-		ColumnButton.name = column_name
-		ColumnButton.text = column_name
+		
+		var ColumnButton = ColumnButtonRes.instance()
+		ColumnButton.column_button_name = column_name
+		ColumnButton.id = count
+		ColumnButton.rect_min_size.x = column_widths[count -1]
+		ColumnButton.connect("column_button_pressed", self, "visually_update_columns_to_show_sort")
+		if count == column_used_for_sort:
+			ColumnButton.active_sort_column = true
+			ColumnButton.sort_reversed = false
+			ColumnButton.arrow_down_visible = true
+			ColumnButton.arrow_up_visible = false
 
 		ColumnButtons.append(ColumnButton)
 		$HBoxContainer.add_child(ColumnButton)
@@ -93,19 +102,6 @@ func create_buttons_and_splitters():
 		
 		
 
-func get_column_buttons_and_splitters ():
-	
-	var count = 1
-	
-	for CurrentNode in $HBoxContainer.get_children():
-		
-		if count % 2 == 0:
-			Splitters.append(CurrentNode)
-		else:
-			ColumnButtons.append(CurrentNode)
-			
-		
-		count += 1
 
 
 
@@ -134,4 +130,28 @@ func resize_column_by_drag(splitter_id):
 	
 	
 func set_last_column_to_expand ():
-	ColumnButtons[ColumnButtons.size() - 1].set_h_size_flags(3) #set to "fill, expand"
+	var LastColumnButton = ColumnButtons[ColumnButtons.size() - 1]
+	#LastColumnButton.set_h_size_flags(3) #set to "fill, expand"
+	#print (LastColumnButton.rect_size.x)
+	#LastColumnButton.rect_min_size.x = LastColumnButton.rect_size.x
+	
+#	var size = RowContainerFilled.rect_min_size.x
+#	print (size)
+#	for i in range(1, ColumnButtons.size() - 1):
+#		size = size - ColumnButtons[i].rect_min_size.x
+#
+#	print (size)
+#	LastColumnButton.rect_min_size.x = size
+
+func visually_update_columns_to_show_sort(column_id):
+	column_used_for_sort = column_id
+	
+	var count = 1
+	for ColumnButton in ColumnButtons:
+		if ColumnButton.active_sort_column == true:
+			RowContainerFilled.highlight_column(column_id)
+			RowContainerEmpty.highlight_column(column_id)
+		if count != column_id:
+			ColumnButton.reset_button()
+		count += 1
+	

@@ -1,13 +1,16 @@
 extends VBoxContainer
 
-var row_height = 30
+var row_height
 
 var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
 onready var RowContainerFilled = $"../../RowContainerFilled"
 onready var TopRow = $"../../../../TopRow"
+onready var SortableTable = $"../../../../.."
 var EmptyRows = []
 
 func _ready():
+	row_height = SortableTable.row_height
+	
 	update_width_of_RowContainerEmpty()
 	fill_up_available_space_with_empty_rows()
 	update_ids_of_empty_rows()
@@ -62,7 +65,7 @@ func resize_columns():
 	for ColumnButton in TopRow.ColumnButtons:
 		
 		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
-		set_column_width(count, ColumnButton.rect_size.x)
+		set_column_width(count, ColumnButton.rect_min_size.x)
 		
 		count += 1
 		
@@ -76,7 +79,7 @@ func set_column_width(column, width):
 func highlight_column(column):
 	if TopRow:
 		if column <= TopRow.ColumnButtons.size() and column > 0:
-			for i in range(1, TopRow.ColumnButtons.size()) :
+			for i in range(1, TopRow.ColumnButtons.size() + 1) :
 				for Row in EmptyRows:
 					Row.modulate_cell_color(i,Color("00ffffff"))
 			for Row in EmptyRows:

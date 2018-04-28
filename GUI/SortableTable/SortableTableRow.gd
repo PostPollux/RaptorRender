@@ -95,7 +95,7 @@ func create_cells():
 		CellColorRect.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		CellColorRect.set_v_size_flags(3) # fill + expand
 		CellColorRect.set_h_size_flags(3) # fill + expand
-		CellColorRect.rect_size.y = row_height
+		CellColorRect.rect_min_size.y = row_height
 		CellColorRect.set_modulate(Color("00ffffff"))
 		
 		var CellMarginContainer = MarginContainer.new()

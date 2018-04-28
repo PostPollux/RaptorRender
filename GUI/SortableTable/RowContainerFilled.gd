@@ -5,13 +5,20 @@ onready var SortableRows = get_children()
 onready var SortableRowsSelected = []
 onready var TopRow = $"../../../TopRow"
 onready var RowScrollContainer = $"../.."
+onready var SortableTable = $"../../../.."
+
+var row_height
 
 func _ready():
+	
+	row_height = SortableTable.row_height
+	for SortableRow in SortableRows:
+		SortableRow.set_row_height(row_height)
 
 	set_amount_of_columns()
-	resize_columns()
 	update_ids_of_rows()
 	highlight_column(TopRow.column_used_for_sort)
+	resize_columns()
 	
 	#create test labels
 	
@@ -66,8 +73,7 @@ func resize_columns():
 	for ColumnButton in TopRow.ColumnButtons:
 		
 		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
-		set_column_width(count, ColumnButton.rect_size.x)
-		
+		set_column_width(count, ColumnButton.rect_min_size.x)
 		count += 1
 		
 		
@@ -94,7 +100,7 @@ func update_ids_of_rows():
 func highlight_column(column):
 	if TopRow:
 		if column <= TopRow.ColumnButtons.size() and column > 0:
-			for i in range(1, TopRow.ColumnButtons.size()) :
+			for i in range(1, TopRow.ColumnButtons.size() + 1) :
 				for Row in SortableRows:
 					Row.modulate_cell_color(i,Color("00ffffff"))
 			for Row in SortableRows:
