@@ -4,14 +4,14 @@
 [ext_resource path="res://GUI/SortableTable/images/arrow_down.png" type="Texture" id=2]
 [ext_resource path="res://GUI/SortableTable/images/arrow_up.png" type="Texture" id=3]
 
-[node name="ColumnButton" type="Button"]
+[node name="ColumnButton" type="Button" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 126.0
-margin_bottom = 20.0
+margin_right = 156.0
+margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 focus_mode = 2
@@ -26,7 +26,7 @@ group = null
 flat = false
 align = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Rect", "Theme" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="." index="0"]
 
@@ -40,10 +40,10 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 3
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
 custom_constants/margin_left = 3
-custom_constants/margin_bottom = 3
+custom_constants/margin_bottom = 0
 _sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" index="0"]
@@ -53,9 +53,8 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 3.0
-margin_top = 3.0
-margin_right = 121.0
-margin_bottom = 17.0
+margin_right = 156.0
+margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 2
@@ -71,8 +70,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 106.0
-margin_bottom = 14.0
+margin_top = 4.0
+margin_right = 136.0
+margin_bottom = 18.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -91,9 +91,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 110.0
-margin_right = 118.0
-margin_bottom = 14.0
+margin_left = 140.0
+margin_right = 153.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -101,6 +101,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 3
+custom_constants/margin_right = 5
 _sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
 [node name="Arrow_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="0"]
@@ -113,7 +114,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 8.0
 margin_right = 16.0
-margin_bottom = 14.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -136,7 +137,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 8.0
 margin_right = 16.0
-margin_bottom = 14.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
