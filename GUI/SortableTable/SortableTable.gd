@@ -8,7 +8,12 @@ export (Array, int) var column_widths
 export (int) var sort_column = 1
 export (int) var row_height = 30
 
-onready var RowScrollContainer = $"VBoxContainer/RowScrollContainer"
+export (Color) var row_color = Color("3c3c3c")
+export (Color) var row_color_selected = Color("956248")
+export (float) var row_brightness_difference = 0.05
+export (float) var hover_brightness_boost = 0.1
+
+onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
 
 
 

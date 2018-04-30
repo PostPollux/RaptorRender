@@ -92,13 +92,12 @@ scrolling_enabled = true
 
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 0.0
-margin_top = -1.0
-margin_right = 0.0
-margin_bottom = -1.0
+margin_left = -1.0
+margin_top = -2.0
+margin_right = -1.0
+margin_bottom = -2.0
 column_names = [ "ID", "Status", "Name", "Priority", "Progress", "Creator", "time created", "Type" ]
 column_widths = [ 100, 100, 100, 100, 100, 100, 100, 20 ]
-row_height = 30
 
 [node name="TabContainerClients" type="TabContainer" parent="Control/VSplitContainer" index="1"]
 
@@ -148,6 +147,5 @@ margin_right = 0.0
 margin_bottom = -1.0
 column_names = [ "Name", "Status", "Platform", "Pools", "uptime", "cpu", "ram", "RR Version" ]
 column_widths = [ 100, 100, 100, 100, 100, 100, 100, 20 ]
-row_height = 30
 
 

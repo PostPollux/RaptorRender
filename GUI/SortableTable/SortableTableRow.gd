@@ -7,16 +7,21 @@ var cell_count
 var row_id
 
 #row colors
-export (Color) var row_color = Color("3c3c3c")
-var row_color_even = row_color
-var row_color_odd = row_color.lightened(0.05)
-export (Color) var row_color_selected = Color("c88969")
-var row_color_selected_even = row_color_selected
-var row_color_selected_odd = row_color_selected.lightened(0.1)
+var row_color
+var row_color_even 
+var row_color_odd 
+var row_color_selected 
+var row_color_selected_even
+var row_color_selected_odd
+
+var even_odd_brightness_difference
+var hover_brightness_boost
 
 
 onready var HBoxForCells = $HBoxContainer
 onready var RowBackgroundColorRect = $BackgroundColor
+
+var SortableTable
 
 var CellsClipContainerArray = []
 var CellsMarginContainerArray = []
@@ -33,6 +38,11 @@ signal row_clicked_rmb
 
 
 func _ready():
+	
+	get_reference_to_SortableTable()
+	
+	set_initial_colors()
+	
 	
 	# set height of row
 	set_row_height(row_height)
@@ -127,8 +137,31 @@ func create_cells():
 	
 
 
+func get_reference_to_SortableTable():
+	var ParentNode = get_parent()
+	
+		
+	while ParentNode.name != "VBox_TopRow_Content":
+		ParentNode = ParentNode.get_parent()
+	
+	# go up one level further to finally get the node of the SortableTable
+	ParentNode = ParentNode.get_parent()
+	
+	SortableTable = ParentNode
+	
 
-
+func set_initial_colors():
+	row_color = SortableTable.row_color
+	row_color_selected = SortableTable.row_color_selected
+	even_odd_brightness_difference = SortableTable.row_brightness_difference
+	hover_brightness_boost = SortableTable.hover_brightness_boost
+	
+	row_color_even = row_color
+	row_color_odd = row_color.lightened(even_odd_brightness_difference)
+	row_color_selected_even = row_color_selected
+	row_color_selected_odd = row_color_selected.lightened(hover_brightness_boost)
+	
+	
 
 func fill_CellArrays ():
 	
@@ -211,15 +244,15 @@ func modulate_cell_color(column, color):
 func update_row_color_hover():
 	if selected:
 		if even:
-			RowBackgroundColorRect.color = row_color_selected_even.lightened(0.2)
+			RowBackgroundColorRect.color = row_color_selected_even.lightened(hover_brightness_boost * 2)
 		else:
-			RowBackgroundColorRect.color = row_color_selected_odd.lightened(0.1)
+			RowBackgroundColorRect.color = row_color_selected_odd.lightened(hover_brightness_boost)
 	
 	else:
 		if even:
-			RowBackgroundColorRect.color = row_color_even.lightened(0.15)
+			RowBackgroundColorRect.color = row_color_even.lightened(hover_brightness_boost * 1.5)
 		else:
-			RowBackgroundColorRect.color = row_color_odd.lightened(0.1)
+			RowBackgroundColorRect.color = row_color_odd.lightened(hover_brightness_boost)
 		
 
 func update_row_color_select():
