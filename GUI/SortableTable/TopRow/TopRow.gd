@@ -23,7 +23,6 @@ var ColumnButtonRes = preload("res://GUI/SortableTable/TopRow/ColumnButton.tscn"
 
 func _ready():
 	
-	print (SortableTable.column_names)
 	column_names = SortableTable.column_names
 	column_widths = SortableTable.column_widths
 	column_used_for_sort = SortableTable.sort_column
@@ -31,7 +30,7 @@ func _ready():
 	create_buttons_and_splitters()
 	assign_ids_to_splitters()
 	connect_signals_of_splitters()
-	set_last_column_to_expand()
+	expand_last_column_if_space_available()
 	
 
 #	
@@ -129,19 +128,19 @@ func resize_column_by_drag(splitter_id):
 	dragging_splitter = true
 	
 	
-func set_last_column_to_expand ():
+func expand_last_column_if_space_available ():
 	var LastColumnButton = ColumnButtons[ColumnButtons.size() - 1]
-	#LastColumnButton.set_h_size_flags(3) #set to "fill, expand"
-	#print (LastColumnButton.rect_size.x)
-	#LastColumnButton.rect_min_size.x = LastColumnButton.rect_size.x
 	
-#	var size = RowContainerFilled.rect_min_size.x
-#	print (size)
-#	for i in range(1, ColumnButtons.size() - 1):
-#		size = size - ColumnButtons[i].rect_min_size.x
-#
-#	print (size)
-#	LastColumnButton.rect_min_size.x = size
+	var size = SortableTable.rect_size.x
+	
+	for i in range(0, ColumnButtons.size() - 1):
+		size = size - ColumnButtons[i].rect_min_size.x
+		
+	if size > column_widths[ColumnButtons.size() - 1]:
+		LastColumnButton.rect_min_size.x = size - ColumnButtons.size() * 4 - 12
+
+
+
 
 func visually_update_columns_to_show_sort(column_id):
 	column_used_for_sort = column_id

@@ -28,17 +28,11 @@ func _ready():
 	var l2 = Label.new()
 	l2.name = "label"
 	l2.text = "Ein recht langer Text zum Testen"
-	#l.size_flags_vertical = 0
-	#l.set_v_size_flags(4)
+
 	
 	add_cell_content(1,1,l)
 	add_cell_content(1,2,l2)
-	
-	print (OS.get_name())
-	print ('Number of Threads: ' + String(OS.get_processor_count()) )
-	print (OS.get_model_name ( ))
-	print (OS.get_dynamic_memory_usage ( ))
-	
+
 	
 	connect_row_signals()
 
