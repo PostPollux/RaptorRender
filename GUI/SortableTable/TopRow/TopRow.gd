@@ -32,7 +32,7 @@ func _ready():
 	create_buttons_and_splitters()
 	assign_ids_to_splitters()
 	connect_signals_of_splitters()
-	expand_last_column_if_space_available()
+
 	
 	# set the calculated width of the last Button as default
 	column_widths_initial[ColumnButtons.size() - 1] = ColumnButtons[ColumnButtons.size() - 1].rect_min_size.x
@@ -153,7 +153,7 @@ func expand_last_column_if_space_available ():
 	for i in column_widths:
 		size_all_columns += i
 
-	available_size = column_widths[column_button_count - 1] + (SortableTable.size_x - size_all_columns - column_button_count * 3)
+	available_size = column_widths[column_button_count - 1] + (SortableTable.rect_size.x - size_all_columns - column_button_count * 3)
 	print (available_size)
 	
 #	var available_size = SortableTable.rect_size.x 
