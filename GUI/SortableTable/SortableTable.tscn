@@ -7,7 +7,7 @@
 [ext_resource path="res://GUI/SortableTable/SortableTableRow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=6]
 
-[node name="SortableTable" type="ScrollContainer" index="0"]
+[node name="SortableTable" type="ScrollContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -243,6 +243,8 @@ _sections_unfolded = [ "Mouse", "custom_constants" ]
 [connection signal="draw" from="." to="." method="_on_SortableTable_draw"]
 
 [connection signal="gui_input" from="." to="." method="_on_SortableTable_gui_input"]
+
+[connection signal="resized" from="VBox_TopRow_Content" to="VBox_TopRow_Content/TopRow" method="_on_VBox_TopRow_Content_resized"]
 
 [connection signal="resized" from="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows" to="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty" method="_on_ClipContainerForEmptyRows_resized"]
 

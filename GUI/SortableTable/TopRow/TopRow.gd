@@ -32,6 +32,9 @@ func _ready():
 	connect_signals_of_splitters()
 	expand_last_column_if_space_available()
 	
+	# set the calculated width of the last Button as default
+	column_widths[ColumnButtons.size() - 1] = ColumnButtons[ColumnButtons.size() - 1].rect_min_size.x
+	
 
 #	
 
@@ -50,10 +53,14 @@ func _process(delta):
 			var calculated_size = min_size_of_column_before_dragging + (mouse_pos_x - mouse_position_x_before_dragging)
 			ColumnButtons[dragging_splitter_id - 1].rect_min_size.x = calculated_size
 			
+			expand_last_column_if_space_available ()
+			
 			# apply the size of the ColumnButton of the TopRow to all the rows of the table
 			var column_width = ColumnButtons[dragging_splitter_id - 1].rect_size.x
 			RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
 			RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
+			
+			
 			
 		# Left mouse button released	
 		else:
@@ -129,15 +136,29 @@ func resize_column_by_drag(splitter_id):
 	
 	
 func expand_last_column_if_space_available ():
-	var LastColumnButton = ColumnButtons[ColumnButtons.size() - 1]
-	
+	var column_button_count = ColumnButtons.size()
+	var LastColumnButton = ColumnButtons[column_button_count - 1]
+
+
 	var size = SortableTable.rect_size.x
-	
-	for i in range(0, ColumnButtons.size() - 1):
+
+	for i in range(0, column_button_count - 1):
 		size = size - ColumnButtons[i].rect_min_size.x
+	
+	print ( size)
+	print ( column_widths[column_button_count - 1])
+	if size > column_widths[column_button_count - 1]:
 		
-	if size > column_widths[ColumnButtons.size() - 1]:
-		LastColumnButton.rect_min_size.x = size - ColumnButtons.size() * 4 - 12
+		# set the size of the last button in the TopRow
+		LastColumnButton.rect_min_size.x = size - column_button_count * 4 - 12
+
+		# apply the size of the ColumnButton of the TopRow to all the rows of the table
+		var column_width = ColumnButtons[column_button_count - 1].rect_min_size.x
+		if RowContainerFilled.SortableRows:
+			RowContainerFilled.set_column_width(column_button_count, column_width)
+		if RowContainerEmpty.EmptyRows:
+			RowContainerEmpty.set_column_width(column_button_count, column_width)
+	
 
 
 
@@ -154,3 +175,11 @@ func visually_update_columns_to_show_sort(column_id):
 			ColumnButton.reset_button()
 		count += 1
 	
+
+
+
+func _on_VBox_TopRow_Content_resized():
+	if ColumnButtons.size() > 0:
+		expand_last_column_if_space_available ()
+		
+

@@ -17,6 +17,7 @@ var row_color_selected_odd
 var even_odd_brightness_difference
 var hover_brightness_boost
 
+var column_count
 
 onready var HBoxForCells = $HBoxContainer
 onready var RowBackgroundColorRect = $BackgroundColor
@@ -29,7 +30,7 @@ var CellsColorRectArray = []
 
 var even = false
 var selected = false
-var row_height = 30
+var row_height
 
 
 signal row_clicked
@@ -43,9 +44,7 @@ func _ready():
 	
 	set_initial_colors()
 	
-	
-	# set height of row
-	set_row_height(row_height)
+	row_height = SortableTable.row_height
 	
 	# determine if row id is even or odd
 	update_row_even_or_odd()
@@ -133,7 +132,9 @@ func create_cells():
 		
 	fill_CellArrays()
 	
-	set_cell_height(30)
+	set_cell_height(row_height)
+	
+	column_count = CellsClipContainerArray.size()
 	
 
 
@@ -211,12 +212,12 @@ func set_cell_count(count):
 ####### Modify Cells #########	
 
 func add_cell_content(column, child):
-	if column <= CellsMarginContainerArray.size():
+	if column <= column_count:
 		CellsMarginContainerArray[column-1].add_child(child)
 	
 	
 func set_cell_width(column, width):
-	if column <= CellsClipContainerArray.size():
+	if column <= column_count:
 		CellsClipContainerArray[column-1].rect_min_size.x = width
 		CellsColorRectArray[column-1].rect_min_size.x = width
 		
@@ -229,7 +230,7 @@ func set_row_height(height):
 	
 
 func set_cell_height(height):
-	if CellsClipContainerArray.size() > 0:
+	if column_count:
 		for ClipContainer in CellsClipContainerArray:
 			ClipContainer.rect_min_size.y = height
 		for CellMarginContainer in CellsMarginContainerArray:
