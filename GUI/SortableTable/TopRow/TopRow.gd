@@ -33,12 +33,6 @@ func _ready():
 	assign_ids_to_splitters()
 	connect_signals_of_splitters()
 
-	
-	# set the calculated width of the last Button as default
-	column_widths_initial[ColumnButtons.size() - 1] = ColumnButtons[ColumnButtons.size() - 1].rect_min_size.x
-	
-
-#	
 
 
 
