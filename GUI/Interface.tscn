@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 [node name="BackgroundColor" type="ColorRect" parent="." index="0"]
 
@@ -107,17 +106,6 @@ size_flags_vertical = 1
 tab_align = 1
 scrolling_enabled = true
 
-[node name="Jobs_SortableTable" parent="Control/HSplitContainer/VSplitContainer/TabContainerJobs/Jobs" index="0" instance=ExtResource( 2 )]
-
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -1.0
-margin_top = -2.0
-margin_right = -1.0
-margin_bottom = -2.0
-column_names = [ "ID", "Status", "Name", "Priority", "Progress", "Creator", "time created", "Type" ]
-column_widths_initial = [ 100, 100, 100, 100, 100, 100, 100, 100 ]
-
 [node name="TabContainerClients" type="TabContainer" parent="Control/HSplitContainer/VSplitContainer" index="1"]
 
 anchor_left = 0.0
@@ -155,17 +143,6 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 tab_align = 1
 scrolling_enabled = true
-
-[node name="Clients_SortableTable" parent="Control/HSplitContainer/VSplitContainer/TabContainerClients/Clients" index="0" instance=ExtResource( 2 )]
-
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 0.0
-margin_top = -1.0
-margin_right = 0.0
-margin_bottom = -1.0
-column_names = [ "Name", "Status", "Platform", "Pools", "uptime", "cpu", "ram", "RR Version" ]
-column_widths_initial = [ 70, 70, 70, 70, 70, 70, 70, 70 ]
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/HSplitContainer" index="1"]
 

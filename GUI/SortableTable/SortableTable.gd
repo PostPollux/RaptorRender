@@ -13,6 +13,8 @@ export (Color) var row_color_selected = Color("956248")
 export (float) var row_brightness_difference = 0.05
 export (float) var hover_brightness_boost = 0.1
 
+export (String) var table_id = "custom id"
+
 onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
 onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled" 
 
