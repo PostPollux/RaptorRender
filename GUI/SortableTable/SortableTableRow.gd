@@ -35,6 +35,7 @@ var row_height
 
 signal row_clicked
 signal row_clicked_rmb
+signal drag_select
 
 
 
@@ -274,7 +275,8 @@ func modulate_cell_color(column, color):
 
 func _on_SortabelTableRow_mouse_entered():
 	update_row_color_hover()
-
+	if Input.is_action_pressed("ui_left_mouse_button"):
+		emit_signal("drag_select", row_id)
 
 func _on_SortabelTableRow_mouse_exited():
 	update_row_color_reset()

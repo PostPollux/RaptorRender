@@ -56,6 +56,7 @@ func initialize_row():
 		
 	Row.connect("row_clicked", self, "select_SortableRows")
 	Row.connect("row_clicked_rmb", self, "open_context_menu")
+	Row.connect("drag_select", self, "drag_select_SortableRows")
 		
 	Row.cell_count = TopRow.ColumnButtons.size()
 	Row.row_height = SortableTable.row_height
@@ -130,10 +131,7 @@ func select_SortableRows(row_id):
 	var ClickedRow = SortableRows[row_id - 1]
 	
 	if Input.is_key_pressed(KEY_CONTROL):
-		if ClickedRow.selected == false:
-			ClickedRow.set_selected(true)
-			SortableRowsSelected.append(ClickedRow)
-		else:
+		if ClickedRow.selected == true:
 			ClickedRow.set_selected(false)
 			SortableRowsSelected.erase(ClickedRow)
 		
@@ -167,7 +165,34 @@ func select_SortableRows(row_id):
 		ClickedRow.set_selected(true)
 		SortableRowsSelected.append(ClickedRow)
 		
+
+
+func drag_select_SortableRows(row_id):
+	
+	var DragedRow = SortableRows[row_id - 1]
+	
+	if Input.is_key_pressed(KEY_CONTROL):
+		DragedRow.set_selected(false)
+		SortableRowsSelected.erase(DragedRow)
 		
+		
+	elif Input.is_key_pressed(KEY_SHIFT):
+		if DragedRow.selected == false:
+			DragedRow.set_selected(true)
+			SortableRowsSelected.append(DragedRow)
+		
+	else:
+		for Row in SortableRows:
+			Row.set_selected(false)
+		SortableRowsSelected.clear()
+		
+		DragedRow.set_selected(true)
+		SortableRowsSelected.append(DragedRow)
+		
+		
+
+
+
 func select_all():
 	
 	# select or deselect all rows depending on wheter all are already selected or not
@@ -181,7 +206,9 @@ func select_all():
 		SortableRowsSelected.clear()
 		for Row in SortableRows:
 			Row.set_selected(false)
-		
+
+
+
 
 func open_context_menu(row_id):
 	
