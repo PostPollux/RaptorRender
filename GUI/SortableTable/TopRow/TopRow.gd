@@ -145,8 +145,6 @@ func expand_last_column_if_space_available ():
 	for i in range(0, column_button_count - 1):
 		size = size - ColumnButtons[i].rect_min_size.x
 	
-	print ( size)
-	print ( column_widths[column_button_count - 1])
 	if size > column_widths[column_button_count - 1]:
 		
 		# set the size of the last button in the TopRow
