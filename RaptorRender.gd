@@ -1,8 +1,7 @@
 extends Node
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+var TableJobs
+var TableClients
 
 var rr_data = {}
 
@@ -83,9 +82,20 @@ func _ready():
 	}
 
 #func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
+#	if TableClients != null:
+#		var l= Label.new()
+#		l.text = "hallo"
+#		TableClients.set_cell_content(1,2,l)
 #	pass
+
+
+func register_table(SortableTable):  
+
+	var sortable_table_id = SortableTable.table_id  
+	
+	match sortable_table_id: 
+		"jobs": TableJobs = SortableTable 
+		"clients": TableClients = SortableTable 
 
 
 func test_prints():

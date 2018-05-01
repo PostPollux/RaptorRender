@@ -29,14 +29,15 @@ scroll_vertical_enabled = false
 scroll_vertical = 0
 script = ExtResource( 2 )
 _sections_unfolded = [ "Grow Direction", "Margin", "Mouse", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
-column_names = [ "Please set up your columns" ]
-column_widths_initial = [ 100 ]
+column_names = null
+column_widths_initial = null
 sort_column = 1
 row_height = 30
 row_color = Color( 0.235294, 0.235294, 0.235294, 1 )
 row_color_selected = Color( 0.584314, 0.384314, 0.282353, 1 )
 row_brightness_difference = 0.05
 hover_brightness_boost = 0.1
+table_id = "custom id"
 
 [node name="VBox_TopRow_Content" type="VBoxContainer" parent="." index="0"]
 
@@ -160,7 +161,6 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 615.0
-margin_bottom = 150.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -178,7 +178,6 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 150.0
 margin_right = 615.0
 margin_bottom = 235.0
 rect_pivot_offset = Vector2( 0, 0 )

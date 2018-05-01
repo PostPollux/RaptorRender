@@ -1,4 +1,4 @@
-tool
+
 
 extends ScrollContainer
 
@@ -13,8 +13,10 @@ export (Color) var row_color_selected = Color("956248")
 export (float) var row_brightness_difference = 0.05
 export (float) var hover_brightness_boost = 0.1
 
-onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
+export (String) var table_id = "custom id"
 
+onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
+onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled" 
 
 
 var previous_scroll_horizontal = 0
@@ -22,14 +24,13 @@ var previous_scroll_vertical = 0
 
 
 
-#onready var TopRow = $"VBoxContainer/TopRow"
-#onready var RowContainerFilled = $"VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled"
-#onready var RowContainerEmpty = $"VBoxContainer/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
-
-
 
 func _ready():
-	pass
+	
+	# register to RaptorRender script
+	if RaptorRender != null:
+		RaptorRender.register_table(self)
+	
 
 
 
@@ -44,7 +45,18 @@ func _on_SortableTable_gui_input(ev):
 
 
 
+func create_rows(count): 
+	RowContainerFilled.add_rows_and_delete_previous(count) 
+ 
+func set_cell_content(row, column, child): 
+	RowContainerFilled.set_cell_content(row, column, child) 
+
+
+
 
 func _on_SortableTable_draw():
 	previous_scroll_horizontal = self.scroll_horizontal
 	previous_scroll_vertical = RowScrollContainer.scroll_vertical
+
+
+
