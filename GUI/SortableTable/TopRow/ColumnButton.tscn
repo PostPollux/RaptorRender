@@ -61,8 +61,9 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 0
 alignment = 0
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags" ]
+_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer" index="0"]
 
@@ -71,7 +72,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 4.0
-margin_right = 136.0
+margin_right = 140.0
 margin_bottom = 18.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -83,7 +84,7 @@ text = "Sample Button"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Mouse", "Size Flags" ]
+_sections_unfolded = [ "Mouse", "Rect", "Size Flags" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" index="1"]
 
@@ -120,8 +121,8 @@ rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6

@@ -31,7 +31,7 @@ scroll_vertical = 0
 script = ExtResource( 2 )
 _sections_unfolded = [ "Grow Direction", "Margin", "Mouse", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
 column_names = [ "Please set up your columns" ]
-column_widths = [ 100 ]
+column_widths_initial = [ 100 ]
 sort_column = 1
 row_height = 30
 row_color = Color( 0.235294, 0.235294, 0.235294, 1 )
@@ -55,7 +55,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 alignment = 0
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
+_sections_unfolded = [ "Rect", "Size Flags", "custom_constants" ]
 
 [node name="TopRow" type="MarginContainer" parent="VBox_TopRow_Content" index="0"]
 

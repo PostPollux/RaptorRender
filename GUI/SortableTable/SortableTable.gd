@@ -4,7 +4,7 @@ extends ScrollContainer
 
 
 export (Array, String) var column_names
-export (Array, int) var column_widths
+export (Array, int) var column_widths_initial
 export (int) var sort_column = 1
 export (int) var row_height = 30
 

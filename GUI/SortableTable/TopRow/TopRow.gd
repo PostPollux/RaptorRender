@@ -3,6 +3,7 @@ tool
 extends MarginContainer
 
 var column_names = []
+var column_widths_initial = []
 var column_widths = []
 
 var Splitters = []
@@ -24,7 +25,8 @@ var ColumnButtonRes = preload("res://GUI/SortableTable/TopRow/ColumnButton.tscn"
 func _ready():
 	
 	column_names = SortableTable.column_names
-	column_widths = SortableTable.column_widths
+	column_widths_initial = SortableTable.column_widths_initial
+	column_widths = column_widths_initial
 	column_used_for_sort = SortableTable.sort_column
 	
 	create_buttons_and_splitters()
@@ -33,7 +35,7 @@ func _ready():
 	expand_last_column_if_space_available()
 	
 	# set the calculated width of the last Button as default
-	column_widths[ColumnButtons.size() - 1] = ColumnButtons[ColumnButtons.size() - 1].rect_min_size.x
+	column_widths_initial[ColumnButtons.size() - 1] = ColumnButtons[ColumnButtons.size() - 1].rect_min_size.x
 	
 
 #	
@@ -51,14 +53,16 @@ func _process(delta):
 			# resize the ColumnButton of the TopRow
 			var mouse_pos_x = get_viewport().get_mouse_position().x
 			var calculated_size = min_size_of_column_before_dragging + (mouse_pos_x - mouse_position_x_before_dragging)
+			if calculated_size < 12:
+				calculated_size = 12
 			ColumnButtons[dragging_splitter_id - 1].rect_min_size.x = calculated_size
-			
-			expand_last_column_if_space_available ()
+			#expand_last_column_if_space_available ()
+			column_widths[dragging_splitter_id - 1] = calculated_size
 			
 			# apply the size of the ColumnButton of the TopRow to all the rows of the table
-			var column_width = ColumnButtons[dragging_splitter_id - 1].rect_size.x
-			RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
-			RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
+			var column_width = column_widths[dragging_splitter_id - 1]
+#			RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
+#			RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
 			
 			
 			
@@ -87,7 +91,7 @@ func create_buttons_and_splitters():
 		var ColumnButton = ColumnButtonRes.instance()
 		ColumnButton.column_button_name = column_name
 		ColumnButton.id = count
-		ColumnButton.rect_min_size.x = column_widths[count -1]
+		ColumnButton.rect_min_size.x = column_widths_initial[count -1]
 		ColumnButton.connect("column_button_pressed", self, "visually_update_columns_to_show_sort")
 		if count == column_used_for_sort:
 			ColumnButton.active_sort_column = true
@@ -131,33 +135,48 @@ func connect_signals_of_splitters ():
 func resize_column_by_drag(splitter_id):
 	dragging_splitter_id = splitter_id
 	mouse_position_x_before_dragging = get_viewport().get_mouse_position().x
-	min_size_of_column_before_dragging = ColumnButtons[splitter_id - 1].rect_size.x
+	min_size_of_column_before_dragging = column_widths[splitter_id - 1]
 	dragging_splitter = true
 	
 	
+	
+	
+###### Not Used at the moment #####
 func expand_last_column_if_space_available ():
+
+	
 	var column_button_count = ColumnButtons.size()
 	var LastColumnButton = ColumnButtons[column_button_count - 1]
-
-
-	var size = SortableTable.rect_size.x
-
-	for i in range(0, column_button_count - 1):
-		size = size - ColumnButtons[i].rect_min_size.x
 	
-	if size > column_widths[column_button_count - 1]:
-		
+	var available_size = 0
+	var size_all_columns = 0
+
+	for i in column_widths:
+		size_all_columns += i
+
+	available_size = column_widths[column_button_count - 1] + (SortableTable.size_x - size_all_columns - column_button_count * 3)
+	print (available_size)
+	
+#	var available_size = SortableTable.rect_size.x 
+#
+#	for i in range(0, column_button_count - 1): 
+#		available_size = available_size - ColumnButtons[i].rect_min_size.x - column_button_count * 3
+
+
+	if available_size > column_widths_initial[column_button_count - 1]:
+
 		# set the size of the last button in the TopRow
-		LastColumnButton.rect_min_size.x = size - column_button_count * 4 - 12
+		LastColumnButton.rect_min_size.x = available_size - 12
+		column_widths[column_button_count - 1] = available_size
 
 		# apply the size of the ColumnButton of the TopRow to all the rows of the table
-		var column_width = ColumnButtons[column_button_count - 1].rect_min_size.x
+		var column_width = column_widths[column_button_count - 1]
 		if RowContainerFilled.SortableRows:
 			RowContainerFilled.set_column_width(column_button_count, column_width)
 		if RowContainerEmpty.EmptyRows:
 			RowContainerEmpty.set_column_width(column_button_count, column_width)
-	
-
+		
+#############
 
 
 
@@ -178,6 +197,8 @@ func visually_update_columns_to_show_sort(column_id):
 
 func _on_VBox_TopRow_Content_resized():
 	if ColumnButtons.size() > 0:
-		expand_last_column_if_space_available ()
+		#expand_last_column_if_space_available ()
+		pass
+		
 		
 
