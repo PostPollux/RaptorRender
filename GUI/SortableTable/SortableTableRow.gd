@@ -268,7 +268,8 @@ func set_cell_height(height):
 	
 	
 func modulate_cell_color(column, color):
-	CellsColorRectArray[column-1].set_modulate( color )
+	if CellsColorRectArray.size() > 0:
+		CellsColorRectArray[column-1].set_modulate( color )
 	
 
 

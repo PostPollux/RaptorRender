@@ -13,6 +13,8 @@ export (Color) var row_color_selected = Color("956248")
 export (float) var row_brightness_difference = 0.05
 export (float) var hover_brightness_boost = 0.1
 
+export (String) var table_id = "some name"
+
 onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
 onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled"
 
@@ -23,13 +25,8 @@ var previous_scroll_vertical = 0
 
 
 
-#onready var TopRow = $"VBoxContainer/TopRow"
-#onready var RowContainerFilled = $"VBoxContainer/RowScrollContainer/VBoxContainer/RowContainerFilled"
-#onready var RowContainerEmpty = $"VBoxContainer/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
-
-
-
 func _ready():
+	RaptorRender.register_table(self)
 	pass
 
 
@@ -53,7 +50,4 @@ func create_rows(count):
 
 func set_cell_content(row, column, child):
 	RowContainerFilled.set_cell_content(row, column, child)
-
-func return_reference_to_self ():
-	return self
 
