@@ -241,8 +241,12 @@ func update_row_color_reset():
 	
 ####### Modify Cells #########	
 
-func add_cell_content(column, child):
+func set_cell_content(column, child):
 	if column <= column_count:
+		if CellsMarginContainerArray[column-1].get_child_count() > 0:
+			var childs = CellsMarginContainerArray[column-1].get_children()
+			for child in childs:
+				child.queue_free()
 		CellsMarginContainerArray[column-1].add_child(child)
 	
 	

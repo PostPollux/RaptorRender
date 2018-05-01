@@ -35,7 +35,7 @@ func _ready():
 
 	
 	# set the calculated width of the last Button as default
-	column_widths_initial[ColumnButtons.size() - 1] = ColumnButtons[ColumnButtons.size() - 1].rect_min_size.x
+	#column_widths_initial[ColumnButtons.size() - 1] = ColumnButtons[ColumnButtons.size() - 1].rect_min_size.x
 	
 
 #	
@@ -84,30 +84,31 @@ func create_buttons_and_splitters():
 		CurrentNode.queue_free()
 		
 	var count = 1
-
-	for column_name in column_names:
-		
-		var ColumnButton = ColumnButtonRes.instance()
-		ColumnButton.column_button_name = column_name
-		ColumnButton.id = count
-		ColumnButton.rect_min_size.x = column_widths_initial[count -1]
-		ColumnButton.connect("column_button_pressed", self, "visually_update_columns_to_show_sort")
-		if count == column_used_for_sort:
-			ColumnButton.active_sort_column = true
-			ColumnButton.sort_reversed = false
-			ColumnButton.arrow_down_visible = true
-			ColumnButton.arrow_up_visible = false
-
-		ColumnButtons.append(ColumnButton)
-		$HBoxContainer.add_child(ColumnButton)
-
-		var Splitter = ColumnSplitterRes.instance()
-		Splitter.splitter_id = count
-		Splitter.connect("just_clicked", self, "resize_column")
-		Splitters.append(Splitter)
-		$HBoxContainer.add_child(Splitter)
-
-		count += 1
+	
+	if column_names != null:
+		for column_name in column_names:
+			
+			var ColumnButton = ColumnButtonRes.instance()
+			ColumnButton.column_button_name = column_name
+			ColumnButton.id = count
+			ColumnButton.rect_min_size.x = column_widths_initial[count -1]
+			ColumnButton.connect("column_button_pressed", self, "visually_update_columns_to_show_sort")
+			if count == column_used_for_sort:
+				ColumnButton.active_sort_column = true
+				ColumnButton.sort_reversed = false
+				ColumnButton.arrow_down_visible = true
+				ColumnButton.arrow_up_visible = false
+	
+			ColumnButtons.append(ColumnButton)
+			$HBoxContainer.add_child(ColumnButton)
+	
+			var Splitter = ColumnSplitterRes.instance()
+			Splitter.splitter_id = count
+			Splitter.connect("just_clicked", self, "resize_column")
+			Splitters.append(Splitter)
+			$HBoxContainer.add_child(Splitter)
+	
+			count += 1
 		
 		
 

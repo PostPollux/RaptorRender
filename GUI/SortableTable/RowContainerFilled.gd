@@ -22,6 +22,7 @@ func _ready():
 		SortableRow.set_row_height(row_height)
 
 	add_rows_and_delete_previous(10)
+	add_row()
 
 	update_ids_of_rows()
 
@@ -101,9 +102,9 @@ func set_column_width(column, width):
 		Row.set_cell_width(column,width)
 		
 		
-func add_cell_content(row, column, child):
+func set_cell_content(row, column, child):
 	if row <= SortableRows.size():
-		SortableRows[row-1].add_cell_content(column, child)
+		SortableRows[row-1].set_cell_content(column, child)
 	
 	
 
