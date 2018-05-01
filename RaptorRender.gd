@@ -1,12 +1,10 @@
 extends Node
 
-
-var TableJobs
-var TableClients
+# class member variables go here, for example:
+# var a = 2
+# var b = "textvar"
 
 var rr_data = {}
-
-
 
 func _ready():
 	
@@ -89,17 +87,7 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func register_table(SortableTable):
-	
-	var sortable_table_id = SortableTable.table_id 
-	
-	match sortable_table_id:
-		"jobs": TableJobs = SortableTable
-		"clients": TableClients = SortableTable
-		
-	
-	
-	
+
 func test_prints():
 	print (OS.get_name())
 	print ('Number of Threads: ' + String(OS.get_processor_count()) )
