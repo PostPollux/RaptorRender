@@ -112,10 +112,10 @@ func create_cells():
 		CellMarginContainer.set_v_size_flags(3) # fill + expand
 		CellMarginContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		CellMarginContainer.margin_left = 3
-		CellMarginContainer.margin_top = 3
+		CellMarginContainer.margin_top = 0
 		CellMarginContainer.margin_right = 3
-		CellMarginContainer.margin_bottom = 3
-		CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
+		CellMarginContainer.margin_bottom = 0
+		CellMarginContainer.rect_min_size.y = SortableTable.row_height
 		
 		# add the cell to the HBoxContainer and to the CellsClipContainerArray
 		CellClipContainer.add_child(CellColorRect)
