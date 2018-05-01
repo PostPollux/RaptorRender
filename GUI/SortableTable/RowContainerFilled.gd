@@ -56,7 +56,7 @@ func connect_row_signals():
 		
 func set_amount_of_columns():
 	for Row in SortableRows:
-		Row.set_cell_count(TopRow.ColumnButtons.size())
+		Row.cell_count = TopRow.ColumnButtons.size()
 		Row.create_cells()
 	
 
@@ -107,7 +107,7 @@ func select_SortableRows(row_id):
 	var ClickedRow = SortableRows[row_id - 1]
 	
 	if Input.is_key_pressed(KEY_CONTROL):
-		if ClickedRow.get_selected() == false:
+		if ClickedRow.selected == false:
 			ClickedRow.set_selected(true)
 			SortableRowsSelected.append(ClickedRow)
 		else:
@@ -117,19 +117,19 @@ func select_SortableRows(row_id):
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
 		if SortableRowsSelected.size() > 0:
-			var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].get_row_id()
+			var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].row_id
 			
 			if row_id > previous_selected_row_id:
 				
 				for i in range(previous_selected_row_id, row_id + 1):
-					if SortableRows[i-1].get_selected() == false:
+					if SortableRows[i-1].selected == false:
 						SortableRows[i-1].set_selected(true)
 						SortableRowsSelected.append(SortableRows[i-1])
 			
 			if row_id < previous_selected_row_id:
 				
 				for i in range(row_id, previous_selected_row_id):
-					if SortableRows[i-1].get_selected() == false:
+					if SortableRows[i-1].selected == false:
 						SortableRows[i-1].set_selected(true)
 						SortableRowsSelected.append(SortableRows[i-1])
 		else:
@@ -165,7 +165,7 @@ func open_context_menu(row_id):
 	var ClickedRow = SortableRows[row_id - 1]
 	
 	#if clicked row is not selected, deselect all but this one
-	if ClickedRow.get_selected() == false:
+	if ClickedRow.selected == false:
 		
 		for Row in SortableRows:
 			Row.set_selected(false)

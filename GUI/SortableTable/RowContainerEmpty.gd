@@ -54,7 +54,7 @@ func update_width_of_RowContainerEmpty():
 	
 func set_amount_of_columns():
 	for Row in EmptyRows:
-		Row.set_cell_count(TopRow.ColumnButtons.size())
+		Row.cell_count = TopRow.ColumnButtons.size()
 		Row.create_cells()
 		
 		

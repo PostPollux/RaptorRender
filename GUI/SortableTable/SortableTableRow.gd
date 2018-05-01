@@ -175,13 +175,6 @@ func fill_CellArrays ():
 		CellsMarginContainerArray.append(CellMarginContainer)	
 	
 
-####### Getters for Variables #########		
-	
-func get_row_id():
-	return row_id
-
-func get_selected():
-	return selected
 	
 ####### Setters for Variables #########		
 	
@@ -190,58 +183,26 @@ func set_row_id(id):
 	update_row_even_or_odd()
 	update_row_color_reset()
 	
-func set_row_color (color):
-	row_color = color
-	
-func set_row_color_selected (color):
-	row_color_selected = color
-	
 func set_selected (sel):
 	selected = sel
 	if selected:
 		update_row_color_select()
 	else:
 		update_row_color_reset()
-	
-func set_cell_count(count):
-	cell_count = count
-	update()
-	
-	
-	
-####### Modify Cells #########	
 
-func add_cell_content(column, child):
-	if column <= column_count:
-		CellsMarginContainerArray[column-1].add_child(child)
-	
-	
-func set_cell_width(column, width):
-	if column <= column_count:
-		CellsClipContainerArray[column-1].rect_min_size.x = width
-		CellsColorRectArray[column-1].rect_min_size.x = width
-		
-		
+
+
+
+
+####### Modify Row #########	
+
 
 func set_row_height(height):
 	row_height = height
 	rect_min_size.y = height
 	set_cell_height(height)
-	
 
-func set_cell_height(height):
-	if column_count:
-		for ClipContainer in CellsClipContainerArray:
-			ClipContainer.rect_min_size.y = height
-		for CellMarginContainer in CellsMarginContainerArray:
-			CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
-		for CellColorRect in CellsColorRectArray:
-			CellColorRect.rect_size.y = HBoxForCells.rect_size.y
-			
-func modulate_cell_color(column, color):
-	CellsColorRectArray[column-1].set_modulate( color )
-	
-	
+
 func update_row_color_hover():
 	if selected:
 		if even:
@@ -256,13 +217,15 @@ func update_row_color_hover():
 			RowBackgroundColorRect.color = row_color_odd.lightened(hover_brightness_boost)
 		
 
+
 func update_row_color_select():
 	if even:
 		RowBackgroundColorRect.color = row_color_selected_even
 	else:
 		RowBackgroundColorRect.color = row_color_selected_odd
 	
-	
+
+
 func update_row_color_reset():
 	if selected: 
 		if even:
@@ -275,6 +238,36 @@ func update_row_color_reset():
 		else:
 			RowBackgroundColorRect.color = row_color_odd
 
+	
+
+	
+####### Modify Cells #########	
+
+func add_cell_content(column, child):
+	if column <= column_count:
+		CellsMarginContainerArray[column-1].add_child(child)
+	
+	
+func set_cell_width(column, width):
+	if column <= column_count:
+		CellsClipContainerArray[column-1].rect_min_size.x = width
+		CellsColorRectArray[column-1].rect_min_size.x = width
+			
+
+
+func set_cell_height(height):
+	if column_count:
+		for ClipContainer in CellsClipContainerArray:
+			ClipContainer.rect_min_size.y = height
+		for CellMarginContainer in CellsMarginContainerArray:
+			CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
+		for CellColorRect in CellsColorRectArray:
+			CellColorRect.rect_size.y = HBoxForCells.rect_size.y
+	
+	
+func modulate_cell_color(column, color):
+	CellsColorRectArray[column-1].set_modulate( color )
+	
 
 
 
