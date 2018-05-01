@@ -98,10 +98,10 @@ func select_SortableRows(row_id):
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
 		if SortableRowsSelected.size() > 0:
-			var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].get_row_id()
+			var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].row_id
 			
 			for i in range(previous_selected_row_id, SortableRows.size() + 1):
-				if SortableRows[i-1].get_selected() == false:
+				if SortableRows[i-1].selected == false:
 					SortableRows[i-1].set_selected(true)
 					SortableRowsSelected.append(SortableRows[i-1])
 		

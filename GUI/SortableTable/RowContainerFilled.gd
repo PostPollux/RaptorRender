@@ -1,13 +1,19 @@
 extends VBoxContainer
 
 
-onready var SortableRows = get_children()
+onready var SortableRows = []
 onready var SortableRowsSelected = []
 onready var TopRow = $"../../../TopRow"
 onready var RowScrollContainer = $"../.."
 onready var SortableTable = $"../../../.."
+onready var RowContainerEmpty = $"../ClipContainerForEmptyRows/RowContainerEmpty"
+
+
+var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
 
 var row_height
+
+
 
 func _ready():
 	
@@ -15,29 +21,58 @@ func _ready():
 	for SortableRow in SortableRows:
 		SortableRow.set_row_height(row_height)
 
-	set_amount_of_columns()
+	add_rows_and_delete_previous(10)
+
 	update_ids_of_rows()
-	highlight_column(TopRow.column_used_for_sort)
-	resize_columns()
-	
-	#create test labels
-	
-	var l = Label.new()
-	l.name = "label"
-	l.text = "Ein recht langer Text zum Testen"
-	var l2 = Label.new()
-	l2.name = "label"
-	l2.text = "Ein recht langer Text zum Testen"
 
 	
-	add_cell_content(1,1,l)
-	add_cell_content(1,2,l2)
 
+
+func add_row():
+	var Row = initialize_row()
+		
+	add_child(Row)
+	SortableRows.append(Row)
+
+
+
+func add_rows_and_delete_previous(count):
 	
-	connect_row_signals()
-
-
-
+	if SortableRows.size() > 0:
+		for SortableRow in SortableRows:
+			SortableRow.queue_free()
+			
+	for i in range(0, count):
+		
+		var Row = initialize_row()
+		
+		add_child(Row)
+		SortableRows.append(Row)
+		
+		
+		
+func initialize_row():
+	var Row = SortableTableRowRes.instance()
+		
+	Row.connect("row_clicked", self, "select_SortableRows")
+	Row.connect("row_clicked_rmb", self, "open_context_menu")
+		
+	Row.cell_count = TopRow.ColumnButtons.size()
+	Row.row_height = SortableTable.row_height
+	Row.create_cells()
+	if TopRow:
+		Row.modulate_cell_color(TopRow.column_used_for_sort,Color("08ffffff"))
+		
+		var count = 1
+		for ColumnButton in TopRow.ColumnButtons:
+			# apply the size of the ColumnButtons of the TopRow to the cells
+			Row.set_cell_width(count,ColumnButton.rect_min_size.x)
+			count += 1
+			
+	return Row
+	
+	
+		
 func _process(delta):
 	if Input.is_action_just_pressed("select_all"):
 		var mouse_pos = get_viewport().get_mouse_position()
@@ -46,18 +81,6 @@ func _process(delta):
 			select_all()
 	
 	
-
-func connect_row_signals():
-	for Row in SortableRows:
-		Row.connect("row_clicked", self, "select_SortableRows")
-		Row.connect("row_clicked_rmb", self, "open_context_menu")
-		
-		
-		
-func set_amount_of_columns():
-	for Row in SortableRows:
-		Row.cell_count = TopRow.ColumnButtons.size()
-		Row.create_cells()
 	
 
 func resize_columns():
@@ -66,7 +89,7 @@ func resize_columns():
 	
 	for ColumnButton in TopRow.ColumnButtons:
 		
-		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
+		# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
 		set_column_width(count, ColumnButton.rect_min_size.x)
 		count += 1
 		

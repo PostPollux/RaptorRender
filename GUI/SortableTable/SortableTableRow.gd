@@ -19,7 +19,7 @@ var hover_brightness_boost
 
 var column_count
 
-onready var HBoxForCells = $HBoxContainer
+var HBoxForCells
 onready var RowBackgroundColorRect = $BackgroundColor
 
 var SortableTable
@@ -84,10 +84,6 @@ func update_row_even_or_odd():
 #create the cells
 func create_cells():
 	
-	var OldCells = HBoxForCells.get_children()
-	
-	for Cell in OldCells:
-		Cell.queue_free()
 	
 	CellsClipContainerArray.clear()
 	
@@ -115,11 +111,12 @@ func create_cells():
 		CellMarginContainer.margin_top = 0
 		CellMarginContainer.margin_right = 3
 		CellMarginContainer.margin_bottom = 0
-		CellMarginContainer.rect_min_size.y = SortableTable.row_height
+		CellMarginContainer.rect_min_size.y = row_height
 		
 		# add the cell to the HBoxContainer and to the CellsClipContainerArray
 		CellClipContainer.add_child(CellColorRect)
 		CellClipContainer.add_child(CellMarginContainer)
+		var HBoxForCells = $"HBoxContainer"
 		HBoxForCells.add_child(CellClipContainer)
 		CellsClipContainerArray.append(CellClipContainer)
 		
