@@ -56,13 +56,12 @@ func _process(delta):
 			if calculated_size < 12:
 				calculated_size = 12
 			ColumnButtons[dragging_splitter_id - 1].rect_min_size.x = calculated_size
-			#expand_last_column_if_space_available ()
 			column_widths[dragging_splitter_id - 1] = calculated_size
 			
 			# apply the size of the ColumnButton of the TopRow to all the rows of the table
 			var column_width = column_widths[dragging_splitter_id - 1]
-#			RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
-#			RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
+			RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
+			RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
 			
 			
 			
