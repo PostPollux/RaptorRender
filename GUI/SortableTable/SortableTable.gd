@@ -26,7 +26,11 @@ var previous_scroll_vertical = 0
 
 
 func _ready():
-	pass
+	
+	# register to RaptorRender script
+	if RaptorRender != null:
+		RaptorRender.register_table(self)
+	
 
 
 

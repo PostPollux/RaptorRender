@@ -82,8 +82,10 @@ func _ready():
 	}
 
 #func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
+#	if TableClients != null:
+#		var l= Label.new()
+#		l.text = "hallo"
+#		TableClients.set_cell_content(1,2,l)
 #	pass
 
 
