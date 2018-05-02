@@ -124,8 +124,7 @@ func create_cells():
 		
 		# add a line to separate the individual cells visually
 		var VerticalLine = VSeparator.new()
-		if i < cell_count - 1:
-			HBoxForCells.add_child(VerticalLine)
+		HBoxForCells.add_child(VerticalLine)
 		
 		
 	fill_CellArrays()
