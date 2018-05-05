@@ -12,7 +12,7 @@ config_version=3
 
 config/name="RaptorRender"
 run/main_scene="res://GUI/Interface.tscn"
-config/icon="res://icon.png"
+config/icon="res://Main_Icons/RR_Icon_64_1.png"
 
 [autoload]
 

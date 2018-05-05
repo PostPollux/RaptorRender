@@ -54,6 +54,7 @@ func _ready():
 		"clients": {
 			"T-Rex1": {
 				"name": "T-Rex1",
+				"ip": "192.168.1.45",
 				"status": "Enabled",
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
@@ -67,6 +68,7 @@ func _ready():
 			},
 			"Raptor1": {
 				"name": "Raptor1",
+				"ip": "192.168.1.22",
 				"status": "Disabled",
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
