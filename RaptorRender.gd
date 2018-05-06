@@ -64,7 +64,8 @@ func _ready():
 				"memory": 32,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": ""
 			},
 			"id2": {
 				"name": "Raptor1",
@@ -78,7 +79,8 @@ func _ready():
 				"memory": 16,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": ""
 			},
 			"id3": {
 				"name": "T-Rex2",
@@ -92,7 +94,8 @@ func _ready():
 				"memory": 64,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": ""
 			},
 			"id4": {
 				"name": "Raptor2",
@@ -106,7 +109,8 @@ func _ready():
 				"memory": 8,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": ""
 			},
 			"id5": {
 				"name": "T-Rex3",
@@ -120,7 +124,8 @@ func _ready():
 				"memory": 4,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": ""
 			},
 			"id6": {
 				"name": "Raptor3",
@@ -134,7 +139,8 @@ func _ready():
 				"memory": 16,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": ""
 			},
 			"id7": {
 				"name": "T-Rex4",
@@ -148,21 +154,23 @@ func _ready():
 				"memory": 32,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": ""
 			},
 			"id8": {
 				"name": "Raptor1",
 				"ip": "192.168.1.22",
 				"status": "4_disabled",
 				"platform": "Windows",
-				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"pools": [],
 				"rr_version": 0.2,
 				"uptime": "1h",
 				"cpu": "8 x 2,4GHZ",
 				"memory": 16,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": ""
 			},
 			"id9": {
 				"name": "T-Rex1",
@@ -176,21 +184,23 @@ func _ready():
 				"memory": 32,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": ""
 			},
 			"id10": {
 				"name": "Raptor1",
 				"ip": "192.168.1.22",
 				"status": "2_waiting",
 				"platform": "Windows",
-				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 0.2,
 				"uptime": "1h",
 				"cpu": "8 x 4GHZ",
 				"memory": 16,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": "my workstation"
 			},
 			"id11": {
 				"name": "T-Rex2",
@@ -204,35 +214,38 @@ func _ready():
 				"memory": 64,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": "NVidia GTX 970"
 			},
 			"id12": {
 				"name": "Nedry",
 				"ip": "192.168.1.87",
 				"status": "2_waiting",
 				"platform": "Windows",
-				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"pools": ["AE_Plugins", "8GB+ VRam", "third pool"],
 				"rr_version": 0.2,
 				"uptime": "100h",
 				"cpu": "12 x 4GHZ",
 				"memory": 16,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": ""
 			},
 			"id13": {
 				"name": "T-Rex3",
 				"ip": "192.168.1.15",
 				"status": "3_error",
 				"platform": "Linux",
-				"pools": ["AE_Plugins"],
+				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 1.2,
 				"uptime": "5h",
 				"cpu": "6 x 3,8GHZ",
 				"memory": 4,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": ""
 			},
 			"id14": {
 				"name": "Raptor3",
@@ -246,21 +259,23 @@ func _ready():
 				"memory": 16,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": ""
 			},
 			"id15": {
 				"name": "Dr.Malcom",
 				"ip": "192.168.1.45",
 				"status": "2_waiting",
 				"platform": "Linux",
-				"pools": ["AE_Plugins"],
+				"pools": ["8GB+ VRam"],
 				"rr_version": 1.2,
 				"uptime": "20h",
 				"cpu": "12 x 3,2GHZ",
 				"memory": 2,
 				"memory_used": 22,
 				"graphics": "NVidia GTX 970",
-				"software": ["Blender", "Natron", "Nuke"]
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": "Just a slow computer"
 			},
 			"id16": {
 				"name": "Hammond",
@@ -274,7 +289,8 @@ func _ready():
 				"memory": 128,
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"]
+				"software": ["Blender", "Natron"],
+				"note": "The Monster Machine!"
 			}
 		}
 	}
@@ -319,6 +335,10 @@ func refresh_clients_table():
 	var cpu_column = 4
 	var memory_column = 5
 	
+	var pools_column = 8
+	var note_column = 9
+	var rr_version_column = 10
+	
 	#### get all clients
 	var clients_array = rr_data.clients.keys()
 	
@@ -345,7 +365,10 @@ func refresh_clients_table():
 			2: primary = rr_data.clients[client].name
 			3: primary = rr_data.clients[client].platform
 			4: primary = rr_data.clients[client].cpu
-			5: primary = rr_data.clients[client].memory 
+			5: primary = rr_data.clients[client].memory
+			8: primary = rr_data.clients[client].pools.size()
+			9: primary = rr_data.clients[client].note
+			10: primary = rr_data.clients[client].rr_version 
 		
 		match TableClients.sort_column_secondary: 
 		
@@ -353,7 +376,10 @@ func refresh_clients_table():
 			2: secondary = rr_data.clients[client].name
 			3: secondary = rr_data.clients[client].platform
 			4: secondary = rr_data.clients[client].cpu
-			5: secondary = rr_data.clients[client].memory 
+			5: secondary = rr_data.clients[client].memory
+			8: secondary = rr_data.clients[client].pools.size()
+			9: secondary = rr_data.clients[client].note
+			10: secondary = rr_data.clients[client].rr_version 
 		
 		sortable_clients_array.append([client, primary, secondary ])
 	
@@ -403,21 +429,21 @@ func refresh_clients_table():
 			StatusIcon.set_modulate(Color("88ffffff"))
 		
 		StatusIcon.set_texture(icon)
-		TableClients.set_cell_content(count,status_column,StatusIcon)
+		TableClients.set_cell_content(count, status_column, StatusIcon)
 
 
 		# Name
 
 		var LabelName = Label.new()
 		LabelName.text = rr_data.clients[client[0]].name
-		TableClients.set_cell_content(count,name_column,LabelName)
+		TableClients.set_cell_content(count, name_column, LabelName)
 		
 		
 		# Platform
 		
 		var LabelPlatform = Label.new()
 		LabelPlatform.text = rr_data.clients[client[0]].platform
-		TableClients.set_cell_content(count,platform_column,LabelPlatform)
+		TableClients.set_cell_content(count, platform_column, LabelPlatform)
 
 		
 		# CPU
@@ -426,7 +452,7 @@ func refresh_clients_table():
 		LabelCPU.text = rr_data.clients[client[0]].cpu
 		#LabelCPU.set_mouse_filter(Control.MOUSE_FILTER_PASS)
 		#LabelCPU.hint_tooltip = rr_data.clients[client[0]].cpu
-		TableClients.set_cell_content(count,cpu_column,LabelCPU)
+		TableClients.set_cell_content(count, cpu_column, LabelCPU)
 		#var row_of_label = LabelCPU.get_parent().get_parent().get_parent().get_parent()
 		#var name_of_signal = "_on_" + LabelCPU.name +"_mouse_entered"
 		#row_of_label.connect("mouse_enter", row_of_label, "update_row_color_hover")
@@ -437,7 +463,40 @@ func refresh_clients_table():
 		
 		var LabelMemory = Label.new()
 		LabelMemory.text = String(rr_data.clients[client[0]].memory) + " GB"
-		TableClients.set_cell_content(count,memory_column,LabelMemory)
+		TableClients.set_cell_content(count, memory_column, LabelMemory)
+		
+		
+		# Pools
+		
+		var LabelPools = Label.new()
+		var pools_string = ""
+		var pool_count = 1
+		
+		if rr_data.clients[client[0]].pools.size() > 0:
+			for pool in rr_data.clients[client[0]].pools:
+				pools_string += pool
+				if pool_count < rr_data.clients[client[0]].pools.size():
+					pools_string += ", "
+				pool_count += 1
+				
+		LabelPools.text = pools_string
+		TableClients.set_cell_content(count, pools_column, LabelPools)
+		
+		
+		# Note
+		
+		var LabelNote = Label.new()
+		LabelNote.text = String(rr_data.clients[client[0]].note) 
+		TableClients.set_cell_content(count, note_column, LabelNote)
+		
+		
+		
+		
+		# Raptor Render Version
+		
+		var LabelVersion = Label.new()
+		LabelVersion.text = String(rr_data.clients[client[0]].rr_version) 
+		TableClients.set_cell_content(count, rr_version_column, LabelVersion)
 		
 		count += 1
 		

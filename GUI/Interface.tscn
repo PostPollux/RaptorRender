@@ -166,8 +166,8 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
-column_names = [ "Status", "Name", "Platform", "CPU", "RAM", "Pools", "Uptime", "RR-Version", "Note", "Errors" ]
-column_widths_initial = [ 60, 100, 100, 100, 60, 100, 100, 100, 100, 100 ]
+column_names = [ "Status", "Name", "Platform", "CPU", "RAM", "Current Job", "Errors", "Pools", "Note", "RR-Version" ]
+column_widths_initial = [ 60, 100, 100, 100, 60, 200, 60, 200, 150, 90 ]
 sort_column_secondary = 2
 table_id = "clients"
 
