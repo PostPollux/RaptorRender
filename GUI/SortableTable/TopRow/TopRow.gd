@@ -13,8 +13,8 @@ onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContai
 onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
 var dragging_splitter = false
 var dragging_splitter_id
-var sort_column_primary = 1
-var sort_column_secondary = 2
+var sort_column_primary
+var sort_column_secondary
 var sort_column_primary_reversed = false
 var sort_column_secondary_reversed = false
 
@@ -30,6 +30,7 @@ func _ready():
 	column_widths_initial = SortableTable.column_widths_initial
 	column_widths = column_widths_initial
 	sort_column_primary = SortableTable.sort_column_primary
+	sort_column_secondary = SortableTable.sort_column_secondary
 	
 	create_buttons_and_splitters()
 	assign_ids_to_splitters()
@@ -93,6 +94,11 @@ func create_buttons_and_splitters():
 			ColumnButton.sort_column_primary_reversed = false
 			ColumnButton.primary_down_visible = true
 			ColumnButton.primary_up_visible = false
+		if count == sort_column_secondary:
+			ColumnButton.secondary_sort_column = true
+			ColumnButton.sort_column_secondary_reversed = false
+			ColumnButton.secondary_down_visible = true
+			ColumnButton.secondary_up_visible = false
 
 		ColumnButtons.append(ColumnButton)
 		$HBoxContainer.add_child(ColumnButton)

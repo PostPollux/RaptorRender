@@ -117,6 +117,7 @@ margin_right = 0.0
 margin_bottom = 0.0
 column_names = [ "ID", "Status", "Name", "Priority", "Progress", "Creator", "Time Created", "Type" ]
 column_widths_initial = [ 100, 100, 100, 100, 100, 100, 100, 100 ]
+sort_column_secondary = 2
 table_id = "jobs"
 
 [node name="TabContainerClients" type="TabContainer" parent="Control/HSplitContainer/VSplitContainer" index="1"]
@@ -167,6 +168,7 @@ margin_right = 0.0
 margin_bottom = 0.0
 column_names = [ "Status", "Name", "Platform", "CPU", "RAM", "Pools", "Uptime", "RR-Version", "Note", "Errors" ]
 column_widths_initial = [ 60, 100, 100, 100, 60, 100, 100, 100, 100, 100 ]
+sort_column_secondary = 2
 table_id = "clients"
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/HSplitContainer" index="1"]

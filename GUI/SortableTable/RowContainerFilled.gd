@@ -21,10 +21,6 @@ func _ready():
 	for SortableRow in SortableRows:
 		SortableRow.set_row_height(row_height)
 
-	add_rows_and_delete_previous(10)
-
-	update_ids_of_rows()
-
 	
 
 
@@ -62,7 +58,7 @@ func initialize_row():
 	Row.row_height = SortableTable.row_height
 	Row.create_cells()
 	if TopRow:
-		Row.modulate_cell_color(TopRow.sort_column_primary,Color("08ffffff"))
+		Row.modulate_cell_color(TopRow.sort_column_primary,Color("18ffffff"))
 		
 		var count = 1
 		for ColumnButton in TopRow.ColumnButtons:
@@ -122,7 +118,7 @@ func highlight_column(column):
 				for Row in SortableRows:
 					Row.modulate_cell_color(i,Color("00ffffff"))
 			for Row in SortableRows:
-				Row.modulate_cell_color(column,Color("08ffffff"))
+				Row.modulate_cell_color(column,Color("18ffffff"))
 		
 		
 

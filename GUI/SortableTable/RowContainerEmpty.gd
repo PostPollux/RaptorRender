@@ -83,7 +83,7 @@ func highlight_column(column):
 				for Row in EmptyRows:
 					Row.modulate_cell_color(i,Color("00ffffff"))
 			for Row in EmptyRows:
-				Row.modulate_cell_color(column,Color("08ffffff"))
+				Row.modulate_cell_color(column,Color("18ffffff"))
 
 
 # empty rows are not selectable, but clicking them can have an effect on the selection of the filled ones

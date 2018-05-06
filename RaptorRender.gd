@@ -163,6 +163,118 @@ func _ready():
 				"memory_used": 2,
 				"graphics": "Intel Onboard",
 				"software": ["Blender", "Natron"]
+			},
+			"id9": {
+				"name": "T-Rex1",
+				"ip": "192.168.1.45",
+				"status": "2_waiting",
+				"platform": "Linux",
+				"pools": ["AE_Plugins"],
+				"rr_version": 1.2,
+				"uptime": "2h",
+				"cpu": "16 x 3,8GHZ",
+				"memory": 32,
+				"memory_used": 22,
+				"graphics": "NVidia GTX 970",
+				"software": ["Blender", "Natron", "Nuke"]
+			},
+			"id10": {
+				"name": "Raptor1",
+				"ip": "192.168.1.22",
+				"status": "2_waiting",
+				"platform": "Windows",
+				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"rr_version": 0.2,
+				"uptime": "1h",
+				"cpu": "8 x 4GHZ",
+				"memory": 16,
+				"memory_used": 2,
+				"graphics": "Intel Onboard",
+				"software": ["Blender", "Natron"]
+			},
+			"id11": {
+				"name": "T-Rex2",
+				"ip": "192.168.1.156",
+				"status": "1_rendering",
+				"platform": "MacOS",
+				"pools": ["AE_Plugins"],
+				"rr_version": 1.2,
+				"uptime": "2h",
+				"cpu": "16 x 3,8GHZ",
+				"memory": 64,
+				"memory_used": 22,
+				"graphics": "NVidia GTX 970",
+				"software": ["Blender", "Natron", "Nuke"]
+			},
+			"id12": {
+				"name": "Nedry",
+				"ip": "192.168.1.87",
+				"status": "2_waiting",
+				"platform": "Windows",
+				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"rr_version": 0.2,
+				"uptime": "100h",
+				"cpu": "12 x 4GHZ",
+				"memory": 16,
+				"memory_used": 2,
+				"graphics": "Intel Onboard",
+				"software": ["Blender", "Natron"]
+			},
+			"id13": {
+				"name": "T-Rex3",
+				"ip": "192.168.1.15",
+				"status": "3_error",
+				"platform": "Linux",
+				"pools": ["AE_Plugins"],
+				"rr_version": 1.2,
+				"uptime": "5h",
+				"cpu": "6 x 3,8GHZ",
+				"memory": 4,
+				"memory_used": 22,
+				"graphics": "NVidia GTX 970",
+				"software": ["Blender", "Natron", "Nuke"]
+			},
+			"id14": {
+				"name": "Raptor3",
+				"ip": "192.168.1.22",
+				"status": "5_offline",
+				"platform": "Windows",
+				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"rr_version": 0.2,
+				"uptime": "1h",
+				"cpu": "2 x 4GHZ",
+				"memory": 16,
+				"memory_used": 2,
+				"graphics": "Intel Onboard",
+				"software": ["Blender", "Natron"]
+			},
+			"id15": {
+				"name": "Dr.Malcom",
+				"ip": "192.168.1.45",
+				"status": "2_waiting",
+				"platform": "Linux",
+				"pools": ["AE_Plugins"],
+				"rr_version": 1.2,
+				"uptime": "20h",
+				"cpu": "12 x 3,2GHZ",
+				"memory": 2,
+				"memory_used": 22,
+				"graphics": "NVidia GTX 970",
+				"software": ["Blender", "Natron", "Nuke"]
+			},
+			"id16": {
+				"name": "Hammond",
+				"ip": "192.168.1.22",
+				"status": "4_disabled",
+				"platform": "Windows",
+				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"rr_version": 0.2,
+				"uptime": "11h",
+				"cpu": "24 x 2,4GHZ",
+				"memory": 128,
+				"memory_used": 2,
+				"graphics": "Intel Onboard",
+				"software": ["Blender", "Natron"]
 			}
 		}
 	}
@@ -312,9 +424,13 @@ func refresh_clients_table():
 
 		var LabelCPU = Label.new()
 		LabelCPU.text = rr_data.clients[client[0]].cpu
-		LabelCPU.set_mouse_filter(Control.MOUSE_FILTER_PASS)
-		LabelCPU.hint_tooltip = rr_data.clients[client[0]].cpu
+		#LabelCPU.set_mouse_filter(Control.MOUSE_FILTER_PASS)
+		#LabelCPU.hint_tooltip = rr_data.clients[client[0]].cpu
 		TableClients.set_cell_content(count,cpu_column,LabelCPU)
+		#var row_of_label = LabelCPU.get_parent().get_parent().get_parent().get_parent()
+		#var name_of_signal = "_on_" + LabelCPU.name +"_mouse_entered"
+		#row_of_label.connect("mouse_enter", row_of_label, "update_row_color_hover")
+		
 		
 		
 		# RAM
