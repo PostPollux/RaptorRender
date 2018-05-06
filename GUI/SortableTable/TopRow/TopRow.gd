@@ -13,8 +13,10 @@ onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContai
 onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
 var dragging_splitter = false
 var dragging_splitter_id
-var column_used_for_sort = 1
-var sort_reversed = false
+var sort_column_primary = 1
+var sort_column_secondary = 2
+var sort_column_primary_reversed = false
+var sort_column_secondary_reversed = false
 
 var mouse_position_x_before_dragging
 var min_size_of_column_before_dragging
@@ -27,7 +29,7 @@ func _ready():
 	column_names = SortableTable.column_names
 	column_widths_initial = SortableTable.column_widths_initial
 	column_widths = column_widths_initial
-	column_used_for_sort = SortableTable.sort_column
+	sort_column_primary = SortableTable.sort_column_primary
 	
 	create_buttons_and_splitters()
 	assign_ids_to_splitters()
@@ -85,12 +87,12 @@ func create_buttons_and_splitters():
 		ColumnButton.column_button_name = column_name
 		ColumnButton.id = count
 		ColumnButton.rect_min_size.x = column_widths_initial[count -1]
-		ColumnButton.connect("column_button_pressed", self, "visually_update_columns_to_show_sort")
-		if count == column_used_for_sort:
-			ColumnButton.active_sort_column = true
-			ColumnButton.sort_reversed = false
-			ColumnButton.arrow_down_visible = true
-			ColumnButton.arrow_up_visible = false
+		ColumnButton.connect("column_button_pressed", self, "column_button_pressed")
+		if count == sort_column_primary:
+			ColumnButton.primary_sort_column = true
+			ColumnButton.sort_column_primary_reversed = false
+			ColumnButton.primary_down_visible = true
+			ColumnButton.primary_up_visible = false
 
 		ColumnButtons.append(ColumnButton)
 		$HBoxContainer.add_child(ColumnButton)
@@ -173,17 +175,48 @@ func expand_last_column_if_space_available ():
 
 
 
-func visually_update_columns_to_show_sort(column_id):
-	column_used_for_sort = column_id
+func column_button_pressed(column_id):
+	
+	# column set to be the primary sort column
+	if ColumnButtons[column_id - 1].primary_sort_column:
+		sort_column_primary = column_id
+		sort_column_primary_reversed = ColumnButtons[column_id - 1].sort_column_primary_reversed
+		SortableTable.sort_column_primary = sort_column_primary
+		SortableTable.sort_column_primary_reversed = sort_column_primary_reversed
+		
+		var count = 1
+		for ColumnButton in ColumnButtons:
+
+			if count != column_id:
+				ColumnButton.primary_sort_column = false
+				ColumnButton.sort_column_primary_reversed = false
+				
+			count += 1
+	
+	# column set to be the secondary sort column	
+	if ColumnButtons[column_id - 1].secondary_sort_column:
+		sort_column_secondary = column_id
+		sort_column_secondary_reversed = ColumnButtons[column_id - 1].sort_column_secondary_reversed
+		SortableTable.sort_column_secondary = sort_column_secondary
+		SortableTable.sort_column_secondary_reversed = sort_column_secondary_reversed
 	
 	var count = 1
 	for ColumnButton in ColumnButtons:
-		if ColumnButton.active_sort_column == true:
-			RowContainerFilled.highlight_column(column_id)
-			RowContainerEmpty.highlight_column(column_id)
-		if count != column_id:
+		
+		# highlight the primary column
+		if ColumnButton.primary_sort_column == true:
+			RowContainerFilled.highlight_column(sort_column_primary)
+			RowContainerEmpty.highlight_column(sort_column_primary)
+		
+		# show the correct icon	
+		if ColumnButton.secondary_sort_column == true:
+			ColumnButton.show_correct_icon()
+		
+		# reset all buttons that are not used anymore for sorting
+		if count != sort_column_primary and count != sort_column_secondary:
 			ColumnButton.reset_button()
 		count += 1
+	
 	
 
 

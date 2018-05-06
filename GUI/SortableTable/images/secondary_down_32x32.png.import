@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrow_down.png-72dd1a44c35f155b7084d619b0d1a2f1.stex"
+path="res://.import/secondary_down_32x32.png-a0b65acd1ddb7c1fb95fa37e3429c0ee.stex"
 
 [deps]
 
-source_file="res://GUI/SortableTable/images/arrow_down.png"
-source_md5="fd92dc69717ca9533150be09305f0898"
+source_file="res://GUI/SortableTable/images/secondary_down_32x32.png"
+source_md5="019b3b5f08717334922aae5874d97523"
 
-dest_files=[ "res://.import/arrow_down.png-72dd1a44c35f155b7084d619b0d1a2f1.stex" ]
-dest_md5="0e6b3f81582ac8ad0f1d2c7186552ddf"
+dest_files=[ "res://.import/secondary_down_32x32.png-a0b65acd1ddb7c1fb95fa37e3429c0ee.stex" ]
+dest_md5="22542c377e9b6fc2546488f8facfaad2"
 
 [params]
 

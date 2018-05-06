@@ -62,7 +62,7 @@ func initialize_row():
 	Row.row_height = SortableTable.row_height
 	Row.create_cells()
 	if TopRow:
-		Row.modulate_cell_color(TopRow.column_used_for_sort,Color("08ffffff"))
+		Row.modulate_cell_color(TopRow.sort_column_primary,Color("08ffffff"))
 		
 		var count = 1
 		for ColumnButton in TopRow.ColumnButtons:

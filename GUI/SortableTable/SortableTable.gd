@@ -5,7 +5,7 @@ extends ScrollContainer
 
 export (Array, String) var column_names
 export (Array, int) var column_widths_initial
-export (int) var sort_column = 1
+export (int) var sort_column_primary = 1
 export (int) var row_height = 30
 
 export (Color) var row_color = Color("3c3c3c")
@@ -22,6 +22,9 @@ onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxCo
 var previous_scroll_horizontal = 0
 var previous_scroll_vertical = 0
 
+var sort_column_secondary = 2
+var sort_column_primary_reversed = false
+var sort_column_secondary_reversed = false
 
 
 

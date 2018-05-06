@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://GUI/SortableTable/TopRow/ColumnButton.gd" type="Script" id=1]
-[ext_resource path="res://GUI/SortableTable/images/arrow_down.png" type="Texture" id=2]
-[ext_resource path="res://GUI/SortableTable/images/arrow_up.png" type="Texture" id=3]
+[ext_resource path="res://GUI/SortableTable/images/primary_down_32x32.png" type="Texture" id=2]
+[ext_resource path="res://GUI/SortableTable/images/secondary_down_32x32.png" type="Texture" id=3]
+[ext_resource path="res://GUI/SortableTable/images/primary_up_32x32.png" type="Texture" id=4]
+[ext_resource path="res://GUI/SortableTable/images/secondary_up_32x32.png" type="Texture" id=5]
 
 [node name="ColumnButton" type="Button" index="0"]
 
@@ -105,7 +107,7 @@ size_flags_vertical = 3
 custom_constants/margin_right = 5
 _sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="Arrow_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="0"]
+[node name="primary_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="0"]
 
 visible = false
 modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
@@ -128,7 +130,30 @@ expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
 
-[node name="Arrow_up" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="1"]
+[node name="secondary_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="1"]
+
+visible = false
+modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_right = 16.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 8, 8 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
+
+[node name="primary_up" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="2"]
 
 visible = false
 modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
@@ -146,7 +171,30 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
+
+[node name="secondary_up" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="3"]
+
+visible = false
+modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_right = 16.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 8, 8 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 5 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
