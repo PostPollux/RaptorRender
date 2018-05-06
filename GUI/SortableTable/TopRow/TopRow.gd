@@ -217,7 +217,7 @@ func column_button_pressed(column_id):
 			ColumnButton.reset_button()
 		count += 1
 	
-	
+	SortableTable.refresh()
 
 
 

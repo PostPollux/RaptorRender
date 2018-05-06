@@ -178,9 +178,12 @@ func register_table(SortableTable):
 	var sortable_table_id = SortableTable.table_id  
 	
 	match sortable_table_id: 
-		"jobs": TableJobs = SortableTable 
-		"clients": TableClients = SortableTable 
-
+		"jobs":
+			TableJobs = SortableTable
+			
+		"clients": 
+			TableClients = SortableTable 
+			TableClients.connect("refresh_table_content", self, "refresh_clients_table")
 
 
 
@@ -211,8 +214,7 @@ func refresh_clients_table():
 	#### sort clients_array ####
 	
 #	var sortable_table_id = SortableTable.table_id  
-#	var primary
-#	var secondary
+	
 #
 #	match sortable_table_id: 
 #		"jobs": TableJobs = SortableTable 
@@ -221,13 +223,34 @@ func refresh_clients_table():
 	var sortable_clients_array = []
 	
 	for client in clients_array:
-		sortable_clients_array.append([client, rr_data.clients[client].platform, rr_data.clients[client].memory ])
+		
+		var primary = rr_data.clients[client].platform
+		var secondary = rr_data.clients[client].memory
+		
+		match TableClients.sort_column_primary: 
+		
+			1: primary = rr_data.clients[client].status
+			2: primary = rr_data.clients[client].name
+			3: primary = rr_data.clients[client].platform
+			4: primary = rr_data.clients[client].cpu
+			5: primary = rr_data.clients[client].memory 
+		
+		match TableClients.sort_column_secondary: 
+		
+			1: secondary = rr_data.clients[client].status
+			2: secondary = rr_data.clients[client].name
+			3: secondary = rr_data.clients[client].platform
+			4: secondary = rr_data.clients[client].cpu
+			5: secondary = rr_data.clients[client].memory 
+		
+		sortable_clients_array.append([client, primary, secondary ])
 	
 	
 	sortable_clients_array.sort_custom ( self, "clients_table_sort" )
 	
 	
 	#### create the correct amount of rows in RowContainerFilled ####
+	
 	#TableClients.create_rows(clients_array.size())
 	#TableClients.
 	#update_ids_of_rows()
@@ -238,6 +261,8 @@ func refresh_clients_table():
 	
 	for client in sortable_clients_array:
 
+
+		# Status Icon
 		
 		var StatusIcon = TextureRect.new()
 		StatusIcon.set_expand(true)
@@ -269,15 +294,21 @@ func refresh_clients_table():
 		TableClients.set_cell_content(count,status_column,StatusIcon)
 
 
+		# Name
+
 		var LabelName = Label.new()
 		LabelName.text = rr_data.clients[client[0]].name
 		TableClients.set_cell_content(count,name_column,LabelName)
 		
 		
+		# Platform
+		
 		var LabelPlatform = Label.new()
 		LabelPlatform.text = rr_data.clients[client[0]].platform
 		TableClients.set_cell_content(count,platform_column,LabelPlatform)
 
+		
+		# CPU
 
 		var LabelCPU = Label.new()
 		LabelCPU.text = rr_data.clients[client[0]].cpu
@@ -285,6 +316,8 @@ func refresh_clients_table():
 		LabelCPU.hint_tooltip = rr_data.clients[client[0]].cpu
 		TableClients.set_cell_content(count,cpu_column,LabelCPU)
 		
+		
+		# RAM
 		
 		var LabelMemory = Label.new()
 		LabelMemory.text = String(rr_data.clients[client[0]].memory) + " GB"

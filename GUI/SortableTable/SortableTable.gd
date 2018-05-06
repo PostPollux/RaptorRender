@@ -26,6 +26,9 @@ var sort_column_secondary = 2
 var sort_column_primary_reversed = false
 var sort_column_secondary_reversed = false
 
+signal refresh_table_content
+
+
 
 
 func _ready():
@@ -62,4 +65,5 @@ func _on_SortableTable_draw():
 	previous_scroll_vertical = RowScrollContainer.scroll_vertical
 
 
-
+func refresh():
+	emit_signal("refresh_table_content")
