@@ -140,6 +140,9 @@ func select_SortableRows(row_id):
 		if ClickedRow.selected == true:
 			ClickedRow.set_selected(false)
 			selected_row_content_ids.erase(ClickedRow.content_id)
+		else:
+			ClickedRow.set_selected(true)
+			selected_row_content_ids.append(ClickedRow.content_id)
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
