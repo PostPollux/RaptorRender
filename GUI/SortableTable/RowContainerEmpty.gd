@@ -90,26 +90,30 @@ func highlight_column(column):
 func select_SortableRows(row_id):
 	
 	var SortableRows = RowContainerFilled.SortableRows
-	var SortableRowsSelected = RowContainerFilled.SortableRowsSelected
+	
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		pass
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
-		if SortableRowsSelected.size() > 0:
-			var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].row_id
+		if RowContainerFilled.selected_row_content_ids.size() > 0:
 			
+			var previous_selected_row_id = 0
+			for Row in SortableRows:
+				if Row.content_id == RowContainerFilled.selected_row_content_ids[RowContainerFilled.selected_row_content_ids.size() - 1]:
+					previous_selected_row_id = Row.row_id
+					
 			for i in range(previous_selected_row_id, SortableRows.size() + 1):
 				if SortableRows[i-1].selected == false:
 					SortableRows[i-1].set_selected(true)
-					SortableRowsSelected.append(SortableRows[i-1])
+					RowContainerFilled.selected_row_content_ids.append(SortableRows[i-1].content_id)
 		
 		
 	else:
 		for Row in SortableRows:
 			Row.set_selected(false)
-		SortableRowsSelected.clear()
+		RowContainerFilled.selected_row_content_ids.clear()
 
 
 func _on_ClipContainerForEmptyRows_resized():

@@ -32,6 +32,7 @@ _sections_unfolded = [ "Grow Direction", "Margin", "Mouse", "Rect", "Scroll", "S
 column_names = null
 column_widths_initial = null
 sort_column_primary = 1
+sort_column_secondary = 2
 row_height = 30
 row_color = Color( 0.235294, 0.235294, 0.235294, 1 )
 row_color_selected = Color( 0.584314, 0.384314, 0.282353, 1 )

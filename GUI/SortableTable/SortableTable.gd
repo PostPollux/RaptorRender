@@ -18,7 +18,7 @@ export (String) var table_id = "custom id"
 
 onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
 onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled" 
-
+onready var RowContainerEmpty = $ "VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
 
 var previous_scroll_horizontal = 0
 var previous_scroll_vertical = 0
@@ -38,7 +38,6 @@ func _ready():
 	if RaptorRender != null:
 		RaptorRender.register_table(self)
 	
-	create_rows(16)
 
 
 
@@ -52,11 +51,15 @@ func _on_SortableTable_gui_input(ev):
 			RowScrollContainer.scroll_vertical = previous_scroll_vertical
 
 
-
-func create_rows(count): 
-	RowContainerFilled.add_rows_and_delete_previous(count) 
+	
+	
+func update_amount_of_rows(count): 
+	
+	RowContainerFilled.update_amount_of_rows(count) 
 	RowContainerFilled.update_ids_of_rows()
- 
+	RowContainerEmpty.update_ids_of_empty_rows()
+	
+	
 func set_cell_content(row, column, child): 
 	RowContainerFilled.set_cell_content(row, column, child)
 

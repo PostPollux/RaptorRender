@@ -32,21 +32,44 @@ func add_row():
 
 
 
-func add_rows_and_delete_previous(count):
+		
+
+func update_amount_of_rows(count):
 	
-	if SortableRows.size() > 0:
-		for SortableRow in SortableRows:
-			SortableRow.queue_free()
+	if SortableRows.size() == count:
+		pass
+	
+	# add needed rows	
+	elif SortableRows.size() < count:
+		var rows_to_add = count - SortableRows.size()
+		
+		for i in range (0, rows_to_add):
 			
-	for i in range(0, count):
+			var Row = initialize_row()
 		
-		var Row = initialize_row()
+			add_child(Row)
+			SortableRows.append(Row)
+	
+	# remove unneeded rows
+	elif SortableRows.size() > count:
+		var rows_to_remove = SortableRows.size() - count
 		
-		add_child(Row)
-		SortableRows.append(Row)
+		# remove from selection
+		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
+			selected_row_content_ids.erase(SortableRows[i].content_id)
+			
+		# remove the nodes
+		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
+			SortableRows[i].free()
+			
+		# remove the references in the 	Sortable Rows Array
+		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
+			SortableRows.pop_back()
+			
 		
 		
 		
+	
 func initialize_row():
 	var Row = SortableTableRowRes.instance()
 		

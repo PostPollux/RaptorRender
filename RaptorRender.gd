@@ -55,7 +55,7 @@ func _ready():
 			"id1": {
 				"name": "T-Rex1",
 				"ip": "192.168.1.45",
-				"status": "2_waiting",
+				"status": "2_available",
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -145,7 +145,7 @@ func _ready():
 			"id7": {
 				"name": "T-Rex4",
 				"ip": "192.168.1.45",
-				"status": "2_waiting",
+				"status": "2_available",
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -175,7 +175,7 @@ func _ready():
 			"id9": {
 				"name": "T-Rex1",
 				"ip": "192.168.1.45",
-				"status": "2_waiting",
+				"status": "2_available",
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -190,7 +190,7 @@ func _ready():
 			"id10": {
 				"name": "Raptor1",
 				"ip": "192.168.1.22",
-				"status": "2_waiting",
+				"status": "2_available",
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 0.2,
@@ -220,7 +220,7 @@ func _ready():
 			"id12": {
 				"name": "Nedry",
 				"ip": "192.168.1.87",
-				"status": "2_waiting",
+				"status": "2_available",
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "8GB+ VRam", "third pool"],
 				"rr_version": 0.2,
@@ -247,25 +247,10 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
-			"id14": {
-				"name": "Raptor3",
-				"ip": "192.168.1.22",
-				"status": "5_offline",
-				"platform": "Windows",
-				"pools": ["AE_Plugins", "another pool", "third pool"],
-				"rr_version": 0.2,
-				"uptime": "1h",
-				"cpu": "2 x 4GHZ",
-				"memory": 16,
-				"memory_used": 2,
-				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"],
-				"note": ""
-			},
 			"id15": {
 				"name": "Dr.Malcom",
 				"ip": "192.168.1.45",
-				"status": "2_waiting",
+				"status": "2_available",
 				"platform": "Linux",
 				"pools": ["8GB+ VRam"],
 				"rr_version": 1.2,
@@ -318,11 +303,13 @@ func register_table(SortableTable):
 func _input(event):
 	
 	if Input.is_key_pressed(KEY_R):
-		refresh_clients_table()
-		
-		
-		
-
+		TableClients.refresh()
+	if Input.is_key_pressed(KEY_X):
+		rr_data.clients.erase("id4")
+		rr_data.clients.erase("id8")
+		rr_data.clients.erase("id10")
+		TableClients.refresh()
+	
 
 
 func refresh_clients_table():
@@ -343,14 +330,9 @@ func refresh_clients_table():
 	var clients_array = rr_data.clients.keys()
 	
 	
+	
 	#### sort clients_array ####
 	
-#	var sortable_table_id = SortableTable.table_id  
-	
-#
-#	match sortable_table_id: 
-#		"jobs": TableJobs = SortableTable 
-#		"clients": primary = rr_data.clients[client].memory 
 		
 	var sortable_clients_array = []
 	
@@ -389,9 +371,8 @@ func refresh_clients_table():
 	
 	#### create the correct amount of rows in RowContainerFilled ####
 	
-	#TableClients.create_rows(clients_array.size())
-	#TableClients.
-	#update_ids_of_rows()
+	TableClients.update_amount_of_rows(clients_array.size())
+	
 	
 	#### Fill Clients Table ####
 	
@@ -417,7 +398,7 @@ func refresh_clients_table():
 		if rr_data.clients[client[0]].status == "1_rendering":
 			icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30_2.png")
 			
-		elif rr_data.clients[client[0]].status == "2_waiting":
+		elif rr_data.clients[client[0]].status == "2_available":
 			icon.load("res://GUI/icons/client_status/58x30/client_status_online_58x30.png")
 
 		elif rr_data.clients[client[0]].status == "3_error":
