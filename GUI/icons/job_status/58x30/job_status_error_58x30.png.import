@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/client_status_offline_58x30.png-526700be66921e4a93ec54c565fac31d.stex"
+path="res://.import/job_status_error_58x30.png-c0a08007852308f1e98b415eb6165d3c.stex"
 
 [deps]
 
-source_file="res://GUI/icons/client_status/58x30/client_status_offline_58x30.png"
-source_md5="61f7f03cfb1190441c0abfb5bf1513d9"
+source_file="res://GUI/icons/job_status/58x30/job_status_error_58x30.png"
+source_md5="2a3db53dc24b0ec27b9302389b8445b9"
 
-dest_files=[ "res://.import/client_status_offline_58x30.png-526700be66921e4a93ec54c565fac31d.stex" ]
-dest_md5="681fedb7783a39fdb100fc338e52e93e"
+dest_files=[ "res://.import/job_status_error_58x30.png-c0a08007852308f1e98b415eb6165d3c.stex" ]
+dest_md5="d1e96b64b4952e126eb92470f7b18980"
 
 [params]
 

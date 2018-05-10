@@ -10,7 +10,6 @@ func _ready():
 	rr_data = {
 		"jobs": {
 			"job1": {
-				"id": 1,
 				"name": "city_build_v5",
 				"priority": 50,
 				"creator": "Johannes",
@@ -31,7 +30,6 @@ func _ready():
 				}
 			},
 			"job2": {
-				"id": 2,
 				"name": "city_unbuild_v02",
 				"priority": 20,
 				"creator": "Chris",
@@ -48,12 +46,11 @@ func _ready():
 				}
 			},
 			"job3": {
-				"id": 2,
 				"name": "Champions_League_Final_Shot3",
 				"priority": 20,
 				"creator": "Michael",
 				"time_created": "1.3.2018 - 10:43:14",
-				"status": "3_paused",
+				"status": "4_paused",
 				"progress": 34,
 				"range_start": 2,
 				"range_end": 5,
@@ -65,12 +62,11 @@ func _ready():
 				}
 			},
 			"job4": {
-				"id": 2,
 				"name": "job 4",
 				"priority": 77,
 				"creator": "Max",
 				"time_created": "1.3.2018 - 10:43:14",
-				"status": "4_finished",
+				"status": "5_finished",
 				"progress": 100,
 				"range_start": 2,
 				"range_end": 5,
@@ -82,13 +78,28 @@ func _ready():
 				}
 			},
 			"job5": {
-				"id": 2,
 				"name": "job 5",
 				"priority": 10,
 				"creator": "Nicolaj",
 				"time_created": "1.3.2018 - 10:43:14",
-				"status": "5_cancelled",
+				"status": "6_cancelled",
 				"progress": 10,
+				"range_start": 2,
+				"range_end": 5,
+				"chunks": {
+					"1":{
+						"status" : "finished",
+						"frames_to_calculate" : [2,3,4,5]
+					}
+				}
+			},
+			"job6": {
+				"name": "job 6",
+				"priority": 10,
+				"creator": "Nicolaj",
+				"time_created": "1.3.2018 - 10:43:14",
+				"status": "3_error",
+				"progress": 0,
 				"range_start": 2,
 				"range_end": 5,
 				"chunks": {
@@ -488,21 +499,22 @@ func refresh_jobs_table():
 		
 		
 		if rr_data.jobs[job[0]].status == "1_rendering":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30_2.png")
+			icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
 			
 		elif rr_data.jobs[job[0]].status == "2_queued":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30.png")
-
-		elif rr_data.jobs[job[0]].status == "3_paused":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_disabled_58x30.png")
+			icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
 		
-		elif rr_data.jobs[job[0]].status == "4_finished":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_online_58x30.png")
-			StatusIcon.set_modulate(Color("88ffffff"))
+		elif rr_data.jobs[job[0]].status == "3_error":
+			icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
 			
-		elif rr_data.jobs[job[0]].status == "5_cancelled":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_error_58x30.png")
-			StatusIcon.set_modulate(Color("88ffffff"))
+		elif rr_data.jobs[job[0]].status == "4_paused":
+			icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
+		
+		elif rr_data.jobs[job[0]].status == "5_finished":
+			icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
+			
+		elif rr_data.jobs[job[0]].status == "6_cancelled":
+			icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
 		
 		StatusIcon.set_texture(icon)
 		TableJobs.set_cell_content(count, status_column, StatusIcon)
@@ -642,7 +654,6 @@ func refresh_clients_table():
 
 		elif rr_data.clients[client[0]].status == "5_offline":
 			icon.load("res://GUI/icons/client_status/58x30/client_status_offline_58x30.png")
-			StatusIcon.set_modulate(Color("88ffffff"))
 		
 		StatusIcon.set_texture(icon)
 		TableClients.set_cell_content(count, status_column, StatusIcon)
