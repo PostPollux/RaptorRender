@@ -11,11 +11,11 @@ func _ready():
 		"jobs": {
 			"job1": {
 				"id": 1,
-				"name": "job 1",
+				"name": "city_build_v5",
 				"priority": 50,
 				"creator": "Johannes",
 				"time_created": "13.3.2018 - 16:23:44",
-				"status": "rendering",
+				"status": "1_rendering",
 				"progress": 28,
 				"range_start": 20,
 				"range_end": 50,
@@ -32,12 +32,63 @@ func _ready():
 			},
 			"job2": {
 				"id": 2,
-				"name": "second_job",
+				"name": "city_unbuild_v02",
+				"priority": 20,
+				"creator": "Chris",
+				"time_created": "1.3.2018 - 10:43:14",
+				"status": "2_queued",
+				"progress": 0,
+				"range_start": 2,
+				"range_end": 5,
+				"chunks": {
+					"1":{
+						"status" : "finished",
+						"frames_to_calculate" : [2,3,4,5]
+					}
+				}
+			},
+			"job3": {
+				"id": 2,
+				"name": "Champions_League_Final_Shot3",
 				"priority": 20,
 				"creator": "Michael",
 				"time_created": "1.3.2018 - 10:43:14",
-				"status": "finished",
+				"status": "3_paused",
+				"progress": 34,
+				"range_start": 2,
+				"range_end": 5,
+				"chunks": {
+					"1":{
+						"status" : "finished",
+						"frames_to_calculate" : [2,3,4,5]
+					}
+				}
+			},
+			"job4": {
+				"id": 2,
+				"name": "job 4",
+				"priority": 77,
+				"creator": "Max",
+				"time_created": "1.3.2018 - 10:43:14",
+				"status": "4_finished",
 				"progress": 100,
+				"range_start": 2,
+				"range_end": 5,
+				"chunks": {
+					"1":{
+						"status" : "finished",
+						"frames_to_calculate" : [2,3,4,5]
+					}
+				}
+			},
+			"job5": {
+				"id": 2,
+				"name": "job 5",
+				"priority": 10,
+				"creator": "Nicolaj",
+				"time_created": "1.3.2018 - 10:43:14",
+				"status": "5_cancelled",
+				"progress": 10,
 				"range_start": 2,
 				"range_end": 5,
 				"chunks": {
@@ -56,6 +107,8 @@ func _ready():
 				"name": "T-Rex1",
 				"ip": "192.168.1.45",
 				"status": "2_available",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -71,6 +124,8 @@ func _ready():
 				"name": "Raptor1",
 				"ip": "192.168.1.22",
 				"status": "4_disabled",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
@@ -86,6 +141,8 @@ func _ready():
 				"name": "T-Rex2",
 				"ip": "192.168.1.156",
 				"status": "1_rendering",
+				"current_job_id": "job1",
+				"error_count": 0,
 				"platform": "MacOS",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -101,6 +158,8 @@ func _ready():
 				"name": "Raptor2",
 				"ip": "192.168.1.87",
 				"status": "5_offline",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
@@ -116,6 +175,8 @@ func _ready():
 				"name": "T-Rex3",
 				"ip": "192.168.1.15",
 				"status": "3_error",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -131,6 +192,8 @@ func _ready():
 				"name": "Raptor3",
 				"ip": "192.168.1.22",
 				"status": "5_offline",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
@@ -146,6 +209,8 @@ func _ready():
 				"name": "T-Rex4",
 				"ip": "192.168.1.45",
 				"status": "2_available",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -161,6 +226,8 @@ func _ready():
 				"name": "Raptor1",
 				"ip": "192.168.1.22",
 				"status": "4_disabled",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": [],
 				"rr_version": 0.2,
@@ -176,6 +243,8 @@ func _ready():
 				"name": "T-Rex1",
 				"ip": "192.168.1.45",
 				"status": "2_available",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -191,6 +260,8 @@ func _ready():
 				"name": "Raptor1",
 				"ip": "192.168.1.22",
 				"status": "2_available",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 0.2,
@@ -206,6 +277,8 @@ func _ready():
 				"name": "T-Rex2",
 				"ip": "192.168.1.156",
 				"status": "1_rendering",
+				"current_job_id": "job1",
+				"error_count": 0,
 				"platform": "MacOS",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -221,6 +294,8 @@ func _ready():
 				"name": "Nedry",
 				"ip": "192.168.1.87",
 				"status": "2_available",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "8GB+ VRam", "third pool"],
 				"rr_version": 0.2,
@@ -236,6 +311,8 @@ func _ready():
 				"name": "T-Rex3",
 				"ip": "192.168.1.15",
 				"status": "3_error",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Linux",
 				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 1.2,
@@ -251,6 +328,8 @@ func _ready():
 				"name": "Dr.Malcom",
 				"ip": "192.168.1.45",
 				"status": "2_available",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Linux",
 				"pools": ["8GB+ VRam"],
 				"rr_version": 1.2,
@@ -266,6 +345,8 @@ func _ready():
 				"name": "Hammond",
 				"ip": "192.168.1.22",
 				"status": "4_disabled",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
@@ -293,6 +374,7 @@ func register_table(SortableTable):
 	match sortable_table_id: 
 		"jobs":
 			TableJobs = SortableTable
+			TableJobs.connect("refresh_table_content", self, "refresh_jobs_table")
 			
 		"clients": 
 			TableClients = SortableTable 
@@ -303,15 +385,153 @@ func register_table(SortableTable):
 func _input(event):
 	
 	if Input.is_key_pressed(KEY_R):
+		TableJobs.refresh()
 		TableClients.refresh()
+			
 	if Input.is_key_pressed(KEY_X):
 		rr_data.clients.erase("id4")
 		rr_data.clients.erase("id8")
 		rr_data.clients.erase("id10")
 		TableClients.refresh()
+	if Input.is_key_pressed(KEY_B):
+		rr_data.clients["id20"] = {
+				"name": "Hammond",
+				"ip": "192.168.1.22",
+				"status": "3_error",
+				"platform": "Windows",
+				"pools": ["AE_Plugins", "another pool", "third pool"],
+				"rr_version": 0.2,
+				"uptime": "11h",
+				"cpu": "24 x 2,4GHZ",
+				"memory": 128,
+				"memory_used": 2,
+				"graphics": "Intel Onboard",
+				"software": ["Blender", "Natron"],
+				"note": "The Monster Machine!"
+			}
+		
+		TableClients.refresh()
+
+
+
+func refresh_jobs_table():
 	
+	
+	#### define the columns of the jobs table ####
+	var status_column = 1
+	var name_column = 2
+	var priority_column = 3
+	var progress_column = 4
+	
+	
+	#### get all jobs
+	var jobs_array = rr_data.jobs.keys()
+	
+	
+	
+	#### sort jobs_array ####
+	
+		
+	var sortable_jobs_array = []
+	
+	for job in jobs_array:
+		
+		var primary 
+		var secondary 
+		
+		match TableJobs.sort_column_primary: 
+		
+			1: primary = rr_data.jobs[job].status
+			2: primary = rr_data.jobs[job].name
+			3: primary = rr_data.jobs[job].priority
+			4: primary = rr_data.jobs[job].progress
+			
+		
+		match TableJobs.sort_column_secondary: 
+		
+			1: secondary = rr_data.jobs[job].status
+			2: secondary = rr_data.jobs[job].name
+			3: secondary = rr_data.jobs[job].priority
+			4: secondary = rr_data.jobs[job].progress
+			 
+		
+		sortable_jobs_array.append([job, primary, secondary ])
+	
+	
+	sortable_jobs_array.sort_custom ( self, "jobs_table_sort" )
+	
+	
+	#### create the correct amount of rows in RowContainerFilled ####
+	
+	TableJobs.update_amount_of_rows(jobs_array.size())
+	
+	
+	#### Fill Clients Table ####
+	
+	var count = 1
+	
+	for job in sortable_jobs_array:
 
 
+		TableJobs.set_row_content_id(count, job[0])
+
+		# Status Icon
+		
+		var StatusIcon = TextureRect.new()
+		StatusIcon.set_expand(true)
+		StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
+		StatusIcon.set_v_size_flags(3) # fill + expand
+		StatusIcon.set_h_size_flags(3) # fill + expand
+		StatusIcon.rect_min_size.x = 54
+		
+		var icon = ImageTexture.new()
+		
+		
+		if rr_data.jobs[job[0]].status == "1_rendering":
+			icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30_2.png")
+			
+		elif rr_data.jobs[job[0]].status == "2_queued":
+			icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30.png")
+
+		elif rr_data.jobs[job[0]].status == "3_paused":
+			icon.load("res://GUI/icons/client_status/58x30/client_status_disabled_58x30.png")
+		
+		elif rr_data.jobs[job[0]].status == "4_finished":
+			icon.load("res://GUI/icons/client_status/58x30/client_status_online_58x30.png")
+			StatusIcon.set_modulate(Color("88ffffff"))
+			
+		elif rr_data.jobs[job[0]].status == "5_cancelled":
+			icon.load("res://GUI/icons/client_status/58x30/client_status_error_58x30.png")
+			StatusIcon.set_modulate(Color("88ffffff"))
+		
+		StatusIcon.set_texture(icon)
+		TableJobs.set_cell_content(count, status_column, StatusIcon)
+
+
+		# Name
+
+		var LabelName = Label.new()
+		LabelName.text = rr_data.jobs[job[0]].name
+		TableJobs.set_cell_content(count, name_column, LabelName)
+		
+		
+		# Priority
+		
+		var LabelPriority = Label.new()
+		LabelPriority.text = String(rr_data.jobs[job[0]].priority)
+		TableJobs.set_cell_content(count, priority_column, LabelPriority)
+
+		# Progress
+		
+		var LabelProgress = Label.new()
+		LabelProgress.text = String(rr_data.jobs[job[0]].progress) + " %"
+		TableJobs.set_cell_content(count, progress_column, LabelProgress)
+		
+		count += 1
+		
+		
+		
+		
 func refresh_clients_table():
 	
 	
@@ -321,7 +541,8 @@ func refresh_clients_table():
 	var platform_column = 3
 	var cpu_column = 4
 	var memory_column = 5
-	
+	var current_job_column = 6
+	var error_count_column = 7
 	var pools_column = 8
 	var note_column = 9
 	var rr_version_column = 10
@@ -338,8 +559,8 @@ func refresh_clients_table():
 	
 	for client in clients_array:
 		
-		var primary = rr_data.clients[client].platform
-		var secondary = rr_data.clients[client].memory
+		var primary
+		var secondary 
 		
 		match TableClients.sort_column_primary: 
 		
@@ -348,6 +569,12 @@ func refresh_clients_table():
 			3: primary = rr_data.clients[client].platform
 			4: primary = rr_data.clients[client].cpu
 			5: primary = rr_data.clients[client].memory
+			6: 
+				if rr_data.clients[client].current_job_id != "":
+					primary = rr_data.jobs[ rr_data.clients[client].current_job_id ].name
+				else:
+					primary = ""
+			7: primary = rr_data.clients[client].error_count
 			8: primary = rr_data.clients[client].pools.size()
 			9: primary = rr_data.clients[client].note
 			10: primary = rr_data.clients[client].rr_version 
@@ -359,6 +586,12 @@ func refresh_clients_table():
 			3: secondary = rr_data.clients[client].platform
 			4: secondary = rr_data.clients[client].cpu
 			5: secondary = rr_data.clients[client].memory
+			6: 
+				if rr_data.clients[client].current_job_id != "":
+					secondary = rr_data.jobs[ rr_data.clients[client].current_job_id ].name
+				else:
+					secondary = ""
+			7: secondary = rr_data.clients[client].error_count
 			8: secondary = rr_data.clients[client].pools.size()
 			9: secondary = rr_data.clients[client].note
 			10: secondary = rr_data.clients[client].rr_version 
@@ -449,6 +682,29 @@ func refresh_clients_table():
 		TableClients.set_cell_content(count, memory_column, LabelMemory)
 		
 		
+		
+		# Current Job
+		
+		var LabelCurrentJob = Label.new()
+		var current_job_id = rr_data.clients[client[0]].current_job_id
+		print (current_job_id)
+		
+		if current_job_id != "":
+			LabelCurrentJob.text = rr_data.jobs[current_job_id].name
+		else:
+			LabelCurrentJob.text = ""
+			
+		TableClients.set_cell_content(count, current_job_column, LabelCurrentJob)
+		
+		
+		# RAM
+		
+		var LabelErrorCount = Label.new()
+		LabelErrorCount.text = String(rr_data.clients[client[0]].error_count)
+		TableClients.set_cell_content(count, error_count_column, LabelErrorCount)
+		
+		
+		
 		# Pools
 		
 		var LabelPools = Label.new()
@@ -508,7 +764,27 @@ func clients_table_sort(a,b):
 			return a[1] > b[1] or (a[1] == b[1] and a[2] > b[2])		
 		
 
+func jobs_table_sort(a,b):
+	
+	if !TableJobs.sort_column_primary_reversed:
+		
+		if !TableJobs.sort_column_secondary_reversed:
 
+			return a[1] < b[1] or (a[1] == b[1] and a[2] < b[2])
+		
+		else:	
+			
+			return a[1] < b[1] or (a[1] == b[1] and a[2] > b[2])
+			
+	else:
+		
+		if !TableJobs.sort_column_secondary_reversed:
+
+			return a[1] > b[1] or (a[1] == b[1] and a[2] < b[2])
+		
+		else:	
+			
+			return a[1] > b[1] or (a[1] == b[1] and a[2] > b[2])
 
 
 
