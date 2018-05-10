@@ -447,8 +447,8 @@ func refresh_jobs_table():
 	
 	for job in jobs_array:
 		
-		var primary 
-		var secondary 
+		var primary = ""
+		var secondary = ""
 		
 		match TableJobs.sort_column_primary: 
 		
@@ -571,8 +571,8 @@ func refresh_clients_table():
 	
 	for client in clients_array:
 		
-		var primary
-		var secondary 
+		var primary = ""
+		var secondary  = ""
 		
 		match TableClients.sort_column_primary: 
 		
