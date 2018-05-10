@@ -2,7 +2,7 @@ extends VBoxContainer
 
 
 onready var SortableRows = []
-onready var SortableRowsSelected = []
+onready var selected_row_content_ids = []
 onready var TopRow = $"../../../TopRow"
 onready var RowScrollContainer = $"../.."
 onready var SortableTable = $"../../../.."
@@ -101,14 +101,24 @@ func set_cell_content(row, column, child):
 	if row <= SortableRows.size():
 		SortableRows[row-1].set_cell_content(column, child)
 	
-	
+func set_row_content_id(row, id):
+		SortableRows[row-1].content_id = id
 
 func update_ids_of_rows():
 	var count = 1
-	for Row in get_children():
+	for Row in SortableRows:
 		Row.set_row_id(count)
 		count += 1
-	
+
+
+func update_selection():
+	for Row in SortableRows:
+		Row.set_selected(false)
+		
+	for selected_row_content_id in selected_row_content_ids:
+		for Row in SortableRows:
+			if Row.content_id == selected_row_content_id:
+				Row.set_selected(true)
 	
 
 func highlight_column(column):
@@ -129,37 +139,40 @@ func select_SortableRows(row_id):
 	if Input.is_key_pressed(KEY_CONTROL):
 		if ClickedRow.selected == true:
 			ClickedRow.set_selected(false)
-			SortableRowsSelected.erase(ClickedRow)
+			selected_row_content_ids.erase(ClickedRow.content_id)
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
-		if SortableRowsSelected.size() > 0:
-			var previous_selected_row_id = SortableRowsSelected[SortableRowsSelected.size() - 1].row_id
-			
+		if selected_row_content_ids.size() > 0:
+			var previous_selected_row_id = 0
+			for Row in SortableRows:
+				if Row.content_id == selected_row_content_ids[selected_row_content_ids.size() - 1]:
+					previous_selected_row_id = Row.row_id
+						
 			if row_id > previous_selected_row_id:
 				
 				for i in range(previous_selected_row_id, row_id + 1):
 					if SortableRows[i-1].selected == false:
 						SortableRows[i-1].set_selected(true)
-						SortableRowsSelected.append(SortableRows[i-1])
+						selected_row_content_ids.append(SortableRows[i-1].content_id)
 			
 			if row_id < previous_selected_row_id:
 				
 				for i in range(row_id, previous_selected_row_id):
 					if SortableRows[i-1].selected == false:
 						SortableRows[i-1].set_selected(true)
-						SortableRowsSelected.append(SortableRows[i-1])
+						selected_row_content_ids.append(SortableRows[i-1].content_id)
 		else:
 			ClickedRow.set_selected(true)
-			SortableRowsSelected.append(ClickedRow)
+			selected_row_content_ids.append(ClickedRow.content_id)
 		
 	else:
 		for Row in SortableRows:
 			Row.set_selected(false)
-		SortableRowsSelected.clear()
+		selected_row_content_ids.clear()
 		
 		ClickedRow.set_selected(true)
-		SortableRowsSelected.append(ClickedRow)
+		selected_row_content_ids.append(ClickedRow.content_id)
 		
 
 
@@ -169,21 +182,21 @@ func drag_select_SortableRows(row_id):
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		DragedRow.set_selected(false)
-		SortableRowsSelected.erase(DragedRow)
+		selected_row_content_ids.erase(DragedRow)
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
 		if DragedRow.selected == false:
 			DragedRow.set_selected(true)
-			SortableRowsSelected.append(DragedRow)
+			selected_row_content_ids.append(DragedRow.content_id)
 		
 	else:
 		for Row in SortableRows:
 			Row.set_selected(false)
-		SortableRowsSelected.clear()
+		selected_row_content_ids.clear()
 		
 		DragedRow.set_selected(true)
-		SortableRowsSelected.append(DragedRow)
+		selected_row_content_ids.append(DragedRow.content_id)
 		
 		
 
@@ -192,14 +205,14 @@ func drag_select_SortableRows(row_id):
 func select_all():
 	
 	# select or deselect all rows depending on wheter all are already selected or not
-	if SortableRowsSelected.size() != SortableRows.size():
+	if selected_row_content_ids.size() != SortableRows.size():
 		
-		SortableRowsSelected.clear()
+		selected_row_content_ids.clear()
 		for Row in SortableRows:
 			Row.set_selected(true)
-			SortableRowsSelected.append(Row)
+			selected_row_content_ids.append(Row.content_id)
 	else:
-		SortableRowsSelected.clear()
+		selected_row_content_ids.clear()
 		for Row in SortableRows:
 			Row.set_selected(false)
 
@@ -215,10 +228,10 @@ func open_context_menu(row_id):
 		
 		for Row in SortableRows:
 			Row.set_selected(false)
-		SortableRowsSelected.clear()
+		selected_row_content_ids.clear()
 		
 		ClickedRow.set_selected(true)
-		SortableRowsSelected.append(ClickedRow)
+		selected_row_content_ids.append(ClickedRow)
 	
 	
 	print("some options to select")

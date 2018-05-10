@@ -400,6 +400,8 @@ func refresh_clients_table():
 	for client in sortable_clients_array:
 
 
+		TableClients.set_row_content_id(count, client[0])
+
 		# Status Icon
 		
 		var StatusIcon = TextureRect.new()

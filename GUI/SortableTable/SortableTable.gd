@@ -58,7 +58,10 @@ func create_rows(count):
 	RowContainerFilled.update_ids_of_rows()
  
 func set_cell_content(row, column, child): 
-	RowContainerFilled.set_cell_content(row, column, child) 
+	RowContainerFilled.set_cell_content(row, column, child)
+
+func set_row_content_id(row, id): 
+	RowContainerFilled.set_row_content_id(row, id) 
 
 
 
@@ -70,3 +73,4 @@ func _on_SortableTable_draw():
 
 func refresh():
 	emit_signal("refresh_table_content")
+	RowContainerFilled.update_selection()

@@ -4,7 +4,8 @@ extends MarginContainer
 
 
 var cell_count
-var row_id
+var row_id #position of the row in the table
+var content_id # unique id of the representing content
 
 #row colors
 var row_color
