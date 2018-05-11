@@ -409,6 +409,8 @@ func _input(event):
 				"name": "Hammond",
 				"ip": "192.168.1.22",
 				"status": "3_error",
+				"current_job_id": "",
+				"error_count": 0,
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
@@ -698,7 +700,6 @@ func refresh_clients_table():
 		
 		var LabelCurrentJob = Label.new()
 		var current_job_id = rr_data.clients[client[0]].current_job_id
-		print (current_job_id)
 		
 		if current_job_id != "":
 			LabelCurrentJob.text = rr_data.jobs[current_job_id].name
