@@ -11,6 +11,7 @@ func _ready():
 		"jobs": {
 			"job1": {
 				"name": "city_build_v5",
+				"type": "Blender",
 				"priority": 50,
 				"creator": "Johannes",
 				"time_created": "13.3.2018 - 16:23:44",
@@ -31,6 +32,7 @@ func _ready():
 			},
 			"job2": {
 				"name": "city_unbuild_v02",
+				"type": "Blender",
 				"priority": 20,
 				"creator": "Chris",
 				"time_created": "1.3.2018 - 10:43:14",
@@ -47,6 +49,7 @@ func _ready():
 			},
 			"job3": {
 				"name": "Champions_League_Final_Shot3",
+				"type": "After Effects",
 				"priority": 20,
 				"creator": "Michael",
 				"time_created": "1.3.2018 - 10:43:14",
@@ -63,6 +66,7 @@ func _ready():
 			},
 			"job4": {
 				"name": "job 4",
+				"type": "Natron",
 				"priority": 77,
 				"creator": "Max",
 				"time_created": "1.3.2018 - 10:43:14",
@@ -79,6 +83,7 @@ func _ready():
 			},
 			"job5": {
 				"name": "job 5",
+				"type": "Nuke",
 				"priority": 10,
 				"creator": "Nicolaj",
 				"time_created": "1.3.2018 - 10:43:14",
@@ -95,6 +100,7 @@ func _ready():
 			},
 			"job6": {
 				"name": "job 6",
+				"type": "3DS Max",
 				"priority": 10,
 				"creator": "Nicolaj",
 				"time_created": "1.3.2018 - 10:43:14",
@@ -434,7 +440,10 @@ func refresh_jobs_table():
 	var status_column = 1
 	var name_column = 2
 	var priority_column = 3
-	var progress_column = 4
+	var active_clients_column = 4
+	var progress_column = 5
+	var type_column = 6
+	var creator_column = 7
 	
 	
 	#### get all jobs
@@ -449,6 +458,12 @@ func refresh_jobs_table():
 	
 	for job in jobs_array:
 		
+		var active_clients = 0
+				
+		for client in rr_data.clients.keys():
+			if rr_data.clients[client].current_job_id == job:
+				active_clients += 1
+		
 		var primary = ""
 		var secondary = ""
 		
@@ -457,7 +472,10 @@ func refresh_jobs_table():
 			1: primary = rr_data.jobs[job].status
 			2: primary = rr_data.jobs[job].name
 			3: primary = rr_data.jobs[job].priority
-			4: primary = rr_data.jobs[job].progress
+			4: primary = active_clients
+			5: primary = rr_data.jobs[job].progress
+			6: primary = rr_data.jobs[job].type
+			7: primary = rr_data.jobs[job].creator
 			
 		
 		match TableJobs.sort_column_secondary: 
@@ -465,7 +483,10 @@ func refresh_jobs_table():
 			1: secondary = rr_data.jobs[job].status
 			2: secondary = rr_data.jobs[job].name
 			3: secondary = rr_data.jobs[job].priority
-			4: secondary = rr_data.jobs[job].progress
+			4: secondary = active_clients
+			5: secondary = rr_data.jobs[job].progress
+			6: secondary = rr_data.jobs[job].type
+			7: secondary = rr_data.jobs[job].creator
 			 
 		
 		sortable_jobs_array.append([job, primary, secondary ])
@@ -534,12 +555,42 @@ func refresh_jobs_table():
 		var LabelPriority = Label.new()
 		LabelPriority.text = String(rr_data.jobs[job[0]].priority)
 		TableJobs.set_cell_content(count, priority_column, LabelPriority)
+		
+		
+		# Active Clients
+		
+		var LabelActiveClients = Label.new()
+		
+		var active_clients = 0
+				
+		for client in rr_data.clients.keys():
+			if rr_data.clients[client].current_job_id == job[0]:
+				active_clients += 1
+				
+		LabelActiveClients.text = String(active_clients)
+		TableJobs.set_cell_content(count, active_clients_column, LabelActiveClients)
+
 
 		# Progress
 		
 		var LabelProgress = Label.new()
 		LabelProgress.text = String(rr_data.jobs[job[0]].progress) + " %"
 		TableJobs.set_cell_content(count, progress_column, LabelProgress)
+		
+		
+		# Type
+		
+		var LabelType = Label.new()
+		LabelType.text = rr_data.jobs[job[0]].type
+		TableJobs.set_cell_content(count, type_column, LabelType)
+		
+		
+		# Creator
+		
+		var LabelCreator = Label.new()
+		LabelCreator.text = rr_data.jobs[job[0]].creator
+		TableJobs.set_cell_content(count, creator_column, LabelCreator)
+		
 		
 		count += 1
 		
