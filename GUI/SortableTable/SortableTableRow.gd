@@ -14,6 +14,11 @@ var row_color_odd
 var row_color_selected 
 var row_color_selected_even
 var row_color_selected_odd
+var row_color_red
+var	row_color_blue
+var	row_color_green
+var	row_color_yellow
+var	row_color_black
 
 var even_odd_brightness_difference
 var hover_brightness_boost
@@ -151,7 +156,14 @@ func get_reference_to_SortableTable():
 
 func set_initial_colors():
 	row_color = SortableTable.row_color
+	
 	row_color_selected = SortableTable.row_color_selected
+	row_color_red = SortableTable.row_color_red
+	row_color_blue = SortableTable.row_color_blue
+	row_color_green = SortableTable.row_color_green
+	row_color_yellow = SortableTable.row_color_yellow
+	row_color_black = SortableTable.row_color_black
+	
 	even_odd_brightness_difference = SortableTable.row_brightness_difference
 	hover_brightness_boost = SortableTable.hover_brightness_boost
 	
@@ -159,7 +171,24 @@ func set_initial_colors():
 	row_color_odd = row_color.lightened(even_odd_brightness_difference)
 	row_color_selected_even = row_color_selected
 	row_color_selected_odd = row_color_selected.lightened(hover_brightness_boost)
+
+
+func set_row_color(color):
 	
+	row_color_even = color
+	row_color_odd = color.lightened(even_odd_brightness_difference)
+	
+	
+func set_row_color_by_string(color_string):
+	
+	match color_string: 
+		"default": set_row_color(row_color)	
+		"red": set_row_color(row_color_red)	
+		"green": set_row_color(row_color_green)	
+		"blue": set_row_color(row_color_blue)
+		"yellow": set_row_color(row_color_yellow)	
+		"black": set_row_color(row_color_black)		
+		
 	
 
 func fill_CellArrays ():

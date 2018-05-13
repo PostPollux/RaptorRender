@@ -1,5 +1,14 @@
 extends Node
 
+
+###### Settings Variables ########
+
+var colorize_table_rows = true
+
+
+
+
+
 var TableJobs
 var TableClients
 
@@ -21,6 +30,29 @@ func _ready():
 				"range_end": 50,
 				"note": "eine Notiz",
 				"errors": 2,
+				"chunks": {
+					"1":{
+						"status" : "queued",
+						"frames_to_calculate" : [20,21,22,23]
+					},
+					"2":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					}
+				}
+			},
+			"job7": {
+				"name": "city_build_v6",
+				"type": "Blender",
+				"priority": 50,
+				"creator": "Johannes",
+				"time_created": "2018/12/13 - 16:23:44",
+				"status": "1_rendering",
+				"progress": 28,
+				"range_start": 20,
+				"range_end": 50,
+				"note": "",
+				"errors": 0,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -81,7 +113,7 @@ func _ready():
 				"range_start": 2,
 				"range_end": 5,
 				"note": "3 Fehler",
-				"errors": 3,
+				"errors": 0,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -119,7 +151,7 @@ func _ready():
 				"range_start": 2,
 				"range_end": 5,
 				"note": "",
-				"errors": 0,
+				"errors": 11,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -205,7 +237,7 @@ func _ready():
 				"ip": "192.168.1.15",
 				"status": "3_error",
 				"current_job_id": "",
-				"error_count": 0,
+				"error_count": 1,
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
@@ -341,7 +373,7 @@ func _ready():
 				"ip": "192.168.1.15",
 				"status": "3_error",
 				"current_job_id": "",
-				"error_count": 0,
+				"error_count": 5,
 				"platform": "Linux",
 				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 1.2,
@@ -551,22 +583,33 @@ func refresh_jobs_table():
 		
 		if rr_data.jobs[job[0]].status == "1_rendering":
 			icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
-			
+			if colorize_table_rows:
+				TableJobs.set_row_color_by_string(count, "blue")
+				
 		elif rr_data.jobs[job[0]].status == "2_queued":
 			icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
-		
+			if colorize_table_rows:
+				TableJobs.set_row_color_by_string(count, "yellow")
+				
 		elif rr_data.jobs[job[0]].status == "3_error":
 			icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
-			
+			if colorize_table_rows:
+				TableJobs.set_row_color_by_string(count, "red")
+				
 		elif rr_data.jobs[job[0]].status == "4_paused":
 			icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
-		
+				
 		elif rr_data.jobs[job[0]].status == "5_finished":
 			icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
-			
+			if colorize_table_rows:
+				TableJobs.set_row_color_by_string(count, "green")
+				
 		elif rr_data.jobs[job[0]].status == "6_cancelled":
 			icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
-		
+			if colorize_table_rows:
+				TableJobs.set_row_color_by_string(count, "black")
+				StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
+				
 		StatusIcon.set_texture(icon)
 		TableJobs.set_cell_content(count, status_column, StatusIcon)
 
@@ -630,8 +673,13 @@ func refresh_jobs_table():
 		# Errors
 		
 		var LabelErrors = Label.new()
-		LabelErrors.text = String(rr_data.jobs[job[0]].errors)
+		var job_error_count = rr_data.jobs[job[0]].errors
+		LabelErrors.text = String(job_error_count)
 		TableJobs.set_cell_content(count, errors_column, LabelErrors)
+		
+		if job_error_count > 0:
+			if colorize_table_rows:
+					TableJobs.set_row_color_by_string(count, "red")
 		
 		
 		
@@ -746,10 +794,14 @@ func refresh_clients_table():
 		
 		if rr_data.clients[client[0]].status == "1_rendering":
 			icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30_2.png")
+			if colorize_table_rows:
+				TableClients.set_row_color_by_string(count, "blue")
 			
 		elif rr_data.clients[client[0]].status == "2_available":
 			icon.load("res://GUI/icons/client_status/58x30/client_status_online_58x30.png")
-
+			if colorize_table_rows:
+				TableClients.set_row_color_by_string(count, "green")
+			
 		elif rr_data.clients[client[0]].status == "3_error":
 			icon.load("res://GUI/icons/client_status/58x30/client_status_error_58x30.png")
 
@@ -758,7 +810,10 @@ func refresh_clients_table():
 
 		elif rr_data.clients[client[0]].status == "5_offline":
 			icon.load("res://GUI/icons/client_status/58x30/client_status_offline_58x30.png")
-		
+			if colorize_table_rows:
+				TableClients.set_row_color_by_string(count, "black")
+				StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
+			
 		StatusIcon.set_texture(icon)
 		TableClients.set_cell_content(count, status_column, StatusIcon)
 
@@ -811,12 +866,18 @@ func refresh_clients_table():
 		TableClients.set_cell_content(count, current_job_column, LabelCurrentJob)
 		
 		
-		# RAM
+		# Errors
 		
 		var LabelErrorCount = Label.new()
-		LabelErrorCount.text = String(rr_data.clients[client[0]].error_count)
+		var clients_error_count = rr_data.clients[client[0]].error_count
+		LabelErrorCount.text = String(clients_error_count)
 		TableClients.set_cell_content(count, error_count_column, LabelErrorCount)
+		if clients_error_count > 0:
+			if colorize_table_rows:
+				TableClients.set_row_color_by_string(count, "red")
+			
 		
+		#Color("9f4c48")
 		
 		
 		# Pools

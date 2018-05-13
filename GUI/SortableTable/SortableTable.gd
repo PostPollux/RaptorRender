@@ -11,6 +11,13 @@ export (int) var row_height = 30
 
 export (Color) var row_color = Color("3c3c3c")
 export (Color) var row_color_selected = Color("956248")
+export (Color) var row_color_red = Color("643f3b")
+export (Color) var row_color_blue = Color("3b5064")
+export (Color) var row_color_green = Color("3b5a3b")
+export (Color) var row_color_yellow = Color("585a3b")
+export (Color) var row_color_black = Color("1d1d1d")
+
+
 export (float) var row_brightness_difference = 0.05
 export (float) var hover_brightness_boost = 0.1
 
@@ -62,6 +69,14 @@ func update_amount_of_rows(count):
 	
 func set_cell_content(row, column, child): 
 	RowContainerFilled.set_cell_content(row, column, child)
+	
+	
+func set_row_color(row, color):
+	RowContainerFilled.set_row_color(row, color)
+	
+func set_row_color_by_string(row, color_string):
+	RowContainerFilled.set_row_color_by_string(row, color_string)
+	
 
 func set_row_content_id(row, id): 
 	RowContainerFilled.set_row_content_id(row, id) 
@@ -75,5 +90,6 @@ func _on_SortableTable_draw():
 
 
 func refresh():
+	RowContainerFilled.reset_all_row_colors_to_default()
 	emit_signal("refresh_table_content")
 	RowContainerFilled.update_selection()

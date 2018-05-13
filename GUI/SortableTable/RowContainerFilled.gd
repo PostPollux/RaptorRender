@@ -122,10 +122,22 @@ func set_column_width(column, width):
 		
 func set_cell_content(row, column, child):
 	if row <= SortableRows.size():
-		SortableRows[row-1].set_cell_content(column, child)
+		SortableRows[row - 1].set_cell_content(column, child)
+	
 	
 func set_row_content_id(row, id):
-		SortableRows[row-1].content_id = id
+		SortableRows[row - 1].content_id = id
+		
+		
+func set_row_color(row, color):
+	if row >= 1:
+		SortableRows[row - 1].set_row_color(color)
+		
+		
+func set_row_color_by_string(row, color_string):
+	if row >= 1:
+		SortableRows[row - 1].set_row_color_by_string(color_string)
+
 
 func update_ids_of_rows():
 	var count = 1
@@ -143,6 +155,10 @@ func update_selection():
 			if Row.content_id == selected_row_content_id:
 				Row.set_selected(true)
 	
+func reset_all_row_colors_to_default():
+	for Row in SortableRows:
+		Row.set_row_color_by_string("default")
+		
 
 func highlight_column(column):
 	if TopRow:
