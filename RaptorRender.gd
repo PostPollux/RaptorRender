@@ -14,11 +14,13 @@ func _ready():
 				"type": "Blender",
 				"priority": 50,
 				"creator": "Johannes",
-				"time_created": "13.3.2018 - 16:23:44",
+				"time_created": "2018/12/13 - 16:23:44",
 				"status": "1_rendering",
 				"progress": 28,
 				"range_start": 20,
 				"range_end": 50,
+				"note": "eine Notiz",
+				"errors": 2,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -35,11 +37,13 @@ func _ready():
 				"type": "Blender",
 				"priority": 20,
 				"creator": "Chris",
-				"time_created": "1.3.2018 - 10:43:14",
+				"time_created": "2017/02/09 - 06:29:04",
 				"status": "2_queued",
 				"progress": 0,
 				"range_start": 2,
 				"range_end": 5,
+				"note": "",
+				"errors": 0,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -52,11 +56,13 @@ func _ready():
 				"type": "After Effects",
 				"priority": 20,
 				"creator": "Michael",
-				"time_created": "1.3.2018 - 10:43:14",
+				"time_created": "2017/06/17 - 12:11:32",
 				"status": "4_paused",
 				"progress": 34,
 				"range_start": 2,
 				"range_end": 5,
+				"note": "Rabarber",
+				"errors": 0,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -69,11 +75,13 @@ func _ready():
 				"type": "Natron",
 				"priority": 77,
 				"creator": "Max",
-				"time_created": "1.3.2018 - 10:43:14",
+				"time_created": "2018/03/01 - 10:43:14",
 				"status": "5_finished",
 				"progress": 100,
 				"range_start": 2,
 				"range_end": 5,
+				"note": "3 Fehler",
+				"errors": 3,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -86,11 +94,13 @@ func _ready():
 				"type": "Nuke",
 				"priority": 10,
 				"creator": "Nicolaj",
-				"time_created": "1.3.2018 - 10:43:14",
+				"time_created": "2018/05/26 - 19:13:24",
 				"status": "6_cancelled",
 				"progress": 10,
 				"range_start": 2,
 				"range_end": 5,
+				"note": "",
+				"errors": 0,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -103,11 +113,13 @@ func _ready():
 				"type": "3DS Max",
 				"priority": 10,
 				"creator": "Nicolaj",
-				"time_created": "1.3.2018 - 10:43:14",
+				"time_created": "2018/01/02 - 14:33:56",
 				"status": "3_error",
 				"progress": 0,
 				"range_start": 2,
 				"range_end": 5,
+				"note": "",
+				"errors": 0,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -444,6 +456,11 @@ func refresh_jobs_table():
 	var progress_column = 5
 	var type_column = 6
 	var creator_column = 7
+	var time_created_column = 8
+	var frames_column = 9
+	var errors_column = 10
+	var pools_column = 11
+	var note_column = 12
 	
 	
 	#### get all jobs
@@ -476,6 +493,12 @@ func refresh_jobs_table():
 			5: primary = rr_data.jobs[job].progress
 			6: primary = rr_data.jobs[job].type
 			7: primary = rr_data.jobs[job].creator
+			8: primary = rr_data.jobs[job].time_created
+			9: primary = rr_data.jobs[job].frames
+			10: primary = rr_data.jobs[job].errors
+			11: primary = rr_data.jobs[job].pools
+			12: primary = rr_data.jobs[job].note
+
 			
 		
 		match TableJobs.sort_column_secondary: 
@@ -487,6 +510,11 @@ func refresh_jobs_table():
 			5: secondary = rr_data.jobs[job].progress
 			6: secondary = rr_data.jobs[job].type
 			7: secondary = rr_data.jobs[job].creator
+			8: secondary = rr_data.jobs[job].time_created
+			9: secondary = rr_data.jobs[job].frames
+			10: secondary = rr_data.jobs[job].errors
+			11: secondary = rr_data.jobs[job].pools
+			12: secondary = rr_data.jobs[job].note
 			 
 		
 		sortable_jobs_array.append([job, primary, secondary ])
@@ -590,6 +618,29 @@ func refresh_jobs_table():
 		var LabelCreator = Label.new()
 		LabelCreator.text = rr_data.jobs[job[0]].creator
 		TableJobs.set_cell_content(count, creator_column, LabelCreator)
+		
+		
+		# Time Created
+		
+		var LabelTimeCreated = Label.new()
+		LabelTimeCreated.text = rr_data.jobs[job[0]].time_created
+		TableJobs.set_cell_content(count, time_created_column, LabelTimeCreated)
+		
+		
+		# Errors
+		
+		var LabelErrors = Label.new()
+		LabelErrors.text = String(rr_data.jobs[job[0]].errors)
+		TableJobs.set_cell_content(count, errors_column, LabelErrors)
+		
+		
+		
+		# Note
+		
+		var LabelNote = Label.new()
+		LabelNote.text = rr_data.jobs[job[0]].note
+		TableJobs.set_cell_content(count, note_column, LabelNote)
+		
 		
 		
 		count += 1
