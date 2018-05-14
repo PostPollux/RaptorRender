@@ -35,6 +35,7 @@ var sort_column_primary_reversed = false
 var sort_column_secondary_reversed = false
 
 signal refresh_table_content
+signal something_just_selected
 
 
 
@@ -82,14 +83,21 @@ func set_row_content_id(row, id):
 	RowContainerFilled.set_row_content_id(row, id) 
 
 
+func clear_selection():
+	RowContainerFilled.clear_selection()
 
 
-func _on_SortableTable_draw():
-	previous_scroll_horizontal = self.scroll_horizontal
-	previous_scroll_vertical = RowScrollContainer.scroll_vertical
-
+func emit_selection_signal():
+	emit_signal("something_just_selected")
+	
 
 func refresh():
 	RowContainerFilled.reset_all_row_colors_to_default()
 	emit_signal("refresh_table_content")
 	RowContainerFilled.update_selection()
+	
+	
+
+func _on_SortableTable_draw():
+	previous_scroll_horizontal = self.scroll_horizontal
+	previous_scroll_vertical = RowScrollContainer.scroll_vertical

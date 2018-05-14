@@ -154,7 +154,16 @@ func update_selection():
 		for Row in SortableRows:
 			if Row.content_id == selected_row_content_id:
 				Row.set_selected(true)
+
+func clear_selection():
 	
+	selected_row_content_ids.clear()
+	
+	for Row in SortableRows:
+		Row.set_selected(false)
+
+
+
 func reset_all_row_colors_to_default():
 	for Row in SortableRows:
 		Row.set_row_color_by_string("default")
@@ -215,7 +224,9 @@ func select_SortableRows(row_id):
 		
 		ClickedRow.set_selected(true)
 		selected_row_content_ids.append(ClickedRow.content_id)
-		
+	
+	SortableTable.emit_selection_signal()
+	
 
 
 func drag_select_SortableRows(row_id):
@@ -240,7 +251,7 @@ func drag_select_SortableRows(row_id):
 		DragedRow.set_selected(true)
 		selected_row_content_ids.append(DragedRow.content_id)
 		
-		
+	SortableTable.emit_selection_signal()
 
 
 
@@ -257,8 +268,8 @@ func select_all():
 		selected_row_content_ids.clear()
 		for Row in SortableRows:
 			Row.set_selected(false)
-
-
+			
+	SortableTable.emit_selection_signal()
 
 
 func open_context_menu(row_id):
@@ -275,6 +286,6 @@ func open_context_menu(row_id):
 		ClickedRow.set_selected(true)
 		selected_row_content_ids.append(ClickedRow)
 	
-	
+	SortableTable.emit_selection_signal()
 	print("some options to select")
 	
