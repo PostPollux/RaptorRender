@@ -3,7 +3,7 @@ extends Node
 
 ###### Settings Variables ########
 
-var colorize_table_rows = true
+var colorize_table_rows = false
 
 
 
@@ -446,6 +446,13 @@ func register_table(SortableTable):
 func _input(event):
 	
 	if Input.is_key_pressed(KEY_R):
+		TableJobs.refresh()
+		TableClients.refresh()
+	if Input.is_key_pressed(KEY_C):
+		if colorize_table_rows:
+			colorize_table_rows = false
+		else:
+			colorize_table_rows = true
 		TableJobs.refresh()
 		TableClients.refresh()
 			
