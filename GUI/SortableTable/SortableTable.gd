@@ -52,10 +52,10 @@ func _ready():
 func _on_SortableTable_gui_input(ev):
 			
 	if ev.is_action_pressed("ui_mouse_wheel_up_or_down"):
-		if !Input.is_key_pressed(KEY_CONTROL):
-			self.scroll_horizontal = previous_scroll_horizontal
-		else:
+		if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
 			RowScrollContainer.scroll_vertical = previous_scroll_vertical
+		else:
+			self.scroll_horizontal = previous_scroll_horizontal
 
 
 	
