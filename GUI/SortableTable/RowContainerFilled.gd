@@ -225,7 +225,7 @@ func select_SortableRows(row_id):
 		ClickedRow.set_selected(true)
 		selected_row_content_ids.append(ClickedRow.content_id)
 	
-	SortableTable.emit_selection_signal()
+	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1] )
 	
 
 
@@ -251,7 +251,7 @@ func drag_select_SortableRows(row_id):
 		DragedRow.set_selected(true)
 		selected_row_content_ids.append(DragedRow.content_id)
 		
-	SortableTable.emit_selection_signal()
+	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1])
 
 
 
@@ -264,12 +264,16 @@ func select_all():
 		for Row in SortableRows:
 			Row.set_selected(true)
 			selected_row_content_ids.append(Row.content_id)
+			
+		SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1 ] )
+		
+		
 	else:
 		selected_row_content_ids.clear()
 		for Row in SortableRows:
 			Row.set_selected(false)
 			
-	SortableTable.emit_selection_signal()
+	
 
 
 func open_context_menu(row_id):
@@ -286,6 +290,6 @@ func open_context_menu(row_id):
 		ClickedRow.set_selected(true)
 		selected_row_content_ids.append(ClickedRow)
 	
-	SortableTable.emit_selection_signal()
+	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1 ] )
 	print("some options to select")
 	

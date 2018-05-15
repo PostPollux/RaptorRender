@@ -87,8 +87,8 @@ func clear_selection():
 	RowContainerFilled.clear_selection()
 
 
-func emit_selection_signal():
-	emit_signal("something_just_selected")
+func emit_selection_signal(last_selected):
+	emit_signal("something_just_selected", last_selected)
 	
 
 func refresh():
