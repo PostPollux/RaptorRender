@@ -436,16 +436,21 @@ func register_table(SortableTable):
 		"jobs":
 			TableJobs = SortableTable
 			TableJobs.connect("refresh_table_content", self, "refresh_jobs_table")
-			TableJobs.connect("something_just_selected", self, "print_selected")
+			TableJobs.connect("something_just_selected", self, "job_selected")
 			
 		"clients": 
 			TableClients = SortableTable 
 			TableClients.connect("refresh_table_content", self, "refresh_clients_table")
-			TableClients.connect("something_just_selected", self, "print_selected")
+			TableClients.connect("something_just_selected", self, "client_selected")
 
 
-func print_selected(content_id_of_row):
-	print (content_id_of_row)
+func client_selected(content_id_of_row):
+	TableJobs.clear_selection()
+	print( content_id_of_row )
+	
+func job_selected(content_id_of_row):
+	TableClients.clear_selection()
+	print( content_id_of_row )
 
 
 func _input(event):
