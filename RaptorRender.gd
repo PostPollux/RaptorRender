@@ -6,6 +6,8 @@ extends Node
 var colorize_table_rows = false
 
 
+#### preloads ####
+var JobProgressBarRes = preload("res://GUI/JobProgressBar/JobProgressBar.tscn")
 
 
 
@@ -577,7 +579,7 @@ func refresh_jobs_table():
 	TableJobs.update_amount_of_rows(jobs_array.size())
 	
 	
-	#### Fill Clients Table ####
+	#### Fill Jobs Table ####
 	
 	var count = 1
 	
@@ -661,10 +663,14 @@ func refresh_jobs_table():
 
 		# Progress
 		
-		var LabelProgress = Label.new()
-		LabelProgress.text = String(rr_data.jobs[job[0]].progress) + " %"
-		TableJobs.set_cell_content(count, progress_column, LabelProgress)
+#		var LabelProgress = Label.new()
+#		LabelProgress.text = String(rr_data.jobs[job[0]].progress) + " %"
+#		TableJobs.set_cell_content(count, progress_column, LabelProgress)
 		
+		var JobProgressBar = JobProgressBarRes.instance()
+		JobProgressBar.rect_min_size.x = 120
+		JobProgressBar.set_chunks(100, 23, 50)
+		TableJobs.set_cell_content(count, progress_column, JobProgressBar)
 		
 		# Type
 		
