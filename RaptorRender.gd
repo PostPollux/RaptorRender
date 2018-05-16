@@ -32,6 +32,7 @@ func _ready():
 				"range_end": 50,
 				"note": "eine Notiz",
 				"errors": 2,
+				"pools": ["AE_Plugins"],
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -75,6 +76,7 @@ func _ready():
 				"range_end": 50,
 				"note": "",
 				"errors": 0,
+				"pools": ["AE_Plugins", "third pool"],
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -118,6 +120,7 @@ func _ready():
 				"range_end": 5,
 				"note": "",
 				"errors": 0,
+				"pools": ["third pool"],
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -161,6 +164,7 @@ func _ready():
 				"range_end": 5,
 				"note": "Rabarber",
 				"errors": 0,
+				"pools": ["another pool"],
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -204,6 +208,7 @@ func _ready():
 				"range_end": 5,
 				"note": "3 Fehler",
 				"errors": 0,
+				"pools": ["AE_Plugins"],
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -247,6 +252,7 @@ func _ready():
 				"range_end": 5,
 				"note": "",
 				"errors": 0,
+				"pools": ["another pool"],
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -290,6 +296,7 @@ func _ready():
 				"range_end": 5,
 				"note": "",
 				"errors": 11,
+				"pools": ["AE_Plugins"],
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -726,7 +733,13 @@ func refresh_jobs_table():
 			8: primary = rr_data.jobs[job].time_created
 			9: primary = rr_data.jobs[job].frames
 			10: primary = rr_data.jobs[job].errors
-			11: primary = rr_data.jobs[job].pools
+			11: 
+				if rr_data.jobs[job].pools.size() > 0:
+					var pools_string = ""
+					for pool in rr_data.jobs[job].pools:
+						pools_string += pool + ", "
+					primary = pools_string
+				else: primary = ""
 			12: primary = rr_data.jobs[job].note
 
 			
@@ -743,7 +756,13 @@ func refresh_jobs_table():
 			8: secondary = rr_data.jobs[job].time_created
 			9: secondary = rr_data.jobs[job].frames
 			10: secondary = rr_data.jobs[job].errors
-			11: secondary = rr_data.jobs[job].pools
+			11: 
+				if rr_data.jobs[job].pools.size() > 0:
+					var pools_string = ""
+					for pool in rr_data.jobs[job].pools:
+						pools_string += pool + ", "
+					secondary = pools_string
+				else: secondary = ""
 			12: secondary = rr_data.jobs[job].note
 			 
 		
@@ -842,10 +861,6 @@ func refresh_jobs_table():
 
 		# Progress
 		
-#		var LabelProgress = Label.new()
-#		LabelProgress.text = String(rr_data.jobs[job[0]].progress) + " %"
-#		TableJobs.set_cell_content(count, progress_column, LabelProgress)
-		
 		var JobProgressBar = JobProgressBarRes.instance()
 		JobProgressBar.rect_min_size.x = 120
 		
@@ -864,6 +879,7 @@ func refresh_jobs_table():
 			
 		JobProgressBar.set_chunks(chunks_total, chunks_finished, chunks_active)
 		TableJobs.set_cell_content(count, progress_column, JobProgressBar)
+		
 		
 		# Type
 		
@@ -897,6 +913,22 @@ func refresh_jobs_table():
 			if colorize_table_rows:
 					TableJobs.set_row_color_by_string(count, "red")
 		
+		
+		# Pools
+		
+		var LabelPools = Label.new()
+		var pools_string = ""
+		var pool_count = 1
+		
+		if rr_data.jobs[job[0]].pools.size() > 0:
+			for pool in rr_data.jobs[job[0]].pools:
+				pools_string += pool
+				if pool_count < rr_data.jobs[job[0]].pools.size():
+					pools_string += ", "
+				pool_count += 1
+				
+		LabelPools.text = pools_string
+		TableJobs.set_cell_content(count, pools_column, LabelPools)
 		
 		
 		# Note
@@ -955,7 +987,13 @@ func refresh_clients_table():
 				else:
 					primary = ""
 			7: primary = rr_data.clients[client].error_count
-			8: primary = rr_data.clients[client].pools.size()
+			8: 
+				if rr_data.clients[client].pools.size() > 0:
+					var pools_string = ""
+					for pool in rr_data.clients[client].pools:
+						pools_string += pool + ", "
+					primary = pools_string
+				else: primary = ""
 			9: primary = rr_data.clients[client].note
 			10: primary = rr_data.clients[client].rr_version 
 		
@@ -972,7 +1010,13 @@ func refresh_clients_table():
 				else:
 					secondary = ""
 			7: secondary = rr_data.clients[client].error_count
-			8: secondary = rr_data.clients[client].pools.size()
+			8: 
+				if rr_data.clients[client].pools.size() > 0:
+					var pools_string = ""
+					for pool in rr_data.clients[client].pools:
+						pools_string += pool + ", "
+					secondary = pools_string
+				else: secondary = ""
 			9: secondary = rr_data.clients[client].note
 			10: secondary = rr_data.clients[client].rr_version 
 		
