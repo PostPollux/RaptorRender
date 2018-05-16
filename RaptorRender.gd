@@ -28,8 +28,8 @@ func _ready():
 				"time_created": "2018/12/13 - 16:23:44",
 				"status": "1_rendering",
 				"progress": 28,
-				"range_start": 20,
-				"range_end": 50,
+				"range_start": 230,
+				"range_end": 780,
 				"note": "eine Notiz",
 				"errors": 2,
 				"pools": ["AE_Plugins"],
@@ -72,8 +72,8 @@ func _ready():
 				"time_created": "2018/12/13 - 16:23:44",
 				"status": "1_rendering",
 				"progress": 28,
-				"range_start": 20,
-				"range_end": 50,
+				"range_start": 1,
+				"range_end": 80,
 				"note": "",
 				"errors": 0,
 				"pools": ["AE_Plugins", "third pool"],
@@ -116,8 +116,8 @@ func _ready():
 				"time_created": "2017/02/09 - 06:29:04",
 				"status": "2_queued",
 				"progress": 0,
-				"range_start": 2,
-				"range_end": 5,
+				"range_start": 1,
+				"range_end": 500,
 				"note": "",
 				"errors": 0,
 				"pools": ["third pool"],
@@ -160,8 +160,8 @@ func _ready():
 				"time_created": "2017/06/17 - 12:11:32",
 				"status": "4_paused",
 				"progress": 34,
-				"range_start": 2,
-				"range_end": 5,
+				"range_start": 80,
+				"range_end": 115,
 				"note": "Rabarber",
 				"errors": 0,
 				"pools": ["another pool"],
@@ -204,8 +204,8 @@ func _ready():
 				"time_created": "2018/03/01 - 10:43:14",
 				"status": "5_finished",
 				"progress": 100,
-				"range_start": 2,
-				"range_end": 5,
+				"range_start": 120,
+				"range_end": 350,
 				"note": "3 Fehler",
 				"errors": 0,
 				"pools": ["AE_Plugins"],
@@ -248,8 +248,8 @@ func _ready():
 				"time_created": "2018/05/26 - 19:13:24",
 				"status": "6_cancelled",
 				"progress": 10,
-				"range_start": 2,
-				"range_end": 5,
+				"range_start": 1600,
+				"range_end": 2800,
 				"note": "",
 				"errors": 0,
 				"pools": ["another pool"],
@@ -292,8 +292,8 @@ func _ready():
 				"time_created": "2018/01/02 - 14:33:56",
 				"status": "3_error",
 				"progress": 0,
-				"range_start": 2,
-				"range_end": 5,
+				"range_start": 20,
+				"range_end": 50,
 				"note": "",
 				"errors": 11,
 				"pools": ["AE_Plugins"],
@@ -675,7 +675,7 @@ func refresh_jobs_table():
 	var type_column = 6
 	var creator_column = 7
 	var time_created_column = 8
-	var frames_column = 9
+	var frame_range_column = 9
 	var errors_column = 10
 	var pools_column = 11
 	var note_column = 12
@@ -731,7 +731,7 @@ func refresh_jobs_table():
 			6: primary = rr_data.jobs[job].type
 			7: primary = rr_data.jobs[job].creator
 			8: primary = rr_data.jobs[job].time_created
-			9: primary = rr_data.jobs[job].frames
+			9: primary = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
 			10: primary = rr_data.jobs[job].errors
 			11: 
 				if rr_data.jobs[job].pools.size() > 0:
@@ -754,7 +754,7 @@ func refresh_jobs_table():
 			6: secondary = rr_data.jobs[job].type
 			7: secondary = rr_data.jobs[job].creator
 			8: secondary = rr_data.jobs[job].time_created
-			9: secondary = rr_data.jobs[job].frames
+			9: secondary = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
 			10: secondary = rr_data.jobs[job].errors
 			11: 
 				if rr_data.jobs[job].pools.size() > 0:
@@ -900,6 +900,14 @@ func refresh_jobs_table():
 		var LabelTimeCreated = Label.new()
 		LabelTimeCreated.text = rr_data.jobs[job[0]].time_created
 		TableJobs.set_cell_content(count, time_created_column, LabelTimeCreated)
+		
+		
+		# Frame Range
+		
+		var LabelFrameRange = Label.new()
+		var frames_total = rr_data.jobs[job[0]].range_end - rr_data.jobs[job[0]].range_start
+		LabelFrameRange.text = String(frames_total) + "  (" + String(rr_data.jobs[job[0]].range_start) + " - " + String(rr_data.jobs[job[0]].range_end) + ")"
+		TableJobs.set_cell_content(count, frame_range_column, LabelFrameRange)
 		
 		
 		# Errors
