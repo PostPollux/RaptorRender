@@ -3,6 +3,7 @@ extends MarginContainer
 
 onready var BarActive = $"ColorRect_active"
 onready var BarFinished = $"ColorRect_finished"
+onready var ProgressLabel = $"ProgressLabel"
 
 
 
@@ -26,6 +27,7 @@ func set_chunks (total, finished, active):
 	
 func show_progress():
 	
+	
 	var total_bar_size = rect_min_size.x
 	
 	var bar_active_size = total_bar_size * (chunks_active + chunks_finished) / chunks_total 
@@ -39,11 +41,9 @@ func show_progress():
 	BarFinished.rect_min_size.x = bar_finished_size
 	
 	
+	ProgressLabel.text = String( int( float(chunks_finished) / float(chunks_total) * 100.0 ) ) + " %"
 	
 	
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+
 
 

@@ -40,6 +40,26 @@ func _ready():
 					"2":{
 						"status" : "queued",
 						"frames_to_calculate" : [24,25,26,27]
+					},
+					"3":{
+						"status" : "active",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"4":{
+						"status" : "active",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"5":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"6":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"7":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
 					}
 				}
 			},
@@ -61,7 +81,27 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23]
 					},
 					"2":{
+						"status" : "active",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"3":{
+						"status" : "active",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"4":{
+						"status" : "active",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"5":{
 						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"6":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"7":{
+						"status" : "finished",
 						"frames_to_calculate" : [24,25,26,27]
 					}
 				}
@@ -80,8 +120,32 @@ func _ready():
 				"errors": 0,
 				"chunks": {
 					"1":{
-						"status" : "finished",
-						"frames_to_calculate" : [2,3,4,5]
+						"status" : "queued",
+						"frames_to_calculate" : [20,21,22,23]
+					},
+					"2":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"3":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"4":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"5":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"6":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"7":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
 					}
 				}
 			},
@@ -99,8 +163,32 @@ func _ready():
 				"errors": 0,
 				"chunks": {
 					"1":{
+						"status" : "queued",
+						"frames_to_calculate" : [20,21,22,23]
+					},
+					"2":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"3":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"4":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"5":{
 						"status" : "finished",
-						"frames_to_calculate" : [2,3,4,5]
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"6":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"7":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
 					}
 				}
 			},
@@ -119,7 +207,31 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "finished",
-						"frames_to_calculate" : [2,3,4,5]
+						"frames_to_calculate" : [20,21,22,23]
+					},
+					"2":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"3":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"4":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"5":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"6":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"7":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
 					}
 				}
 			},
@@ -137,8 +249,32 @@ func _ready():
 				"errors": 0,
 				"chunks": {
 					"1":{
+						"status" : "queued",
+						"frames_to_calculate" : [20,21,22,23]
+					},
+					"2":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"3":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"4":{
 						"status" : "finished",
-						"frames_to_calculate" : [2,3,4,5]
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"5":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"6":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"7":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27]
 					}
 				}
 			},
@@ -156,8 +292,32 @@ func _ready():
 				"errors": 11,
 				"chunks": {
 					"1":{
-						"status" : "finished",
-						"frames_to_calculate" : [2,3,4,5]
+						"status" : "queued",
+						"frames_to_calculate" : [20,21,22,23]
+					},
+					"2":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"3":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"4":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"5":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"6":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
+					},
+					"7":{
+						"status" : "queued",
+						"frames_to_calculate" : [24,25,26,27]
 					}
 				}
 			}
@@ -526,11 +686,30 @@ func refresh_jobs_table():
 	
 	for job in jobs_array:
 		
+		## calculate the active clients for ordering
 		var active_clients = 0
 				
 		for client in rr_data.clients.keys():
 			if rr_data.clients[client].current_job_id == job:
 				active_clients += 1
+		
+		## calculate the progress for ordering		
+		var chunk_keys = rr_data.jobs[job].chunks.keys()
+		
+		var chunks_total = 0
+		var chunks_finished = 0
+		var job_progress = 0.0
+		
+		for chunk_key in chunk_keys:
+			var chunk_status = rr_data.jobs[job].chunks[chunk_key].status
+			match chunk_status:
+				"finished": chunks_finished += 1
+			chunks_total += 1
+		
+		job_progress = float(chunks_finished) / float(chunks_total) * 100.0
+		
+		
+		
 		
 		var primary = ""
 		var secondary = ""
@@ -541,7 +720,7 @@ func refresh_jobs_table():
 			2: primary = rr_data.jobs[job].name
 			3: primary = rr_data.jobs[job].priority
 			4: primary = active_clients
-			5: primary = rr_data.jobs[job].progress
+			5: primary = job_progress
 			6: primary = rr_data.jobs[job].type
 			7: primary = rr_data.jobs[job].creator
 			8: primary = rr_data.jobs[job].time_created
@@ -558,7 +737,7 @@ func refresh_jobs_table():
 			2: secondary = rr_data.jobs[job].name
 			3: secondary = rr_data.jobs[job].priority
 			4: secondary = active_clients
-			5: secondary = rr_data.jobs[job].progress
+			5: secondary = job_progress
 			6: secondary = rr_data.jobs[job].type
 			7: secondary = rr_data.jobs[job].creator
 			8: secondary = rr_data.jobs[job].time_created
@@ -669,7 +848,21 @@ func refresh_jobs_table():
 		
 		var JobProgressBar = JobProgressBarRes.instance()
 		JobProgressBar.rect_min_size.x = 120
-		JobProgressBar.set_chunks(100, 23, 50)
+		
+		var chunk_keys = rr_data.jobs[job[0]].chunks.keys()
+		
+		var chunks_total = 0
+		var chunks_finished = 0
+		var chunks_active = 0
+		
+		for chunk_key in chunk_keys:
+			var chunk_status = rr_data.jobs[job[0]].chunks[chunk_key].status
+			match chunk_status:
+				"active": chunks_active += 1
+				"finished": chunks_finished += 1
+			chunks_total += 1
+			
+		JobProgressBar.set_chunks(chunks_total, chunks_finished, chunks_active)
 		TableJobs.set_cell_content(count, progress_column, JobProgressBar)
 		
 		# Type
