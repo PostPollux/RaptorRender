@@ -614,6 +614,7 @@ func register_table(SortableTable):
 			TableClients = SortableTable 
 			TableClients.connect("refresh_table_content", self, "refresh_clients_table")
 			TableClients.connect("something_just_selected", self, "client_selected")
+			TableClients.connect("context_invoked", self, "client_context_menu_invoked")
 
 
 
@@ -633,16 +634,19 @@ func client_selected(content_id_of_row):
 	TableJobs.clear_selection()
 	print( content_id_of_row )
 	
+	
+	
 func job_selected(content_id_of_row):
 	TableClients.clear_selection()
 	print( content_id_of_row )
 
+func client_context_menu_invoked():
+	ContextMenu_Clients.show_at_mouse_position()
+
+
+
 
 func _input(event):
-	
-	if Input.is_key_pressed(KEY_S):
-		
-		ContextMenu_Clients.show_at_mouse_position()
 		
 	if Input.is_key_pressed(KEY_R):
 		TableJobs.refresh()

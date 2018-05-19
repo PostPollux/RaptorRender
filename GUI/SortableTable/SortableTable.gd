@@ -36,6 +36,7 @@ var sort_column_secondary_reversed = false
 
 signal refresh_table_content
 signal something_just_selected
+signal context_invoked
 
 
 
@@ -89,6 +90,12 @@ func clear_selection():
 
 func emit_selection_signal(last_selected):
 	emit_signal("something_just_selected", last_selected)
+	
+func emit_ContextMenu_signal():
+	emit_signal("context_invoked")
+	
+func get_selected_content_ids():
+	return RowContainerFilled.selected_row_content_ids
 	
 
 func refresh():

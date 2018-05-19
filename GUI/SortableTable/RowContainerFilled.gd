@@ -280,6 +280,7 @@ func open_context_menu(row_id):
 	
 	var ClickedRow = SortableRows[row_id - 1]
 	
+	# handle selection
 	#if clicked row is not selected, deselect all but this one
 	if ClickedRow.selected == false:
 		
@@ -290,6 +291,7 @@ func open_context_menu(row_id):
 		ClickedRow.set_selected(true)
 		selected_row_content_ids.append(ClickedRow.content_id)
 	
+	# emit signals
 	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1 ] )
-	print("some options to select")
+	SortableTable.emit_ContextMenu_signal()
 	
