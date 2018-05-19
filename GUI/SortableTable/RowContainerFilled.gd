@@ -288,7 +288,7 @@ func open_context_menu(row_id):
 		selected_row_content_ids.clear()
 		
 		ClickedRow.set_selected(true)
-		selected_row_content_ids.append(ClickedRow)
+		selected_row_content_ids.append(ClickedRow.content_id)
 	
 	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1 ] )
 	print("some options to select")
