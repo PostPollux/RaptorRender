@@ -2,9 +2,9 @@
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
-[ext_resource path="res://GUI/PopupMenus/Inherited Context Menus/ContextMenu_Clients.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Clients.tscn" type="PackedScene" id=3]
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 [node name="BackgroundColor" type="ColorRect" parent="." index="0"]
 
