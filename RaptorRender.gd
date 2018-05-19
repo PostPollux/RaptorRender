@@ -14,6 +14,9 @@ var JobProgressBarRes = preload("res://GUI/JobProgressBar/JobProgressBar.tscn")
 var TableJobs
 var TableClients
 
+var ContextMenu_Clients
+var ContextMenu_Jobs
+
 var rr_data = {}
 
 func _ready():
@@ -613,6 +616,19 @@ func register_table(SortableTable):
 			TableClients.connect("something_just_selected", self, "client_selected")
 
 
+
+
+func register_context_menu(ContextMenu):  
+	
+	match ContextMenu.context_menu_id: 
+		"clients":
+			ContextMenu_Clients = ContextMenu
+			
+		"jobs":
+			ContextMenu_Jobs = ContextMenu
+			
+			
+			
 func client_selected(content_id_of_row):
 	TableJobs.clear_selection()
 	print( content_id_of_row )
@@ -624,6 +640,10 @@ func job_selected(content_id_of_row):
 
 func _input(event):
 	
+	if Input.is_key_pressed(KEY_S):
+		
+		ContextMenu_Clients.show_at_mouse_position()
+		
 	if Input.is_key_pressed(KEY_R):
 		TableJobs.refresh()
 		TableClients.refresh()

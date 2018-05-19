@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/PopupMenus/Inherited Context Menus/ContextMenu_Clients.tscn" type="PackedScene" id=3]
 
-[node name="Node" type="Node" index="0"]
+[node name="Node" type="Node"]
 
 [node name="BackgroundColor" type="ColorRect" parent="." index="0"]
 
@@ -234,5 +235,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Hint", "Mouse" ]
+
+[node name="PopupBase" parent="Control" index="1" instance=ExtResource( 3 )]
 
 
