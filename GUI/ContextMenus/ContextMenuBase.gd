@@ -46,4 +46,5 @@ func show_at_mouse_position():
 		popup_pos_y = mouse_pos.y
 	
 	ContextMenu.rect_position = Vector2(popup_pos_x, popup_pos_y)
+	ContextMenu.enable_disable_items()
 	ContextMenu.show()
