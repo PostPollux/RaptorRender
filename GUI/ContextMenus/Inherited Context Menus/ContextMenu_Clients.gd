@@ -25,7 +25,31 @@ func _ready():
 	self.visible = false
 
 
-
+func set_item_names():
+	
+	if RaptorRender.TableClients.get_selected_content_ids().size() <= 1:
+		self.set_item_text(0, "Enable Client")
+		self.set_item_text(1, "Disable Client Deferred")
+		self.set_item_text(2, "Disable Client Immediately")
+		self.set_item_text(4, "Configure Client")
+		self.set_item_text(6, "Reset Client Error count")
+		self.set_item_text(8, "Wake on LAN")
+		self.set_item_text(9, "Shutdown computer")
+		self.set_item_text(10, "Reboot computer")
+		self.set_item_text(12, "Execute command on client")
+		self.set_item_text(14, "Remove Client")
+	else:
+		self.set_item_text(0, "Enable Clients")
+		self.set_item_text(1, "Disable Clients Deferred")
+		self.set_item_text(2, "Disable Clients Immediately")
+		self.set_item_text(4, "Configure Clients")
+		self.set_item_text(6, "Reset Client Error counts")
+		self.set_item_text(8, "Wake on LAN")
+		self.set_item_text(9, "Shutdown computers")
+		self.set_item_text(10, "Reboot computers")
+		self.set_item_text(12, "Execute command on clients")
+		self.set_item_text(14, "Remove Clients")
+	
 
 func enable_disable_items():
 	
