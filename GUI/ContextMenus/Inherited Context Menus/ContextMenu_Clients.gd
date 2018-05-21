@@ -12,7 +12,7 @@ func _ready():
 	self.add_item("Reset Client Error count", 6, 0)
 	self.add_separator()
 	
-	self.add_item("Wake over LAN", 8, 0)
+	self.add_item("Wake on LAN", 8, 0)
 	self.add_item("Shutdown computer", 9, 0)
 	self.add_item("Reboot computer", 10, 0)
 	self.add_separator()
@@ -34,7 +34,7 @@ func enable_disable_items():
 	self.set_item_disabled(2, true)  # Diable Client Immediately
 	self.set_item_disabled(4, true)  # Configure Client
 	self.set_item_disabled(6, true)  # Error Count
-	self.set_item_disabled(8, true)  # Wake over LAN
+	self.set_item_disabled(8, true)  # Wake on LAN
 	self.set_item_disabled(9, true)  # Shutdwon Computer
 	self.set_item_disabled(10, true)  # Reboot Computer
 	self.set_item_disabled(12, true)  # Execute Command
@@ -64,7 +64,7 @@ func enable_disable_items():
 		if status != "5_offline":
 			self.set_item_disabled(6, false)
 		
-		# Wake over LAN
+		# Wake on LAN
 		if status == "5_offline":
 			self.set_item_disabled(8, false)
 			
@@ -169,20 +169,39 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 			
-		8:  # Wake over LAN
-			print ( "Wake over Lan - not implemented yet")
-			
+		8:  # Wake on LAN
+			print ( "Wake on Lan - not implemented yet")
+			# packet hat a total of 102 bytes
+			# first six bytes are all 255 in hex so "FF" -> FF FF FF FF FF FF
+			# next 96 bytes are 16 repetitions of the destination Mac adress (which are also 6 bytes in hex each)
 			
 			
 		9:  # Shutdown Client
 			print ( "Shutdown client - not implemented yet")
 			
+#			# Linux - works !
+#			var arguments = ["-P", "now", "Raptor Render shuts down your System!"]
+#			var result = []
+#			OS.execute("shutdown", arguments, false, result)
+
+#			# Windows - untested !
+#			var arguments = ["-s", "-t 0"]
+#			var result = []
+#			OS.execute("shutdown", arguments, false, result)
 			
 			
 		10:  # Reboot Client
 			print ( "Reboot Client - not implemented yet")
 			
+#			# Linux - works !
+#			var arguments = ["-r", "now", "Raptor Render reboots your System!"]
+#			var result = []
+#			OS.execute("shutdown", arguments, false, result)
 			
+#			# Windows - untested !
+#			var arguments = ["-r", "-t 0"]
+#			var result = []
+#			OS.execute("shutdown", arguments, false, result)
 			
 		11:  # Separator
 			pass
