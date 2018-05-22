@@ -203,13 +203,13 @@ func _on_ContextMenu_index_pressed(index):
 		9:  # Shutdown Client
 			print ( "Shutdown client - not implemented yet")
 			
-#			# Linux - works !
+#			# Linux
 #			var arguments = ["-P", "now", "Raptor Render shuts down your System!"]
 #			var result = []
 #			OS.execute("shutdown", arguments, false, result)
 
-#			# Windows - untested !
-#			var arguments = ["-s", "-t 0"]
+#			# Windows
+#			var arguments = ["-s", "-t", "0"]
 #			var result = []
 #			OS.execute("shutdown", arguments, false, result)
 			
@@ -217,13 +217,13 @@ func _on_ContextMenu_index_pressed(index):
 		10:  # Reboot Client
 			print ( "Reboot Client - not implemented yet")
 			
-#			# Linux - works !
+#			# Linux 
 #			var arguments = ["-r", "now", "Raptor Render reboots your System!"]
 #			var result = []
 #			OS.execute("shutdown", arguments, false, result)
 			
-#			# Windows - untested !
-#			var arguments = ["-r", "-t 0"]
+#			# Windows
+#			var arguments = ["-r", "-t","0"]
 #			var result = []
 #			OS.execute("shutdown", arguments, false, result)
 			
