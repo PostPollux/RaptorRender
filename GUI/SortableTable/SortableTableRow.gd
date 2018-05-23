@@ -130,6 +130,7 @@ func create_cells():
 		
 		# add a line to separate the individual cells visually
 		var VerticalLine = VSeparator.new()
+		VerticalLine.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		HBoxForCells.add_child(VerticalLine)
 		
 		
