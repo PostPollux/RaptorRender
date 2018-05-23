@@ -609,6 +609,7 @@ func register_table(SortableTable):
 			TableJobs = SortableTable
 			TableJobs.connect("refresh_table_content", self, "refresh_jobs_table")
 			TableJobs.connect("something_just_selected", self, "job_selected")
+			TableJobs.connect("context_invoked", self, "jobs_context_menu_invoked")
 			
 		"clients": 
 			TableClients = SortableTable 
@@ -640,8 +641,13 @@ func job_selected(content_id_of_row):
 	TableClients.clear_selection()
 	print( content_id_of_row )
 
+
 func client_context_menu_invoked():
 	ContextMenu_Clients.show_at_mouse_position()
+	
+
+func jobs_context_menu_invoked():
+	ContextMenu_Jobs.show_at_mouse_position()
 
 
 
