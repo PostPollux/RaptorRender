@@ -79,11 +79,11 @@ func enable_disable_items():
 			self.set_item_disabled(2, false)
 			
 		# Cancel Job Permanently
-		if status != "6_cancelled":
+		if status == "1_rendering" or status == "2_queued" or status == "3_error" or status == "4_paused":
 			self.set_item_disabled(4, false)
 			
 		# Configure Job
-		if status != "1_rendering":
+		if status == "2_queued" or status == "3_error" or status == "4_paused":
 			self.set_item_disabled(6, false)
 		
 		# Reset Job Error count
@@ -100,8 +100,7 @@ func enable_disable_items():
 		self.set_item_disabled(12, false)
 		
 		# Remove Job
-		if status != "1_rendering":
-			self.set_item_disabled(14, false)
+		self.set_item_disabled(14, false)
 	
 
 
@@ -120,7 +119,7 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[selected].status
 				
-				if status == "1_rendering" or status == "2_queued":
+				if status == "1_rendering" or status == "2_queued" or status == "3_error":
 					
 					RaptorRender.rr_data.jobs[selected].status = "4_paused"
 			
@@ -136,8 +135,15 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[selected].status
 				
-				if status == "1_rendering" or status == "2_queued" or status == "4_paused":
+				if status == "1_rendering" or status == "2_queued" or status == "3_error" or status == "4_paused":
 					
+					# remove Clients from Job
+					for client in RaptorRender.rr_data.clients.keys():
+						if RaptorRender.rr_data.clients[client].current_job_id == selected:
+							RaptorRender.rr_data.clients[client].current_job_id = ""
+							RaptorRender.rr_data.clients[client].status = "2_available"
+					
+					# Set Status to paused
 					RaptorRender.rr_data.jobs[selected].status = "4_paused"
 				
 			RaptorRender.TableJobs.refresh()
@@ -173,8 +179,15 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[selected].status
 				
-				if status == "1_rendering" or status == "2_queued" or status == "4_paused":
+				if status == "1_rendering" or status == "2_queued" or status == "3_error" or status == "4_paused":
 					
+					# remove Clients from Job
+					for client in RaptorRender.rr_data.clients.keys():
+						if RaptorRender.rr_data.clients[client].current_job_id == selected:
+							RaptorRender.rr_data.clients[client].current_job_id = ""
+							RaptorRender.rr_data.clients[client].status = "2_available"
+					
+					# Set Status to cancelled
 					RaptorRender.rr_data.jobs[selected].status = "6_cancelled"
 				
 			RaptorRender.TableJobs.refresh()
@@ -238,6 +251,13 @@ func _on_ContextMenu_index_pressed(index):
 			
 			for selected in selected_ids:
 				
+				# remove Clients from Job
+				for client in RaptorRender.rr_data.clients.keys():
+					if RaptorRender.rr_data.clients[client].current_job_id == selected:
+						RaptorRender.rr_data.clients[client].current_job_id = ""
+						RaptorRender.rr_data.clients[client].status = "2_available"
+					
+				# Remove the job
 				RaptorRender.rr_data.jobs.erase(selected)
 			
 			RaptorRender.TableJobs.refresh()
