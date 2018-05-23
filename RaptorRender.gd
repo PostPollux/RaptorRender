@@ -8,6 +8,7 @@ var colorize_table_rows = false
 
 #### preloads ####
 var JobProgressBarRes = preload("res://GUI/JobProgressBar/JobProgressBar.tscn")
+var JobPriorityControlRes = preload("res://GUI/PriorityControl/PriorityControl.tscn")
 
 
 
@@ -870,10 +871,13 @@ func refresh_jobs_table():
 		
 		# Priority
 		
-		var LabelPriority = Label.new()
-		LabelPriority.text = String(rr_data.jobs[job[0]].priority)
-		TableJobs.set_cell_content(count, priority_column, LabelPriority)
+#		var LabelPriority = Label.new()
+#		LabelPriority.text = String(rr_data.jobs[job[0]].priority)
+#		TableJobs.set_cell_content(count, priority_column, LabelPriority)
 		
+		var JobPriorityControl = JobPriorityControlRes.instance()
+		JobPriorityControl.job_id = job[0]
+		TableJobs.set_cell_content(count, priority_column, JobPriorityControl)
 		
 		# Active Clients
 		
