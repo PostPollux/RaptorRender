@@ -11,7 +11,7 @@ func _ready():
 	self.add_item("Reset Job Error count", 7, 0)
 	self.add_separator()
 	
-	self.add_item("Resubmit Job", 9, 0)
+	self.add_item("Resubmit Job paused", 9, 0)
 	self.add_separator()
 	self.add_item("Open Output Directory", 11, 0)
 	self.add_item("Open Scene Directory", 12, 0)
@@ -32,7 +32,7 @@ func set_item_names():
 		self.set_item_text(4, "Cancel Job Permanently")
 		self.set_item_text(6, "Configure Job")
 		self.set_item_text(7, "Reset Job Error count")
-		self.set_item_text(9, "Resubmit Job")
+		self.set_item_text(9, "Resubmit Job paused")
 		self.set_item_text(11, "Open Output Directory")
 		self.set_item_text(12, "Open Scene Directory")
 		self.set_item_text(14, "Remove Job")
@@ -43,7 +43,7 @@ func set_item_names():
 		self.set_item_text(4, "Cancel Jobs Permanently")
 		self.set_item_text(6, "Configure Jobs")
 		self.set_item_text(7, "Reset Job Error Counts")
-		self.set_item_text(9, "Resubmit Jobs")
+		self.set_item_text(9, "Resubmit Jobs paused")
 		self.set_item_text(11, "Open Output Directories")
 		self.set_item_text(12, "Open Scene Directories")
 		self.set_item_text(14, "Remove Jobs")
@@ -231,8 +231,29 @@ func _on_ContextMenu_index_pressed(index):
 			pass
 			
 			
-		9:  # Resubmit Job
-			print ( "Resubmit Job - not implemented yet")
+		9:  # Resubmit Job paused
+			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			
+			for selected in selected_ids:
+				
+				var job_to_resubmit = str2var( var2str(RaptorRender.rr_data.jobs[selected]) ) # conversion is needed to copy the dict. Otherwise you only get a reference
+				
+				# set job status to paused
+				job_to_resubmit.status = "4_paused"
+				
+				# requeue all chunks
+				for chunk in job_to_resubmit.chunks.keys():
+					job_to_resubmit.chunks[chunk].status = "queued"
+				
+				# create a new job id
+				var max_id = 0
+				for job in RaptorRender.rr_data.jobs.keys():
+					max_id = max(max_id, int(job))
+				
+				RaptorRender.rr_data.jobs[String( max_id + 1 )] = job_to_resubmit
+				
+				
+			RaptorRender.TableJobs.refresh()
 			
 			
 			

@@ -24,7 +24,7 @@ func _ready():
 	
 	rr_data = {
 		"jobs": {
-			"job1": {
+			"1": {
 				"name": "city_build_v5",
 				"type": "Blender",
 				"priority": 50,
@@ -70,7 +70,7 @@ func _ready():
 					}
 				}
 			},
-			"job7": {
+			"7" : {
 				"name": "city_build_v6",
 				"type": "Blender",
 				"priority": 50,
@@ -116,7 +116,7 @@ func _ready():
 					}
 				}
 			},
-			"job2": {
+			"2": {
 				"name": "city_unbuild_v02",
 				"type": "Blender",
 				"priority": 20,
@@ -162,7 +162,7 @@ func _ready():
 					}
 				}
 			},
-			"job3": {
+			"3": {
 				"name": "Champions_League_Final_Shot3",
 				"type": "After Effects",
 				"priority": 20,
@@ -208,7 +208,7 @@ func _ready():
 					}
 				}
 			},
-			"job4": {
+			"4": {
 				"name": "job 4",
 				"type": "Natron",
 				"priority": 77,
@@ -254,7 +254,7 @@ func _ready():
 					}
 				}
 			},
-			"job5": {
+			"5": {
 				"name": "job 5",
 				"type": "Nuke",
 				"priority": 10,
@@ -300,7 +300,7 @@ func _ready():
 					}
 				}
 			},
-			"job6": {
+			"6": {
 				"name": "job 6",
 				"type": "3DS Max",
 				"priority": 10,
@@ -389,7 +389,7 @@ func _ready():
 				"name": "T-Rex2",
 				"ip": "192.168.1.156",
 				"status": "1_rendering",
-				"current_job_id": "job1",
+				"current_job_id": "1",
 				"error_count": 0,
 				"platform": "MacOS",
 				"pools": ["AE_Plugins"],
@@ -525,7 +525,7 @@ func _ready():
 				"name": "T-Rex2",
 				"ip": "192.168.1.156",
 				"status": "1_rendering",
-				"current_job_id": "job1",
+				"current_job_id": "1",
 				"error_count": 0,
 				"platform": "MacOS",
 				"pools": ["AE_Plugins"],
