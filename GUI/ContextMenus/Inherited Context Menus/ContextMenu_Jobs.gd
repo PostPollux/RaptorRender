@@ -143,6 +143,11 @@ func _on_ContextMenu_index_pressed(index):
 							RaptorRender.rr_data.clients[client].current_job_id = ""
 							RaptorRender.rr_data.clients[client].status = "2_available"
 					
+					# cancle active chunks
+					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
+						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "active":
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "queued"
+							
 					# Set Status to paused
 					RaptorRender.rr_data.jobs[selected].status = "4_paused"
 				
@@ -186,6 +191,11 @@ func _on_ContextMenu_index_pressed(index):
 						if RaptorRender.rr_data.clients[client].current_job_id == selected:
 							RaptorRender.rr_data.clients[client].current_job_id = ""
 							RaptorRender.rr_data.clients[client].status = "2_available"
+							
+					# cancle active chunks
+					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
+						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "active":
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "queued"
 					
 					# Set Status to cancelled
 					RaptorRender.rr_data.jobs[selected].status = "6_cancelled"
