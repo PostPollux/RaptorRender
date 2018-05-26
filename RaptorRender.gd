@@ -912,6 +912,10 @@ func refresh_jobs_table():
 			chunks_total += 1
 			
 		JobProgressBar.set_chunks(chunks_total, chunks_finished, chunks_active)
+		if rr_data.jobs[job[0]].status == "4_paused":
+			JobProgressBar.job_status = "paused"
+		if rr_data.jobs[job[0]].status == "6_cancelled":
+			JobProgressBar.job_status = "cancelled"
 		TableJobs.set_cell_content(count, progress_column, JobProgressBar)
 		
 		

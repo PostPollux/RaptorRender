@@ -11,7 +11,7 @@ var CellContainer
 var chunks_total = 3
 var chunks_finished = 1
 var chunks_active = 1
-
+var job_status = "normal"
 
 func _ready():
 	
@@ -20,6 +20,7 @@ func _ready():
 	# set correct size
 	rect_min_size.x = CellContainer.rect_min_size.x - 5
 	
+	match_color_to_status()
 	show_progress()
 	
 
@@ -34,6 +35,12 @@ func set_chunks (total, finished, active):
 	chunks_finished = finished
 	chunks_active = active
 	
+	
+func match_color_to_status():
+	match job_status:
+		"normal": pass
+		"paused": BarFinished.set_color_paused()
+		"cancelled": BarFinished.set_color_cancelled()
 	
 	
 func show_progress():
