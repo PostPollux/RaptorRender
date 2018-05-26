@@ -37,6 +37,8 @@ func _ready():
 				"note": "eine Notiz",
 				"errors": 2,
 				"pools": ["AE_Plugins"],
+				"scene_directory" : "/home/johannes/Downloads/",
+				"output_directory" : "/home/johannes/GodotTest/",
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -81,6 +83,8 @@ func _ready():
 				"note": "",
 				"errors": 0,
 				"pools": ["AE_Plugins", "third pool"],
+				"scene_directory" : "\\home\\johannes\\Downloads\\",
+				"output_directory" : "\\home\\johannes\\GodotTest\\",
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -125,6 +129,8 @@ func _ready():
 				"note": "",
 				"errors": 0,
 				"pools": ["third pool"],
+				"scene_directory" : "/home/johannes/Downloads/",
+				"output_directory" : "/home/johannes/GodotTest/",
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -169,6 +175,8 @@ func _ready():
 				"note": "Rabarber",
 				"errors": 0,
 				"pools": ["another pool"],
+				"scene_directory" : "/home/johannes/Downloads/",
+				"output_directory" : "/home/johannes/GodotTest/",
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -213,6 +221,8 @@ func _ready():
 				"note": "3 Fehler",
 				"errors": 0,
 				"pools": ["AE_Plugins"],
+				"scene_directory" : "/home/johannes/Downloads/",
+				"output_directory" : "/home/johannes/GodotTest/",
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -257,6 +267,8 @@ func _ready():
 				"note": "",
 				"errors": 0,
 				"pools": ["another pool"],
+				"scene_directory" : "/home/johannes/Downloads/",
+				"output_directory" : "/home/johannes/GodotTest/",
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -301,6 +313,8 @@ func _ready():
 				"note": "",
 				"errors": 11,
 				"pools": ["AE_Plugins"],
+				"scene_directory" : "/home/johannes/Downloads/",
+				"output_directory" : "/home/johannes/GodotTest/",
 				"chunks": {
 					"1":{
 						"status" : "queued",
