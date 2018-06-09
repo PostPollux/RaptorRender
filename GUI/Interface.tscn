@@ -2,12 +2,12 @@
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
-[ext_resource path="res://GUI/ClientsInfoPanel/Clients_Info_Panel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://GUI/ClientsInfoPanel/Job_Info_Panel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/InfoPanels/Client_Info_Panel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/InfoPanels/Job_Info_Panel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Clients.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Jobs.tscn" type="PackedScene" id=6]
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 [node name="BackgroundColor" type="ColorRect" parent="." index="0"]
 
