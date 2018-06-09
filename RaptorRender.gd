@@ -18,6 +18,9 @@ var TableClients
 var ContextMenu_Clients
 var ContextMenu_Jobs
 
+var ClientInfoPanel
+var JobInfoPanel
+
 var rr_data = {}
 
 func _ready():
@@ -612,6 +615,9 @@ func _ready():
 	#test_prints()
 	
 	
+func register_client_info_panel(InfoPanel):  
+	
+	ClientInfoPanel = InfoPanel
 
 
 
@@ -648,12 +654,16 @@ func register_context_menu(ContextMenu):
 			
 func client_selected(content_id_of_row):
 	TableJobs.clear_selection()
+	ClientInfoPanel.visible = true
+	ClientInfoPanel.update_client_info_panel(content_id_of_row)
 	print( content_id_of_row )
 	
 	
 	
 func job_selected(content_id_of_row):
 	TableClients.clear_selection()
+	ClientInfoPanel.visible = false
+	ClientInfoPanel.reset_to_first_tab()
 	print( content_id_of_row )
 
 
