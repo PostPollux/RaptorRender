@@ -620,6 +620,10 @@ func register_client_info_panel(InfoPanel):
 	ClientInfoPanel = InfoPanel
 
 
+func register_job_info_panel(InfoPanel):  
+	
+	JobInfoPanel = InfoPanel
+
 
 func register_table(SortableTable):  
 
@@ -654,9 +658,11 @@ func register_context_menu(ContextMenu):
 			
 func client_selected(content_id_of_row):
 	TableJobs.clear_selection()
-	ClientInfoPanel.visible = true
+	JobInfoPanel.visible = false
+	JobInfoPanel.reset_to_first_tab()
 	ClientInfoPanel.update_client_info_panel(content_id_of_row)
-	print( content_id_of_row )
+	ClientInfoPanel.visible = true
+	
 	
 	
 	
@@ -664,7 +670,9 @@ func job_selected(content_id_of_row):
 	TableClients.clear_selection()
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
-	print( content_id_of_row )
+	JobInfoPanel.update_job_info_panel(content_id_of_row)
+	JobInfoPanel.visible = true
+	
 
 
 func client_context_menu_invoked():

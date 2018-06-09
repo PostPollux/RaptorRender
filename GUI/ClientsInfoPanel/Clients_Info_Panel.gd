@@ -6,6 +6,8 @@ onready var NameLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Mai
 onready var StatusLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
 onready var UptimeLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
 
+onready var CPULabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
+onready var RAMLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
 onready var PlatformLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/PlatformLabel"
 onready var IPLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
 
@@ -51,11 +53,8 @@ func update_client_info_panel(client_id):
 		
 	UptimeLabel.text = "Uptime:  " + selected_client["uptime"]
 	
-	
+	CPULabel.text = "CPU:  " + selected_client["cpu"]
+	RAMLabel.text = "Memory:  " + String(selected_client["memory"]) + " GB"
 	PlatformLabel.text = "Platform:  " + selected_client["platform"]
 	IPLabel.text = "IP:  " + selected_client["ip"]
-	
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+

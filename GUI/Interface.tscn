@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GUI/ClientsInfoPanel/Clients_Info_Panel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Clients.tscn" type="PackedScene" id=4]
-[ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Jobs.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GUI/ClientsInfoPanel/Job_Info_Panel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Clients.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Jobs.tscn" type="PackedScene" id=6]
 
 [node name="Node" type="Node"]
 
@@ -218,12 +219,18 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="Control" parent="Control/HSplitContainer/PanelContainer/Panel" index="0" instance=ExtResource( 3 )]
+[node name="ClientInfoPanel" parent="Control/HSplitContainer/PanelContainer/Panel" index="0" instance=ExtResource( 3 )]
 
+visible = false
 margin_right = 0.0
 
-[node name="ContextMenu_Clients" parent="Control" index="1" instance=ExtResource( 4 )]
+[node name="JobInfoPanel" parent="Control/HSplitContainer/PanelContainer/Panel" index="1" instance=ExtResource( 4 )]
 
-[node name="ContextMenu_Jobs" parent="Control" index="2" instance=ExtResource( 5 )]
+visible = false
+margin_right = 0.0
+
+[node name="ContextMenu_Clients" parent="Control" index="1" instance=ExtResource( 5 )]
+
+[node name="ContextMenu_Jobs" parent="Control" index="2" instance=ExtResource( 6 )]
 
 
