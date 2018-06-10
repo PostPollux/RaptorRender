@@ -17,6 +17,7 @@ config/icon="res://Main_Icons/RR_Icon_64_1.png"
 [autoload]
 
 RaptorRender="*res://RaptorRender.gd"
+TimeFunctions="*res://TimeFunctions.gd"
 
 [debug]
 

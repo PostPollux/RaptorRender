@@ -24,6 +24,11 @@ var JobInfoPanel
 var rr_data = {}
 
 func _ready():
+	print(OS.get_unix_time())
+	
+	TimeFunctions.time_stamp_to_date_as_string(TimeFunctions.time_stamp_with_time_zone())
+	
+	print(TimeFunctions.time_elapsed_as_string(1528623180,1528724124))
 	
 	rr_data = {
 		"jobs": {
@@ -45,31 +50,59 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "queued",
-						"frames_to_calculate" : [20,21,22,23]
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"2":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "active",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"4":{
 						"status" : "active",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"5":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"6":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"7":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					}
 				}
 			},
@@ -91,31 +124,59 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "queued",
-						"frames_to_calculate" : [20,21,22,23]
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"2":{
 						"status" : "active",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "active",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"4":{
 						"status" : "active",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"5":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"6":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"7":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					}
 				}
 			},
@@ -137,31 +198,59 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "queued",
-						"frames_to_calculate" : [20,21,22,23]
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"2":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"4":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"5":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"6":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"7":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					}
 				}
 			},
@@ -183,31 +272,59 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "queued",
-						"frames_to_calculate" : [20,21,22,23]
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"2":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"4":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"5":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"6":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"7":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					}
 				}
 			},
@@ -229,31 +346,59 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "finished",
-						"frames_to_calculate" : [20,21,22,23]
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"2":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"4":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"5":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"6":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"7":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					}
 				}
 			},
@@ -275,31 +420,59 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "queued",
-						"frames_to_calculate" : [20,21,22,23]
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"2":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"4":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"5":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"6":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"7":{
 						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					}
 				}
 			},
@@ -321,31 +494,51 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "queued",
-						"frames_to_calculate" : [20,21,22,23]
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"2":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
-					},
-					"4":{
-						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"5":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"6":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					},
 					"7":{
 						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27]
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
 					}
 				}
 			}
