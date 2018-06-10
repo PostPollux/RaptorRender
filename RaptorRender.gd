@@ -37,7 +37,7 @@ func _ready():
 				"type": "Blender",
 				"priority": 50,
 				"creator": "Johannes",
-				"time_created": "2018/12/13 - 16:23:44",
+				"time_created": 1528623180,
 				"status": "1_rendering",
 				"progress": 28,
 				"range_start": 230,
@@ -111,7 +111,7 @@ func _ready():
 				"type": "Blender",
 				"priority": 50,
 				"creator": "Johannes",
-				"time_created": "2018/12/13 - 16:23:44",
+				"time_created": 1528621180,
 				"status": "1_rendering",
 				"progress": 28,
 				"range_start": 1,
@@ -185,7 +185,7 @@ func _ready():
 				"type": "Blender",
 				"priority": 20,
 				"creator": "Chris",
-				"time_created": "2017/02/09 - 06:29:04",
+				"time_created": 1528613180,
 				"status": "2_queued",
 				"progress": 0,
 				"range_start": 1,
@@ -259,7 +259,7 @@ func _ready():
 				"type": "After Effects",
 				"priority": 20,
 				"creator": "Michael",
-				"time_created": "2017/06/17 - 12:11:32",
+				"time_created": 1528523180,
 				"status": "4_paused",
 				"progress": 34,
 				"range_start": 80,
@@ -333,7 +333,7 @@ func _ready():
 				"type": "Natron",
 				"priority": 77,
 				"creator": "Max",
-				"time_created": "2018/03/01 - 10:43:14",
+				"time_created": 1528620180,
 				"status": "5_finished",
 				"progress": 100,
 				"range_start": 120,
@@ -407,7 +407,7 @@ func _ready():
 				"type": "Nuke",
 				"priority": 10,
 				"creator": "Nicolaj",
-				"time_created": "2018/05/26 - 19:13:24",
+				"time_created": 1528623110,
 				"status": "6_cancelled",
 				"progress": 10,
 				"range_start": 1600,
@@ -481,7 +481,7 @@ func _ready():
 				"type": "3DS Max",
 				"priority": 10,
 				"creator": "Nicolaj",
-				"time_created": "2018/01/02 - 14:33:56",
+				"time_created": 1525611110,
 				"status": "3_error",
 				"progress": 0,
 				"range_start": 20,
@@ -1161,9 +1161,9 @@ func refresh_jobs_table():
 		# Time Created
 		
 		var LabelTimeCreated = Label.new()
-		LabelTimeCreated.text = rr_data.jobs[job[0]].time_created
+		LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job[0]].time_created )
 		TableJobs.set_cell_content(count, time_created_column, LabelTimeCreated)
-		
+
 		
 		# Frame Range
 		
