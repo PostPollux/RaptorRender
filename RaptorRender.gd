@@ -28,7 +28,6 @@ func _ready():
 	
 	TimeFunctions.time_stamp_to_date_as_string(TimeFunctions.time_stamp_with_time_zone())
 	
-	print(TimeFunctions.time_elapsed_as_string(1528623180,1528724124))
 	
 	rr_data = {
 		"jobs": {
@@ -47,6 +46,7 @@ func _ready():
 				"pools": ["AE_Plugins"],
 				"scene_directory" : "/home/johannes/Downloads/",
 				"output_directory" : "/home/johannes/GodotTest/",
+				"render_time" : 345,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -121,6 +121,7 @@ func _ready():
 				"pools": ["AE_Plugins", "third pool"],
 				"scene_directory" : "\\home\\johannes\\Downloads\\",
 				"output_directory" : "\\home\\johannes\\GodotTest\\",
+				"render_time" : 3645,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -195,6 +196,7 @@ func _ready():
 				"pools": ["third pool"],
 				"scene_directory" : "/home/johannes/Downloads/",
 				"output_directory" : "/home/johannes/GodotTest/",
+				"render_time" : 45,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -269,6 +271,7 @@ func _ready():
 				"pools": ["another pool"],
 				"scene_directory" : "/home/johannes/Downloads/",
 				"output_directory" : "/home/johannes/GodotTest/",
+				"render_time" : 54445,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -343,6 +346,7 @@ func _ready():
 				"pools": ["AE_Plugins"],
 				"scene_directory" : "/home/johannes/Downloads/",
 				"output_directory" : "/home/johannes/GodotTest/",
+				"render_time" : 2487,
 				"chunks": {
 					"1":{
 						"status" : "finished",
@@ -409,7 +413,7 @@ func _ready():
 				"creator": "Nicolaj",
 				"time_created": 1528623110,
 				"status": "6_cancelled",
-				"progress": 10,
+				"progress": 57,
 				"range_start": 1600,
 				"range_end": 2800,
 				"note": "",
@@ -417,6 +421,7 @@ func _ready():
 				"pools": ["another pool"],
 				"scene_directory" : "/home/johannes/Downloads/",
 				"output_directory" : "/home/johannes/GodotTest/",
+				"render_time" : 3433578,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -491,6 +496,7 @@ func _ready():
 				"pools": ["AE_Plugins"],
 				"scene_directory" : "/home/johannes/Downloads/",
 				"output_directory" : "/home/johannes/GodotTest/",
+				"render_time" : 4578,
 				"chunks": {
 					"1":{
 						"status" : "queued",
@@ -556,7 +562,7 @@ func _ready():
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
-				"uptime": "2h",
+				"time_connected": 1528759663,
 				"cpu": "16 x 3,8GHZ",
 				"memory": 32,
 				"memory_used": 22,
@@ -573,7 +579,7 @@ func _ready():
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
-				"uptime": "1h",
+				"time_connected": 1528759663,
 				"cpu": "8 x 4GHZ",
 				"memory": 16,
 				"memory_used": 2,
@@ -590,7 +596,7 @@ func _ready():
 				"platform": "MacOS",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
-				"uptime": "2h",
+				"time_connected": 1528759663,
 				"cpu": "16 x 3,8GHZ",
 				"memory": 64,
 				"memory_used": 22,
@@ -607,7 +613,7 @@ func _ready():
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
-				"uptime": "1h",
+				"time_connected": 1528759663,
 				"cpu": "8 x 4GHZ",
 				"memory": 8,
 				"memory_used": 2,
@@ -624,7 +630,7 @@ func _ready():
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
-				"uptime": "2h",
+				"time_connected": 1528759663,
 				"cpu": "16 x 3,8GHZ",
 				"memory": 4,
 				"memory_used": 22,
@@ -641,7 +647,7 @@ func _ready():
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
-				"uptime": "1h",
+				"time_connected": 1528759663,
 				"cpu": "8 x 4GHZ",
 				"memory": 16,
 				"memory_used": 2,
@@ -658,7 +664,7 @@ func _ready():
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
-				"uptime": "2h",
+				"time_connected": 1528759663,
 				"cpu": "4 x 3,2GHZ",
 				"memory": 32,
 				"memory_used": 22,
@@ -675,7 +681,7 @@ func _ready():
 				"platform": "Windows",
 				"pools": [],
 				"rr_version": 0.2,
-				"uptime": "1h",
+				"time_connected": 1528759663,
 				"cpu": "8 x 2,4GHZ",
 				"memory": 16,
 				"memory_used": 2,
@@ -692,7 +698,7 @@ func _ready():
 				"platform": "Linux",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
-				"uptime": "2h",
+				"time_connected": 1528759663,
 				"cpu": "16 x 3,8GHZ",
 				"memory": 32,
 				"memory_used": 22,
@@ -709,7 +715,7 @@ func _ready():
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 0.2,
-				"uptime": "1h",
+				"time_connected": 1528759663,
 				"cpu": "8 x 4GHZ",
 				"memory": 16,
 				"memory_used": 2,
@@ -726,7 +732,7 @@ func _ready():
 				"platform": "MacOS",
 				"pools": ["AE_Plugins"],
 				"rr_version": 1.2,
-				"uptime": "2h",
+				"time_connected": 1528759663,
 				"cpu": "16 x 3,8GHZ",
 				"memory": 64,
 				"memory_used": 22,
@@ -743,7 +749,7 @@ func _ready():
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "8GB+ VRam", "third pool"],
 				"rr_version": 0.2,
-				"uptime": "100h",
+				"time_connected": 1528759663,
 				"cpu": "12 x 4GHZ",
 				"memory": 16,
 				"memory_used": 2,
@@ -760,7 +766,7 @@ func _ready():
 				"platform": "Linux",
 				"pools": ["AE_Plugins", "8GB+ VRam"],
 				"rr_version": 1.2,
-				"uptime": "5h",
+				"time_connected": 1528759663,
 				"cpu": "6 x 3,8GHZ",
 				"memory": 4,
 				"memory_used": 22,
@@ -777,7 +783,7 @@ func _ready():
 				"platform": "Linux",
 				"pools": ["8GB+ VRam"],
 				"rr_version": 1.2,
-				"uptime": "20h",
+				"time_connected": 1528759663,
 				"cpu": "12 x 3,2GHZ",
 				"memory": 2,
 				"memory_used": 22,
@@ -794,7 +800,7 @@ func _ready():
 				"platform": "Windows",
 				"pools": ["AE_Plugins", "another pool", "third pool"],
 				"rr_version": 0.2,
-				"uptime": "11h",
+				"time_connected": 1528759663,
 				"cpu": "24 x 2,4GHZ",
 				"memory": 128,
 				"memory_used": 2,
@@ -1123,20 +1129,9 @@ func refresh_jobs_table():
 		var JobProgressBar = JobProgressBarRes.instance()
 		JobProgressBar.rect_min_size.x = 120
 		
-		var chunk_keys = rr_data.jobs[job[0]].chunks.keys()
-		
-		var chunks_total = 0
-		var chunks_finished = 0
-		var chunks_active = 0
-		
-		for chunk_key in chunk_keys:
-			var chunk_status = rr_data.jobs[job[0]].chunks[chunk_key].status
-			match chunk_status:
-				"active": chunks_active += 1
-				"finished": chunks_finished += 1
-			chunks_total += 1
+		var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job[0])
 			
-		JobProgressBar.set_chunks(chunks_total, chunks_finished, chunks_active)
+		JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
 		if rr_data.jobs[job[0]].status == "4_paused":
 			JobProgressBar.job_status = "paused"
 		if rr_data.jobs[job[0]].status == "6_cancelled":

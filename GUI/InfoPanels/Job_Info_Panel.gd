@@ -6,6 +6,9 @@ onready var StatusIconTexture = $"TabContainer/Details/MarginContainer/VBoxConta
 
 onready var NameLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/NameLabel"
 onready var StatusLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
+onready var TimeRenderedLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/TimeRenderedLabel"
+onready var TimeRemainingLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/TimeRemainingLabel"
+
 
 func _ready():
 	RaptorRender.register_job_info_panel(self)
@@ -25,6 +28,8 @@ func update_job_info_panel(job_id):
 	var status = selected_job["status"]
 	
 	
+	# Status Icon
+	
 	var icon = ImageTexture.new()
 	
 	match status:
@@ -38,6 +43,7 @@ func update_job_info_panel(job_id):
 	StatusIconTexture.set_texture(icon)
 	
 	
+	# Status
 	
 	match status:
 		"1_rendering": StatusLabel.text = "Status:  Rendering"
@@ -47,9 +53,17 @@ func update_job_info_panel(job_id):
 		"5_finished":  StatusLabel.text = "Status:  Finished"
 		"6_cancelled": StatusLabel.text = "Status:  Cancelled"
 		
-#	UptimeLabel.text = "Uptime:  " + selected_client["uptime"]
-#
-#	CPULabel.text = "CPU:  " + selected_client["cpu"]
-#	RAMLabel.text = "Memory:  " + String(selected_client["memory"]) + " GB"
-#	PlatformLabel.text = "Platform:  " + selected_client["platform"]
-#	IPLabel.text = "IP:  " + selected_client["ip"]
+		
+	# Render Time and Time Remaining
+	
+	TimeRenderedLabel.text = "Time rendered:  " + TimeFunctions.seconds_to_string( selected_job["render_time"], 2 )
+	
+	var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job_id)
+	var progress = float(chunk_counts[1]) / float(chunk_counts[0])
+	print(progress)
+	
+	if progress > 0:
+		TimeRemainingLabel.text = "Time remaining:  " + TimeFunctions.seconds_to_string( int( (selected_job["render_time"] * 1 / progress) - selected_job["render_time"]), 2 )
+	else:
+		TimeRemainingLabel.text = "Time remaining:  "
+		

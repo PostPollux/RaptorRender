@@ -50,8 +50,11 @@ func update_client_info_panel(client_id):
 		"3_error":     StatusLabel.text = "Status:  Error"
 		"4_disabled":  StatusLabel.text = "Status:  Disabled"
 		"5_offline":   StatusLabel.text = "Status:  Offline"
-		
-	UptimeLabel.text = "Uptime:  " + selected_client["uptime"]
+	
+	if status != "5_offline":	
+		UptimeLabel.text = "Uptime:  " + TimeFunctions.time_elapsed_as_string(selected_client["time_connected"], OS.get_unix_time(), 2)
+	else:
+		UptimeLabel.text = "Last seen:  not implemented yet" 
 	
 	CPULabel.text = "CPU:  " + selected_client["cpu"]
 	RAMLabel.text = "Memory:  " + String(selected_client["memory"]) + " GB"
