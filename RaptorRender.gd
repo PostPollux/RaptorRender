@@ -24,10 +24,6 @@ var JobInfoPanel
 var rr_data = {}
 
 func _ready():
-	print(OS.get_unix_time())
-	
-	TimeFunctions.time_stamp_to_date_as_string(TimeFunctions.time_stamp_with_time_zone())
-	
 	
 	rr_data = {
 		"jobs": {
@@ -1156,7 +1152,7 @@ func refresh_jobs_table():
 		# Time Created
 		
 		var LabelTimeCreated = Label.new()
-		LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job[0]].time_created )
+		LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job[0]].time_created, 2)
 		TableJobs.set_cell_content(count, time_created_column, LabelTimeCreated)
 
 		
