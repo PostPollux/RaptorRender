@@ -6,6 +6,9 @@ func _ready():
 	
 	print ("MAC Addresses:")
 	print (get_MAC_addresses())
+	print("")
+	print ("Memory:")
+	print ( get_memory())
 	
 
 
@@ -13,6 +16,7 @@ func _ready():
 func get_MAC_addresses():
 	
 	var mac_addresses = []
+	
 	var platform = OS.get_name()
 			
 	match platform:
@@ -64,4 +68,71 @@ func get_MAC_addresses():
 			var arguments = []
 			OS.execute("getmac", arguments, true, getmac_output)
 			print ( getmac_output )
+			
+
+
+
+
+
+# returns an array [MemTotal, MemAvailable] (in kb)
+func get_memory():
+	
+	var memory = []
+	
+	var platform = OS.get_name()
+			
+	match platform:
+		
+		# Linux
+		"X11" : 
+			
+			# just read the file /proc/meminfo
+						
+			var meminfo_file_path = "/proc/meminfo"
+						
+			var meminfo_file = File.new()
+						
+			if meminfo_file.file_exists(meminfo_file_path):
+				
+				var mem_total = 0
+				var mem_available = 0
+				
+				meminfo_file.open(meminfo_file_path,1)
+				
+				while true:
+					var line = meminfo_file.get_line()
+					
+					if line.begins_with("MemTotal"):
+						line = line.right(10) #cut off beginning
+						line = line.left(line.rfind("kB", -1)) # cut off kB
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						mem_total = int (line)
+						
+						
+					if line.begins_with("MemAvailable"):
+						line = line.right(13) #cut off beginning
+						line = line.left(line.rfind("kB", -1)) # cut off kB
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						mem_available = int (line)
+						
+					# break loop when both values are set	
+					if (mem_total != 0 and mem_available != 0) :
+						break
+					
+					# break loop if end of file is reached
+					if line == "":
+						break
+					
+				memory.append(mem_total)
+				memory.append(mem_available)
+				
+			
+			return memory
+		
+		
+		# Windows
+		"Windows" :	
+			pass
+			
+			
 			
