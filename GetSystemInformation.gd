@@ -57,5 +57,11 @@ func get_MAC_addresses():
 						
 					
 					return mac_addresses
-			
+		
+		# Windows
+		"Windows" :	
+			var getmac_output = []
+			var arguments = []
+			OS.execute("getmac", arguments, true, getmac_output)
+			print ( getmac_output )
 			
