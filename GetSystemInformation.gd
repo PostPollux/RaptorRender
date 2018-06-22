@@ -4,11 +4,26 @@ extends Node
 
 func _ready():
 	
+	var mac_addresses = get_MAC_addresses()
+	var cpu = get_cpu_info()
+	var mem = get_memory()
+	
+	print(" ")
 	print ("MAC Addresses:")
-	print (get_MAC_addresses())
-	print("")
+	print (mac_addresses)
+	print(" ")
+	print ("CPU:")
+	print ("Model Name: " + cpu[0])
+	print ("GHz: " + String( cpu[1] ) +" GHz")
+	print ("Sockets: " + String( cpu[2]))
+	print ("Cores: " + String( cpu[3]))
+	print ("Threads: " + String( cpu[4]))
+	print(" ")
 	print ("Memory:")
-	print ( get_memory())
+	print ("total: " + String( mem[0]/1000 ) +" MB")
+	print ("available: " + String( mem[1]/1000 ) +" MB")
+	print ("used: " + String( (mem[0]-mem[1])/1000 ) +" MB")
+	
 	
 
 
@@ -128,6 +143,103 @@ func get_memory():
 				
 			
 			return memory
+		
+		
+		# Windows
+		"Windows" :	
+			pass
+			
+			
+			
+			
+# returns an array [Model Name, MHz, number of sockets, number of cores, number of threads] 
+func get_cpu_info():
+	
+	var cpu = []
+	
+	var platform = OS.get_name()
+			
+	match platform:
+		
+		# Linux
+		"X11" : 
+			
+			# just read the file /proc/cpuinfo
+						
+			var cpuinfo_file_path = "/proc/cpuinfo"
+						
+			var cpuinfo_file = File.new()
+						
+			if cpuinfo_file.file_exists(cpuinfo_file_path):
+				
+				var model_name = ""
+				var GHz = 0.0
+				var sockets = 0
+				var cores = 0
+				var threads = 0
+				
+				var number_of_empty_lines = 0
+				
+				cpuinfo_file.open(cpuinfo_file_path,1)
+				
+				while true:
+					
+					var line = cpuinfo_file.get_line()
+					
+					if line.begins_with("model name"):
+						line = line.right(10) #cut off beginning
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						line = line.right(1) # cut off ":" 
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						model_name = line
+						
+						GHz = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
+						GHz = GHz.left(GHz.rfind("GHz", -1))
+						GHz = float (GHz)
+						
+							
+						
+					if line.begins_with("cpu cores"):
+						line = line.right(9) #cut off beginning
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						line = line.right(1) # cut off ":" 
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						cores = int(line)
+						
+						
+					if line.begins_with("siblings"):
+						line = line.right(8) #cut off beginning
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						line = line.right(1) # cut off ":" 
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						threads = int(line)
+						
+						
+					if line.begins_with("physical id"):
+						line = line.right(11) #cut off beginning
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						line = line.right(1) # cut off ":" 
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						var physical_id = int(line)	
+						if physical_id > sockets:
+							sockets = physical_id
+					
+					# break loop if end of file is reached (more then 2 empty lines in a row)
+					if line == "":
+						number_of_empty_lines += 1
+						if number_of_empty_lines > 2:
+							break
+					else:
+						number_of_empty_lines = 0
+					
+				
+				cpu.append(model_name)
+				cpu.append(GHz)
+				cpu.append(sockets + 1)
+				cpu.append(cores)
+				cpu.append(threads)
+				
+			return cpu
 		
 		
 		# Windows
