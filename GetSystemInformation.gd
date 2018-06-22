@@ -4,10 +4,13 @@ extends Node
 
 func _ready():
 	
+	var hostname = get_hostname()
 	var mac_addresses = get_MAC_addresses()
 	var cpu = get_cpu_info()
 	var mem = get_memory()
 	
+	print(" ")
+	print ("Hostname: " + hostname)
 	print(" ")
 	print ("MAC Addresses:")
 	print (mac_addresses)
@@ -240,6 +243,39 @@ func get_cpu_info():
 				cpu.append(threads)
 				
 			return cpu
+		
+		
+		# Windows
+		"Windows" :	
+			pass
+			
+			
+
+# returns the name of the computer
+func get_hostname():
+	
+	var hostname = ""
+	
+	var platform = OS.get_name()
+			
+	match platform:
+		
+		# Linux
+		"X11" : 
+			
+			# just read the file /etc/hostname
+						
+			var hostname_file_path = "/etc/hostname"
+						
+			var hostname_file = File.new()
+						
+			if hostname_file.file_exists(hostname_file_path):
+				
+				hostname_file.open(hostname_file_path,1)
+				
+				hostname = hostname_file.get_as_text().strip_edges(true,true)
+				
+			return hostname
 		
 		
 		# Windows
