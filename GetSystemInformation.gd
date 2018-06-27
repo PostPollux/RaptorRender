@@ -30,7 +30,7 @@ func _ready():
 	
 
 
-# returns the MAC Adresses as a String Array
+# returns the MAC Adresses as a String Array with ":" inbetween
 func get_MAC_addresses():
 	
 	var mac_addresses = []
@@ -82,10 +82,24 @@ func get_MAC_addresses():
 		
 		# Windows
 		"Windows" :	
+		
+			# invoke getmac with format option csv
 			var getmac_output = []
-			var arguments = []
-			OS.execute("getmac", arguments, true, getmac_output)
-			print ( getmac_output )
+			var arguments = ["/fo", "csv"]
+			OS.execute("getmac", arguments, true, getmac_output)   
+			
+			# split String in lines
+			var splitted_output = getmac_output[0].split('\n', false, 0)  
+			
+			# extract the mac addresses from the second line onwards
+			for i in range( 1, splitted_output.size()):
+				var mac_address = splitted_output[i].right(1).left(17)  # cut off beginning and ending of the line to extract the mac-address
+				mac_address = mac_address.replace("-",":")
+				
+				mac_addresses.append(mac_address)
+				
+			
+			return mac_addresses
 			
 
 
@@ -150,7 +164,10 @@ func get_memory():
 		
 		# Windows
 		"Windows" :	
-			pass
+		
+			# not implemented
+			var erg = [0,0]
+			return erg
 			
 			
 			
@@ -247,7 +264,7 @@ func get_cpu_info():
 		
 		# Windows
 		"Windows" :	
-			pass
+			return ("not implemented")
 			
 			
 
@@ -280,7 +297,7 @@ func get_hostname():
 		
 		# Windows
 		"Windows" :	
-			pass
+			return ( "not implemented")
 			
 			
 			
