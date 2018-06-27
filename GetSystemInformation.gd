@@ -297,7 +297,15 @@ func get_hostname():
 		
 		# Windows
 		"Windows" :	
-			return ( "not implemented")
+		
+			var hostname_output = []
+			var arguments = []
+			OS.execute("hostname", arguments, true, hostname_output)
+			
+			hostname = hostname_output[0]
+			
+			return hostname
+			
 			
 			
 			
