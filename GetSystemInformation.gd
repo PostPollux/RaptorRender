@@ -164,6 +164,8 @@ func get_memory():
 		
 		# Windows
 		"Windows" :	
+			# wmic OS get FreePhysicalMemory
+			# wmic OS get TotalVisibleMemorySize
 		
 			# not implemented
 			var erg = [0,0]
@@ -176,6 +178,12 @@ func get_memory():
 func get_cpu_info():
 	
 	var cpu = []
+	
+	var model_name = ""
+	var GHz = 0.0
+	var sockets = 0
+	var cores = 0
+	var threads = 0
 	
 	var platform = OS.get_name()
 			
@@ -191,12 +199,6 @@ func get_cpu_info():
 			var cpuinfo_file = File.new()
 						
 			if cpuinfo_file.file_exists(cpuinfo_file_path):
-				
-				var model_name = ""
-				var GHz = 0.0
-				var sockets = 0
-				var cores = 0
-				var threads = 0
 				
 				var number_of_empty_lines = 0
 				
@@ -264,7 +266,61 @@ func get_cpu_info():
 		
 		# Windows
 		"Windows" :	
-			return ("not implemented")
+			
+			# get model name and GHz
+			var output = []
+			var arguments = ['/C','wmic cpu get Name /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			model_name = output[0].strip_edges(true,true)  # strip away empty stuff
+			model_name = model_name.split("=")[1]  # Take the string behind the "="
+			
+			GHz = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
+			GHz = GHz.left(GHz.rfind("GHz", -1))
+			GHz = float (GHz)
+			
+			
+			# get number of sockets
+			output = []
+			arguments = ['/C','wmic COMPUTERSYSTEM get NumberOfProcessors /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			sockets = output[0].strip_edges(true,true)  # strip away empty stuff
+			sockets = sockets.split("=")[1]  # Take the string behind the "="
+			sockets = int(sockets)
+			
+			
+			# get number of cores
+			output = []
+			arguments = ['/C','wmic cpu get NumberOfCores /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			cores = output[0].strip_edges(true,true)  # strip away empty stuff
+			cores = cores.split("=")[1]  # Take the string behind the "="
+			cores = int(cores)
+			
+			
+			# get number of threads
+			output = []
+			arguments = ['/C','wmic cpu get NumberOfLogicalProcessors /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			threads = output[0].strip_edges(true,true)  # strip away empty stuff
+			threads = threads.split("=")[1]  # Take the string behind the "="
+			threads = int(threads)
+			
+			# build the array
+			cpu.append(model_name)
+			cpu.append(GHz)
+			cpu.append(sockets)
+			cpu.append(cores)
+			cpu.append(threads)
+		
+			return cpu
 			
 			
 
