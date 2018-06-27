@@ -23,9 +23,9 @@ func _ready():
 	print ("Threads: " + String( cpu[4]))
 	print(" ")
 	print ("Memory:")
-	print ("total: " + String( mem[0]/1000 ) +" MB")
-	print ("available: " + String( mem[1]/1000 ) +" MB")
-	print ("used: " + String( (mem[0]-mem[1])/1000 ) +" MB")
+	print ("total: " + String( mem[0]/1024 ) +" MB")
+	print ("available: " + String( mem[1]/1024 ) +" MB")
+	print ("used: " + String( (mem[0]-mem[1])/1024 ) +" MB")
 	
 	
 
@@ -164,12 +164,32 @@ func get_memory():
 		
 		# Windows
 		"Windows" :	
-			# wmic OS get FreePhysicalMemory
-			# wmic OS get TotalVisibleMemorySize
 		
-			# not implemented
-			var erg = [0,0]
-			return erg
+			# get total memory
+			var output = []
+			var arguments = ['/C','wmic OS get TotalVisibleMemorySize /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			var mem_total = output[0].strip_edges(true,true)  # strip away empty stuff
+			mem_total = mem_total.split("=")[1]  # Take the string behind the "="
+			mem_total = int(mem_total)
+			
+			
+			# get free memory
+			output = []
+			arguments = ['/C','wmic OS get FreePhysicalMemory /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			var mem_available = output[0].strip_edges(true,true)  # strip away empty stuff
+			mem_available = mem_available.split("=")[1]  # Take the string behind the "="
+			mem_available = int(mem_available)
+			
+			memory.append(mem_total)
+			memory.append(mem_available)
+			
+			return memory
 			
 			
 			
