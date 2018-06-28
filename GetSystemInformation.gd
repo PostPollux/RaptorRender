@@ -1,13 +1,61 @@
 extends Node
 
+var total_memory
+
+var memory_load
+var cpu_load
 
 
 func _ready():
 	
+	# create timer to constantly get the cpu and memory load
+	var hardware_info_timer = Timer.new()
+	hardware_info_timer.name = "Hardware Info Timer"
+	hardware_info_timer.wait_time = 2
+	hardware_info_timer.connect("timeout",self,"_on_hardware_info_timer_timeout") 
+	get_tree().get_root().get_node("Node").add_child(hardware_info_timer)
+	hardware_info_timer.start()
+	
+	
+	# fill the variables that don't change
+	total_memory = get_total_memory()
+	
+	
+	# print
+	print_hardware_info()
+	
+
+
+
+func _on_hardware_info_timer_timeout():
+	
+	# set memory_load
+	var mem_available = get_available_memory()
+	var mem_load_as_float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100
+	
+	memory_load = int(mem_load_as_float)
+	
+	
+	# set cpu load
+	cpu_load = int (get_cpu_load() )
+	
+	
+	
+	# print results
+	print ( "Memory Load: " + String( memory_load )  + " %"  )
+	print ( "CPU Load: " + String( cpu_load )  + " %"  )
+
+
+
+
+
+
+func print_hardware_info():
+	# Print
 	var hostname = get_hostname()
 	var mac_addresses = get_MAC_addresses()
 	var cpu = get_cpu_info()
-	var mem = get_memory()
+	var mem_available = get_available_memory()
 	
 	print(" ")
 	print ("Hostname: " + hostname)
@@ -23,11 +71,11 @@ func _ready():
 	print ("Threads: " + String( cpu[4]))
 	print(" ")
 	print ("Memory:")
-	print ("total: " + String( mem[0]/1024 ) +" MB")
-	print ("available: " + String( mem[1]/1024 ) +" MB")
-	print ("used: " + String( (mem[0]-mem[1])/1024 ) +" MB")
-	
-	
+	print ("total: " + String( total_memory / 1024 ) +" MB")
+	print ("available: " + String( mem_available / 1024 ) +" MB")
+	print ("used: " + String( (total_memory - mem_available) / 1024 ) +" MB")
+
+
 
 
 # returns the MAC Adresses as a String Array with ":" inbetween
@@ -106,10 +154,10 @@ func get_MAC_addresses():
 
 
 
-# returns an array [MemTotal, MemAvailable] (in kb)
-func get_memory():
+# returns total memory in kb
+func get_total_memory():
 	
-	var memory = []
+	var mem_total = 0
 	
 	var platform = OS.get_name()
 			
@@ -126,8 +174,8 @@ func get_memory():
 						
 			if meminfo_file.file_exists(meminfo_file_path):
 				
-				var mem_total = 0
-				var mem_available = 0
+				
+				
 				
 				meminfo_file.open(meminfo_file_path,1)
 				
@@ -138,28 +186,17 @@ func get_memory():
 						line = line.right(10) #cut off beginning
 						line = line.left(line.rfind("kB", -1)) # cut off kB
 						line = line.strip_edges(true,true) # remove nonprintable characters
-						mem_total = int (line)
+						mem_total = int (line)	
 						
-						
-					if line.begins_with("MemAvailable"):
-						line = line.right(13) #cut off beginning
-						line = line.left(line.rfind("kB", -1)) # cut off kB
-						line = line.strip_edges(true,true) # remove nonprintable characters
-						mem_available = int (line)
-						
-					# break loop when both values are set	
-					if (mem_total != 0 and mem_available != 0) :
+					# break loop when value is set
+					if (mem_total != 0) :
 						break
 					
 					# break loop if end of file is reached
 					if line == "":
-						break
-					
-				memory.append(mem_total)
-				memory.append(mem_available)
-				
+						break			
 			
-			return memory
+			return mem_total
 		
 		
 		# Windows
@@ -171,29 +208,82 @@ func get_memory():
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			var mem_total = output[0].strip_edges(true,true)  # strip away empty stuff
-			mem_total = mem_total.split("=")[1]  # Take the string behind the "="
-			mem_total = int(mem_total)
+			var mem_total_str = output[0].strip_edges(true,true)  # strip away empty stuff
+			mem_total_str = mem_total_str.split("=")[1]  # Take the string behind the "="
+			mem_total = int(mem_total_str)
 			
+			return mem_total
+			
+
+
+
+
+# returns available memory in kb
+func get_available_memory():
+	
+	var mem_available = 0
+	
+	var platform = OS.get_name()
+			
+	match platform:
+		
+		# Linux
+		"X11" : 
+			
+			# just read the file /proc/meminfo
+						
+			var meminfo_file_path = "/proc/meminfo"
+						
+			var meminfo_file = File.new()
+						
+			if meminfo_file.file_exists(meminfo_file_path):
+				
+				
+				
+				meminfo_file.open(meminfo_file_path,1)
+				
+				while true:
+					var line = meminfo_file.get_line()
+						
+					if line.begins_with("MemAvailable"):
+						line = line.right(13) #cut off beginning
+						line = line.left(line.rfind("kB", -1)) # cut off kB
+						line = line.strip_edges(true,true) # remove nonprintable characters
+						mem_available = int (line)
+						
+					# break loop when both values are set	
+					if (mem_available != 0) :
+						break
+					
+					# break loop if end of file is reached
+					if line == "":
+						break
+			
+			return mem_available
+		
+		
+		
+		# Windows
+		"Windows" :				
 			
 			# get free memory
-			output = []
-			arguments = ['/C','wmic OS get FreePhysicalMemory /Value']
+			var output = []
+			var arguments = ['/C','wmic OS get FreePhysicalMemory /Value']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			var mem_available = output[0].strip_edges(true,true)  # strip away empty stuff
-			mem_available = mem_available.split("=")[1]  # Take the string behind the "="
-			mem_available = int(mem_available)
+			var mem_available_str = output[0].strip_edges(true,true)  # strip away empty stuff
+			mem_available_str = mem_available_str.split("=")[1]  # Take the string behind the "="
+			mem_available = int(mem_available_str)
 			
-			memory.append(mem_total)
-			memory.append(mem_available)
-			
-			return memory
+			return mem_available
 			
 			
 			
-			
+
+
+
+
 # returns an array [Model Name, MHz, number of sockets, number of cores, number of threads] 
 func get_cpu_info():
 	
@@ -343,6 +433,38 @@ func get_cpu_info():
 			return cpu
 			
 			
+
+
+
+func get_cpu_load():
+	
+	var cpu_load_as_float = 0.0
+	
+	var platform = OS.get_name()
+			
+	match platform:
+		
+		# Linux
+		"X11" :
+			pass
+			
+		# Windows
+		"Windows" :	
+			
+			# get number of threads
+			var output = []
+			var arguments = ['/C','wmic cpu get loadpercentage /Value>test.txt']  # unfortunately saving to a text file only works in blocking mode :(
+			
+			#OS.execute('CMD.exe', arguments, false, output)
+			
+			#var cpu_load_str = output[0].strip_edges(true,true)  # strip away empty stuff
+			#cpu_load_str = cpu_load_str.split("=")[1]  # Take the string behind the "="
+			#cpu_load_as_float = float(cpu_load_str)
+			
+			return cpu_load_as_float
+
+
+
 
 # returns the name of the computer
 func get_hostname():
