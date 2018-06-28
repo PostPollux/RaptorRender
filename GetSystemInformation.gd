@@ -5,6 +5,8 @@ var total_memory
 var memory_load
 var cpu_load
 
+var recent_cpu_stat_values = []
+
 
 func _ready():
 	
@@ -446,7 +448,41 @@ func get_cpu_load():
 		
 		# Linux
 		"X11" :
-			pass
+			
+			# read the file /proc/stat 
+			# the first line is the accumulation of all the cores. It looks something like: 
+			# "cpu  337190 187 61395 3331872 1319 0 4453 0 0 0"
+			#		  ^          ^      ^
+			# 		 user      system  idle
+			
+			# twice with a small time offset. Substract the first values from the second ones. 
+			
+			# cat <(grep 'cpu ' /proc/stat) <(sleep 1 && grep 'cpu ' /proc/stat) > test.txt | awk -v RS="" '{print ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}'
+			
+			var cpu_load_file_path = "/proc/stat"
+						
+			var cpu_load_file = File.new()
+						
+			if cpu_load_file.file_exists(cpu_load_file_path):
+				
+				var number_of_empty_lines = 0
+				
+				cpu_load_file.open(cpu_load_file_path,1)
+					
+				var line = cpu_load_file.get_line() # get the first line
+				
+				line = line.strip_edges(true, true) # remove nonprintable characters
+				var current_cpu_stat_values = line.split(" ", false, 0) # convert the line to an array
+				
+				if (recent_cpu_stat_values.size() > 0):
+					var time_spent_user_plus_system = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3])
+					var time_spent_user_plus_system_plus_idle = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3]) + int(current_cpu_stat_values[4]) - int(recent_cpu_stat_values[4])
+					cpu_load_as_float = time_spent_user_plus_system * 100 / time_spent_user_plus_system_plus_idle
+
+				recent_cpu_stat_values = current_cpu_stat_values
+			
+			return cpu_load_as_float
+			
 			
 		# Windows
 		"Windows" :	
