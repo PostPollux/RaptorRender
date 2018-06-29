@@ -634,6 +634,9 @@ func get_graphic_cards():
 				if position_to_split > -1:
 					line = line.left(position_to_split)
 				
+				# remove the word "Corporation"
+				line = line.replacen("Corporation ","")
+				
 				# add the result to the array
 				graphic_cards_array.append(line)
 				
