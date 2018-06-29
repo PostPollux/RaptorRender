@@ -1,11 +1,19 @@
 extends Node
 
-var total_memory
+var hostname
+var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version)
+var mac_addresses # array of all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
+var total_memory # total memory in kb
+var cpu_info  # array: [Model Name, MHz, number of sockets, number of cores, number of threads] 
+var graphic_cards # array with the name of all graphic cards found in the system
 
-var memory_load
-var cpu_load
+var memory_load # percentage of memory used (int Value between 0 and 100)
+var cpu_load # percentage of cpu usage (int Value between 0 and 100)
+
 
 var recent_cpu_stat_values = []
+
+
 
 
 func _ready():
@@ -20,7 +28,12 @@ func _ready():
 	
 	
 	# fill the variables that don't change
+	hostname = get_hostname()
+	platform_info = get_platform_info()
+	mac_addresses = get_MAC_addresses()
 	total_memory = get_total_memory()
+	cpu_info = get_cpu_info()
+	graphic_cards = get_graphic_cards()
 	
 	
 	# print
@@ -41,8 +54,7 @@ func _on_hardware_info_timer_timeout():
 	# set cpu load
 	cpu_load = int (get_cpu_load() )
 	
-	
-	
+
 	# print results
 	print ( "Memory Load: " + String( memory_load )  + " %"  )
 	print ( "CPU Load: " + String( cpu_load )  + " %"  )
@@ -50,33 +62,34 @@ func _on_hardware_info_timer_timeout():
 
 
 
-
-
 func print_hardware_info():
 	# Print
-	var hostname = get_hostname()
-	var mac_addresses = get_MAC_addresses()
-	var cpu = get_cpu_info()
 	var mem_available = get_available_memory()
 	
 	print(" ")
 	print ("Hostname: " + hostname)
+	print ("Platform: " + platform_info[0])
+	print ("Version: " + platform_info[1])
 	print(" ")
 	print ("MAC Addresses:")
 	print (mac_addresses)
 	print(" ")
 	print ("CPU:")
-	print ("Model Name: " + cpu[0])
-	print ("GHz: " + String( cpu[1] ) +" GHz")
-	print ("Sockets: " + String( cpu[2]))
-	print ("Cores: " + String( cpu[3]))
-	print ("Threads: " + String( cpu[4]))
+	print ("Model Name: " + cpu_info[0])
+	print ("GHz: " + String( cpu_info[1] ) +" GHz")
+	print ("Sockets: " + String( cpu_info[2]))
+	print ("Cores: " + String( cpu_info[3]))
+	print ("Threads: " + String( cpu_info[4]))
 	print(" ")
 	print ("Memory:")
 	print ("total: " + String( total_memory / 1024 ) +" MB")
 	print ("available: " + String( mem_available / 1024 ) +" MB")
 	print ("used: " + String( (total_memory - mem_available) / 1024 ) +" MB")
-
+	print(" ")
+	print ("Graphic Cards:")
+	for card in graphic_cards:
+		print (card)
+	print(" ")
 
 
 
@@ -86,7 +99,7 @@ func get_MAC_addresses():
 	var mac_addresses = []
 	
 	var platform = OS.get_name()
-			
+	
 	match platform:
 		
 		# Linux
@@ -96,8 +109,8 @@ func get_MAC_addresses():
 			
 			var dir = Directory.new()
 			var network_adapters_directory_path = "/sys/class/net/"
-						
-			if	dir.dir_exists( network_adapters_directory_path ):
+			
+			if dir.dir_exists( network_adapters_directory_path ):
 				var adapter_directories = []
 				
 				dir.open(network_adapters_directory_path)
@@ -112,7 +125,7 @@ func get_MAC_addresses():
 						adapter_directories.append(adapter_dir)
 						
 				dir.list_dir_end()
-					
+				
 				if adapter_directories.size() > 0:
 					
 					for adapter_dir in adapter_directories:
@@ -131,7 +144,7 @@ func get_MAC_addresses():
 					return mac_addresses
 		
 		# Windows
-		"Windows" :	
+		"Windows" :
 		
 			# invoke getmac with format option csv
 			var getmac_output = []
@@ -162,18 +175,18 @@ func get_total_memory():
 	var mem_total = 0
 	
 	var platform = OS.get_name()
-			
+	
 	match platform:
 		
 		# Linux
 		"X11" : 
 			
 			# just read the file /proc/meminfo
-						
+			
 			var meminfo_file_path = "/proc/meminfo"
-						
+			
 			var meminfo_file = File.new()
-						
+			
 			if meminfo_file.file_exists(meminfo_file_path):
 				
 				
@@ -196,13 +209,13 @@ func get_total_memory():
 					
 					# break loop if end of file is reached
 					if line == "":
-						break			
+						break
 			
 			return mem_total
 		
 		
 		# Windows
-		"Windows" :	
+		"Windows" :
 		
 			# get total memory
 			var output = []
@@ -226,18 +239,18 @@ func get_available_memory():
 	var mem_available = 0
 	
 	var platform = OS.get_name()
-			
+	
 	match platform:
 		
 		# Linux
 		"X11" : 
 			
 			# just read the file /proc/meminfo
-						
+			
 			var meminfo_file_path = "/proc/meminfo"
-						
+			
 			var meminfo_file = File.new()
-						
+			
 			if meminfo_file.file_exists(meminfo_file_path):
 				
 				
@@ -246,7 +259,7 @@ func get_available_memory():
 				
 				while true:
 					var line = meminfo_file.get_line()
-						
+					
 					if line.begins_with("MemAvailable"):
 						line = line.right(13) #cut off beginning
 						line = line.left(line.rfind("kB", -1)) # cut off kB
@@ -266,7 +279,7 @@ func get_available_memory():
 		
 		
 		# Windows
-		"Windows" :				
+		"Windows" :
 			
 			# get free memory
 			var output = []
@@ -298,18 +311,18 @@ func get_cpu_info():
 	var threads = 0
 	
 	var platform = OS.get_name()
-			
+	
 	match platform:
 		
 		# Linux
 		"X11" : 
 			
 			# just read the file /proc/cpuinfo
-						
+			
 			var cpuinfo_file_path = "/proc/cpuinfo"
-						
+			
 			var cpuinfo_file = File.new()
-						
+			
 			if cpuinfo_file.file_exists(cpuinfo_file_path):
 				
 				var number_of_empty_lines = 0
@@ -331,7 +344,7 @@ func get_cpu_info():
 						GHz = GHz.left(GHz.rfind("GHz", -1))
 						GHz = float (GHz)
 						
-							
+						
 						
 					if line.begins_with("cpu cores"):
 						line = line.right(9) #cut off beginning
@@ -377,7 +390,7 @@ func get_cpu_info():
 		
 		
 		# Windows
-		"Windows" :	
+		"Windows" :
 			
 			# get model name and GHz
 			var output = []
@@ -443,32 +456,31 @@ func get_cpu_load():
 	var cpu_load_as_float = 0.0
 	
 	var platform = OS.get_name()
-			
+	
 	match platform:
 		
 		# Linux
 		"X11" :
 			
 			# read the file /proc/stat 
-			# the first line is the accumulation of all the cores. It looks something like: 
+			# the first line is the time accumulation of all the cores. It looks something like: 
 			# "cpu  337190 187 61395 3331872 1319 0 4453 0 0 0"
-			#		  ^          ^      ^
-			# 		 user      system  idle
+			#         ^          ^      ^
+			#        user      system  idle
 			
-			# twice with a small time offset. Substract the first values from the second ones. 
-			
-			# cat <(grep 'cpu ' /proc/stat) <(sleep 1 && grep 'cpu ' /proc/stat) > test.txt | awk -v RS="" '{print ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}'
+			# read the file twice with a time offset. Substract the first values from the second ones. 
+			# load = time spent by user and system devided by total time spent ( user + system + idle)
 			
 			var cpu_load_file_path = "/proc/stat"
-						
+			
 			var cpu_load_file = File.new()
-						
+			
 			if cpu_load_file.file_exists(cpu_load_file_path):
 				
 				var number_of_empty_lines = 0
 				
 				cpu_load_file.open(cpu_load_file_path,1)
-					
+				
 				var line = cpu_load_file.get_line() # get the first line
 				
 				line = line.strip_edges(true, true) # remove nonprintable characters
@@ -485,7 +497,7 @@ func get_cpu_load():
 			
 			
 		# Windows
-		"Windows" :	
+		"Windows" :
 			
 			# get number of threads
 			var output = []
@@ -508,18 +520,18 @@ func get_hostname():
 	var hostname = ""
 	
 	var platform = OS.get_name()
-			
+	
 	match platform:
 		
 		# Linux
 		"X11" : 
 			
 			# just read the file /etc/hostname
-						
+			
 			var hostname_file_path = "/etc/hostname"
-						
+			
 			var hostname_file = File.new()
-						
+			
 			if hostname_file.file_exists(hostname_file_path):
 				
 				hostname_file.open(hostname_file_path,1)
@@ -530,7 +542,7 @@ func get_hostname():
 		
 		
 		# Windows
-		"Windows" :	
+		"Windows" :
 		
 			var hostname_output = []
 			var arguments = []
@@ -539,7 +551,99 @@ func get_hostname():
 			hostname = hostname_output[0]
 			
 			return hostname
+
+
+
+# returns the name of the platform
+func get_platform_info():
+	
+	var platform_info_array = []
+	
+	var platform = OS.get_name()
+	
+	match platform:
+		
+		# Linux
+		"X11" :
+			# Platform Name
+			platform_info_array.append("Linux")
+			
+			# Kernel Version
+			var output = []
+			var arguments = ["-r"]
+			
+			OS.execute("uname", arguments, true, output)
+			
+			var position_to_split = output[0].find_last("-")
+			
+			var kernel_version = output[0].left(position_to_split) # take the left part of the string
+			
+			platform_info_array.append(kernel_version) 
 			
 			
+			return platform_info_array
+		
+		
+		# Windows
+		"Windows" :
+			# Platform name
+			platform_info_array.append("Windows")
+			
+			# Windows Version
 			
 			
+			return platform_info_array
+			
+			
+		# Mac OS
+		"OSX" :
+			platform_info_array.append("OSX")
+			
+			return platform_info_array
+
+
+
+# returns the name of the platform
+func get_graphic_cards():
+	
+	var graphic_cards_array = []
+	
+	var platform = OS.get_name()
+	
+	match platform:
+		
+		# Linux
+		"X11" :
+			
+			# run "lspci | grep -E 'VGA|3D'" to get a list of all graphics devices
+			var output = []
+			var arguments = ["-c","lspci | grep -E 'VGA|3D'"] # filter the output of lspci by VGA and 3D
+			OS.execute("bash", arguments, true, output)
+			
+			# split String in lines
+			var splitted_output = output[0].split('\n', false, 0)  
+			
+			for line in splitted_output:
+				
+				# remove stuff at the beginning of the line
+				var position_to_split = line.find(": ")
+				line = line.right(position_to_split + 2)
+				
+				# remove stuff at the end of the line
+				position_to_split = line.find_last("(")
+				if position_to_split > -1:
+					line = line.left(position_to_split)
+				
+				# add the result to the array
+				graphic_cards_array.append(line)
+				
+			
+			return graphic_cards_array
+		
+		
+		# Windows
+		"Windows" :
+			pass
+			
+
+
