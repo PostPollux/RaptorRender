@@ -3,6 +3,7 @@ extends Node
 var hostname
 var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version)
 var mac_addresses # array of all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
+var ip_addresses # array of all used ip addresses
 var total_memory # total memory in kb
 var cpu_info  # array: [Model Name, MHz, number of sockets, number of cores, number of threads] 
 var graphic_cards # array with the name of all graphic cards found in the system
@@ -31,6 +32,7 @@ func _ready():
 	hostname = get_hostname()
 	platform_info = get_platform_info()
 	mac_addresses = get_MAC_addresses()
+	ip_addresses = get_IP_addresses()
 	total_memory = get_total_memory()
 	cpu_info = get_cpu_info()
 	graphic_cards = get_graphic_cards()
@@ -73,6 +75,9 @@ func print_hardware_info():
 	print(" ")
 	print ("MAC Addresses:")
 	print (mac_addresses)
+	print(" ")
+	print ("IP Addresses:")
+	print (ip_addresses)
 	print(" ")
 	print ("CPU:")
 	print ("Model Name: " + cpu_info[0])
@@ -166,6 +171,36 @@ func get_MAC_addresses():
 			
 
 
+
+# returns the IP Adresses as a String Array
+func get_IP_addresses():
+	
+	var ip_addresses = []
+	
+	var platform = OS.get_name()
+	
+	match platform:
+		
+		# Linux
+		"X11" : 
+			# get a list of ip addresses by filtering the "ip addr show" command
+			var output = []
+			var arguments = ["-c","ip addr show  | grep -Eo 'inet ([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'"]
+			OS.execute("bash", arguments, true, output)
+			
+			# split String in lines
+			var splitted_output = output[0].split('\n', false, 0)  
+			
+			for line in splitted_output:
+				ip_addresses.append(line)
+			
+			return ip_addresses
+		
+		# Windows
+		"Windows" :
+			# not implemented yet
+			
+			return ip_addresses
 
 
 
