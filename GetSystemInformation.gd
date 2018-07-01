@@ -1,5 +1,7 @@
 extends Node
 
+var client
+
 var hostname
 var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version)
 var mac_addresses # array of all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
@@ -41,6 +43,10 @@ func _ready():
 	# print
 	print_hardware_info()
 	
+	create_client_dict()
+	
+	RaptorRender.rr_data.clients[mac_addresses[0]] = client
+	
 
 
 
@@ -62,7 +68,25 @@ func _on_hardware_info_timer_timeout():
 	print ( "CPU Load: " + String( cpu_load )  + " %"  )
 
 
-
+func create_client_dict():
+	client = {
+		"name": hostname,
+		"mac_addresses": mac_addresses,
+		"ip_addresses": ip_addresses,
+		"status": "4_disabled",
+		"current_job_id": "",
+		"error_count": 0,
+		"platform": platform_info,
+		"pools": ["AE_Plugins", "another pool", "third pool"],
+		"rr_version": 0.2,
+		"time_connected": 1528759663,
+		"cpu": cpu_info,
+		"memory": total_memory,
+		"memory_available": 2,
+		"graphics": graphic_cards,
+		"software": ["Blender", "Natron"],
+		"note": ""
+	}
 
 func print_hardware_info():
 	# Print

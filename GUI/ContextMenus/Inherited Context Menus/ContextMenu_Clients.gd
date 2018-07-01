@@ -207,6 +207,7 @@ func _on_ContextMenu_index_pressed(index):
 				if RaptorRender.rr_data.clients[selected].status == "5_offline":
 					var mac_addresses_of_selected = RaptorRender.rr_data.clients[selected].mac_addresses
 					for mac_address_of_selected in mac_addresses_of_selected:
+						mac_address_of_selected = mac_address_of_selected.replace(":","")  # remove ":"
 						mac_addresses.append(mac_address_of_selected)
 				
 			

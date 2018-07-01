@@ -6,10 +6,12 @@ onready var NameLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Mai
 onready var StatusLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
 onready var UptimeLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
 
-onready var CPULabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
-onready var RAMLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
-onready var PlatformLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/PlatformLabel"
-onready var IPLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/Specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
+onready var CPULabel = $"TabContainer/Details/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
+onready var RAMLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
+onready var GraphicsLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsLabel"
+onready var PlatformLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/PlatformLabel"
+onready var IPLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
+onready var MACLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/MACLabel"
 
 
 
@@ -56,8 +58,88 @@ func update_client_info_panel(client_id):
 	else:
 		UptimeLabel.text = "Last seen:  not implemented yet" 
 	
-	CPULabel.text = "CPU:  " + selected_client["cpu"]
-	RAMLabel.text = "Memory:  " + String(selected_client["memory"]) + " GB"
-	PlatformLabel.text = "Platform:  " + selected_client["platform"]
-	IPLabel.text = "IP:  " + selected_client["ip"]
+	
+	###############
+	#  CPU Section
+	###############
+	
+	var cpu_text = ""
+	
+	cpu_text += selected_client["cpu"][0] + "\n"
+	
+	if selected_client["cpu"][2] < 2:
+		cpu_text += String(selected_client["cpu"][2]) + " Socket, "
+	else:
+		cpu_text += String(selected_client["cpu"][2]) + " Sockets, "
+		
+	if selected_client["cpu"][3] < 2:
+		cpu_text += String(selected_client["cpu"][3]) + " Core, "
+	else:
+		cpu_text += String(selected_client["cpu"][3]) + " Cores, "
+		
+	if selected_client["cpu"][4] < 2:
+		cpu_text += String(selected_client["cpu"][4]) + " Thread"
+	else:
+		cpu_text += String(selected_client["cpu"][4]) + " Threads"
+		
+	CPULabel.text = cpu_text
+	
+	
+	
+	
+	###################
+	#  Memory Section
+	###################	
+	
+	var size_in_gb =  String( float(selected_client["memory"]) / 1024 / 1024 )
+	RAMLabel.text = size_in_gb.left(size_in_gb.find(".")+ 3) + " GB"
+	
+	
+	
+	
+	###################
+	#  Graphics Section
+	###################
+	
+	var graphics_text = ""
+	for i in range(0, selected_client["graphics"].size()):
+		graphics_text += selected_client["graphics"][i] + "\n"
+		
+	if graphics_text.ends_with("\n"):
+		graphics_text = graphics_text.substr(0,graphics_text.length()-1)	
+	GraphicsLabel.text = graphics_text
+	
+	
+	
+	##################
+	# Network Section
+	##################
+	
+	if selected_client["ip_addresses"].size() > 1:
+		var text = "IP Addresses: \n"
+		for i in range(0, selected_client["ip_addresses"].size()):
+			text += " " + selected_client["ip_addresses"][i].replace(".", " . ") + "\n"
+		if text.ends_with("\n"):
+			text = text.substr(0,text.length()-1)
+		IPLabel.text = text
+	else:
+		IPLabel.text = "IP:  " + selected_client["ip_addresses"][0].replace(".", " . ")
+		
+		
+	if selected_client["mac_addresses"].size() > 1:
+		var text = "MAC Addresses: \n"
+		for i in range(0, selected_client["mac_addresses"].size()):
+			text += " " + selected_client["mac_addresses"][i].to_upper().replace(":", " : ") + "\n"
+		if text.ends_with("\n"):
+			text = text.substr(0,text.length()-1)
+		MACLabel.text = text
+	else:
+		MACLabel.text = "MAC:  " + selected_client["mac_addresses"][0].to_upper().replace(":", " : ")
 
+
+
+	##################
+	# System Section
+	##################
+	
+	PlatformLabel.text = selected_client["platform"][0] + "  " + selected_client["platform"][1]
