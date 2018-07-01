@@ -192,10 +192,49 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		8:  # Wake on LAN
-			print ( "Wake on Lan - not implemented yet")
-			# packet hat a total of 102 bytes
+			
+			# magic packet hat a total of 102 bytes
 			# first six bytes are all 255 in hex so "FF" -> FF FF FF FF FF FF
 			# next 96 bytes are 16 repetitions of the destination Mac adress (which are also 6 bytes in hex each)
+			
+			
+			var mac_addresses = []
+			
+			# fill the mac_addresses array with all the mac addresssess that are supposed to recieve a WOL package
+			var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+			
+			for selected in selected_ids:
+				if RaptorRender.rr_data.clients[selected].status == "5_offline":
+					var mac_addresses_of_selected = RaptorRender.rr_data.clients[selected].mac_addresses
+					for mac_address_of_selected in mac_addresses_of_selected:
+						mac_addresses.append(mac_address_of_selected)
+				
+			
+			# create an UDP Socket	
+			var socketUDP = PacketPeerUDP.new()
+			
+			var port = 9
+			var ip = "192.255.255.255" # ip actually doesn't matter, as wake on lan does not look at ip addresses
+			
+			socketUDP.set_dest_address(ip, port)
+			
+			
+			
+			# send a WOL packet for each mac address
+			for mac in mac_addresses:
+				
+				var msg = "ffffffffffff"
+				for i in range (0,16):
+					msg = msg + mac
+				
+				print (msg)
+				var pac = Converters.hex_string_to_PoolByteArray(msg)
+				socketUDP.put_packet(pac)
+			
+			# close UDP Socket
+			socketUDP.close()
+			
+			
 			
 			
 		9:  # Shutdown Client

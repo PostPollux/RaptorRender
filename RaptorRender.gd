@@ -551,6 +551,7 @@ func _ready():
 		"clients": {
 			"id1": {
 				"name": "T-Rex1",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.45",
 				"status": "2_available",
 				"current_job_id": "",
@@ -568,6 +569,7 @@ func _ready():
 			},
 			"id2": {
 				"name": "Raptor1",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.22",
 				"status": "4_disabled",
 				"current_job_id": "",
@@ -585,6 +587,7 @@ func _ready():
 			},
 			"id3": {
 				"name": "T-Rex2",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.156",
 				"status": "1_rendering",
 				"current_job_id": "1",
@@ -602,6 +605,7 @@ func _ready():
 			},
 			"id4": {
 				"name": "Raptor2",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.87",
 				"status": "5_offline",
 				"current_job_id": "",
@@ -619,6 +623,7 @@ func _ready():
 			},
 			"id5": {
 				"name": "T-Rex3",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.15",
 				"status": "3_error",
 				"current_job_id": "",
@@ -636,6 +641,7 @@ func _ready():
 			},
 			"id6": {
 				"name": "Raptor3",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.22",
 				"status": "5_offline",
 				"current_job_id": "",
@@ -653,6 +659,7 @@ func _ready():
 			},
 			"id7": {
 				"name": "T-Rex4",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.45",
 				"status": "2_available",
 				"current_job_id": "",
@@ -670,6 +677,7 @@ func _ready():
 			},
 			"id8": {
 				"name": "Raptor1",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.22",
 				"status": "4_disabled",
 				"current_job_id": "",
@@ -687,6 +695,7 @@ func _ready():
 			},
 			"id9": {
 				"name": "T-Rex1",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.45",
 				"status": "2_available",
 				"current_job_id": "",
@@ -704,6 +713,7 @@ func _ready():
 			},
 			"id10": {
 				"name": "Raptor1",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.22",
 				"status": "2_available",
 				"current_job_id": "",
@@ -721,6 +731,7 @@ func _ready():
 			},
 			"id11": {
 				"name": "T-Rex2",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.156",
 				"status": "1_rendering",
 				"current_job_id": "1",
@@ -738,6 +749,7 @@ func _ready():
 			},
 			"id12": {
 				"name": "Nedry",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.87",
 				"status": "2_available",
 				"current_job_id": "",
@@ -755,6 +767,7 @@ func _ready():
 			},
 			"id13": {
 				"name": "T-Rex3",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.15",
 				"status": "3_error",
 				"current_job_id": "",
@@ -772,6 +785,7 @@ func _ready():
 			},
 			"id15": {
 				"name": "Dr.Malcom",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.45",
 				"status": "2_available",
 				"current_job_id": "",
@@ -789,6 +803,7 @@ func _ready():
 			},
 			"id16": {
 				"name": "Hammond",
+				"mac_addresses": ["80fa5b538b43","f8633fcf777c"],
 				"ip": "192.168.1.22",
 				"status": "4_disabled",
 				"current_job_id": "",
