@@ -662,7 +662,7 @@ func get_platform_info():
 
 
 
-# returns the name of the platform
+# return the names of the graphics devices
 func get_graphic_cards():
 	
 	var graphic_cards_array = []
@@ -705,6 +705,17 @@ func get_graphic_cards():
 		
 		# Windows
 		"Windows" :
+			
+			# get number of threads
+			var output = []
+			var arguments = ['/C','wmic path win32_VideoController get name /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			var graphics = output[0].strip_edges(true,true)  # strip away empty stuff
+			graphics = graphics.split("=")[1]  # Take the string behind the "="
+	
+			graphic_cards_array.append(graphics)
 			
 			return graphic_cards_array
 			
