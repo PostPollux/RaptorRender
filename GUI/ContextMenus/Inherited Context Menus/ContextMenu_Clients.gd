@@ -217,7 +217,7 @@ func _on_ContextMenu_index_pressed(index):
 			var port = 9
 			var ip = "192.255.255.255" # ip actually doesn't matter, as wake on lan does not look at ip addresses
 			
-			socketUDP.set_dest_address(ip, port)
+			
 			
 			
 			
@@ -230,6 +230,17 @@ func _on_ContextMenu_index_pressed(index):
 				
 				print (msg)
 				var pac = Converters.hex_string_to_PoolByteArray(msg)
+				
+				ip = "192.255.255.255"
+				socketUDP.set_dest_address(ip, port)
+				socketUDP.put_packet(pac)
+				
+				ip = "192.168.255.255"
+				socketUDP.set_dest_address(ip, port)
+				socketUDP.put_packet(pac)
+				
+				ip = "192.168.178.255"
+				socketUDP.set_dest_address(ip, port)
 				socketUDP.put_packet(pac)
 			
 			# close UDP Socket

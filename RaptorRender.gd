@@ -641,7 +641,7 @@ func _ready():
 			},
 			"id6": {
 				"name": "Raptor3",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+				"mac_addresses": ["10:7b:44:7a:fb:e2","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "5_offline",
 				"current_job_id": "",
