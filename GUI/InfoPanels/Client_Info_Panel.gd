@@ -122,8 +122,10 @@ func update_client_info_panel(client_id):
 		if text.ends_with("\n"):
 			text = text.substr(0,text.length()-1)
 		IPLabel.text = text
-	else:
+	elif selected_client["ip_addresses"].size() == 1:
 		IPLabel.text = "IP:  " + selected_client["ip_addresses"][0].replace(".", " . ")
+	else:
+		IPLabel.text = ""
 		
 		
 	if selected_client["mac_addresses"].size() > 1:
@@ -133,9 +135,10 @@ func update_client_info_panel(client_id):
 		if text.ends_with("\n"):
 			text = text.substr(0,text.length()-1)
 		MACLabel.text = text
-	else:
+	elif selected_client["mac_addresses"].size() == 1:
 		MACLabel.text = "MAC:  " + selected_client["mac_addresses"][0].to_upper().replace(":", " : ")
-
+	else:
+		MACLabel.text = ""
 
 
 	##################

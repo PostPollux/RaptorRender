@@ -649,7 +649,7 @@ func get_platform_info():
 			platform_info_array.append("Windows")
 			
 			# Windows Version
-			
+			platform_info_array.append("")
 			
 			return platform_info_array
 			
@@ -705,7 +705,9 @@ func get_graphic_cards():
 		
 		# Windows
 		"Windows" :
-			pass
+			
+			return graphic_cards_array
+			
 			
 
 
