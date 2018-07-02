@@ -215,33 +215,40 @@ func _on_ContextMenu_index_pressed(index):
 			var socketUDP = PacketPeerUDP.new()
 			
 			var port = 9
-			var ip = "192.255.255.255" # ip actually doesn't matter, as wake on lan does not look at ip addresses
+			var ip 
 			
+			for ip_addr in GetSystemInformation.ip_addresses:
+				
+				var ip_bytes = ip_addr.split(".", false, 0)
 			
+				# send WOL packets for each mac address
+				for mac in mac_addresses:
+					
+					# create the message to send via udp. ( ffffffffffff + 16 x Mac Address ) 
+					var msg = "ffffffffffff"
+					for i in range (0,16):
+						msg = msg + mac
+					
+					# convert it to PoolByteArray
+					var pac = Converters.hex_string_to_PoolByteArray(msg)
+					
+					# send all packages twice, because udp packages could get lost
+					for i in range(0, 2):
+						
+						# send packets with different broadcast patterns
+						
+						ip = ip_bytes[0] + ".255.255.255"
+						socketUDP.set_dest_address(ip, port)
+						socketUDP.put_packet(pac)
+						
+						ip = ip_bytes[0] + "." + ip_bytes[1] + ".255.255"
+						socketUDP.set_dest_address(ip, port)
+						socketUDP.put_packet(pac)
+						
+						ip = ip_bytes[0] + "." + ip_bytes[1] + "." + ip_bytes[2] + ".255"
+						socketUDP.set_dest_address(ip, port)
+						socketUDP.put_packet(pac)
 			
-			
-			
-			# send a WOL packet for each mac address
-			for mac in mac_addresses:
-				
-				var msg = "ffffffffffff"
-				for i in range (0,16):
-					msg = msg + mac
-				
-				print (msg)
-				var pac = Converters.hex_string_to_PoolByteArray(msg)
-				
-				ip = "192.255.255.255"
-				socketUDP.set_dest_address(ip, port)
-				socketUDP.put_packet(pac)
-				
-				ip = "192.168.255.255"
-				socketUDP.set_dest_address(ip, port)
-				socketUDP.put_packet(pac)
-				
-				ip = "192.168.178.255"
-				socketUDP.set_dest_address(ip, port)
-				socketUDP.put_packet(pac)
 			
 			# close UDP Socket
 			socketUDP.close()
