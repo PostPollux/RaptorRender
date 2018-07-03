@@ -571,15 +571,33 @@ func get_cpu_load():
 		# Windows
 		"Windows" :
 			
-			# get number of threads
-			var output = []
-			var arguments = ['/C','wmic cpu get loadpercentage /Value>test.txt']  # unfortunately saving to a text file only works in blocking mode :(
+			# the command "wmic cpu get loadpercentage /Value" takes one second to return a value. So we can't use this with a blocking OS.execute, as it would constantly block the whole RaptorRender application.
+			# As a solution we should execute it in a none blocking way and save the result to a file, which can be read afterwards without the need to wait 1 sec.
+			# unfortunately saving a file via cmd (e.g: echo hello>test.txt) only works when blocking is enabled in OS.execute
+			# The work around now is: 
+			# 1. generate a ".bat" file with "wmic cpu get loadpercentage /Value>win_cpu_load.text"
+			# 2. execute this ".bat" file everytime this function is called. It will generate the "win_cpu_load.txt" file that contains the value
+			# 3. read this file with OS.execute 
 			
-			#OS.execute('CMD.exe', arguments, false, output)
 			
-			#var cpu_load_str = output[0].strip_edges(true,true)  # strip away empty stuff
-			#cpu_load_str = cpu_load_str.split("=")[1]  # Take the string behind the "="
-			#cpu_load_as_float = float(cpu_load_str)
+			
+			
+			# read the win_cpu_load.txt file
+			
+			var win_cpu_load_file_path = "win_cpu_load.txt"
+			
+			var win_cpu_load_file = File.new()
+			
+			if win_cpu_load_file.file_exists(win_cpu_load_file_path):
+			
+				var output = []
+				var arguments = ['/C', 'type C:\\git_projects\\RaptorRender\\win_cpu_load.txt']
+				
+				OS.execute('CMD.exe', arguments, true, output)
+				print (output)
+				var cpu_load_str = output[0].strip_edges(true,true)  # strip away empty stuff
+				cpu_load_str = cpu_load_str.split("=")[1]  # Take the string behind the "="
+				cpu_load_as_float = float(cpu_load_str)
 			
 			return cpu_load_as_float
 
