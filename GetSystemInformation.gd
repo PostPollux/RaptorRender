@@ -10,16 +10,29 @@ var total_memory # total memory in kb
 var cpu_info  # array: [Model Name, MHz, number of sockets, number of cores, number of threads] 
 var graphic_cards # array with the name of all graphic cards found in the system
 
-var memory_load # percentage of memory used (int Value between 0 and 100)
-var cpu_load # percentage of cpu usage (int Value between 0 and 100)
+var memory_usage # percentage of memory used (int Value between 0 and 100)
+var cpu_usage # percentage of cpu usage (int Value between 0 and 100)
 
 
 var recent_cpu_stat_values = []
-
+var user_data_dir
 
 
 
 func _ready():
+	
+	user_data_dir = OS.get_user_data_dir()
+	print (user_data_dir)
+	
+	# create .bat file to read cpu usage
+	var bat_file = File.new()
+	
+	if bat_file.open("user://get_win_cpu_usage.bat", File.WRITE) != 0:
+		print("Error opening file")
+	else:
+		bat_file.store_line('wmic cpu get loadpercentage /Value | findstr /C:"=">win_cpu_usage.txt')
+		bat_file.close()
+	
 	
 	# create timer to constantly get the cpu and memory load
 	var hardware_info_timer = Timer.new()
@@ -52,20 +65,20 @@ func _ready():
 
 func _on_hardware_info_timer_timeout():
 	
-	# set memory_load
+	# set memory usage
 	var mem_available = get_available_memory()
-	var mem_load_as_float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100
+	var mem_usage_as_float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100
 	
-	memory_load = int(mem_load_as_float)
+	memory_usage = int(mem_usage_as_float)
 	
 	
-	# set cpu load
-	cpu_load = int (get_cpu_load() )
+	# set cpu usage
+	cpu_usage = int (get_cpu_usage() )
 	
 
 	# print results
-	print ( "Memory Load: " + String( memory_load )  + " %"  )
-	print ( "CPU Load: " + String( cpu_load )  + " %"  )
+	print ( "Memory Load: " + String( memory_usage )  + " %"  )
+	print ( "CPU Load: " + String( cpu_usage )  + " %"  )
 
 
 func create_client_dict():
@@ -523,9 +536,9 @@ func get_cpu_info():
 
 
 
-func get_cpu_load():
+func get_cpu_usage():
 	
-	var cpu_load_as_float = 0.0
+	var cpu_usage_as_float = 0.0
 	
 	var platform = OS.get_name()
 	
@@ -541,19 +554,19 @@ func get_cpu_load():
 			#        user      system  idle
 			
 			# read the file twice with a time offset. Substract the first values from the second ones. 
-			# load = time spent by user and system devided by total time spent ( user + system + idle)
+			# usage = time spent by user and system devided by total time spent ( user + system + idle)
 			
-			var cpu_load_file_path = "/proc/stat"
+			var cpu_usage_file_path = "/proc/stat"
 			
-			var cpu_load_file = File.new()
+			var cpu_usage_file = File.new()
 			
-			if cpu_load_file.file_exists(cpu_load_file_path):
+			if cpu_usage_file.file_exists(cpu_usage_file_path):
 				
 				var number_of_empty_lines = 0
 				
-				cpu_load_file.open(cpu_load_file_path,1)
+				cpu_usage_file.open(cpu_usage_file_path,1)
 				
-				var line = cpu_load_file.get_line() # get the first line
+				var line = cpu_usage_file.get_line() # get the first line
 				
 				line = line.strip_edges(true, true) # remove nonprintable characters
 				var current_cpu_stat_values = line.split(" ", false, 0) # convert the line to an array
@@ -561,11 +574,11 @@ func get_cpu_load():
 				if (recent_cpu_stat_values.size() > 0):
 					var time_spent_user_plus_system = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3])
 					var time_spent_user_plus_system_plus_idle = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3]) + int(current_cpu_stat_values[4]) - int(recent_cpu_stat_values[4])
-					cpu_load_as_float = time_spent_user_plus_system * 100 / time_spent_user_plus_system_plus_idle
+					cpu_usage_as_float = time_spent_user_plus_system * 100 / time_spent_user_plus_system_plus_idle
 
 				recent_cpu_stat_values = current_cpu_stat_values
 			
-			return cpu_load_as_float
+			return cpu_usage_as_float
 			
 			
 		# Windows
@@ -581,25 +594,32 @@ func get_cpu_load():
 			
 			
 			
-			
 			# read the win_cpu_load.txt file
 			
-			var win_cpu_load_file_path = "win_cpu_load.txt"
+			var win_cpu_usage_file_path = user_data_dir + "win_cpu_usage.txt"
 			
-			var win_cpu_load_file = File.new()
+			var win_cpu_usage_file = File.new()
 			
-			if win_cpu_load_file.file_exists(win_cpu_load_file_path):
+			if win_cpu_usage_file.file_exists(win_cpu_usage_file_path):
 			
 				var output = []
-				var arguments = ['/C', 'type C:\\git_projects\\RaptorRender\\win_cpu_load.txt']
+				var arguments = ['/C', 'type ' + win_cpu_usage_file_path]
 				
 				OS.execute('CMD.exe', arguments, true, output)
-				print (output)
-				var cpu_load_str = output[0].strip_edges(true,true)  # strip away empty stuff
-				cpu_load_str = cpu_load_str.split("=")[1]  # Take the string behind the "="
-				cpu_load_as_float = float(cpu_load_str)
+				var cpu_usage_str = output[0].strip_edges(true,true)  # strip away empty stuff
+				cpu_usage_str = cpu_usage_str.split("=")[1]  # Take the string behind the "="
+				cpu_usage_as_float = float(cpu_usage_str)
 			
-			return cpu_load_as_float
+			
+			# execute the ".bat" file to save current cpu load which will be read next time
+			var bat_file_path = user_data_dir + "get_win_cpu_usage.bat"
+			var output = []
+			var arguments = ['/C', bat_file_path]
+			
+			OS.execute('CMD.exe', arguments, false, output)
+			
+			
+			return cpu_usage_as_float
 
 
 
