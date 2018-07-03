@@ -220,9 +220,22 @@ func get_IP_addresses():
 			
 			return ip_addresses
 		
+		
 		# Windows
 		"Windows" :
-			# not implemented yet
+			# get a list of ip addresses by filtering the "arp -a" command
+			var output = []
+			var arguments = ['/C arp -a | findstr /C:"---"']
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			# split String in lines
+			var splitted_output = output[0].split('\n', false, 0)  
+			
+			for line in splitted_output:
+				var splitted_line = line.split(" ", false, 0)
+				
+				ip_addresses.append(splitted_line[1])
+			
 			
 			return ip_addresses
 
