@@ -145,4 +145,8 @@ func update_client_info_panel(client_id):
 	# System Section
 	##################
 	
-	PlatformLabel.text = selected_client["platform"][0] + "  " + selected_client["platform"][1]
+	if selected_client["platform"].size() == 2:
+		PlatformLabel.text = selected_client["platform"][0] + "  " + selected_client["platform"][1]
+	if selected_client["platform"].size() == 3:
+		PlatformLabel.text = selected_client["platform"][0] + "  " + selected_client["platform"][1] + "  " + selected_client["platform"][2]
+	

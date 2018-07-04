@@ -3,7 +3,7 @@ extends Node
 var client
 
 var hostname
-var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version)
+var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version (XP,7,10)), third item: additional info (Linux Distribution, Windows version (Pro, Home, Ultimate))
 var mac_addresses # array of all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
 var ip_addresses # array of all used ip addresses
 var total_memory # total memory in kb
@@ -706,7 +706,19 @@ func get_platform_info():
 			platform_info_array.append("Windows")
 			
 			# Windows Version
-			platform_info_array.append("")
+			var output = []
+			var arguments = ['/C','wmic os get Caption /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			var version_str = output[0].strip_edges(true,true)  # strip away empty stuff
+			version_str = version_str.split("=")[1]  # Take the string behind the "="
+			version_str = version_str.replace("Microsoft","").replace("Windows","").strip_edges(true,true)
+			var version_str_splitted = version_str.split(" ")
+			
+			platform_info_array.append(version_str_splitted[0])
+			if version_str_splitted.size() > 1:
+				platform_info_array.append(version_str_splitted[1])
 			
 			return platform_info_array
 			
