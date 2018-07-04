@@ -30,6 +30,7 @@ func _ready():
 	if bat_file.open("user://get_win_cpu_usage.bat", File.WRITE) != 0:
 		print("Error opening file")
 	else:
+		bat_file.store_line('cd ' + user_data_dir + '\r\n') # .bat seems to only write a file if the cmd first switches to the correct location
 		bat_file.store_line('wmic cpu get loadpercentage /Value | findstr /C:"=">win_cpu_usage.txt')
 		bat_file.close()
 	
@@ -77,8 +78,8 @@ func _on_hardware_info_timer_timeout():
 	
 
 	# print results
-	print ( "Memory Load: " + String( memory_usage )  + " %"  )
-	print ( "CPU Load: " + String( cpu_usage )  + " %"  )
+	print ( "Memory usage: " + String( memory_usage )  + " %"  )
+	print ( "CPU usage: " + String( cpu_usage )  + " %"  )
 
 
 func create_client_dict():
@@ -596,27 +597,32 @@ func get_cpu_usage():
 			
 			# read the win_cpu_load.txt file
 			
-			var win_cpu_usage_file_path = user_data_dir + "win_cpu_usage.txt"
+			var win_cpu_usage_file_path = user_data_dir + "/win_cpu_usage.txt"
+			win_cpu_usage_file_path = win_cpu_usage_file_path.replace("/","\\")
 			
 			var win_cpu_usage_file = File.new()
 			
 			if win_cpu_usage_file.file_exists(win_cpu_usage_file_path):
-			
+				
 				var output = []
 				var arguments = ['/C', 'type ' + win_cpu_usage_file_path]
 				
 				OS.execute('CMD.exe', arguments, true, output)
 				var cpu_usage_str = output[0].strip_edges(true,true)  # strip away empty stuff
-				cpu_usage_str = cpu_usage_str.split("=")[1]  # Take the string behind the "="
-				cpu_usage_as_float = float(cpu_usage_str)
+
+				if cpu_usage_str.find("=") >= 0:
+					cpu_usage_str = cpu_usage_str.split("=")[1]  # Take the string behind the "="
+					cpu_usage_as_float = float(cpu_usage_str)
 			
 			
 			# execute the ".bat" file to save current cpu load which will be read next time
-			var bat_file_path = user_data_dir + "get_win_cpu_usage.bat"
+			var bat_file_path = user_data_dir + "\\get_win_cpu_usage.bat"
+			bat_file_path = bat_file_path.replace("/","\\")
+
 			var output = []
 			var arguments = ['/C', bat_file_path]
 			
-			OS.execute('CMD.exe', arguments, false, output)
+			OS.execute("CMD.exe", arguments, false, output)
 			
 			
 			return cpu_usage_as_float
