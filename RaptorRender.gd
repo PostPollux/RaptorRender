@@ -1372,7 +1372,7 @@ func refresh_clients_table():
 		# CPU
 
 		var LabelCPU = Label.new()
-		LabelCPU.text = String(rr_data.clients[client[0]].cpu[2] * rr_data.clients[client[0]].cpu[3]) + " x " + String(rr_data.clients[client[0]].cpu[1]) + "GHZ"
+		LabelCPU.text = String(rr_data.clients[client[0]].cpu[1] * rr_data.clients[client[0]].cpu[2] * rr_data.clients[client[0]].cpu[3]) + " GHZ"
 		#LabelCPU.set_mouse_filter(Control.MOUSE_FILTER_PASS)
 		#LabelCPU.hint_tooltip = rr_data.clients[client[0]].cpu
 		TableClients.set_cell_content(count, cpu_column, LabelCPU)

@@ -73,14 +73,14 @@ func update_client_info_panel(client_id):
 		cpu_text += String(selected_client["cpu"][2]) + " Sockets, "
 		
 	if selected_client["cpu"][3] < 2:
-		cpu_text += String(selected_client["cpu"][3]) + " Core, "
+		cpu_text += String(selected_client["cpu"][2] * selected_client["cpu"][3]) + " Core, "
 	else:
-		cpu_text += String(selected_client["cpu"][3]) + " Cores, "
+		cpu_text += String(selected_client["cpu"][2] * selected_client["cpu"][3]) + " Cores, "
 		
 	if selected_client["cpu"][4] < 2:
-		cpu_text += String(selected_client["cpu"][4]) + " Thread"
+		cpu_text += String(selected_client["cpu"][2] * selected_client["cpu"][4]) + " Thread"
 	else:
-		cpu_text += String(selected_client["cpu"][4]) + " Threads"
+		cpu_text += String(selected_client["cpu"][2] * selected_client["cpu"][4]) + " Threads"
 		
 	CPULabel.text = cpu_text
 	
