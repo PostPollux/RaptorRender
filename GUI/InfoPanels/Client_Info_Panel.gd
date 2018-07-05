@@ -13,6 +13,8 @@ onready var PlatformLabel = $"TabContainer/Details/MarginContainer/VBoxContainer
 onready var IPLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
 onready var MACLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/MACLabel"
 
+onready var CPUUsageBar = $"TabContainer/Details/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/cpu_usage"
+onready var MemoryUsageBar = $"TabContainer/Details/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/memory_usage"
 
 
 func _ready():
@@ -25,7 +27,19 @@ func reset_to_first_tab():
 
 func update_client_info_panel(client_id):
 	
+	
+	# set the id for the cpu usage bar so that it knows which value to get
+	CPUUsageBar.client_id = client_id
+	MemoryUsageBar.client_id = client_id
+	
+	
 	var selected_client = RaptorRender.rr_data.clients[client_id]
+	
+	
+	#################
+	#  Status Section
+	#################
+	
 	
 	NameLabel.text = selected_client["name"]
 	

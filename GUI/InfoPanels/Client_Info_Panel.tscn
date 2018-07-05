@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://GUI/InfoPanels/Client_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/client_status/200x100/client_status_online_200x100.png" type="Texture" id=2]
 [ext_resource path="res://GUI/InfoPanels/textures/usage_status_under_texture.tres" type="Texture" id=3]
 [ext_resource path="res://GUI/InfoPanels/textures/usage_status_progress_texture.tres" type="Texture" id=4]
-
-
+[ext_resource path="res://GUI/InfoPanels/cpu_usage.gd" type="Script" id=5]
+[ext_resource path="res://GUI/InfoPanels/memory_usage.gd" type="Script" id=6]
 
 [sub_resource type="DynamicFontData" id=1]
 
@@ -429,6 +429,7 @@ texture_progress = ExtResource( 4 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = true
+script = ExtResource( 5 )
 _sections_unfolded = [ "Rect", "Size Flags", "Textures" ]
 
 [node name="HSeparator2" type="HSeparator" parent="TabContainer/Details/MarginContainer/VBoxContainer" index="3"]
@@ -457,7 +458,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 240.0
 margin_right = 655.0
-margin_bottom = 272.0
+margin_bottom = 284.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -477,7 +478,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 655.0
-margin_bottom = 32.0
+margin_bottom = 44.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -493,7 +494,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 655.0
-margin_bottom = 32.0
+margin_bottom = 44.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -511,7 +512,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 15.0
 margin_right = 655.0
-margin_bottom = 32.0
+margin_bottom = 44.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -563,15 +564,47 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags" ]
 
+[node name="memory_usage" type="TextureProgress" parent="TabContainer/Details/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 36.0
+margin_right = 200.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 200, 8 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 48.99
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 3 )
+texture_over = null
+texture_progress = ExtResource( 4 )
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = true
+script = ExtResource( 6 )
+_sections_unfolded = [ "Rect", "Size Flags", "Textures" ]
+
 [node name="HSeparator3" type="HSeparator" parent="TabContainer/Details/MarginContainer/VBoxContainer" index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 276.0
+margin_top = 288.0
 margin_right = 655.0
-margin_bottom = 296.0
+margin_bottom = 308.0
 rect_min_size = Vector2( 0, 20 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -587,9 +620,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 300.0
+margin_top = 312.0
 margin_right = 655.0
-margin_bottom = 332.0
+margin_bottom = 344.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -701,9 +734,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 336.0
+margin_top = 348.0
 margin_right = 655.0
-margin_bottom = 356.0
+margin_bottom = 368.0
 rect_min_size = Vector2( 0, 20 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -720,9 +753,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 360.0
+margin_top = 372.0
 margin_right = 655.0
-margin_bottom = 410.0
+margin_bottom = 422.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -855,9 +888,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 414.0
+margin_top = 426.0
 margin_right = 655.0
-margin_bottom = 434.0
+margin_bottom = 446.0
 rect_min_size = Vector2( 0, 20 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -873,9 +906,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 438.0
+margin_top = 450.0
 margin_right = 655.0
-margin_bottom = 470.0
+margin_bottom = 482.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0

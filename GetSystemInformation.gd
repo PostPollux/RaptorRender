@@ -22,17 +22,18 @@ var user_data_dir
 func _ready():
 	
 	user_data_dir = OS.get_user_data_dir()
-	print (user_data_dir)
 	
-	# create .bat file to read cpu usage
-	var bat_file = File.new()
-	
-	if bat_file.open("user://get_win_cpu_usage.bat", File.WRITE) != 0:
-		print("Error opening file")
-	else:
-		bat_file.store_line('cd ' + user_data_dir + '\r\n') # .bat seems to only write a file if the cmd first switches to the correct location
-		bat_file.store_line('wmic cpu get loadpercentage /Value | findstr /C:"=">win_cpu_usage.txt')
-		bat_file.close()
+	# create .bat file to read cpu usage (only under Windows)
+	if OS.get_name() == "Windows":
+		
+		var bat_file = File.new()
+		
+		if bat_file.open("user://get_win_cpu_usage.bat", File.WRITE) != 0:
+			print("Error opening file")
+		else:
+			bat_file.store_line('cd ' + user_data_dir + '\r\n') # .bat seems to only write a file if the cmd first switches to the correct location
+			bat_file.store_line('wmic cpu get loadpercentage /Value | findstr /C:"=">win_cpu_usage.txt')
+			bat_file.close()
 	
 	
 	# create timer to constantly get the cpu and memory load
@@ -52,6 +53,8 @@ func _ready():
 	total_memory = get_total_memory()
 	cpu_info = get_cpu_info()
 	graphic_cards = get_graphic_cards()
+	memory_usage = 0
+	cpu_usage = 0
 	
 	
 	# print
@@ -80,6 +83,10 @@ func _on_hardware_info_timer_timeout():
 	# print results
 	print ( "Memory usage: " + String( memory_usage )  + " %"  )
 	print ( "CPU usage: " + String( cpu_usage )  + " %"  )
+	
+	# change the values
+	RaptorRender.rr_data.clients[mac_addresses[0]].memory_usage = memory_usage
+	RaptorRender.rr_data.clients[mac_addresses[0]].cpu_usage = cpu_usage
 
 
 func create_client_dict():
@@ -95,8 +102,9 @@ func create_client_dict():
 		"rr_version": 0.2,
 		"time_connected": 1528759663,
 		"cpu": cpu_info,
+		"cpu_usage": cpu_usage,
 		"memory": total_memory,
-		"memory_available": 2,
+		"memory_usage": memory_usage,
 		"graphics": graphic_cards,
 		"software": ["Blender", "Natron"],
 		"note": ""
