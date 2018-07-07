@@ -1270,7 +1270,7 @@ func refresh_clients_table():
 		
 			1: primary = rr_data.clients[client].status
 			2: primary = rr_data.clients[client].name
-			3: primary = rr_data.clients[client].platform
+			3: primary = rr_data.clients[client].platform[0]
 			4: primary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
 			5: primary = rr_data.clients[client].memory
 			6: 
@@ -1293,7 +1293,7 @@ func refresh_clients_table():
 		
 			1: secondary = rr_data.clients[client].status
 			2: secondary = rr_data.clients[client].name
-			3: secondary = rr_data.clients[client].platform
+			3: secondary = rr_data.clients[client].platform[0]
 			4: secondary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
 			5: secondary = rr_data.clients[client].memory
 			6: 
