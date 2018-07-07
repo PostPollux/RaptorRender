@@ -6,6 +6,9 @@ export (Color) var color_finished_cancelled = Color("181818")
 
 func _ready():
 	self.color = color_finished
+
+func set_color_finished ():
+	self.color = color_finished
 	
 func set_color_paused ():
 	self.color = color_finished_paused

@@ -1,20 +1,20 @@
 extends MarginContainer
 
 onready var ClientInfoTabContainer = $"TabContainer"
-onready var StatusIconTexture = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
-onready var NameLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/NameLabel"
-onready var StatusLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
-onready var UptimeLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
+onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
+onready var NameLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/NameLabel"
+onready var StatusLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
+onready var UptimeLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
 
-onready var CPULabel = $"TabContainer/Details/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
-onready var RAMLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
-onready var GraphicsLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsLabel"
-onready var PlatformLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/PlatformLabel"
-onready var IPLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
-onready var MACLabel = $"TabContainer/Details/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/MACLabel"
+onready var CPULabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
+onready var RAMLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
+onready var GraphicsLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsLabel"
+onready var PlatformLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/PlatformLabel"
+onready var IPLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
+onready var MACLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/MACLabel"
 
-onready var CPUUsageBar = $"TabContainer/Details/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/cpu_usage"
-onready var MemoryUsageBar = $"TabContainer/Details/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/memory_usage"
+onready var CPUUsageBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/cpu_usage"
+onready var MemoryUsageBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/memory_usage"
 
 
 func _ready():

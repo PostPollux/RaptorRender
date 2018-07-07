@@ -1158,6 +1158,8 @@ func refresh_jobs_table():
 		var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job[0])
 			
 		JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
+		JobProgressBar.in_sortable_table = true
+		
 		if rr_data.jobs[job[0]].status == "4_paused":
 			JobProgressBar.job_status = "paused"
 		if rr_data.jobs[job[0]].status == "6_cancelled":
