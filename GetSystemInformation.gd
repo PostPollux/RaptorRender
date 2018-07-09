@@ -654,18 +654,12 @@ func get_hostname():
 		# Linux
 		"X11" : 
 			
-			# just read the file /etc/hostname
+			var hostname_output = []
+			var arguments = []
+			OS.execute("hostname", arguments, true, hostname_output)
 			
-			var hostname_file_path = "/etc/hostname"
+			hostname = hostname_output[0].strip_edges(true,true)
 			
-			var hostname_file = File.new()
-			
-			if hostname_file.file_exists(hostname_file_path):
-				
-				hostname_file.open(hostname_file_path,1)
-				
-				hostname = hostname_file.get_as_text().strip_edges(true,true)
-				
 			return hostname
 		
 		
@@ -694,8 +688,13 @@ func get_username():
 		# Linux
 		"X11" : 
 			
+			var username_output = []
+			var arguments = []
 			
-				
+			OS.execute('whoami', arguments, true, username_output)
+			
+			username = username_output[0].strip_edges(true,true)
+			
 			return username
 		
 		
