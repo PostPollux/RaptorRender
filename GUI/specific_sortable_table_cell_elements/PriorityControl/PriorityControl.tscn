@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://GUI/PriorityControl/PriorityControl.gd" type="Script" id=1]
+[ext_resource path="res://GUI/specific_sortable_table_cell_elements/PriorityControl/PriorityControl.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/plus_minus/15x15/plus_default_15x15.png" type="Texture" id=2]
 [ext_resource path="res://GUI/icons/plus_minus/15x15/plus_mouse_down_15x15.png" type="Texture" id=3]
 [ext_resource path="res://GUI/icons/plus_minus/15x15/plus_disabled_15x15.png" type="Texture" id=4]
@@ -63,6 +63,7 @@ margin_bottom = 27.0
 rect_min_size = Vector2( 15, 15 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
+focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 4
@@ -89,6 +90,7 @@ margin_bottom = 27.0
 rect_min_size = Vector2( 15, 15 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
+focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 4

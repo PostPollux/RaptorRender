@@ -7,8 +7,9 @@ var colorize_table_rows = false
 
 
 #### preloads ####
-var JobProgressBarRes = preload("res://GUI/JobProgressBar/JobProgressBar.tscn")
-var JobPriorityControlRes = preload("res://GUI/PriorityControl/PriorityControl.tscn")
+var JobProgressBarRes = preload("res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn")
+var JobPriorityControlRes = preload("res://GUI/specific_sortable_table_cell_elements/PriorityControl/PriorityControl.tscn")
+var CurrentJobLinkRes = preload("res://GUI/specific_sortable_table_cell_elements/CurrentJobLink/CurrentJobLink.tscn")
 
 
 
@@ -744,7 +745,7 @@ func _ready():
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
 				"status": "1_rendering",
-				"current_job_id": "1",
+				"current_job_id": "7",
 				"error_count": 0,
 				"platform": ["OSX","Snow Leopard"],
 				"pools": ["AE_Plugins"],
@@ -1409,15 +1410,11 @@ func refresh_clients_table():
 		
 		# Current Job
 		
-		var LabelCurrentJob = Label.new()
-		var current_job_id = rr_data.clients[client[0]].current_job_id
+		var CurrentJobLink = CurrentJobLinkRes.instance()
 		
-		if current_job_id != "":
-			LabelCurrentJob.text = rr_data.jobs[current_job_id].name
-		else:
-			LabelCurrentJob.text = ""
-			
-		TableClients.set_cell_content(count, current_job_column, LabelCurrentJob)
+		CurrentJobLink.job_id = rr_data.clients[client[0]].current_job_id
+		
+		TableClients.set_cell_content(count, current_job_column, CurrentJobLink)
 		
 		
 		# Errors

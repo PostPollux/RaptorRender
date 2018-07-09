@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://GUI/JobProgressBar/JobProgressBar.gd" type="Script" id=1]
-[ext_resource path="res://GUI/JobProgressBar/ColorRect_finished.gd" type="Script" id=2]
+[ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.gd" type="Script" id=1]
+[ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/ColorRect_finished.gd" type="Script" id=2]
+
 
 [node name="JobProgressBar" type="MarginContainer" index="0"]
 

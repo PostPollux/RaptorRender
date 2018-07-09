@@ -2,7 +2,8 @@
 
 [ext_resource path="res://GUI/InfoPanels/Job_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/job_status/200x100/job_status_finished_200x100.png" type="Texture" id=2]
-[ext_resource path="res://GUI/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
+
 
 [sub_resource type="DynamicFontData" id=1]
 

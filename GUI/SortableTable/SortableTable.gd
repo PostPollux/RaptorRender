@@ -86,7 +86,12 @@ func set_row_content_id(row, id):
 
 func clear_selection():
 	RowContainerFilled.clear_selection()
-
+	
+	
+func select_by_content_id(content_id):
+	RowContainerFilled.clear_selection()
+	RowContainerFilled.add_content_id_to_selection(content_id)
+	RowContainerFilled.update_selection()
 
 func emit_selection_signal(last_selected):
 	emit_signal("something_just_selected", last_selected)

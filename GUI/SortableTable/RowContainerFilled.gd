@@ -155,6 +155,7 @@ func update_selection():
 			if Row.content_id == selected_row_content_id:
 				Row.set_selected(true)
 
+
 func clear_selection():
 	
 	selected_row_content_ids.clear()
@@ -162,6 +163,8 @@ func clear_selection():
 	for Row in SortableRows:
 		Row.set_selected(false)
 
+func add_content_id_to_selection(content_id):
+	selected_row_content_ids.append(content_id)
 
 
 func reset_all_row_colors_to_default():
