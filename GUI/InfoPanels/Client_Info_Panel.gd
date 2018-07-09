@@ -2,7 +2,8 @@ extends MarginContainer
 
 onready var ClientInfoTabContainer = $"TabContainer"
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
-onready var NameLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/NameLabel"
+onready var NameLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/NameLabel"
+onready var UserLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UserLabel"
 onready var StatusLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
 onready var UptimeLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
 
@@ -42,6 +43,7 @@ func update_client_info_panel(client_id):
 	
 	
 	NameLabel.text = selected_client["name"]
+	UserLabel.text = "( " + selected_client["username"] + " )"
 	
 	
 	var status = selected_client["status"]
