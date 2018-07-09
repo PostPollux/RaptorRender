@@ -672,7 +672,7 @@ func get_hostname():
 			var arguments = []
 			OS.execute("hostname", arguments, true, hostname_output)
 			
-			hostname = hostname_output[0]
+			hostname = hostname_output[0].strip_edges(true,true)
 			
 			return hostname
 
