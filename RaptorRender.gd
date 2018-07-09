@@ -552,6 +552,7 @@ func _ready():
 		"clients": {
 			"id1": {
 				"name": "T-Rex1",
+				"username": "Johannes",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
 				"status": "2_available",
@@ -571,6 +572,7 @@ func _ready():
 			},
 			"id2": {
 				"name": "Raptor1",
+				"username": "Michael",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "4_disabled",
@@ -590,6 +592,7 @@ func _ready():
 			},
 			"id3": {
 				"name": "T-Rex2",
+				"username": "Max",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
 				"status": "1_rendering",
@@ -609,6 +612,7 @@ func _ready():
 			},
 			"id4": {
 				"name": "Raptor2",
+				"username": "Chris",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.87"],
 				"status": "5_offline",
@@ -628,6 +632,7 @@ func _ready():
 			},
 			"id5": {
 				"name": "T-Rex3",
+				"username": "Angela",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.15"],
 				"status": "3_error",
@@ -647,6 +652,7 @@ func _ready():
 			},
 			"id6": {
 				"name": "Raptor3",
+				"username": "Nicolaj",
 				"mac_addresses": ["10:7b:44:7a:fb:e2","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "5_offline",
@@ -666,6 +672,7 @@ func _ready():
 			},
 			"id7": {
 				"name": "T-Rex4",
+				"username": "Patrick",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
 				"status": "2_available",
@@ -685,6 +692,7 @@ func _ready():
 			},
 			"id8": {
 				"name": "Raptor1",
+				"username": "Florian",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "4_disabled",
@@ -704,6 +712,7 @@ func _ready():
 			},
 			"id9": {
 				"name": "T-Rex1",
+				"username": "Marcel",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
 				"status": "2_available",
@@ -723,6 +732,7 @@ func _ready():
 			},
 			"id10": {
 				"name": "Raptor1",
+				"username": "Andreas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "2_available",
@@ -742,6 +752,7 @@ func _ready():
 			},
 			"id11": {
 				"name": "T-Rex2",
+				"username": "Thomas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
 				"status": "1_rendering",
@@ -761,6 +772,7 @@ func _ready():
 			},
 			"id12": {
 				"name": "Nedry",
+				"username": "Dennis",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.87"],
 				"status": "2_available",
@@ -780,6 +792,7 @@ func _ready():
 			},
 			"id13": {
 				"name": "T-Rex3",
+				"username": "Peter",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.15"],
 				"status": "3_error",
@@ -799,6 +812,7 @@ func _ready():
 			},
 			"id15": {
 				"name": "Dr.Malcom",
+				"username": "Horst",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
 				"status": "2_available",
@@ -818,6 +832,7 @@ func _ready():
 			},
 			"id16": {
 				"name": "Hammond",
+				"username": "Daniel",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "4_disabled",

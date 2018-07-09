@@ -3,6 +3,7 @@ extends Node
 var client
 
 var hostname
+var username
 var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version (XP,7,10)), third item: additional info (Linux Distribution, Windows version (Pro, Home, Ultimate))
 var mac_addresses # array of all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
 var ip_addresses # array of all used ip addresses
@@ -47,6 +48,7 @@ func _ready():
 	
 	# fill the variables that don't change
 	hostname = get_hostname()
+	username = get_username()
 	platform_info = get_platform_info()
 	mac_addresses = get_MAC_addresses()
 	ip_addresses = get_IP_addresses()
@@ -92,6 +94,7 @@ func _on_hardware_info_timer_timeout():
 func create_client_dict():
 	client = {
 		"name": hostname,
+		"username": username,
 		"mac_addresses": mac_addresses,
 		"ip_addresses": ip_addresses,
 		"status": "4_disabled",
@@ -116,6 +119,7 @@ func print_hardware_info():
 	
 	print(" ")
 	print ("Hostname: " + hostname)
+	print ("Username: " + username)
 	print ("Platform: " + platform_info[0])
 	print ("Version: " + platform_info[1])
 	print(" ")
@@ -675,6 +679,38 @@ func get_hostname():
 			hostname = hostname_output[0].strip_edges(true,true)
 			
 			return hostname
+
+
+
+# returns the current logged in username
+func get_username():
+	
+	var username = ""
+	
+	var platform = OS.get_name()
+	
+	match platform:
+		
+		# Linux
+		"X11" : 
+			
+			
+				
+			return username
+		
+		
+		# Windows
+		"Windows" :
+		
+			var username_output = []
+			var arguments = ['/C','echo %username%']
+			
+			OS.execute('CMD.exe', arguments, true, username_output)
+			
+			username = username_output[0].strip_edges(true,true)
+			
+			return username
+			
 
 
 
