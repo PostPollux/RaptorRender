@@ -1260,14 +1260,15 @@ func refresh_clients_table():
 	#### define the columns of the clients table ####
 	var status_column = 1
 	var name_column = 2
-	var platform_column = 3
-	var cpu_column = 4
-	var memory_column = 5
-	var current_job_column = 6
-	var error_count_column = 7
-	var pools_column = 8
-	var note_column = 9
-	var rr_version_column = 10
+	var username_column = 3
+	var platform_column = 4
+	var cpu_column = 5
+	var memory_column = 6
+	var current_job_column = 7
+	var error_count_column = 8
+	var pools_column = 9
+	var note_column = 10
+	var rr_version_column = 11
 	
 	#### get all clients
 	var clients_array = rr_data.clients.keys()
@@ -1288,47 +1289,49 @@ func refresh_clients_table():
 		
 			1: primary = rr_data.clients[client].status
 			2: primary = rr_data.clients[client].name
-			3: primary = rr_data.clients[client].platform[0]
-			4: primary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
-			5: primary = rr_data.clients[client].memory
-			6: 
+			3: primary = rr_data.clients[client].username
+			4: primary = rr_data.clients[client].platform[0]
+			5: primary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
+			6: primary = rr_data.clients[client].memory
+			7: 
 				if rr_data.clients[client].current_job_id != "":
 					primary = rr_data.jobs[ rr_data.clients[client].current_job_id ].name
 				else:
 					primary = ""
-			7: primary = rr_data.clients[client].error_count
-			8: 
+			8: primary = rr_data.clients[client].error_count
+			9: 
 				if rr_data.clients[client].pools.size() > 0:
 					var pools_string = ""
 					for pool in rr_data.clients[client].pools:
 						pools_string += pool + ", "
 					primary = pools_string
 				else: primary = ""
-			9: primary = rr_data.clients[client].note
-			10: primary = rr_data.clients[client].rr_version 
+			10: primary = rr_data.clients[client].note
+			11: primary = rr_data.clients[client].rr_version 
 		
 		match TableClients.sort_column_secondary: 
 		
 			1: secondary = rr_data.clients[client].status
 			2: secondary = rr_data.clients[client].name
-			3: secondary = rr_data.clients[client].platform[0]
-			4: secondary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
-			5: secondary = rr_data.clients[client].memory
-			6: 
+			3: secondary = rr_data.clients[client].username
+			4: secondary = rr_data.clients[client].platform[0]
+			5: secondary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
+			6: secondary = rr_data.clients[client].memory
+			7: 
 				if rr_data.clients[client].current_job_id != "":
 					secondary = rr_data.jobs[ rr_data.clients[client].current_job_id ].name
 				else:
 					secondary = ""
-			7: secondary = rr_data.clients[client].error_count
-			8: 
+			8: secondary = rr_data.clients[client].error_count
+			9: 
 				if rr_data.clients[client].pools.size() > 0:
 					var pools_string = ""
 					for pool in rr_data.clients[client].pools:
 						pools_string += pool + ", "
 					secondary = pools_string
 				else: secondary = ""
-			9: secondary = rr_data.clients[client].note
-			10: secondary = rr_data.clients[client].rr_version 
+			10: secondary = rr_data.clients[client].note
+			11: secondary = rr_data.clients[client].rr_version 
 		
 		sortable_clients_array.append([client, primary, secondary ])
 	
@@ -1393,6 +1396,13 @@ func refresh_clients_table():
 		var LabelName = Label.new()
 		LabelName.text = rr_data.clients[client[0]].name
 		TableClients.set_cell_content(count, name_column, LabelName)
+		
+		
+		# Username
+
+		var LabelUserName = Label.new()
+		LabelUserName.text = rr_data.clients[client[0]].username
+		TableClients.set_cell_content(count, username_column, LabelUserName)
 		
 		
 		# Platform
