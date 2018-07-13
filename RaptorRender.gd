@@ -1045,8 +1045,8 @@ func refresh_jobs_table():
 					primary = pools_string
 				else: primary = ""
 			12: primary = rr_data.jobs[job].note
-
-			
+		
+		
 		
 		match TableJobs.sort_column_secondary: 
 		
@@ -1089,7 +1089,7 @@ func refresh_jobs_table():
 
 
 		TableJobs.set_row_content_id(count, job[0])
-
+		
 		# Status Icon
 		
 		var StatusIcon = TextureRect.new()
@@ -1133,46 +1133,48 @@ func refresh_jobs_table():
 				
 		StatusIcon.set_texture(icon)
 		TableJobs.set_cell_content(count, status_column, StatusIcon)
-
-
+		TableJobs.set_cell_sort_value(count, status_column,  rr_data.jobs[job[0]].status)
+		
+		
 		# Name
-
+		
 		var LabelName = Label.new()
 		LabelName.text = rr_data.jobs[job[0]].name
 		TableJobs.set_cell_content(count, name_column, LabelName)
+		TableJobs.set_cell_sort_value(count, name_column,  rr_data.jobs[job[0]].name)
 		
 		
 		# Priority
 		
-#		var LabelPriority = Label.new()
-#		LabelPriority.text = String(rr_data.jobs[job[0]].priority)
-#		TableJobs.set_cell_content(count, priority_column, LabelPriority)
-		
 		var JobPriorityControl = JobPriorityControlRes.instance()
 		JobPriorityControl.job_id = job[0]
 		TableJobs.set_cell_content(count, priority_column, JobPriorityControl)
+		TableJobs.set_cell_sort_value(count, priority_column,  rr_data.jobs[job[0]].priority)
+		
 		
 		# Active Clients
 		
 		var LabelActiveClients = Label.new()
 		
 		var active_clients = 0
-				
+		
 		for client in rr_data.clients.keys():
 			if rr_data.clients[client].current_job_id == job[0]:
 				active_clients += 1
 				
 		LabelActiveClients.text = String(active_clients)
 		TableJobs.set_cell_content(count, active_clients_column, LabelActiveClients)
-
-
+		TableJobs.set_cell_sort_value(count, active_clients_column, active_clients)
+		
+		
 		# Progress
 		
 		var JobProgressBar = JobProgressBarRes.instance()
 		JobProgressBar.rect_min_size.x = 120
 		
 		var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job[0])
-			
+		var percentage = int( float(chunk_counts[1]) / float(chunk_counts[0]) * 100.0 )
+		
 		JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
 		JobProgressBar.in_sortable_table = true
 		
@@ -1180,7 +1182,10 @@ func refresh_jobs_table():
 			JobProgressBar.job_status = "paused"
 		if rr_data.jobs[job[0]].status == "6_cancelled":
 			JobProgressBar.job_status = "cancelled"
+			
+		
 		TableJobs.set_cell_content(count, progress_column, JobProgressBar)
+		TableJobs.set_cell_sort_value(count, progress_column, percentage)
 		
 		
 		# Type
@@ -1188,6 +1193,7 @@ func refresh_jobs_table():
 		var LabelType = Label.new()
 		LabelType.text = rr_data.jobs[job[0]].type
 		TableJobs.set_cell_content(count, type_column, LabelType)
+		TableJobs.set_cell_sort_value(count, type_column,  rr_data.jobs[job[0]].type)
 		
 		
 		# Creator
@@ -1195,6 +1201,7 @@ func refresh_jobs_table():
 		var LabelCreator = Label.new()
 		LabelCreator.text = rr_data.jobs[job[0]].creator
 		TableJobs.set_cell_content(count, creator_column, LabelCreator)
+		TableJobs.set_cell_sort_value(count, creator_column,  rr_data.jobs[job[0]].creator)
 		
 		
 		# Time Created
@@ -1202,7 +1209,8 @@ func refresh_jobs_table():
 		var LabelTimeCreated = Label.new()
 		LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job[0]].time_created, 2)
 		TableJobs.set_cell_content(count, time_created_column, LabelTimeCreated)
-
+		TableJobs.set_cell_sort_value(count, time_created_column,  rr_data.jobs[job[0]].time_created)
+		
 		
 		# Frame Range
 		
@@ -1210,6 +1218,7 @@ func refresh_jobs_table():
 		var frames_total = rr_data.jobs[job[0]].range_end - rr_data.jobs[job[0]].range_start
 		LabelFrameRange.text = String(frames_total) + "  (" + String(rr_data.jobs[job[0]].range_start) + " - " + String(rr_data.jobs[job[0]].range_end) + ")"
 		TableJobs.set_cell_content(count, frame_range_column, LabelFrameRange)
+		TableJobs.set_cell_sort_value(count, frame_range_column,  rr_data.jobs[job[0]].range_end - rr_data.jobs[job[0]].range_start)
 		
 		
 		# Errors
@@ -1218,6 +1227,7 @@ func refresh_jobs_table():
 		var job_error_count = rr_data.jobs[job[0]].errors
 		LabelErrors.text = String(job_error_count)
 		TableJobs.set_cell_content(count, errors_column, LabelErrors)
+		TableJobs.set_cell_sort_value(count, errors_column,  rr_data.jobs[job[0]].errors)
 		
 		if job_error_count > 0:
 			if colorize_table_rows:
@@ -1239,6 +1249,7 @@ func refresh_jobs_table():
 				
 		LabelPools.text = pools_string
 		TableJobs.set_cell_content(count, pools_column, LabelPools)
+		TableJobs.set_cell_sort_value(count, pools_column,  pools_string)
 		
 		
 		# Note
@@ -1246,14 +1257,13 @@ func refresh_jobs_table():
 		var LabelNote = Label.new()
 		LabelNote.text = rr_data.jobs[job[0]].note
 		TableJobs.set_cell_content(count, note_column, LabelNote)
-		
+		TableJobs.set_cell_sort_value(count, note_column,  rr_data.jobs[job[0]].note)
 		
 		
 		count += 1
-		
-		
-		
-		
+
+
+
 func refresh_clients_table():
 	
 	
@@ -1389,6 +1399,7 @@ func refresh_clients_table():
 			
 		StatusIcon.set_texture(icon)
 		TableClients.set_cell_content(count, status_column, StatusIcon)
+		TableClients.set_cell_sort_value(count, status_column,  rr_data.clients[client[0]].status)
 
 
 		# Name
@@ -1396,6 +1407,7 @@ func refresh_clients_table():
 		var LabelName = Label.new()
 		LabelName.text = rr_data.clients[client[0]].name
 		TableClients.set_cell_content(count, name_column, LabelName)
+		TableClients.set_cell_sort_value(count, name_column,  rr_data.clients[client[0]].name)
 		
 		
 		# Username
@@ -1403,6 +1415,7 @@ func refresh_clients_table():
 		var LabelUserName = Label.new()
 		LabelUserName.text = rr_data.clients[client[0]].username
 		TableClients.set_cell_content(count, username_column, LabelUserName)
+		TableClients.set_cell_sort_value(count, username_column,  rr_data.clients[client[0]].username)
 		
 		
 		# Platform
@@ -1410,19 +1423,16 @@ func refresh_clients_table():
 		var LabelPlatform = Label.new()
 		LabelPlatform.text = rr_data.clients[client[0]].platform[0]
 		TableClients.set_cell_content(count, platform_column, LabelPlatform)
-
+		TableClients.set_cell_sort_value(count, platform_column,  rr_data.clients[client[0]].platform[0])
+		
 		
 		# CPU
 
 		var LabelCPU = Label.new()
-		LabelCPU.text = String(rr_data.clients[client[0]].cpu[1] * rr_data.clients[client[0]].cpu[2] * rr_data.clients[client[0]].cpu[3]) + " GHZ"
-		#LabelCPU.set_mouse_filter(Control.MOUSE_FILTER_PASS)
-		#LabelCPU.hint_tooltip = rr_data.clients[client[0]].cpu
+		var ghz = rr_data.clients[client[0]].cpu[1] * rr_data.clients[client[0]].cpu[2] * rr_data.clients[client[0]].cpu[3]
+		LabelCPU.text =  String( ghz ) + " GHZ"
 		TableClients.set_cell_content(count, cpu_column, LabelCPU)
-		#var row_of_label = LabelCPU.get_parent().get_parent().get_parent().get_parent()
-		#var name_of_signal = "_on_" + LabelCPU.name +"_mouse_entered"
-		#row_of_label.connect("mouse_enter", row_of_label, "update_row_color_hover")
-		
+		TableClients.set_cell_sort_value(count, cpu_column,  ghz)
 		
 		
 		# RAM
@@ -1430,7 +1440,7 @@ func refresh_clients_table():
 		var LabelMemory = Label.new()
 		LabelMemory.text = String( round(float(rr_data.clients[client[0]].memory) / 1024 / 1024 ))+ " GB"
 		TableClients.set_cell_content(count, memory_column, LabelMemory)
-		
+		TableClients.set_cell_sort_value(count, memory_column,  rr_data.clients[client[0]].memory)
 		
 		
 		# Current Job
@@ -1440,6 +1450,7 @@ func refresh_clients_table():
 		CurrentJobLink.job_id = rr_data.clients[client[0]].current_job_id
 		
 		TableClients.set_cell_content(count, current_job_column, CurrentJobLink)
+		TableClients.set_cell_sort_value(count, current_job_column,  rr_data.clients[client[0]].current_job_id)
 		
 		
 		# Errors
@@ -1448,6 +1459,8 @@ func refresh_clients_table():
 		var clients_error_count = rr_data.clients[client[0]].error_count
 		LabelErrorCount.text = String(clients_error_count)
 		TableClients.set_cell_content(count, error_count_column, LabelErrorCount)
+		TableClients.set_cell_sort_value(count, error_count_column,  rr_data.clients[client[0]].error_count)
+		
 		if clients_error_count > 0:
 			if colorize_table_rows:
 				TableClients.set_row_color_by_string(count, "red")
@@ -1471,6 +1484,7 @@ func refresh_clients_table():
 				
 		LabelPools.text = pools_string
 		TableClients.set_cell_content(count, pools_column, LabelPools)
+		TableClients.set_cell_sort_value(count, pools_column, pools_string)
 		
 		
 		# Note
@@ -1478,6 +1492,7 @@ func refresh_clients_table():
 		var LabelNote = Label.new()
 		LabelNote.text = String(rr_data.clients[client[0]].note) 
 		TableClients.set_cell_content(count, note_column, LabelNote)
+		TableClients.set_cell_sort_value(count, note_column,  rr_data.clients[client[0]].note)
 		
 		
 		
@@ -1487,6 +1502,7 @@ func refresh_clients_table():
 		var LabelVersion = Label.new()
 		LabelVersion.text = String(rr_data.clients[client[0]].rr_version) 
 		TableClients.set_cell_content(count, rr_version_column, LabelVersion)
+		TableClients.set_cell_sort_value(count, rr_version_column,  rr_data.clients[client[0]].rr_version)
 		
 		count += 1
 		

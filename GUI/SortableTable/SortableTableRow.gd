@@ -4,8 +4,10 @@ extends MarginContainer
 
 
 var cell_count
-var row_id #position of the row in the table
+var row_id # position of the row in the table
 var content_id # unique id of the representing content
+var sort_values = [] # e.g. sort_values[5-1] holds the value that is used to sort column 5
+
 
 #row colors
 var row_color
@@ -210,6 +212,7 @@ func set_row_id(id):
 	row_id = id
 	update_row_even_or_odd()
 	update_row_color_reset()
+	
 	
 func set_selected (sel):
 	selected = sel

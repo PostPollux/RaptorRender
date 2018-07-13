@@ -119,4 +119,5 @@ func _on_ColumnButton_pressed():
 			sort_column_primary_reversed = false
 			show_correct_icon()
 	
+	# emit a signal which is catched by TopRow
 	emit_signal("column_button_pressed", id)

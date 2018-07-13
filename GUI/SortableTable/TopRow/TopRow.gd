@@ -223,7 +223,14 @@ func column_button_pressed(column_id):
 			ColumnButton.reset_button()
 		count += 1
 	
-	SortableTable.refresh()
+	# sort the table
+	RowContainerFilled.sort_table(column_id)
+	
+	# row array updaten
+	
+	# update the sortable rows array of RowContainerFilled to ensure selection works correct and row backgroundcolor is also correct
+	RowContainerFilled.update_sortable_rows_array()
+	RowContainerFilled.update_ids_of_rows()
 
 
 

@@ -78,7 +78,13 @@ func initialize_row():
 	Row.connect("drag_select", self, "drag_select_SortableRows")
 		
 	Row.cell_count = TopRow.ColumnButtons.size()
+	
+	for column in TopRow.ColumnButtons:
+		Row.sort_values.append("")
+	Row.sort_values.append("")
+	
 	Row.row_height = SortableTable.row_height
+	
 	Row.create_cells()
 	if TopRow:
 		Row.modulate_cell_color(TopRow.sort_column_primary,Color("18ffffff"))
@@ -123,6 +129,11 @@ func set_column_width(column, width):
 func set_cell_content(row, column, child):
 	if row <= SortableRows.size():
 		SortableRows[row - 1].set_cell_content(column, child)
+		
+
+func set_cell_sort_value(row, column, value):
+	if row <= SortableRows.size():
+		SortableRows[row - 1].sort_values[column] = value
 	
 	
 func set_row_content_id(row, id):
@@ -138,7 +149,10 @@ func set_row_color_by_string(row, color_string):
 	if row >= 1:
 		SortableRows[row - 1].set_row_color_by_string(color_string)
 
-
+func update_sortable_rows_array():
+	SortableRows = self.get_children()
+	
+	
 func update_ids_of_rows():
 	var count = 1
 	for Row in SortableRows:
@@ -146,42 +160,68 @@ func update_ids_of_rows():
 		count += 1
 
 
-func update_selection():
-	for Row in SortableRows:
-		Row.set_selected(false)
-		
-	for selected_row_content_id in selected_row_content_ids:
-		for Row in SortableRows:
-			if Row.content_id == selected_row_content_id:
-				Row.set_selected(true)
 
+##############
+### Sort Table
+##############
 
-func clear_selection():
+func sort_table(column):
 	
-	selected_row_content_ids.clear()
+	var primary = SortableTable.sort_column_primary
+	var secondary = SortableTable.sort_column_secondary
 	
+	var sort_array = []
+	
+	# create the array to sort
 	for Row in SortableRows:
-		Row.set_selected(false)
+	
+		sort_array.append([Row, Row.sort_values[primary], Row.sort_values[secondary] ] )
+	
+	# sort the array
+	sort_array.sort_custom ( self, "raptor_render_custom_sort" )
+	
+	
+	# update the table
+	var position = 0
+	
+	for row in sort_array:
+		self.move_child(row[0], position)
+		position += 1
+	
 
-func add_content_id_to_selection(content_id):
-	selected_row_content_ids.append(content_id)
-
-
-func reset_all_row_colors_to_default():
-	for Row in SortableRows:
-		Row.set_row_color_by_string("default")
+func raptor_render_custom_sort(a,b):
+	
+	var primary_reversed = SortableTable.sort_column_primary_reversed
+	var secondary_reversed = SortableTable.sort_column_secondary_reversed
+	
+	if !primary_reversed:
 		
+		if !secondary_reversed:
 
-func highlight_column(column):
-	if TopRow:
-		if column <= TopRow.ColumnButtons.size() and column > 0:
-			for i in range(1, TopRow.ColumnButtons.size() + 1) :
-				for Row in SortableRows:
-					Row.modulate_cell_color(i,Color("00ffffff"))
-			for Row in SortableRows:
-				Row.modulate_cell_color(column,Color("18ffffff"))
+			return a[1] < b[1] or (a[1] == b[1] and a[2] < b[2])
 		
+		else:	
+			
+			return a[1] < b[1] or (a[1] == b[1] and a[2] > b[2])
+			
+	else:
 		
+		if !secondary_reversed:
+
+			return a[1] > b[1] or (a[1] == b[1] and a[2] < b[2])
+		
+		else:	
+			
+			return a[1] > b[1] or (a[1] == b[1] and a[2] > b[2])	
+
+
+
+
+
+#############
+### Selection
+#############
+
 
 func select_SortableRows(row_id):
 	
@@ -276,7 +316,51 @@ func select_all():
 		for Row in SortableRows:
 			Row.set_selected(false)
 			
+
+
+func reset_all_row_colors_to_default():
+	for Row in SortableRows:
+		Row.set_row_color_by_string("default")
+		
+
+
+func highlight_column(column):
+	if TopRow:
+		if column <= TopRow.ColumnButtons.size() and column > 0:
+			for i in range(1, TopRow.ColumnButtons.size() + 1) :
+				for Row in SortableRows:
+					Row.modulate_cell_color(i,Color("00ffffff"))
+			for Row in SortableRows:
+				Row.modulate_cell_color(column,Color("18ffffff"))
+
+
+func update_selection():
+	for Row in SortableRows:
+		Row.set_selected(false)
+		
+	for selected_row_content_id in selected_row_content_ids:
+		for Row in SortableRows:
+			if Row.content_id == selected_row_content_id:
+				Row.set_selected(true)
+
+
+func clear_selection():
 	
+	selected_row_content_ids.clear()
+	
+	for Row in SortableRows:
+		Row.set_selected(false)
+
+
+func add_content_id_to_selection(content_id):
+	selected_row_content_ids.append(content_id)
+
+
+
+
+#######################
+### invoke Context menu
+#######################
 
 
 func open_context_menu(row_id):

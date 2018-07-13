@@ -72,6 +72,9 @@ func update_amount_of_rows(count):
 func set_cell_content(row, column, child): 
 	RowContainerFilled.set_cell_content(row, column, child)
 	
+func set_cell_sort_value(row, column, value):
+	RowContainerFilled.set_cell_sort_value(row, column, value)
+	
 	
 func set_row_color(row, color):
 	RowContainerFilled.set_row_color(row, color)
