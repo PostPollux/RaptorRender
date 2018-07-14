@@ -25,7 +25,7 @@ func _ready():
 
 func set_item_names():
 	
-	if RaptorRender.TableClients.get_selected_content_ids().size() <= 1:
+	if RaptorRender.ClientsTable.get_selected_ids().size() <= 1:
 		self.set_item_text(0, "Enable Client")
 		self.set_item_text(1, "Disable Client Deferred")
 		self.set_item_text(2, "Disable Client Immediately")
@@ -63,7 +63,7 @@ func enable_disable_items():
 	self.set_item_disabled(14, true)  # Remove Client
 	
 	
-	var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+	var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 	
 	for selected in selected_ids:
 		
@@ -116,7 +116,7 @@ func _on_ContextMenu_index_pressed(index):
 		
 		0:  # Enable Client
 			
-			var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -124,13 +124,13 @@ func _on_ContextMenu_index_pressed(index):
 					
 					RaptorRender.rr_data.clients[selected].status = "2_available"
 			
-			RaptorRender.TableClients.refresh()
+			RaptorRender.ClientsTable.refresh()
 			
 			
 			
 		1:  # Disable Client Deffered
 			
-			var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -140,13 +140,13 @@ func _on_ContextMenu_index_pressed(index):
 					
 					RaptorRender.rr_data.clients[selected].status = "4_disabled"
 				
-			RaptorRender.TableClients.refresh()
+			RaptorRender.ClientsTable.refresh()
 			
 			
 				
 		2:  # Disable Client Immediately
 			
-			var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -156,7 +156,7 @@ func _on_ContextMenu_index_pressed(index):
 					
 					RaptorRender.rr_data.clients[selected].status = "4_disabled"
 			
-			RaptorRender.TableClients.refresh()
+			RaptorRender.ClientsTable.refresh()
 			
 			
 			
@@ -177,12 +177,12 @@ func _on_ContextMenu_index_pressed(index):
 			
 		6:  # Reset Client Error count
 			
-			var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				RaptorRender.rr_data.clients[selected].error_count = 0
 			
-			RaptorRender.TableClients.refresh()
+			RaptorRender.ClientsTable.refresh()
 		
 		
 		
@@ -201,7 +201,7 @@ func _on_ContextMenu_index_pressed(index):
 			var mac_addresses = []
 			
 			# fill the mac_addresses array with all the mac addresssess that are supposed to recieve a WOL package
-			var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				if RaptorRender.rr_data.clients[selected].status == "5_offline":
@@ -300,7 +300,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 		14:  # Remove Client
 			
-			var selected_ids = RaptorRender.TableClients.get_selected_content_ids()
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -310,7 +310,7 @@ func _on_ContextMenu_index_pressed(index):
 					
 					RaptorRender.rr_data.clients.erase(selected)
 			
-			RaptorRender.TableClients.refresh()
+			RaptorRender.ClientsTable.refresh()
 
 
 

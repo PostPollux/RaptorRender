@@ -59,8 +59,7 @@ func _ready():
 	cpu_usage = 0
 	
 	
-	# print
-	print_hardware_info()
+	# print_hardware_info()
 	
 	create_client_dict()
 	
@@ -81,10 +80,6 @@ func _on_hardware_info_timer_timeout():
 	# set cpu usage
 	cpu_usage = int (get_cpu_usage() )
 	
-
-	# print results
-	print ( "Memory usage: " + String( memory_usage )  + " %"  )
-	print ( "CPU usage: " + String( cpu_usage )  + " %"  )
 	
 	# change the values
 	RaptorRender.rr_data.clients[mac_addresses[0]].memory_usage = memory_usage

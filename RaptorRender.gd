@@ -13,8 +13,8 @@ var CurrentJobLinkRes = preload("res://GUI/specific_sortable_table_cell_elements
 
 
 
-var TableJobs
-var TableClients
+var JobsTable
+var ClientsTable
 
 var ContextMenu_Clients
 var ContextMenu_Jobs
@@ -853,7 +853,6 @@ func _ready():
 		}
 	}
 	
-	#test_prints()
 	
 	
 func register_client_info_panel(InfoPanel):  
@@ -872,16 +871,16 @@ func register_table(SortableTable):
 	
 	match sortable_table_id: 
 		"jobs":
-			TableJobs = SortableTable
-			TableJobs.connect("refresh_table_content", self, "refresh_jobs_table")
-			TableJobs.connect("something_just_selected", self, "job_selected")
-			TableJobs.connect("context_invoked", self, "jobs_context_menu_invoked")
+			JobsTable = SortableTable
+			JobsTable.connect("refresh_table_content", self, "refresh_jobs_table")
+			JobsTable.connect("something_just_selected", self, "job_selected")
+			JobsTable.connect("context_invoked", self, "jobs_context_menu_invoked")
 			
 		"clients": 
-			TableClients = SortableTable 
-			TableClients.connect("refresh_table_content", self, "refresh_clients_table")
-			TableClients.connect("something_just_selected", self, "client_selected")
-			TableClients.connect("context_invoked", self, "client_context_menu_invoked")
+			ClientsTable = SortableTable 
+			ClientsTable.connect("refresh_table_content", self, "refresh_clients_table")
+			ClientsTable.connect("something_just_selected", self, "client_selected")
+			ClientsTable.connect("context_invoked", self, "client_context_menu_invoked")
 
 
 
@@ -897,21 +896,21 @@ func register_context_menu(ContextMenu):
 			
 			
 			
-func client_selected(content_id_of_row):
-	TableJobs.clear_selection()
+func client_selected(id_of_row):
+	JobsTable.clear_selection()
 	JobInfoPanel.visible = false
 	JobInfoPanel.reset_to_first_tab()
-	ClientInfoPanel.update_client_info_panel(content_id_of_row)
+	ClientInfoPanel.update_client_info_panel(id_of_row)
 	ClientInfoPanel.visible = true
 	
 	
 	
 	
-func job_selected(content_id_of_row):
-	TableClients.clear_selection()
+func job_selected(id_of_row):
+	ClientsTable.clear_selection()
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
-	JobInfoPanel.update_job_info_panel(content_id_of_row)
+	JobInfoPanel.update_job_info_panel(id_of_row)
 	JobInfoPanel.visible = true
 	
 
@@ -929,48 +928,150 @@ func jobs_context_menu_invoked():
 func _input(event):
 		
 	if Input.is_key_pressed(KEY_R):
-		TableJobs.refresh()
-		TableClients.refresh()
+		JobsTable.refresh()
+		ClientsTable.refresh()
+		
 	if Input.is_key_pressed(KEY_C):
 		if colorize_table_rows:
 			colorize_table_rows = false
 		else:
 			colorize_table_rows = true
-		TableJobs.refresh()
-		TableClients.refresh()
+		JobsTable.refresh()
+		ClientsTable.refresh()
 			
 	if Input.is_key_pressed(KEY_X):
 		rr_data.clients.erase("id4")
 		rr_data.clients.erase("id8")
 		rr_data.clients.erase("id10")
-		TableClients.refresh()
+		ClientsTable.refresh()
+		
 	if Input.is_key_pressed(KEY_B):
-		rr_data.clients["id20"] = {
-				"name": "Hammond",
-				"ip": "192.168.1.22",
-				"status": "3_error",
-				"current_job_id": "",
-				"error_count": 0,
-				"platform": "Windows",
-				"pools": ["AE_Plugins", "another pool", "third pool"],
-				"rr_version": 0.2,
-				"uptime": "11h",
-				"cpu": "24 x 2,4GHZ",
-				"memory": 128,
-				"memory_used": 2,
-				"graphics": "Intel Onboard",
-				"software": ["Blender", "Natron"],
-				"note": "The Monster Machine!"
+		rr_data.jobs["1"] = {
+				"name": "new name",
+				"type": "new program",
+				"priority": 99,
+				"creator": "new",
+				"time_created": 623180,
+				"status": "2_queued",
+				"progress": 88,
+				"range_start": 280,
+				"range_end": 880,
+				"note": "eine andere Notiz",
+				"errors": 10,
+				"pools": ["neuer pool","neuer pool2"],
+				"scene_directory" : "/home/johannes/Downloads/",
+				"output_directory" : "/home/johannes/GodotTest/",
+				"render_time" : 345,
+				"chunks": {
+					"1":{
+						"status" : "finished",
+						"frames_to_calculate" : [20,21,22,23],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
+					},
+					"2":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
+					},
+					"3":{
+						"status" : "active",
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
+					},
+					"4":{
+						"status" : "active",
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
+					},
+					"5":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
+					},
+					"6":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
+					},
+					"7":{
+						"status" : "finished",
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : "",
+						"time_finished" : "",
+						"number_of_tries" : 1
+					}
+				}
+			}
+
+		rr_data.clients["id1"] =  {
+				"name": "new machine",
+				"username": "new user",
+				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+				"ip_addresses": ["192.168.1.45","192.133.1.45"],
+				"status": "1_rendering",
+				"current_job_id": "4",
+				"error_count": 12,
+				"platform": ["Linux","4.14.48-2"],
+				"pools": ["new pool", "new pools"],
+				"rr_version": 1.6,
+				"time_connected": 1528759663,
+				"cpu": ["Intel(R) Core(TM) i7-8800 CPU @ 30.00GHz", 30, 2, 4, 8],
+				"cpu_usage": 5,
+				"memory": 329610232,
+				"memory_usage": 22,
+				"graphics": ["NVidia GTX 970"],
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": "new note"
+			}
+		rr_data.clients["77"] =  {
+				"name": "Double Sun Power!",
+				"username": "Sun",
+				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+				"ip_addresses": ["192.168.1.45","192.133.1.45"],
+				"status": "1_rendering",
+				"current_job_id": "4",
+				"error_count": 12,
+				"platform": ["Linux","4.14.48-2"],
+				"pools": ["new pool", "new pools"],
+				"rr_version": 1.6,
+				"time_connected": 1528759663,
+				"cpu": ["Intel(R) Core(TM) i7-8800 CPU @ 30.00GHz", 30, 2, 4, 8],
+				"cpu_usage": 5,
+				"memory": 329610232,
+				"memory_usage": 22,
+				"graphics": ["NVidia GTX 970"],
+				"software": ["Blender", "Natron", "Nuke"],
+				"note": "new note"
 			}
 		
-		TableClients.refresh()
+		ClientsTable.refresh()
+		JobsTable.refresh()
 
 
 
 func refresh_jobs_table():
 	
 	
-	#### define the columns of the jobs table ####
+	# define the columns of the jobs table ####
 	var status_column = 1
 	var name_column = 2
 	var priority_column = 3
@@ -985,289 +1086,495 @@ func refresh_jobs_table():
 	var note_column = 12
 	
 	
-	#### get all jobs
+	# get all jobs
 	var jobs_array = rr_data.jobs.keys()
 	
-	
-	
-	#### sort jobs_array ####
-	
-		
-	var sortable_jobs_array = []
-	
-	for job in jobs_array:
-		
-		## calculate the active clients for ordering
-		var active_clients = 0
-				
-		for client in rr_data.clients.keys():
-			if rr_data.clients[client].current_job_id == job:
-				active_clients += 1
-		
-		## calculate the progress for ordering		
-		var chunk_keys = rr_data.jobs[job].chunks.keys()
-		
-		var chunks_total = 0
-		var chunks_finished = 0
-		var job_progress = 0.0
-		
-		for chunk_key in chunk_keys:
-			var chunk_status = rr_data.jobs[job].chunks[chunk_key].status
-			match chunk_status:
-				"finished": chunks_finished += 1
-			chunks_total += 1
-		
-		job_progress = float(chunks_finished) / float(chunks_total) * 100.0
-		
-		
-		
-		
-		var primary = ""
-		var secondary = ""
-		
-		match TableJobs.sort_column_primary: 
-		
-			1: primary = rr_data.jobs[job].status
-			2: primary = rr_data.jobs[job].name
-			3: primary = rr_data.jobs[job].priority
-			4: primary = active_clients
-			5: primary = job_progress
-			6: primary = rr_data.jobs[job].type
-			7: primary = rr_data.jobs[job].creator
-			8: primary = rr_data.jobs[job].time_created
-			9: primary = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
-			10: primary = rr_data.jobs[job].errors
-			11: 
-				if rr_data.jobs[job].pools.size() > 0:
-					var pools_string = ""
-					for pool in rr_data.jobs[job].pools:
-						pools_string += pool + ", "
-					primary = pools_string
-				else: primary = ""
-			12: primary = rr_data.jobs[job].note
-		
-		
-		
-		match TableJobs.sort_column_secondary: 
-		
-			1: secondary = rr_data.jobs[job].status
-			2: secondary = rr_data.jobs[job].name
-			3: secondary = rr_data.jobs[job].priority
-			4: secondary = active_clients
-			5: secondary = job_progress
-			6: secondary = rr_data.jobs[job].type
-			7: secondary = rr_data.jobs[job].creator
-			8: secondary = rr_data.jobs[job].time_created
-			9: secondary = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
-			10: secondary = rr_data.jobs[job].errors
-			11: 
-				if rr_data.jobs[job].pools.size() > 0:
-					var pools_string = ""
-					for pool in rr_data.jobs[job].pools:
-						pools_string += pool + ", "
-					secondary = pools_string
-				else: secondary = ""
-			12: secondary = rr_data.jobs[job].note
-			 
-		
-		sortable_jobs_array.append([job, primary, secondary ])
-	
-	
-	sortable_jobs_array.sort_custom ( self, "jobs_table_sort" )
-	
-	
-	#### create the correct amount of rows in RowContainerFilled ####
-	
-	TableJobs.update_amount_of_rows(jobs_array.size())
+	# display number of jobs in the Tabname
+	JobsTable.get_parent().name = "Jobs (" + String ( jobs_array.size() ) + ")"
 	
 	
 	#### Fill Jobs Table ####
 	
 	var count = 1
 	
-	for job in sortable_jobs_array:
+	for job in jobs_array:
 
-
-		TableJobs.set_row_content_id(count, job[0])
+		##############################################
+		### update modified cells in row if row exists
+		##############################################
 		
-		# Status Icon
-		
-		var StatusIcon = TextureRect.new()
-		StatusIcon.set_expand(true)
-		StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
-		StatusIcon.set_v_size_flags(3) # fill + expand
-		StatusIcon.set_h_size_flags(3) # fill + expand
-		StatusIcon.rect_min_size.x = 54
-		
-		var icon = ImageTexture.new()
-		
-		
-		if rr_data.jobs[job[0]].status == "1_rendering":
-			icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
-			if colorize_table_rows:
-				TableJobs.set_row_color_by_string(count, "blue")
-				
-		elif rr_data.jobs[job[0]].status == "2_queued":
-			icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
-			if colorize_table_rows:
-				TableJobs.set_row_color_by_string(count, "yellow")
-				
-		elif rr_data.jobs[job[0]].status == "3_error":
-			icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
-			if colorize_table_rows:
-				TableJobs.set_row_color_by_string(count, "red")
-				
-		elif rr_data.jobs[job[0]].status == "4_paused":
-			icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
-				
-		elif rr_data.jobs[job[0]].status == "5_finished":
-			icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
-			if colorize_table_rows:
-				TableJobs.set_row_color_by_string(count, "green")
-				
-		elif rr_data.jobs[job[0]].status == "6_cancelled":
-			icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
-			if colorize_table_rows:
-				TableJobs.set_row_color_by_string(count, "black")
-				StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
-				
-		StatusIcon.set_texture(icon)
-		TableJobs.set_cell_content(count, status_column, StatusIcon)
-		TableJobs.set_cell_sort_value(count, status_column,  rr_data.jobs[job[0]].status)
-		
-		
-		# Name
-		
-		var LabelName = Label.new()
-		LabelName.text = rr_data.jobs[job[0]].name
-		TableJobs.set_cell_content(count, name_column, LabelName)
-		TableJobs.set_cell_sort_value(count, name_column,  rr_data.jobs[job[0]].name)
-		
-		
-		# Priority
-		
-		var JobPriorityControl = JobPriorityControlRes.instance()
-		JobPriorityControl.job_id = job[0]
-		TableJobs.set_cell_content(count, priority_column, JobPriorityControl)
-		TableJobs.set_cell_sort_value(count, priority_column,  rr_data.jobs[job[0]].priority)
-		
-		
-		# Active Clients
-		
-		var LabelActiveClients = Label.new()
-		
-		var active_clients = 0
-		
-		for client in rr_data.clients.keys():
-			if rr_data.clients[client].current_job_id == job[0]:
-				active_clients += 1
-				
-		LabelActiveClients.text = String(active_clients)
-		TableJobs.set_cell_content(count, active_clients_column, LabelActiveClients)
-		TableJobs.set_cell_sort_value(count, active_clients_column, active_clients)
-		
-		
-		# Progress
-		
-		var JobProgressBar = JobProgressBarRes.instance()
-		JobProgressBar.rect_min_size.x = 120
-		
-		var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job[0])
-		var percentage = int( float(chunk_counts[1]) / float(chunk_counts[0]) * 100.0 )
-		
-		JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
-		JobProgressBar.in_sortable_table = true
-		
-		if rr_data.jobs[job[0]].status == "4_paused":
-			JobProgressBar.job_status = "paused"
-		if rr_data.jobs[job[0]].status == "6_cancelled":
-			JobProgressBar.job_status = "cancelled"
+		if JobsTable.RowContainerFilled.id_position_dict.has(job):
 			
-		
-		TableJobs.set_cell_content(count, progress_column, JobProgressBar)
-		TableJobs.set_cell_sort_value(count, progress_column, percentage)
-		
-		
-		# Type
-		
-		var LabelType = Label.new()
-		LabelType.text = rr_data.jobs[job[0]].type
-		TableJobs.set_cell_content(count, type_column, LabelType)
-		TableJobs.set_cell_sort_value(count, type_column,  rr_data.jobs[job[0]].type)
-		
-		
-		# Creator
-		
-		var LabelCreator = Label.new()
-		LabelCreator.text = rr_data.jobs[job[0]].creator
-		TableJobs.set_cell_content(count, creator_column, LabelCreator)
-		TableJobs.set_cell_sort_value(count, creator_column,  rr_data.jobs[job[0]].creator)
-		
-		
-		# Time Created
-		
-		var LabelTimeCreated = Label.new()
-		LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job[0]].time_created, 2)
-		TableJobs.set_cell_content(count, time_created_column, LabelTimeCreated)
-		TableJobs.set_cell_sort_value(count, time_created_column,  rr_data.jobs[job[0]].time_created)
-		
-		
-		# Frame Range
-		
-		var LabelFrameRange = Label.new()
-		var frames_total = rr_data.jobs[job[0]].range_end - rr_data.jobs[job[0]].range_start
-		LabelFrameRange.text = String(frames_total) + "  (" + String(rr_data.jobs[job[0]].range_start) + " - " + String(rr_data.jobs[job[0]].range_end) + ")"
-		TableJobs.set_cell_content(count, frame_range_column, LabelFrameRange)
-		TableJobs.set_cell_sort_value(count, frame_range_column,  rr_data.jobs[job[0]].range_end - rr_data.jobs[job[0]].range_start)
-		
-		
-		# Errors
-		
-		var LabelErrors = Label.new()
-		var job_error_count = rr_data.jobs[job[0]].errors
-		LabelErrors.text = String(job_error_count)
-		TableJobs.set_cell_content(count, errors_column, LabelErrors)
-		TableJobs.set_cell_sort_value(count, errors_column,  rr_data.jobs[job[0]].errors)
-		
-		if job_error_count > 0:
-			if colorize_table_rows:
-					TableJobs.set_row_color_by_string(count, "red")
-		
-		
-		# Pools
-		
-		var LabelPools = Label.new()
-		var pools_string = ""
-		var pool_count = 1
-		
-		if rr_data.jobs[job[0]].pools.size() > 0:
-			for pool in rr_data.jobs[job[0]].pools:
-				pools_string += pool
-				if pool_count < rr_data.jobs[job[0]].pools.size():
-					pools_string += ", "
-				pool_count += 1
+			# get reference to the row
+			var row_position = JobsTable.RowContainerFilled.id_position_dict[job]
+			var row = JobsTable.get_row_by_position( row_position )
+			
+			# update all cells that have changed
+			
+			
+			
+			### Status Icon ###
+			
+			# only change when value is different
+			if (row.sort_values[status_column] != rr_data.jobs[job].status):
 				
-		LabelPools.text = pools_string
-		TableJobs.set_cell_content(count, pools_column, LabelPools)
-		TableJobs.set_cell_sort_value(count, pools_column,  pools_string)
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, status_column )
+				
+				# change the cell value
+				var icon = ImageTexture.new()
+				
+				if rr_data.jobs[job].status == "1_rendering":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
+					if colorize_table_rows:
+						JobsTable.set_row_color_by_string(row_position, "blue")
+						
+				elif rr_data.jobs[job].status == "2_queued":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
+					if colorize_table_rows:
+						JobsTable.set_row_color_by_string(row_position, "yellow")
+						
+				elif rr_data.jobs[job].status == "3_error":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
+					if colorize_table_rows:
+						JobsTable.set_row_color_by_string(row_position, "red")
+						
+				elif rr_data.jobs[job].status == "4_paused":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
+						
+				elif rr_data.jobs[job].status == "5_finished":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
+					if colorize_table_rows:
+						JobsTable.set_row_color_by_string(row_position, "green")
+						
+				elif rr_data.jobs[job].status == "6_cancelled":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
+					if colorize_table_rows:
+						JobsTable.set_row_color_by_string(row_position, "black")
+						cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
+						
+				cell.get_child(0).set_texture(icon)
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, status_column,  rr_data.jobs[job].status)
+			
+			
+			
+			### Name ###
+			
+			# only change when value is different
+			if (row.sort_values[name_column] != rr_data.jobs[job].name.to_lower()):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, name_column )
+				
+				# change the cell value
+				cell.get_child(0).text = rr_data.jobs[job].name
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, name_column,  rr_data.jobs[job].name.to_lower())
+			
+			
+			
+			### Priority ###
+			
+			# only change when value is different
+			if (row.sort_values[priority_column] != rr_data.jobs[job].priority):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, priority_column )
+				
+				# change the cell value
+				cell.get_child(0).disable_if_needed()
+				cell.get_child(0).LabelPriority.text = String( rr_data.jobs[job].priority )
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, priority_column,  rr_data.jobs[job].priority)
+			
+			
+			
+			### Active Clients ###
+			
+			var active_clients = 0
+			
+			# calculate the numbers of active clients
+			if rr_data.jobs[job].status == "1_rendering" or rr_data.jobs[job].status == "4_paused":
+				for client in rr_data.clients.keys():
+					if rr_data.clients[client].current_job_id == job:
+						active_clients += 1
+						
+			# only change when value is different
+			if (row.sort_values[active_clients_column] != active_clients):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, active_clients_column )
+				
+				# change the cell value
+				cell.get_child(0).text = String(active_clients)
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, active_clients_column, active_clients)
+			
+			
+			
+			### Progress ###
+			
+			var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job)
+			var percentage = int( float(chunk_counts[1]) / float(chunk_counts[0]) * 100.0 )
+				
+			# only change when value is different
+			if (row.sort_values[progress_column] != percentage):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, progress_column )
+				
+				# change the cell values
+				var JobProgressBar = cell.get_child(0)
+				
+				if rr_data.jobs[job].status == "4_paused":
+					JobProgressBar.job_status = "paused"
+				if rr_data.jobs[job].status == "6_cancelled":
+					JobProgressBar.job_status = "cancelled"
+				
+				JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
+				JobProgressBar.show_progress()
+				JobProgressBar.match_color_to_status()
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, progress_column, percentage)
+			
+			
+			
+			### Type ###
+			
+			# only change when value is different
+			if (row.sort_values[type_column] != rr_data.jobs[job].type.to_lower()):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, type_column )
+				
+				# change the cell value
+				cell.get_child(0).text = rr_data.jobs[job].type
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, type_column,  rr_data.jobs[job].type.to_lower())
+			
+			
+			
+			### Creator ###
+			
+			# impossible to change
+			
+			
+			
+			### Time Created ###
+			
+			# impossible to change
+			
+			
+			
+			### Frame Range ###
+			
+			# only change when value is different
+			if (row.sort_values[frame_range_column] != rr_data.jobs[job].range_end - rr_data.jobs[job].range_start):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, frame_range_column )
+				
+				# change the cell value
+				var frames_total = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
+				cell.get_child(0).text = String(frames_total) + "  (" + String(rr_data.jobs[job].range_start) + " - " + String(rr_data.jobs[job].range_end) + ")"
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, frame_range_column,  frames_total)
+			
+			
+			
+			### Errors ###
+			
+			# only change when value is different
+			if (row.sort_values[errors_column] != rr_data.jobs[job].errors):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, errors_column )
+				
+				# change the cell value
+				cell.get_child(0).text = String(rr_data.jobs[job].errors)
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, errors_column,  rr_data.jobs[job].errors)
+				
+				if rr_data.jobs[job].errors > 0:
+					if colorize_table_rows:
+							JobsTable.set_row_color_by_string(row_position, "red")
+			
+			
+			
+			### Pools ###
+			
+			var pools_string = ""
+			var pool_count = 1
+				
+			if rr_data.jobs[job].pools.size() > 0:
+				for pool in rr_data.jobs[job].pools:
+					pools_string += pool
+					if pool_count < rr_data.jobs[job].pools.size():
+						pools_string += ", "
+					pool_count += 1
+						
+			# only change when value is different
+			if (row.sort_values[pools_column] != pools_string.to_lower()):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, pools_column )
+				
+				# change the cell value
+				cell.get_child(0).text = pools_string
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, pools_column,  pools_string.to_lower())
+			
+			
+			
+			### Note ###
+			
+			# only change when value is different
+			if (row.sort_values[note_column] != rr_data.jobs[job].note.to_lower()):
+				
+				# get reference to the cell
+				var cell = JobsTable.get_cell( row_position, note_column )
+				
+				# change the cell value
+				cell.get_child(0).text = rr_data.jobs[job].note
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, note_column,  rr_data.jobs[job].note.to_lower())
+			
+			
+			
+		##########################################################
+		### create the row if row with given id does not exist yet
+		##########################################################
 		
-		
-		# Note
-		
-		var LabelNote = Label.new()
-		LabelNote.text = rr_data.jobs[job[0]].note
-		TableJobs.set_cell_content(count, note_column, LabelNote)
-		TableJobs.set_cell_sort_value(count, note_column,  rr_data.jobs[job[0]].note)
+		else:
+			
+			JobsTable.create_row(job)
+			
+			
+			### Status Icon ###
+			
+			var StatusIcon = TextureRect.new()
+			StatusIcon.set_expand(true)
+			StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
+			StatusIcon.set_v_size_flags(3) # fill + expand
+			StatusIcon.set_h_size_flags(3) # fill + expand
+			StatusIcon.rect_min_size.x = 54
+			
+			var icon = ImageTexture.new()
+			
+			
+			if rr_data.jobs[job].status == "1_rendering":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
+				if colorize_table_rows:
+					JobsTable.set_row_color_by_string(count, "blue")
+					
+			elif rr_data.jobs[job].status == "2_queued":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
+				if colorize_table_rows:
+					JobsTable.set_row_color_by_string(count, "yellow")
+					
+			elif rr_data.jobs[job].status == "3_error":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
+				if colorize_table_rows:
+					JobsTable.set_row_color_by_string(count, "red")
+					
+			elif rr_data.jobs[job].status == "4_paused":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
+					
+			elif rr_data.jobs[job].status == "5_finished":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
+				if colorize_table_rows:
+					JobsTable.set_row_color_by_string(count, "green")
+					
+			elif rr_data.jobs[job].status == "6_cancelled":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
+				if colorize_table_rows:
+					JobsTable.set_row_color_by_string(count, "black")
+					StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
+					
+			StatusIcon.set_texture(icon)
+			JobsTable.set_cell_content(count, status_column, StatusIcon)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, status_column,  rr_data.jobs[job].status)
+			
+			
+			
+			### Name ###
+			
+			var LabelName = Label.new()
+			LabelName.text = rr_data.jobs[job].name
+			JobsTable.set_cell_content(count, name_column, LabelName)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, name_column,  rr_data.jobs[job].name.to_lower())
+			
+			
+			
+			### Priority ###
+			
+			var JobPriorityControl = JobPriorityControlRes.instance()
+			JobPriorityControl.job_id = job
+			JobsTable.set_cell_content(count, priority_column, JobPriorityControl)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, priority_column,  rr_data.jobs[job].priority)
+			
+			
+			
+			### Active Clients ###
+			
+			var LabelActiveClients = Label.new()
+			
+			var active_clients = 0
+			
+			for client in rr_data.clients.keys():
+				if rr_data.clients[client].current_job_id == job:
+					active_clients += 1
+					
+			LabelActiveClients.text = String(active_clients)
+			JobsTable.set_cell_content(count, active_clients_column, LabelActiveClients)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, active_clients_column, active_clients)
+			
+			
+			
+			### Progress ###
+			
+			var JobProgressBar = JobProgressBarRes.instance()
+			JobProgressBar.rect_min_size.x = 120
+			
+			var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job)
+			var percentage = int( float(chunk_counts[1]) / float(chunk_counts[0]) * 100.0 )
+			
+			JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
+			JobProgressBar.in_sortable_table = true
+			
+			if rr_data.jobs[job].status == "4_paused":
+				JobProgressBar.job_status = "paused"
+			if rr_data.jobs[job].status == "6_cancelled":
+				JobProgressBar.job_status = "cancelled"
+				
+			
+			JobsTable.set_cell_content(count, progress_column, JobProgressBar)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, progress_column, percentage)
+			
+			
+			
+			### Type ###
+			
+			var LabelType = Label.new()
+			LabelType.text = rr_data.jobs[job].type
+			JobsTable.set_cell_content(count, type_column, LabelType)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, type_column,  rr_data.jobs[job].type.to_lower())
+			
+			
+			
+			### Creator ###
+			
+			var LabelCreator = Label.new()
+			LabelCreator.text = rr_data.jobs[job].creator
+			JobsTable.set_cell_content(count, creator_column, LabelCreator)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, creator_column,  rr_data.jobs[job].creator.to_lower())
+			
+			
+			
+			### Time Created ###
+			
+			var LabelTimeCreated = Label.new()
+			LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job].time_created, 2)
+			JobsTable.set_cell_content(count, time_created_column, LabelTimeCreated)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, time_created_column,  rr_data.jobs[job].time_created)
+			
+			
+			
+			### Frame Range ###
+			
+			var LabelFrameRange = Label.new()
+			var frames_total = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
+			LabelFrameRange.text = String(frames_total) + "  (" + String(rr_data.jobs[job].range_start) + " - " + String(rr_data.jobs[job].range_end) + ")"
+			JobsTable.set_cell_content(count, frame_range_column, LabelFrameRange)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, frame_range_column, frames_total)
+			
+			
+			
+			### Errors ###
+			
+			var LabelErrors = Label.new()
+			LabelErrors.text = String(rr_data.jobs[job].errors)
+			JobsTable.set_cell_content(count, errors_column, LabelErrors)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, errors_column,  rr_data.jobs[job].errors)
+			
+			if rr_data.jobs[job].errors > 0:
+				if colorize_table_rows:
+						JobsTable.set_row_color_by_string(count, "red")
+			
+			
+			
+			### Pools ###
+			
+			var LabelPools = Label.new()
+			var pools_string = ""
+			var pool_count = 1
+			
+			if rr_data.jobs[job].pools.size() > 0:
+				for pool in rr_data.jobs[job].pools:
+					pools_string += pool
+					if pool_count < rr_data.jobs[job].pools.size():
+						pools_string += ", "
+					pool_count += 1
+					
+			LabelPools.text = pools_string
+			JobsTable.set_cell_content(count, pools_column, LabelPools)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, pools_column,  pools_string.to_lower())
+			
+			
+			
+			### Note ###
+			
+			var LabelNote = Label.new()
+			LabelNote.text = rr_data.jobs[job].note
+			JobsTable.set_cell_content(count, note_column, LabelNote)
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(count, note_column,  rr_data.jobs[job].note.to_lower())
 		
 		
 		count += 1
-
+	
+	JobsTable.sort()
+	
 
 
 func refresh_clients_table():
 	
 	
-	#### define the columns of the clients table ####
+	# define the columns of the clients table ####
 	var status_column = 1
 	var name_column = 2
 	var username_column = 3
@@ -1280,292 +1587,440 @@ func refresh_clients_table():
 	var note_column = 10
 	var rr_version_column = 11
 	
-	#### get all clients
+	# get all clients
 	var clients_array = rr_data.clients.keys()
 	
-	
-	
-	#### sort clients_array ####
-	
-		
-	var sortable_clients_array = []
-	
-	for client in clients_array:
-		
-		var primary = ""
-		var secondary  = ""
-		
-		match TableClients.sort_column_primary: 
-		
-			1: primary = rr_data.clients[client].status
-			2: primary = rr_data.clients[client].name
-			3: primary = rr_data.clients[client].username
-			4: primary = rr_data.clients[client].platform[0]
-			5: primary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
-			6: primary = rr_data.clients[client].memory
-			7: 
-				if rr_data.clients[client].current_job_id != "":
-					primary = rr_data.jobs[ rr_data.clients[client].current_job_id ].name
-				else:
-					primary = ""
-			8: primary = rr_data.clients[client].error_count
-			9: 
-				if rr_data.clients[client].pools.size() > 0:
-					var pools_string = ""
-					for pool in rr_data.clients[client].pools:
-						pools_string += pool + ", "
-					primary = pools_string
-				else: primary = ""
-			10: primary = rr_data.clients[client].note
-			11: primary = rr_data.clients[client].rr_version 
-		
-		match TableClients.sort_column_secondary: 
-		
-			1: secondary = rr_data.clients[client].status
-			2: secondary = rr_data.clients[client].name
-			3: secondary = rr_data.clients[client].username
-			4: secondary = rr_data.clients[client].platform[0]
-			5: secondary = rr_data.clients[client].cpu[1] * float(rr_data.clients[client].cpu[2]) * float(rr_data.clients[client].cpu[3])
-			6: secondary = rr_data.clients[client].memory
-			7: 
-				if rr_data.clients[client].current_job_id != "":
-					secondary = rr_data.jobs[ rr_data.clients[client].current_job_id ].name
-				else:
-					secondary = ""
-			8: secondary = rr_data.clients[client].error_count
-			9: 
-				if rr_data.clients[client].pools.size() > 0:
-					var pools_string = ""
-					for pool in rr_data.clients[client].pools:
-						pools_string += pool + ", "
-					secondary = pools_string
-				else: secondary = ""
-			10: secondary = rr_data.clients[client].note
-			11: secondary = rr_data.clients[client].rr_version 
-		
-		sortable_clients_array.append([client, primary, secondary ])
-	
-	
-	sortable_clients_array.sort_custom ( self, "clients_table_sort" )
-	
-	
-	#### create the correct amount of rows in RowContainerFilled ####
-	
-	TableClients.update_amount_of_rows(clients_array.size())
+	# display number of clients in the Tabname
+	ClientsTable.get_parent().name = "Clients (" + String ( clients_array.size() ) + ")"
 	
 	
 	#### Fill Clients Table ####
 	
 	var count = 1
 	
-	for client in sortable_clients_array:
+	for client in clients_array:
 
-
-		TableClients.set_row_content_id(count, client[0])
-
-		# Status Icon
+		##############################################
+		### update modified cells in row if row exists
+		##############################################
 		
-		var StatusIcon = TextureRect.new()
-		StatusIcon.set_expand(true)
-		StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
-		StatusIcon.set_v_size_flags(3) # fill + expand
-		StatusIcon.set_h_size_flags(3) # fill + expand
-		StatusIcon.rect_min_size.x = 54
-		
-		var icon = ImageTexture.new()
-		
-		
-		if rr_data.clients[client[0]].status == "1_rendering":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30_2.png")
-			if colorize_table_rows:
-				TableClients.set_row_color_by_string(count, "blue")
+		if ClientsTable.RowContainerFilled.id_position_dict.has(client):
 			
-		elif rr_data.clients[client[0]].status == "2_available":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_online_58x30.png")
-			if colorize_table_rows:
-				TableClients.set_row_color_by_string(count, "green")
+			# get reference to the row
+			var row_position = ClientsTable.RowContainerFilled.id_position_dict[client]
+			var row = ClientsTable.get_row_by_position( row_position )
 			
-		elif rr_data.clients[client[0]].status == "3_error":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_error_58x30.png")
-
-		elif rr_data.clients[client[0]].status == "4_disabled":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_disabled_58x30.png")
-
-		elif rr_data.clients[client[0]].status == "5_offline":
-			icon.load("res://GUI/icons/client_status/58x30/client_status_offline_58x30.png")
-			if colorize_table_rows:
-				TableClients.set_row_color_by_string(count, "black")
-				StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
 			
-		StatusIcon.set_texture(icon)
-		TableClients.set_cell_content(count, status_column, StatusIcon)
-		TableClients.set_cell_sort_value(count, status_column,  rr_data.clients[client[0]].status)
-
-
-		# Name
-
-		var LabelName = Label.new()
-		LabelName.text = rr_data.clients[client[0]].name
-		TableClients.set_cell_content(count, name_column, LabelName)
-		TableClients.set_cell_sort_value(count, name_column,  rr_data.clients[client[0]].name)
-		
-		
-		# Username
-
-		var LabelUserName = Label.new()
-		LabelUserName.text = rr_data.clients[client[0]].username
-		TableClients.set_cell_content(count, username_column, LabelUserName)
-		TableClients.set_cell_sort_value(count, username_column,  rr_data.clients[client[0]].username)
-		
-		
-		# Platform
-		
-		var LabelPlatform = Label.new()
-		LabelPlatform.text = rr_data.clients[client[0]].platform[0]
-		TableClients.set_cell_content(count, platform_column, LabelPlatform)
-		TableClients.set_cell_sort_value(count, platform_column,  rr_data.clients[client[0]].platform[0])
-		
-		
-		# CPU
-
-		var LabelCPU = Label.new()
-		var ghz = rr_data.clients[client[0]].cpu[1] * rr_data.clients[client[0]].cpu[2] * rr_data.clients[client[0]].cpu[3]
-		LabelCPU.text =  String( ghz ) + " GHZ"
-		TableClients.set_cell_content(count, cpu_column, LabelCPU)
-		TableClients.set_cell_sort_value(count, cpu_column,  ghz)
-		
-		
-		# RAM
-		
-		var LabelMemory = Label.new()
-		LabelMemory.text = String( round(float(rr_data.clients[client[0]].memory) / 1024 / 1024 ))+ " GB"
-		TableClients.set_cell_content(count, memory_column, LabelMemory)
-		TableClients.set_cell_sort_value(count, memory_column,  rr_data.clients[client[0]].memory)
-		
-		
-		# Current Job
-		
-		var CurrentJobLink = CurrentJobLinkRes.instance()
-		
-		CurrentJobLink.job_id = rr_data.clients[client[0]].current_job_id
-		
-		TableClients.set_cell_content(count, current_job_column, CurrentJobLink)
-		TableClients.set_cell_sort_value(count, current_job_column,  rr_data.clients[client[0]].current_job_id)
-		
-		
-		# Errors
-		
-		var LabelErrorCount = Label.new()
-		var clients_error_count = rr_data.clients[client[0]].error_count
-		LabelErrorCount.text = String(clients_error_count)
-		TableClients.set_cell_content(count, error_count_column, LabelErrorCount)
-		TableClients.set_cell_sort_value(count, error_count_column,  rr_data.clients[client[0]].error_count)
-		
-		if clients_error_count > 0:
-			if colorize_table_rows:
-				TableClients.set_row_color_by_string(count, "red")
+			# update all cells that have changed
 			
-		
-		#Color("9f4c48")
-		
-		
-		# Pools
-		
-		var LabelPools = Label.new()
-		var pools_string = ""
-		var pool_count = 1
-		
-		if rr_data.clients[client[0]].pools.size() > 0:
-			for pool in rr_data.clients[client[0]].pools:
-				pools_string += pool
-				if pool_count < rr_data.clients[client[0]].pools.size():
-					pools_string += ", "
-				pool_count += 1
+			
+			### Status Icon ###
+			
+			# only change when value is different
+			if (row.sort_values[status_column] != rr_data.clients[client].status):
 				
-		LabelPools.text = pools_string
-		TableClients.set_cell_content(count, pools_column, LabelPools)
-		TableClients.set_cell_sort_value(count, pools_column, pools_string)
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, status_column )
+				
+				
+				var icon = ImageTexture.new()
+				
+				if rr_data.clients[client].status == "1_rendering":
+					icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30_2.png")
+					if colorize_table_rows:
+						ClientsTable.set_row_color_by_string(row_position, "blue")
+					
+				elif rr_data.clients[client].status == "2_available":
+					icon.load("res://GUI/icons/client_status/58x30/client_status_online_58x30.png")
+					if colorize_table_rows:
+						ClientsTable.set_row_color_by_string(row_position, "green")
+					
+				elif rr_data.clients[client].status == "3_error":
+					icon.load("res://GUI/icons/client_status/58x30/client_status_error_58x30.png")
+		
+				elif rr_data.clients[client].status == "4_disabled":
+					icon.load("res://GUI/icons/client_status/58x30/client_status_disabled_58x30.png")
+		
+				elif rr_data.clients[client].status == "5_offline":
+					icon.load("res://GUI/icons/client_status/58x30/client_status_offline_58x30.png")
+					if colorize_table_rows:
+						ClientsTable.set_row_color_by_string(row_position, "black")
+						cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
+				
+				
+				# change the cell value
+				cell.get_child(0).set_texture(icon)
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, status_column,  rr_data.clients[client].status)
+			
+			
+			
+			### Name ###
+			
+			# only change when value is different
+			if (row.sort_values[name_column] != rr_data.clients[client].name.to_lower()):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, name_column )
+				
+				# change the cell value
+				cell.get_child(0).text = rr_data.clients[client].name
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, name_column,  rr_data.clients[client].name.to_lower())
+			
+			
+			
+			### Username ###
+			
+			# only change when value is different
+			if (row.sort_values[username_column] != rr_data.clients[client].username.to_lower()):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, username_column )
+				
+				# change the cell value
+				cell.get_child(0).text = rr_data.clients[client].username
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, username_column,  rr_data.clients[client].username.to_lower())
+			
+			
+			
+			### Platform ###
+			
+			# only change when value is different
+			if (row.sort_values[platform_column] != rr_data.clients[client].platform[0]):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, platform_column )
+				
+				# change the cell value
+				cell.get_child(0).text = rr_data.clients[client].platform[0]
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, platform_column,  rr_data.clients[client].platform[0])
+			
+			
+			
+			### CPU ###
+			
+			# only change when value is different
+			if (row.sort_values[cpu_column] != rr_data.clients[client].cpu[1] * rr_data.clients[client].cpu[2] * rr_data.clients[client].cpu[3]):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, cpu_column )
+				
+				# change the cell value
+				var ghz = rr_data.clients[client].cpu[1] * rr_data.clients[client].cpu[2] * rr_data.clients[client].cpu[3]
+				cell.get_child(0).text =  String( ghz ) + " GHZ"
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, cpu_column,  ghz)
+			
+			
+			
+			### RAM ###
+			
+			# only change when value is different
+			if (row.sort_values[memory_column] != rr_data.clients[client].memory):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, memory_column )
+				
+				# change the cell value
+				cell.get_child(0).text = String( round(float(rr_data.clients[client].memory) / 1024 / 1024 ))+ " GB"
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, memory_column,  rr_data.clients[client].memory)
+			
+			
+			
+			### Current Job ###
+			
+			# only change when value is different
+			if (row.sort_values[current_job_column] != rr_data.clients[client].current_job_id):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, current_job_column )
+				
+				# change the cell value
+				var job_id = rr_data.clients[client].current_job_id
+				cell.get_child(0).job_id = job_id
+				
+				if job_id == "":
+					cell.get_child(0).CurrentJobLabel.text = ""
+				else:
+					cell.get_child(0).CurrentJobLabel.text = rr_data.jobs[job_id].name
+				cell.get_child(0).set_correct_visibility_of_link_button()
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, current_job_column,  rr_data.clients[client].current_job_id)
+			
+			
+			
+			### Errors ###
+			
+			# only change when value is different
+			if (row.sort_values[error_count_column] != rr_data.clients[client].error_count):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, error_count_column )
+				
+				# change the cell value
+				var clients_error_count = rr_data.clients[client].error_count
+				cell.get_child(0).text = String ( clients_error_count )
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value( row_position, error_count_column,  clients_error_count )
+				
+				if clients_error_count > 0:
+					if colorize_table_rows:
+						ClientsTable.set_row_color_by_string(row_position, "red")
+			
+			
+			
+			### Pools ###
+			
+			var pools_string = ""
+			var pool_count = 1
+			
+			if rr_data.clients[client].pools.size() > 0:
+				for pool in rr_data.clients[client].pools:
+					pools_string += pool
+					if pool_count < rr_data.clients[client].pools.size():
+						pools_string += ", "
+					pool_count += 1
+					
+			# only change when value is different
+			if (row.sort_values[pools_column] != pools_string):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, pools_column )
+				
+				# change the cell value
+				cell.get_child(0).text = pools_string
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, pools_column, pools_string)
+			
+			
+			
+			### Note ###
+			
+			# only change when value is different
+			if (row.sort_values[note_column] != rr_data.clients[client].note):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, note_column )
+				
+				# change the cell value
+				cell.get_child(0).text = String(rr_data.clients[client].note) 
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(row_position, note_column,  rr_data.clients[client].note)
+			
+			
+			
+			### Raptor Render Version ###
+			
+			
+			# only change when value is different
+			if (row.sort_values[rr_version_column] != rr_data.clients[client].rr_version):
+				
+				# get reference to the cell
+				var cell = ClientsTable.get_cell( row_position, rr_version_column )
+				
+				# change the cell value
+				cell.get_child(0).text = String(rr_data.clients[client].rr_version) 
+				
+				# update sort_value
+				ClientsTable.set_cell_sort_value(count, rr_version_column,  rr_data.clients[client].rr_version)
 		
 		
-		# Note
 		
-		var LabelNote = Label.new()
-		LabelNote.text = String(rr_data.clients[client[0]].note) 
-		TableClients.set_cell_content(count, note_column, LabelNote)
-		TableClients.set_cell_sort_value(count, note_column,  rr_data.clients[client[0]].note)
+		##########################################################
+		### create the row if row with given id does not exist yet
+		##########################################################
 		
+		else:
+			ClientsTable.create_row(client)
+			
+
+			### Status Icon ###
+			
+			var StatusIcon = TextureRect.new()
+			StatusIcon.set_expand(true)
+			StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
+			StatusIcon.set_v_size_flags(3) # fill + expand
+			StatusIcon.set_h_size_flags(3) # fill + expand
+			StatusIcon.rect_min_size.x = 54
+			
+			var icon = ImageTexture.new()
+			
+			
+			if rr_data.clients[client].status == "1_rendering":
+				icon.load("res://GUI/icons/client_status/58x30/client_status_rendering_58x30_2.png")
+				if colorize_table_rows:
+					ClientsTable.set_row_color_by_string(count, "blue")
+				
+			elif rr_data.clients[client].status == "2_available":
+				icon.load("res://GUI/icons/client_status/58x30/client_status_online_58x30.png")
+				if colorize_table_rows:
+					ClientsTable.set_row_color_by_string(count, "green")
+				
+			elif rr_data.clients[client].status == "3_error":
+				icon.load("res://GUI/icons/client_status/58x30/client_status_error_58x30.png")
+	
+			elif rr_data.clients[client].status == "4_disabled":
+				icon.load("res://GUI/icons/client_status/58x30/client_status_disabled_58x30.png")
+	
+			elif rr_data.clients[client].status == "5_offline":
+				icon.load("res://GUI/icons/client_status/58x30/client_status_offline_58x30.png")
+				if colorize_table_rows:
+					ClientsTable.set_row_color_by_string(count, "black")
+					StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
+				
+			StatusIcon.set_texture(icon)
+			ClientsTable.set_cell_content(count, status_column, StatusIcon)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, status_column,  rr_data.clients[client].status)
+			
+			
+			
+			### Name ###
+	
+			var LabelName = Label.new()
+			LabelName.text = rr_data.clients[client].name
+			ClientsTable.set_cell_content(count, name_column, LabelName)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, name_column,  rr_data.clients[client].name.to_lower())
+			
+			
+			
+			### Username ###
+			
+			var LabelUserName = Label.new()
+			LabelUserName.text = rr_data.clients[client].username
+			ClientsTable.set_cell_content(count, username_column, LabelUserName)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, username_column,  rr_data.clients[client].username.to_lower())
+			
+			
+			
+			### Platform ###
+			
+			var LabelPlatform = Label.new()
+			LabelPlatform.text = rr_data.clients[client].platform[0]
+			ClientsTable.set_cell_content(count, platform_column, LabelPlatform)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, platform_column,  rr_data.clients[client].platform[0])
+			
+			
+			
+			### CPU ###
+			
+			var LabelCPU = Label.new()
+			var ghz = rr_data.clients[client].cpu[1] * rr_data.clients[client].cpu[2] * rr_data.clients[client].cpu[3]
+			LabelCPU.text =  String( ghz ) + " GHZ"
+			ClientsTable.set_cell_content(count, cpu_column, LabelCPU)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, cpu_column,  ghz)
+			
+			
+			
+			### RAM ###
+			
+			var LabelMemory = Label.new()
+			LabelMemory.text = String( round(float(rr_data.clients[client].memory) / 1024 / 1024 ))+ " GB"
+			ClientsTable.set_cell_content(count, memory_column, LabelMemory)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, memory_column,  rr_data.clients[client].memory)
+			
+			
+			
+			### Current Job ###
+			
+			var CurrentJobLink = CurrentJobLinkRes.instance()
+			
+			CurrentJobLink.job_id = rr_data.clients[client].current_job_id
+			
+			ClientsTable.set_cell_content(count, current_job_column, CurrentJobLink)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, current_job_column,  rr_data.clients[client].current_job_id)
+			
+			
+			
+			### Errors ###
+			
+			var LabelErrorCount = Label.new()
+			var clients_error_count = rr_data.clients[client].error_count
+			LabelErrorCount.text = String(clients_error_count)
+			ClientsTable.set_cell_content(count, error_count_column, LabelErrorCount)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, error_count_column,  rr_data.clients[client].error_count)
+			
+			if clients_error_count > 0:
+				if colorize_table_rows:
+					ClientsTable.set_row_color_by_string(count, "red")
+			
+			
+			
+			### Pools ###
+			
+			var LabelPools = Label.new()
+			var pools_string = ""
+			var pool_count = 1
+			
+			if rr_data.clients[client].pools.size() > 0:
+				for pool in rr_data.clients[client].pools:
+					pools_string += pool
+					if pool_count < rr_data.clients[client].pools.size():
+						pools_string += ", "
+					pool_count += 1
+					
+			LabelPools.text = pools_string
+			ClientsTable.set_cell_content(count, pools_column, LabelPools)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, pools_column, pools_string)
+			
+			
+			
+			### Note ###
+			
+			var LabelNote = Label.new()
+			LabelNote.text = String(rr_data.clients[client].note) 
+			ClientsTable.set_cell_content(count, note_column, LabelNote)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, note_column,  rr_data.clients[client].note)
+			
+			
+			
+			### Raptor Render Version ###
+			
+			var LabelVersion = Label.new()
+			LabelVersion.text = String(rr_data.clients[client].rr_version) 
+			ClientsTable.set_cell_content(count, rr_version_column, LabelVersion)
+			
+			# update sort_value
+			ClientsTable.set_cell_sort_value(count, rr_version_column,  rr_data.clients[client].rr_version)
 		
-		
-		
-		# Raptor Render Version
-		
-		var LabelVersion = Label.new()
-		LabelVersion.text = String(rr_data.clients[client[0]].rr_version) 
-		TableClients.set_cell_content(count, rr_version_column, LabelVersion)
-		TableClients.set_cell_sort_value(count, rr_version_column,  rr_data.clients[client[0]].rr_version)
 		
 		count += 1
-		
-
-
-func clients_table_sort(a,b):
 	
-	if !TableClients.sort_column_primary_reversed:
-		
-		if !TableClients.sort_column_secondary_reversed:
-
-			return a[1] < b[1] or (a[1] == b[1] and a[2] < b[2])
-		
-		else:	
-			
-			return a[1] < b[1] or (a[1] == b[1] and a[2] > b[2])
-			
-	else:
-		
-		if !TableClients.sort_column_secondary_reversed:
-
-			return a[1] > b[1] or (a[1] == b[1] and a[2] < b[2])
-		
-		else:	
-			
-			return a[1] > b[1] or (a[1] == b[1] and a[2] > b[2])		
-		
-
-func jobs_table_sort(a,b):
-	
-	if !TableJobs.sort_column_primary_reversed:
-		
-		if !TableJobs.sort_column_secondary_reversed:
-
-			return a[1] < b[1] or (a[1] == b[1] and a[2] < b[2])
-		
-		else:	
-			
-			return a[1] < b[1] or (a[1] == b[1] and a[2] > b[2])
-			
-	else:
-		
-		if !TableJobs.sort_column_secondary_reversed:
-
-			return a[1] > b[1] or (a[1] == b[1] and a[2] < b[2])
-		
-		else:	
-			
-			return a[1] > b[1] or (a[1] == b[1] and a[2] > b[2])
+	ClientsTable.sort()
 
 
 
 
-
-func test_prints():
-	print (OS.get_name())
-	print ('Number of Threads: ' + String(OS.get_processor_count()) )
-	print (OS.get_model_name ( ))
-	print (OS.get_dynamic_memory_usage ( ))
-	
-	
-
-
-	
-		
-	

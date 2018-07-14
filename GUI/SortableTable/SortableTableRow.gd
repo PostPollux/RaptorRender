@@ -4,8 +4,8 @@ extends MarginContainer
 
 
 var cell_count
-var row_id # position of the row in the table
-var content_id # unique id of the representing content
+var row_position # position of the row in the table
+var id # unique id of the representing content
 var sort_values = [] # e.g. sort_values[5-1] holds the value that is used to sort column 5
 
 
@@ -83,8 +83,8 @@ func _process(delta):
 
 
 func update_row_even_or_odd():
-	if row_id:
-		if (row_id % 2) == 0:
+	if row_position:
+		if (row_position % 2) == 0:
 			even = true
 		else:
 			even = false
@@ -208,8 +208,8 @@ func fill_CellArrays ():
 	
 ####### Setters for Variables #########		
 	
-func set_row_id(id):
-	row_id = id
+func set_row_position(id):
+	row_position = id
 	update_row_even_or_odd()
 	update_row_color_reset()
 	
@@ -314,7 +314,7 @@ func modulate_cell_color(column, color):
 func _on_SortabelTableRow_mouse_entered():
 	update_row_color_hover()
 	if Input.is_action_pressed("ui_left_mouse_button"):
-		emit_signal("drag_select", row_id)
+		emit_signal("drag_select", row_position)
 
 func _on_SortabelTableRow_mouse_exited():
 	update_row_color_reset()
@@ -322,7 +322,7 @@ func _on_SortabelTableRow_mouse_exited():
 
 func _on_SortabelTableRow_gui_input(ev):
 	if ev.is_action_pressed("ui_left_mouse_button"):
-		emit_signal("row_clicked", row_id)
+		emit_signal("row_clicked", row_position)
 	if ev.is_action_pressed("ui_right_mouse_button"):
-		emit_signal("row_clicked_rmb", row_id)
+		emit_signal("row_clicked_rmb", row_position)
 		

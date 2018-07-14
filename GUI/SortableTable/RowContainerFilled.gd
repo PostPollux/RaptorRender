@@ -2,7 +2,8 @@ extends VBoxContainer
 
 
 onready var SortableRows = []
-onready var selected_row_content_ids = []
+onready var id_position_dict = {}
+onready var selected_row_ids = []
 onready var TopRow = $"../../../TopRow"
 onready var RowScrollContainer = $"../.."
 onready var SortableTable = $"../../../.."
@@ -21,14 +22,6 @@ func _ready():
 	for SortableRow in SortableRows:
 		SortableRow.set_row_height(row_height)
 
-	
-
-
-func add_row():
-	var Row = initialize_row()
-		
-	add_child(Row)
-	SortableRows.append(Row)
 
 
 
@@ -44,11 +37,9 @@ func update_amount_of_rows(count):
 		var rows_to_add = count - SortableRows.size()
 		
 		for i in range (0, rows_to_add):
-			
-			var Row = initialize_row()
-		
-			add_child(Row)
-			SortableRows.append(Row)
+			var id = "blub"
+			initialize_row(id)
+
 	
 	# remove unneeded rows
 	elif SortableRows.size() > count:
@@ -56,7 +47,7 @@ func update_amount_of_rows(count):
 		
 		# remove from selection
 		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
-			selected_row_content_ids.erase(SortableRows[i].content_id)
+			selected_row_ids.erase(SortableRows[i].id)
 			
 		# remove the nodes
 		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
@@ -70,30 +61,42 @@ func update_amount_of_rows(count):
 		
 		
 	
-func initialize_row():
+func initialize_row(id):
 	var Row = SortableTableRowRes.instance()
-		
+	
+	# set variables. (id, amount of cells , row height)
+	Row.id = id
+	Row.cell_count = TopRow.ColumnButtons.size()
+	Row.row_height = SortableTable.row_height
+	
+	# connect signals to enable selecting and invoking a context menu
 	Row.connect("row_clicked", self, "select_SortableRows")
 	Row.connect("row_clicked_rmb", self, "open_context_menu")
 	Row.connect("drag_select", self, "drag_select_SortableRows")
-		
-	Row.cell_count = TopRow.ColumnButtons.size()
 	
+	# initialize the array for the sort values with correct amount of empty strings. Important, otherwise it would crash
 	for column in TopRow.ColumnButtons:
 		Row.sort_values.append("")
 	Row.sort_values.append("")
 	
-	Row.row_height = SortableTable.row_height
-	
+	# create the cells
 	Row.create_cells()
 	if TopRow:
 		Row.modulate_cell_color(TopRow.sort_column_primary,Color("18ffffff"))
 		
 		var count = 1
 		for ColumnButton in TopRow.ColumnButtons:
+			
 			# apply the size of the ColumnButtons of the TopRow to the cells
 			Row.set_cell_width(count,ColumnButton.rect_min_size.x)
 			count += 1
+	
+	# add the row to the tree and to the array 
+	self.add_child(Row)
+	SortableRows.append(Row)
+	
+	# make an entry in the id_position_dict
+	id_position_dict[id] = Row.get_index() + 1
 			
 	return Row
 	
@@ -136,27 +139,32 @@ func set_cell_sort_value(row, column, value):
 		SortableRows[row - 1].sort_values[column] = value
 	
 	
-func set_row_content_id(row, id):
-		SortableRows[row - 1].content_id = id
+func set_row_id(row, id):
+		SortableRows[row - 1].id = id
 		
 		
 func set_row_color(row, color):
 	if row >= 1:
 		SortableRows[row - 1].set_row_color(color)
-		
-		
+
+
 func set_row_color_by_string(row, color_string):
 	if row >= 1:
 		SortableRows[row - 1].set_row_color_by_string(color_string)
 
+func update_id_position_dict():
+	for Row in SortableRows:
+		id_position_dict[Row.id] = Row.get_index() + 1
+
+
 func update_sortable_rows_array():
 	SortableRows = self.get_children()
-	
-	
-func update_ids_of_rows():
+
+
+func update_positions_of_rows():
 	var count = 1
 	for Row in SortableRows:
-		Row.set_row_id(count)
+		Row.set_row_position(count)
 		count += 1
 
 
@@ -165,7 +173,7 @@ func update_ids_of_rows():
 ### Sort Table
 ##############
 
-func sort_table(column):
+func sort_table():
 	
 	var primary = SortableTable.sort_column_primary
 	var secondary = SortableTable.sort_column_secondary
@@ -180,8 +188,7 @@ func sort_table(column):
 	# sort the array
 	sort_array.sort_custom ( self, "raptor_render_custom_sort" )
 	
-	
-	# update the table
+	# update the table by moving the row nodes
 	var position = 0
 	
 	for row in sort_array:
@@ -223,96 +230,96 @@ func raptor_render_custom_sort(a,b):
 #############
 
 
-func select_SortableRows(row_id):
+func select_SortableRows(row_position):
 	
-	var ClickedRow = SortableRows[row_id - 1]
+	var ClickedRow = SortableRows[row_position - 1]
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		if ClickedRow.selected == true:
 			ClickedRow.set_selected(false)
-			selected_row_content_ids.erase(ClickedRow.content_id)
+			selected_row_ids.erase(ClickedRow.id)
 		else:
 			ClickedRow.set_selected(true)
-			selected_row_content_ids.append(ClickedRow.content_id)
+			selected_row_ids.append(ClickedRow.id)
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
-		if selected_row_content_ids.size() > 0:
-			var previous_selected_row_id = 0
+		if selected_row_ids.size() > 0:
+			var previous_selected_row_position = 0
 			for Row in SortableRows:
-				if Row.content_id == selected_row_content_ids[selected_row_content_ids.size() - 1]:
-					previous_selected_row_id = Row.row_id
+				if Row.id == selected_row_ids[selected_row_ids.size() - 1]:
+					previous_selected_row_position = Row.row_position
 						
-			if row_id > previous_selected_row_id:
+			if row_position > previous_selected_row_position:
 				
-				for i in range(previous_selected_row_id, row_id + 1):
+				for i in range(previous_selected_row_position, row_position + 1):
 					if SortableRows[i-1].selected == false:
 						SortableRows[i-1].set_selected(true)
-						selected_row_content_ids.append(SortableRows[i-1].content_id)
+						selected_row_ids.append(SortableRows[i-1].id)
 			
-			if row_id < previous_selected_row_id:
+			if row_position < previous_selected_row_position:
 				
-				for i in range(row_id, previous_selected_row_id):
+				for i in range(row_position, previous_selected_row_position):
 					if SortableRows[i-1].selected == false:
 						SortableRows[i-1].set_selected(true)
-						selected_row_content_ids.append(SortableRows[i-1].content_id)
+						selected_row_ids.append(SortableRows[i-1].id)
 		else:
 			ClickedRow.set_selected(true)
-			selected_row_content_ids.append(ClickedRow.content_id)
+			selected_row_ids.append(ClickedRow.id)
 		
 	else:
 		for Row in SortableRows:
 			Row.set_selected(false)
-		selected_row_content_ids.clear()
+		selected_row_ids.clear()
 		
 		ClickedRow.set_selected(true)
-		selected_row_content_ids.append(ClickedRow.content_id)
+		selected_row_ids.append(ClickedRow.id)
 	
-	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1] )
+	SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1] )
 	
 
 
-func drag_select_SortableRows(row_id):
+func drag_select_SortableRows(row_position):
 	
-	var DragedRow = SortableRows[row_id - 1]
+	var DragedRow = SortableRows[row_position - 1]
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		DragedRow.set_selected(false)
-		selected_row_content_ids.erase(DragedRow)
+		selected_row_ids.erase(DragedRow)
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
 		if DragedRow.selected == false:
 			DragedRow.set_selected(true)
-			selected_row_content_ids.append(DragedRow.content_id)
+			selected_row_ids.append(DragedRow.id)
 		
 	else:
 		for Row in SortableRows:
 			Row.set_selected(false)
-		selected_row_content_ids.clear()
+		selected_row_ids.clear()
 		
 		DragedRow.set_selected(true)
-		selected_row_content_ids.append(DragedRow.content_id)
+		selected_row_ids.append(DragedRow.id)
 		
-	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1])
+	SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1])
 
 
 
 func select_all():
 	
 	# select or deselect all rows depending on wheter all are already selected or not
-	if selected_row_content_ids.size() != SortableRows.size():
+	if selected_row_ids.size() != SortableRows.size():
 		
-		selected_row_content_ids.clear()
+		selected_row_ids.clear()
 		for Row in SortableRows:
 			Row.set_selected(true)
-			selected_row_content_ids.append(Row.content_id)
+			selected_row_ids.append(Row.id)
 			
-		SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1 ] )
+		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1 ] )
 		
 		
 	else:
-		selected_row_content_ids.clear()
+		selected_row_ids.clear()
 		for Row in SortableRows:
 			Row.set_selected(false)
 			
@@ -338,22 +345,22 @@ func update_selection():
 	for Row in SortableRows:
 		Row.set_selected(false)
 		
-	for selected_row_content_id in selected_row_content_ids:
+	for selected_row_id in selected_row_ids:
 		for Row in SortableRows:
-			if Row.content_id == selected_row_content_id:
+			if Row.id == selected_row_id:
 				Row.set_selected(true)
 
 
 func clear_selection():
 	
-	selected_row_content_ids.clear()
+	selected_row_ids.clear()
 	
 	for Row in SortableRows:
 		Row.set_selected(false)
 
 
-func add_content_id_to_selection(content_id):
-	selected_row_content_ids.append(content_id)
+func add_id_to_selection(id):
+	selected_row_ids.append(id)
 
 
 
@@ -363,9 +370,9 @@ func add_content_id_to_selection(content_id):
 #######################
 
 
-func open_context_menu(row_id):
+func open_context_menu(row_position):
 	
-	var ClickedRow = SortableRows[row_id - 1]
+	var ClickedRow = SortableRows[row_position - 1]
 	
 	# handle selection
 	#if clicked row is not selected, deselect all but this one
@@ -373,12 +380,12 @@ func open_context_menu(row_id):
 		
 		for Row in SortableRows:
 			Row.set_selected(false)
-		selected_row_content_ids.clear()
+		selected_row_ids.clear()
 		
 		ClickedRow.set_selected(true)
-		selected_row_content_ids.append(ClickedRow.content_id)
+		selected_row_ids.append(ClickedRow.id)
 	
 	# emit signals
-	SortableTable.emit_selection_signal( selected_row_content_ids[selected_row_content_ids.size() - 1 ] )
+	SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1 ] )
 	SortableTable.emit_ContextMenu_signal()
 	

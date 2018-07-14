@@ -25,7 +25,7 @@ func _ready():
 
 func set_item_names():
 	
-	if RaptorRender.TableJobs.get_selected_content_ids().size() <= 1:
+	if RaptorRender.JobsTable.get_selected_ids().size() <= 1:
 		self.set_item_text(0, "Pause Job Deffered")
 		self.set_item_text(1, "Pause Job Immediately")
 		self.set_item_text(2, "Resume Job")
@@ -63,7 +63,7 @@ func enable_disable_items():
 	self.set_item_disabled(14, true)  # Remove Job
 	
 	
-	var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+	var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 	
 	for selected in selected_ids:
 		
@@ -113,7 +113,7 @@ func _on_ContextMenu_index_pressed(index):
 		
 		0:  # Pause Job	Deffered
 			
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -123,13 +123,13 @@ func _on_ContextMenu_index_pressed(index):
 					
 					RaptorRender.rr_data.jobs[selected].status = "4_paused"
 			
-			RaptorRender.TableJobs.refresh()
+			RaptorRender.JobsTable.refresh()
 			
 			
 			
 		1:  # Pause Job	Immediately
 			
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -151,14 +151,14 @@ func _on_ContextMenu_index_pressed(index):
 					# Set Status to paused
 					RaptorRender.rr_data.jobs[selected].status = "4_paused"
 				
-			RaptorRender.TableJobs.refresh()
-			RaptorRender.TableClients.refresh()
+			RaptorRender.JobsTable.refresh()
+			RaptorRender.ClientsTable.refresh()
 			
 			
 				
 		2:  # Resume Job
 			
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -168,7 +168,7 @@ func _on_ContextMenu_index_pressed(index):
 					
 					RaptorRender.rr_data.jobs[selected].status = "2_queued"
 			
-			RaptorRender.TableJobs.refresh()
+			RaptorRender.JobsTable.refresh()
 			
 			
 			
@@ -178,7 +178,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 		
 		4:  # Cancel Job Permanently
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -200,8 +200,8 @@ func _on_ContextMenu_index_pressed(index):
 					# Set Status to cancelled
 					RaptorRender.rr_data.jobs[selected].status = "6_cancelled"
 				
-			RaptorRender.TableJobs.refresh()
-			RaptorRender.TableClients.refresh()
+			RaptorRender.JobsTable.refresh()
+			RaptorRender.ClientsTable.refresh()
 			
 			
 		
@@ -216,13 +216,13 @@ func _on_ContextMenu_index_pressed(index):
 		
 		
 		7:  # Reset Job Error count
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 	
 				RaptorRender.rr_data.jobs[selected].errors = 0
 				
-			RaptorRender.TableJobs.refresh()
+			RaptorRender.JobsTable.refresh()
 			
 			
 			
@@ -232,7 +232,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		9:  # Resubmit Job paused
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -253,7 +253,7 @@ func _on_ContextMenu_index_pressed(index):
 				RaptorRender.rr_data.jobs[String( max_id + 1 )] = job_to_resubmit
 				
 				
-			RaptorRender.TableJobs.refresh()
+			RaptorRender.JobsTable.refresh()
 			
 			
 			
@@ -262,7 +262,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		11:  # Open Output Folder
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			var platform = OS.get_name()
 			
 			match platform:
@@ -329,7 +329,7 @@ func _on_ContextMenu_index_pressed(index):
 		
 		
 		12:  # Open Scene Folder
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			var platform = OS.get_name()
 			
 			match platform:
@@ -402,7 +402,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 		14:  # Remove Job
 			
-			var selected_ids = RaptorRender.TableJobs.get_selected_content_ids()
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
 				
@@ -415,5 +415,5 @@ func _on_ContextMenu_index_pressed(index):
 				# Remove the job
 				RaptorRender.rr_data.jobs.erase(selected)
 			
-			RaptorRender.TableJobs.refresh()
-			RaptorRender.TableClients.refresh()
+			RaptorRender.JobsTable.refresh()
+			RaptorRender.ClientsTable.refresh()

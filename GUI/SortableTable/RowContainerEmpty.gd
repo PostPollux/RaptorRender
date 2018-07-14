@@ -13,7 +13,7 @@ func _ready():
 	
 	update_width_of_RowContainerEmpty()
 	fill_up_available_space_with_empty_rows()
-	update_ids_of_empty_rows()
+	update_positions_of_empty_rows()
 	connect_row_clicked_signals()
 	set_amount_of_columns()
 	resize_columns()
@@ -39,11 +39,11 @@ func fill_up_available_space_with_empty_rows():
 
 		
 	
-func update_ids_of_empty_rows():
+func update_positions_of_empty_rows():
 	var filled_row_count = RowContainerFilled.SortableRows.size()
 	var count = 1
 	for Row in get_children():
-		Row.set_row_id(filled_row_count + count)
+		Row.set_row_position(filled_row_count + count)
 		count += 1
 
 
@@ -87,7 +87,7 @@ func highlight_column(column):
 
 
 # empty rows are not selectable, but clicking them can have an effect on the selection of the filled ones
-func select_SortableRows(row_id):
+func select_SortableRows(row_position):
 	
 	var SortableRows = RowContainerFilled.SortableRows
 	
@@ -97,23 +97,23 @@ func select_SortableRows(row_id):
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
-		if RowContainerFilled.selected_row_content_ids.size() > 0:
+		if RowContainerFilled.selected_row_ids.size() > 0:
 			
-			var previous_selected_row_id = 0
+			var previous_selected_row_position = 0
 			for Row in SortableRows:
-				if Row.content_id == RowContainerFilled.selected_row_content_ids[RowContainerFilled.selected_row_content_ids.size() - 1]:
-					previous_selected_row_id = Row.row_id
+				if Row.content_id == RowContainerFilled.selected_row_ids[RowContainerFilled.selected_row_ids.size() - 1]:
+					previous_selected_row_position = Row.row_position
 					
-			for i in range(previous_selected_row_id, SortableRows.size() + 1):
+			for i in range(previous_selected_row_position, SortableRows.size() + 1):
 				if SortableRows[i-1].selected == false:
 					SortableRows[i-1].set_selected(true)
-					RowContainerFilled.selected_row_content_ids.append(SortableRows[i-1].content_id)
+					RowContainerFilled.selected_row_ids.append(SortableRows[i-1].content_id)
 		
 		
 	else:
 		for Row in SortableRows:
 			Row.set_selected(false)
-		RowContainerFilled.selected_row_content_ids.clear()
+		RowContainerFilled.selected_row_ids.clear()
 
 
 func _on_ClipContainerForEmptyRows_resized():

@@ -65,8 +65,22 @@ func _on_SortableTable_gui_input(ev):
 func update_amount_of_rows(count): 
 	
 	RowContainerFilled.update_amount_of_rows(count) 
-	RowContainerFilled.update_ids_of_rows()
-	RowContainerEmpty.update_ids_of_empty_rows()
+	RowContainerFilled.update_positions_of_rows()
+	RowContainerEmpty.update_positions_of_empty_rows()
+	
+
+func create_row(id):
+	var row = RowContainerFilled.initialize_row(id)
+	RowContainerFilled.update_positions_of_rows()
+	RowContainerEmpty.update_positions_of_empty_rows()
+
+
+func get_row_by_position(pos):
+	return RowContainerFilled.SortableRows[pos - 1]
+	
+
+func get_cell(row, column):
+	return RowContainerFilled.SortableRows[row - 1].CellsMarginContainerArray[column - 1]
 	
 	
 func set_cell_content(row, column, child): 
@@ -83,17 +97,17 @@ func set_row_color_by_string(row, color_string):
 	RowContainerFilled.set_row_color_by_string(row, color_string)
 	
 
-func set_row_content_id(row, id): 
-	RowContainerFilled.set_row_content_id(row, id) 
+func set_row_id(row, id): 
+	RowContainerFilled.set_row_id(row, id) 
 
 
 func clear_selection():
 	RowContainerFilled.clear_selection()
 	
 	
-func select_by_content_id(content_id):
+func select_by_id(id):
 	RowContainerFilled.clear_selection()
-	RowContainerFilled.add_content_id_to_selection(content_id)
+	RowContainerFilled.add_id_to_selection(id)
 	RowContainerFilled.update_selection()
 
 func emit_selection_signal(last_selected):
@@ -102,8 +116,8 @@ func emit_selection_signal(last_selected):
 func emit_ContextMenu_signal():
 	emit_signal("context_invoked")
 	
-func get_selected_content_ids():
-	return RowContainerFilled.selected_row_content_ids
+func get_selected_ids():
+	return RowContainerFilled.selected_row_ids
 	
 
 func refresh():
@@ -112,6 +126,13 @@ func refresh():
 	RowContainerFilled.update_selection()
 	
 	
+func sort():
+	
+	RowContainerFilled.sort_table()
+	RowContainerFilled.update_sortable_rows_array()
+	RowContainerFilled.update_id_position_dict()
+	RowContainerFilled.update_positions_of_rows()
+
 
 func _on_SortableTable_draw():
 	previous_scroll_horizontal = self.scroll_horizontal
