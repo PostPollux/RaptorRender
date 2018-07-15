@@ -183,7 +183,7 @@ func sort_table():
 	# create the array to sort
 	for Row in SortableRows:
 	
-		sort_array.append([Row, Row.sort_values[primary], Row.sort_values[secondary] ] )
+		sort_array.append([Row, Row.sort_values[primary], Row.sort_values[secondary], Row.id ] )
 	
 	# sort the array
 	sort_array.sort_custom ( self, "raptor_render_custom_sort" )
@@ -198,28 +198,34 @@ func sort_table():
 
 func raptor_render_custom_sort(a,b):
 	
+	# a custom sort function must return true if the first argument (a) is less than the second (b)
+	# to ensure that the rows are not jumping when refreshing and both, primary and secondary values are the same, it also uses the id to sort
 	var primary_reversed = SortableTable.sort_column_primary_reversed
 	var secondary_reversed = SortableTable.sort_column_secondary_reversed
 	
 	if !primary_reversed:
 		
 		if !secondary_reversed:
-
-			return a[1] < b[1] or (a[1] == b[1] and a[2] < b[2])
 		
-		else:	
+		#    case 1: primary different     case 2: primary identical,           case 3: primary and secondary identical
+		#                                  but secondary different              -> check for id because this is distinct   
+		#                 v                            v                                            v                    
+		#
+			return   a[1] < b[1]   or   (a[1] == b[1] and a[2] < b[2])   or   (a[1] == b[1] and a[2] == b[2] and a[3] < b[3])
+		
+		else:
 			
-			return a[1] < b[1] or (a[1] == b[1] and a[2] > b[2])
+			return   a[1] < b[1]   or   (a[1] == b[1] and a[2] > b[2])   or   (a[1] == b[1] and a[2] == b[2] and a[3] < b[3])
 			
 	else:
 		
 		if !secondary_reversed:
 
-			return a[1] > b[1] or (a[1] == b[1] and a[2] < b[2])
+			return   a[1] > b[1]   or   (a[1] == b[1] and a[2] < b[2])   or   (a[1] == b[1] and a[2] == b[2] and a[3] < b[3])
 		
-		else:	
+		else:
 			
-			return a[1] > b[1] or (a[1] == b[1] and a[2] > b[2])	
+			return   a[1] > b[1]   or   (a[1] == b[1] and a[2] > b[2])   or   (a[1] == b[1] and a[2] == b[2] and a[3] < b[3])
 
 
 
