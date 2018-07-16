@@ -139,8 +139,6 @@ func set_cell_sort_value(row, column, value):
 		SortableRows[row - 1].sort_values[column] = value
 	
 	
-func set_row_id(row, id):
-		SortableRows[row - 1].id = id
 		
 		
 func set_row_color(row, color):
