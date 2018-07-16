@@ -46,7 +46,7 @@ func _ready():
 	hardware_info_timer.start()
 	
 	
-	# fill the variables that don't change
+	# fill the variables
 	hostname = get_hostname()
 	username = get_username()
 	platform_info = get_platform_info()
@@ -59,31 +59,11 @@ func _ready():
 	cpu_usage = 0
 	
 	
-	# print_hardware_info()
-	
 	create_client_dict()
 	
 	RaptorRender.rr_data.clients[mac_addresses[0]] = client
 	
 
-
-
-func _on_hardware_info_timer_timeout():
-	
-	# set memory usage
-	var mem_available = get_available_memory()
-	var mem_usage_as_float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100
-	
-	memory_usage = int(mem_usage_as_float)
-	
-	
-	# set cpu usage
-	cpu_usage = int (get_cpu_usage() )
-	
-	
-	# change the values
-	RaptorRender.rr_data.clients[mac_addresses[0]].memory_usage = memory_usage
-	RaptorRender.rr_data.clients[mac_addresses[0]].cpu_usage = cpu_usage
 
 
 func create_client_dict():
@@ -108,8 +88,15 @@ func create_client_dict():
 		"note": ""
 	}
 
+
+
+
+############################################
+### Debug function to print retrieved values
+############################################
+
 func print_hardware_info():
-	# Print
+	
 	var mem_available = get_available_memory()
 	
 	print(" ")
@@ -143,6 +130,13 @@ func print_hardware_info():
 
 
 
+
+
+############################################
+### Functions to retrieve System Information
+############################################
+
+
 # returns the MAC Adresses as a String Array with ":" inbetween
 func get_MAC_addresses():
 	
@@ -166,7 +160,7 @@ func get_MAC_addresses():
 				dir.open(network_adapters_directory_path)
 				
 				dir.list_dir_begin()
-
+				
 				while true:
 					var adapter_dir = dir.get_next()
 					if adapter_dir == "":
@@ -213,7 +207,7 @@ func get_MAC_addresses():
 				
 			
 			return mac_addresses
-			
+
 
 
 
@@ -259,6 +253,7 @@ func get_IP_addresses():
 			
 			
 			return ip_addresses
+
 
 
 
@@ -321,7 +316,7 @@ func get_total_memory():
 			mem_total = int(mem_total_str)
 			
 			return mem_total
-			
+
 
 
 
@@ -385,9 +380,8 @@ func get_available_memory():
 			mem_available = int(mem_available_str)
 			
 			return mem_available
-			
-			
-			
+
+
 
 
 
@@ -537,10 +531,10 @@ func get_cpu_info():
 			cpu.append(sockets)
 			cpu.append(cores)
 			cpu.append(threads)
-		
+			
 			return cpu
-			
-			
+
+
 
 
 
@@ -560,7 +554,7 @@ func get_cpu_usage():
 			# "cpu  337190 187 61395 3331872 1319 0 4453 0 0 0"
 			#         ^          ^      ^
 			#        user      system  idle
-			
+			#
 			# read the file twice with a time offset. Substract the first values from the second ones. 
 			# usage = time spent by user and system devided by total time spent ( user + system + idle)
 			
@@ -583,7 +577,7 @@ func get_cpu_usage():
 					var time_spent_user_plus_system = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3])
 					var time_spent_user_plus_system_plus_idle = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3]) + int(current_cpu_stat_values[4]) - int(recent_cpu_stat_values[4])
 					cpu_usage_as_float = time_spent_user_plus_system * 100 / time_spent_user_plus_system_plus_idle
-
+					
 				recent_cpu_stat_values = current_cpu_stat_values
 			
 			return cpu_usage_as_float
@@ -616,7 +610,7 @@ func get_cpu_usage():
 				
 				OS.execute('CMD.exe', arguments, true, output)
 				var cpu_usage_str = output[0].strip_edges(true,true)  # strip away empty stuff
-
+				
 				if cpu_usage_str.find("=") >= 0:
 					cpu_usage_str = cpu_usage_str.split("=")[1]  # Take the string behind the "="
 					cpu_usage_as_float = float(cpu_usage_str)
@@ -625,7 +619,7 @@ func get_cpu_usage():
 			# execute the ".bat" file to save current cpu load which will be read next time
 			var bat_file_path = user_data_dir + "\\get_win_cpu_usage.bat"
 			bat_file_path = bat_file_path.replace("/","\\")
-
+			
 			var output = []
 			var arguments = ['/C', bat_file_path]
 			
@@ -821,7 +815,7 @@ func get_graphic_cards():
 			
 			var graphics = output[0].strip_edges(true,true)  # strip away empty stuff
 			graphics = graphics.split("=")[1]  # Take the string behind the "="
-	
+			
 			graphic_cards_array.append(graphics)
 			
 			return graphic_cards_array
@@ -829,3 +823,27 @@ func get_graphic_cards():
 			
 
 
+
+
+
+##############################################################
+### Timer Function to get cpu and memory usage every x seconds
+##############################################################
+
+
+func _on_hardware_info_timer_timeout():
+	
+	# set memory usage
+	var mem_available = get_available_memory()
+	var mem_usage_as_float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100
+	
+	memory_usage = int(mem_usage_as_float)
+	
+	
+	# set cpu usage
+	cpu_usage = int (get_cpu_usage() )
+	
+	
+	# change the values
+	RaptorRender.rr_data.clients[mac_addresses[0]].memory_usage = memory_usage
+	RaptorRender.rr_data.clients[mac_addresses[0]].cpu_usage = cpu_usage

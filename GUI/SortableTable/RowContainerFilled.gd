@@ -1,24 +1,38 @@
+
+
 extends VBoxContainer
 
 
-onready var SortableRows = []
-onready var id_position_dict = {}
-onready var selected_row_ids = []
-onready var TopRow = $"../../../TopRow"
-onready var RowScrollContainer = $"../.."
-onready var SortableTable = $"../../../.."
-onready var RowContainerEmpty = $"../ClipContainerForEmptyRows/RowContainerEmpty"
-
-
-var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
 
 var row_height
+
+# Array to hold all current rows. It get's updated when sorting, so it always reflects the current order of rows
+var SortableRows = []
+
+# Dictionary that maps row ids to the current position in the sorted table
+var id_position_dict = {} 
+
+# Array for selections. It hold's the ids, not the rows themselves
+var selected_row_ids = []
+
+# references to other nodes of sortable table
+onready var SortableTable = $"../../../.."
+onready var TopRow = $"../../../TopRow"
+onready var RowScrollContainer = $"../.."
+onready var RowContainerEmpty = $"../ClipContainerForEmptyRows/RowContainerEmpty"
+
+# preload Resources
+var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
+
+
+
 
 
 
 func _ready():
 	
 	row_height = SortableTable.row_height
+	
 	for SortableRow in SortableRows:
 		SortableRow.set_row_height(row_height)
 
@@ -30,10 +44,9 @@ func _process(delta):
 		var row_scroll_container_rect = RowScrollContainer.get_global_rect()
 		if row_scroll_container_rect.has_point(mouse_pos):
 			select_all()
-			
-			
-			
-		
+
+
+
 
 func update_amount_of_rows(count):
 	
@@ -47,7 +60,7 @@ func update_amount_of_rows(count):
 		for i in range (0, rows_to_add):
 			var id = "blub"
 			initialize_row(id)
-
+	
 	
 	# remove unneeded rows
 	elif SortableRows.size() > count:
@@ -64,14 +77,9 @@ func update_amount_of_rows(count):
 		# remove the references in the 	Sortable Rows Array
 		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
 			SortableRows.pop_back()
-			
-		
-		
-		
-	
 
-	
-	
+
+
 
 
 
