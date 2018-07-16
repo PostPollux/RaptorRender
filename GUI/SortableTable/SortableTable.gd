@@ -76,7 +76,7 @@ func refresh():
 
 func sort():
 	
-	RowContainerFilled.sort_table()
+	RowContainerFilled.sort_rows()
 	RowContainerFilled.update_sortable_rows_array()
 	RowContainerFilled.update_id_position_dict()
 	RowContainerFilled.update_positions_of_rows()
@@ -108,10 +108,12 @@ func set_row_color_by_string(row, color_string):
 ### handle cells
 ################
 
+# first row and column is 1, not 0
 func set_cell_content(row, column, child): 
 	RowContainerFilled.set_cell_content(row, column, child)
 
 
+# first row and column is 1, not 0
 func set_cell_sort_value(row, column, value):
 	RowContainerFilled.set_cell_sort_value(row, column, value)
 

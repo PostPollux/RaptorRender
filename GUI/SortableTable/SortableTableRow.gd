@@ -208,8 +208,8 @@ func fill_CellArrays ():
 	
 ####### Setters for Variables #########		
 	
-func set_row_position(id):
-	row_position = id
+func set_row_position(pos):
+	row_position = pos
 	update_row_even_or_odd()
 	update_row_color_reset()
 	
