@@ -1,3 +1,11 @@
+#////////#
+# TopRow #
+#////////#
+
+# The TopRow shows the names of the columns and provides the functionality to trigger the table to sort.
+# It consists of a button for each column and splitters inbetween these buttons. The splitters can be dragged to risize that column. 
+# If a button is pressed, the sort criteria of SortableTable gets set and a sort will happen.
+# The TopRow is supposed to always be on top, thus it shouldn't be in the scroll container that contains the actual rows of the table.
 
 
 extends MarginContainer

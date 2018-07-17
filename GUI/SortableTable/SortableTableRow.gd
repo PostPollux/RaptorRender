@@ -48,7 +48,7 @@ signal drag_select
 
 func _ready():
 	
-	get_reference_to_SortableTable()
+	SortableTable = self.get_parent().SortableTable
 	
 	set_initial_colors()
 	
@@ -136,10 +136,6 @@ func create_cells():
 	set_cell_height(row_height)
 	
 
-
-func get_reference_to_SortableTable():
-	
-	SortableTable = self.get_parent().SortableTable #ParentNode
 	
 
 func set_initial_colors():

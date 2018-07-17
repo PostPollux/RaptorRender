@@ -237,6 +237,10 @@ func _on_ContextMenu_index_pressed(index):
 						
 						# send packets with different broadcast patterns
 						
+						ip = "255.255.255.255"
+						socketUDP.set_dest_address(ip, port)
+						socketUDP.put_packet(pac)
+						
 						ip = ip_bytes[0] + ".255.255.255"
 						socketUDP.set_dest_address(ip, port)
 						socketUDP.put_packet(pac)
