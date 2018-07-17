@@ -1,11 +1,14 @@
 extends MarginContainer
 
 
-var cell_count
-var row_position # position of the row in the table
+var column_count
+var row_position # position of the row in the table. First row is 1, not 0.
 var id # unique id of the representing content
 var sort_values = [] # e.g. sort_values[5-1] holds the value that is used to sort column 5
 
+var CellsClipContainerArray = []
+var CellsMarginContainerArray = []
+var CellsColorRectArray = []
 
 #row colors
 var row_color
@@ -23,22 +26,20 @@ var	row_color_black
 var even_odd_brightness_difference
 var hover_brightness_boost
 
-var column_count
 
 var HBoxForCells
 onready var RowBackgroundColorRect = $BackgroundColor
 
 var SortableTable
 
-var CellsClipContainerArray = []
-var CellsMarginContainerArray = []
-var CellsColorRectArray = []
+
 
 var even = false
 var selected = false
+
 var row_height
 
-
+# signals
 signal row_clicked
 signal row_clicked_rmb
 signal drag_select
@@ -75,10 +76,6 @@ func _ready():
 
 
 
-func _process(delta):
-	pass
-
-
 
 func update_row_even_or_odd():
 	if row_position:
@@ -94,7 +91,7 @@ func create_cells():
 	
 	CellsClipContainerArray.clear()
 	
-	for i in range(cell_count):
+	for i in range(column_count):
 		
 		var CellClipContainer = Container.new()
 		CellClipContainer.name = "cell_clip_container_" + String(i+1)
@@ -138,21 +135,11 @@ func create_cells():
 	
 	set_cell_height(row_height)
 	
-	column_count = CellsClipContainerArray.size()
-	
 
 
 func get_reference_to_SortableTable():
-	var ParentNode = get_parent()
 	
-		
-	while ParentNode.name != "VBox_TopRow_Content":
-		ParentNode = ParentNode.get_parent()
-	
-	# go up one level further to finally get the node of the SortableTable
-	ParentNode = ParentNode.get_parent()
-	
-	SortableTable = ParentNode
+	SortableTable = self.get_parent().SortableTable #ParentNode
 	
 
 func set_initial_colors():
@@ -290,7 +277,7 @@ func set_cell_width(column, width):
 
 
 func set_cell_height(height):
-	if column_count:
+	if HBoxForCells != null:
 		for ClipContainer in CellsClipContainerArray:
 			ClipContainer.rect_min_size.y = height
 		for CellMarginContainer in CellsMarginContainerArray:

@@ -114,7 +114,7 @@ func initialize_row(id):
 	
 	# set variables. (id, amount of cells , row height)
 	Row.id = id
-	Row.cell_count = TopRow.ColumnButtons.size()
+	Row.column_count = TopRow.ColumnButtons.size()
 	Row.row_height = SortableTable.row_height
 	
 	# connect signals to enable selecting and invoking a context menu
@@ -322,7 +322,8 @@ func select_SortableRows(row_position):
 		ClickedRow.set_selected(true)
 		selected_row_ids.append(ClickedRow.id)
 	
-	SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1] )
+	if selected_row_ids.size() > 0:
+		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1] )
 
 
 
@@ -347,8 +348,9 @@ func drag_select_SortableRows(row_position):
 		
 		DragedRow.set_selected(true)
 		selected_row_ids.append(DragedRow.id)
-		
-	SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1])
+	
+	if selected_row_ids.size() > 0:
+		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1])
 
 
 
@@ -447,6 +449,7 @@ func open_context_menu(row_position):
 		selected_row_ids.append(ClickedRow.id)
 	
 	# emit signals
-	SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1 ] )
-	SortableTable.emit_ContextMenu_signal()
+	if selected_row_ids.size() > 0:
+		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1 ] )
+		SortableTable.emit_ContextMenu_signal()
 	
