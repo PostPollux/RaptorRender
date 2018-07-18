@@ -1,7 +1,13 @@
+#////////////////////#
+# RowContainerFilled #
+#////////////////////#
+
+# A VBoxContainer that holds all the rows that contain data. 
+# Basic row handling and the sorting algorithm is part of this script file.
+
 
 
 extends VBoxContainer
-
 
 
 var row_height

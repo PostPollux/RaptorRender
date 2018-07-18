@@ -1,3 +1,11 @@
+#////////////////////////#
+# Get System Information #
+#////////////////////////#
+
+# This script provides all the function to get specific information and specs of the computer it is running on.
+# It is supposed to be autoloaded.
+
+
 extends Node
 
 var client
@@ -15,7 +23,8 @@ var memory_usage # percentage of memory used (int Value between 0 and 100)
 var cpu_usage # percentage of cpu usage (int Value between 0 and 100)
 
 
-var recent_cpu_stat_values = []
+var recent_cpu_stat_values = [] # only relevant for Linux. Used to calculate cpu usage
+
 var user_data_dir
 
 
@@ -24,7 +33,7 @@ func _ready():
 	
 	user_data_dir = OS.get_user_data_dir()
 	
-	# create .bat file to read cpu usage (only under Windows)
+	# create .bat file to read cpu usage (only for Windows)
 	if OS.get_name() == "Windows":
 		
 		var bat_file = File.new()

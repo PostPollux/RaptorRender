@@ -1,3 +1,14 @@
+#////////////////////#
+# RowContainerEmpty #
+#////////////////////#
+
+# A VBoxContainer that holds all the rows that do not contain any data. 
+# The sortable table is supposed to be scrollable and should look like there are actually rows, 
+# even if there is no data displayed. So we need some empty rows with alternating colors.
+# As these empty rows shouldn't be recognized as scrollable content we need a simple parent "Container" with clipping enabled.
+
+
+
 extends VBoxContainer
 
 
@@ -23,14 +34,17 @@ func _ready():
 	fill_up_available_space_with_empty_rows()
 	update_positions_of_empty_rows()
 	set_amount_of_columns()
-	resize_columns()
+	initialize_column_widths()
 	highlight_column(TopRow.sort_column_primary)
 
 
 
 
-		
+######################################
+### manage the rows
+######################################
 
+# create them
 func fill_up_available_space_with_empty_rows():
 	var screen_size_y = OS.get_screen_size()[1]
 	var amount_of_needed_rows = int(screen_size_y/row_height)
@@ -41,10 +55,10 @@ func fill_up_available_space_with_empty_rows():
 		add_child(SortableTableRow)
 		SortableTableRow.set_row_height(row_height)
 		EmptyRows.append(SortableTableRow)
-		
 
-		
-	
+
+
+# this function is needed for correct alternating colors
 func update_positions_of_empty_rows():
 	var filled_row_count = RowContainerFilled.SortableRows.size()
 	var count = 1
@@ -53,35 +67,58 @@ func update_positions_of_empty_rows():
 		count += 1
 
 
+
+
+######################################
+### correct width of RowContainerEmpty
+######################################
+
+
+func _on_ClipContainerForEmptyRows_resized():
+	update_width_of_RowContainerEmpty()
+
+# this function is needed, as the size flag "fill, expand" doen't work if the parent container is a simple "Container" 
 func update_width_of_RowContainerEmpty():
 	var width_of_clipcontainer = $"../../ClipContainerForEmptyRows".rect_size.x
 	rect_min_size.x = width_of_clipcontainer
-	
-	
+
+
+
+
+
+##################
+### handle columns
+##################
+
+
 func set_amount_of_columns():
 	for Row in EmptyRows:
 		Row.column_count = TopRow.ColumnButtons.size()
 		Row.create_cells()
-		
-		
-func resize_columns():
+
+
+
+func initialize_column_widths():
 	
-	var count = 1
+	var column = 1
 	
 	for ColumnButton in TopRow.ColumnButtons:
 		
-		# apply the size of the ColumnButtons of the TopRow to the collumns of all the rows of the table
-		set_column_width(count, ColumnButton.rect_min_size.x)
+		# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
+		set_column_width(column, ColumnButton.rect_min_size.x)
 		
-		count += 1
-		
-		
+		column += 1
+
+
+
 func set_column_width(column, width):
 	
 	for Row in EmptyRows:
 		Row.set_cell_width(column,width)
-		
 
+
+
+# function to highlight the primary sort column 
 func highlight_column(column):
 	if TopRow:
 		if column <= TopRow.ColumnButtons.size() and column > 0:
@@ -92,10 +129,8 @@ func highlight_column(column):
 				Row.modulate_cell_color(column,Color("18ffffff"))
 
 
-func _on_ClipContainerForEmptyRows_resized():
-	update_width_of_RowContainerEmpty()
-	
-	
+
+
 
 
 #############
