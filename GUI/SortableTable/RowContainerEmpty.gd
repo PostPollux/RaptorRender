@@ -1,6 +1,6 @@
-#////////////////////#
+#///////////////////#
 # RowContainerEmpty #
-#////////////////////#
+#///////////////////#
 
 # A VBoxContainer that holds all the rows that do not contain any data. 
 # The sortable table is supposed to be scrollable and should look like there are actually rows, 
@@ -40,9 +40,9 @@ func _ready():
 
 
 
-######################################
+###################
 ### manage the rows
-######################################
+###################
 
 # create them
 func fill_up_available_space_with_empty_rows():
