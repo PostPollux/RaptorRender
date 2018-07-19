@@ -90,7 +90,9 @@ func sort():
 func create_row(id):
 	var row = RowContainerFilled.initialize_row(id)
 	RowContainerFilled.update_positions_of_rows()
-	RowContainerEmpty.update_positions_of_empty_rows()
+	RowContainerEmpty.remove_empty_row()
+	
+	
 
 
 func set_row_color(row, color):

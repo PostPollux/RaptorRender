@@ -6,6 +6,8 @@
 # The sortable table is supposed to be scrollable and should look like there are actually rows, 
 # even if there is no data displayed. So we need some empty rows with alternating colors.
 # As these empty rows shouldn't be recognized as scrollable content we need a simple parent "Container" with clipping enabled.
+# At the beginning there are enough empty rows created, so that even if this container fills up the whole screen, everything would be covered with alternating rows.
+# As rows are added to the RowContainerFilled empty rows will be deleted to improve performance.
 
 
 
@@ -40,21 +42,42 @@ func _ready():
 
 
 
+
 ###################
 ### manage the rows
 ###################
 
-# create them
+
+# create enough empty rows to fill up the whole screen
 func fill_up_available_space_with_empty_rows():
 	var screen_size_y = OS.get_screen_size()[1]
 	var amount_of_needed_rows = int(screen_size_y/row_height)
 	
 	for i in range(1, amount_of_needed_rows):
-		var SortableTableRow = SortableTableRowRes.instance()
-		SortableTableRow.connect("row_clicked", self, "select_SortableRows")
-		add_child(SortableTableRow)
-		SortableTableRow.set_row_height(row_height)
-		EmptyRows.append(SortableTableRow)
+		create_empty_row()
+	
+
+# create an empty row
+func create_empty_row():
+	
+	var SortableTableRow = SortableTableRowRes.instance()
+	
+	SortableTableRow.connect("row_clicked", self, "select_SortableRows")
+	SortableTableRow.set_row_height(row_height)
+	
+	self.add_child(SortableTableRow)
+	EmptyRows.append(SortableTableRow)
+
+
+
+func remove_empty_row():
+	if EmptyRows.size() > 1: # make sure one empty row is always available
+		
+		EmptyRows[0].free()
+		EmptyRows.pop_front()
+		
+		update_positions_of_empty_rows()
+		print(EmptyRows.size())
 
 
 
