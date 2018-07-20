@@ -15,6 +15,7 @@ extends VBoxContainer
 
 
 var row_height
+var amount_of_needed_rows_to_fill_up_screen
 
 var EmptyRows = []
 
@@ -30,13 +31,21 @@ var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn
 
 
 func _ready():
+	
 	row_height = SortableTable.row_height
 	
+	amount_of_needed_rows_to_fill_up_screen =  int( OS.get_screen_size()[1] / row_height )
+	
+	# create enough empty rows to fill up the whole screen
+	for i in range(1, amount_of_needed_rows_to_fill_up_screen):
+		create_empty_row()
+	
 	update_width_of_RowContainerEmpty()
-	fill_up_available_space_with_empty_rows()
+	
 	update_positions_of_empty_rows()
-	set_amount_of_columns()
+	
 	initialize_column_widths()
+	
 	highlight_column(TopRow.sort_column_primary)
 
 
@@ -48,25 +57,19 @@ func _ready():
 ###################
 
 
-# create enough empty rows to fill up the whole screen
-func fill_up_available_space_with_empty_rows():
-	var screen_size_y = OS.get_screen_size()[1]
-	var amount_of_needed_rows = int(screen_size_y/row_height)
-	
-	for i in range(1, amount_of_needed_rows):
-		create_empty_row()
-	
-
 # create an empty row
 func create_empty_row():
 	
-	var SortableTableRow = SortableTableRowRes.instance()
-	
-	SortableTableRow.connect("row_clicked", self, "select_SortableRows")
-	SortableTableRow.set_row_height(row_height)
-	
-	self.add_child(SortableTableRow)
-	EmptyRows.append(SortableTableRow)
+	if EmptyRows.size() < amount_of_needed_rows_to_fill_up_screen:
+		var SortableTableRow = SortableTableRowRes.instance()
+		
+		SortableTableRow.connect("row_clicked", self, "select_SortableRows")
+		SortableTableRow.set_row_height(row_height)
+		SortableTableRow.column_count = TopRow.ColumnButtons.size()
+		SortableTableRow.create_cells()
+		
+		self.add_child(SortableTableRow)
+		EmptyRows.append(SortableTableRow)
 
 
 
@@ -75,9 +78,6 @@ func remove_empty_row():
 		
 		EmptyRows[0].free()
 		EmptyRows.pop_front()
-		
-		update_positions_of_empty_rows()
-		print(EmptyRows.size())
 
 
 
@@ -112,13 +112,6 @@ func update_width_of_RowContainerEmpty():
 ##################
 ### handle columns
 ##################
-
-
-func set_amount_of_columns():
-	for Row in EmptyRows:
-		Row.column_count = TopRow.ColumnButtons.size()
-		Row.create_cells()
-
 
 
 func initialize_column_widths():

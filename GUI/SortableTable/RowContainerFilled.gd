@@ -54,37 +54,6 @@ func _process(delta):
 
 
 
-func update_amount_of_rows(count):
-	
-	if SortableRows.size() == count:
-		pass
-	
-	# add needed rows	
-	elif SortableRows.size() < count:
-		var rows_to_add = count - SortableRows.size()
-		
-		for i in range (0, rows_to_add):
-			var id = "blub"
-			initialize_row(id)
-	
-	
-	# remove unneeded rows
-	elif SortableRows.size() > count:
-		var rows_to_remove = SortableRows.size() - count
-		
-		# remove from selection
-		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
-			selected_row_ids.erase(SortableRows[i].id)
-			
-		# remove the nodes
-		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
-			SortableRows[i].free()
-			
-		# remove the references in the 	Sortable Rows Array
-		for i in range (SortableRows.size() - rows_to_remove, SortableRows.size()):
-			SortableRows.pop_back()
-
-
 
 
 
@@ -151,8 +120,29 @@ func initialize_row(id):
 	
 	# make an entry in the id_position_dict
 	id_position_dict[id] = Row.get_index() + 1
-			
+	
 	return Row
+
+
+
+# removing a row
+func remove_row(id):
+	
+	# remove from selection
+	selected_row_ids.erase(id)
+	
+	# remove the node
+	SortableRows[ id_position_dict[id] -1 ].free()
+	
+	# remove the references in the Sortable Rows Array
+	SortableRows.remove( id_position_dict[id] - 1  )
+	
+	# remove the entry in the dict
+	id_position_dict.erase( id )
+	
+	# update the dict to reflect correct positions of the rows
+	update_id_position_dict()
+
 
 
 

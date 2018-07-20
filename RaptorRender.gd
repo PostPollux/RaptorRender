@@ -1042,6 +1042,7 @@ func _input(event):
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": "new note"
 			}
+			
 		rr_data.clients["77"] =  {
 				"name": "Double Sun Power!",
 				"username": "Sun",

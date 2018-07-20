@@ -106,11 +106,23 @@ func sort():
 ###############
 
 func create_row(id):
-	var row = RowContainerFilled.initialize_row(id)
+	
+	RowContainerFilled.initialize_row(id)
 	RowContainerFilled.update_positions_of_rows()
+	
 	RowContainerEmpty.remove_empty_row()
+	RowContainerEmpty.update_positions_of_empty_rows()
+
+
+
+func remove_row(id):
 	
+	RowContainerFilled.remove_row(id)
+	RowContainerFilled.update_positions_of_rows()
 	
+	RowContainerEmpty.create_empty_row()
+	RowContainerEmpty.update_positions_of_empty_rows()
+
 
 
 func set_row_color(row, color):
@@ -147,11 +159,12 @@ func set_cell_sort_value(row, column, value):
 # first row is 1, not 0
 func get_row_by_position(pos):
 	return RowContainerFilled.SortableRows[pos - 1]
-	
-	
+
+
+
 # first row and cell is 1, not 0
 func get_cell(row, column):
-	return RowContainerFilled.SortableRows[row - 1].CellsMarginContainerArray[column - 1]
+	return RowContainerFilled.SortableRows[row - 1].CellsArray[column - 1]
 
 
 

@@ -2,7 +2,7 @@
 # Get System Information #
 #////////////////////////#
 
-# This script provides all the function to get specific information and specs of the computer it is running on.
+# This script provides all the functions to get specific information and specs of the computer it is running on.
 # It is supposed to be autoloaded.
 
 

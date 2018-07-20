@@ -305,16 +305,22 @@ func _on_ContextMenu_index_pressed(index):
 			
 		14:  # Remove Client
 			
-			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
+			var selected_ids = str2var( var2str( RaptorRender.ClientsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
 			
 			for selected in selected_ids:
+				
 				
 				var status =  RaptorRender.rr_data.clients[selected].status
 				
 				if status == "5_offline":
 					
+					# remove from database
 					RaptorRender.rr_data.clients.erase(selected)
-			
+				
+				
+					# remove the row from the table
+					RaptorRender.ClientsTable.remove_row(selected)
+				
 			RaptorRender.ClientsTable.refresh()
 
 

@@ -402,7 +402,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 		14:  # Remove Job
 			
-			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
+			var selected_ids = str2var( var2str( RaptorRender.JobsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
 			
 			for selected in selected_ids:
 				
@@ -412,8 +412,11 @@ func _on_ContextMenu_index_pressed(index):
 						RaptorRender.rr_data.clients[client].current_job_id = ""
 						RaptorRender.rr_data.clients[client].status = "2_available"
 					
-				# Remove the job
+				# Remove the job from the database
 				RaptorRender.rr_data.jobs.erase(selected)
+				
+				# remove the row from the table
+				RaptorRender.JobsTable.remove_row(selected)
 			
-			RaptorRender.JobsTable.refresh()
+			# RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
