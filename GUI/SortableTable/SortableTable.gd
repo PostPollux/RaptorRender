@@ -1,3 +1,21 @@
+#///////////////#
+# SortableTable #
+#///////////////#
+
+# SortableTable is a handy new UI Element build from scratch using availiable Godot Control nodes.
+# It's basically a table that can display data sets in rows which can be sorted by clicking the column names on the top.
+# For sorting it supports primary and secondary sort criteria. To change the sencondary one, just shift + click on the column name.
+#
+# The content of a cell can be just everything as the "set_cell_content()" function expects a node that will be added as a child to the cell.
+# But how to sort a table where the cells could be everything? That's why there is also a "set_cell_sort_value()" function.
+# Triggering a sort will compare all the sort values of the cells in the given column.
+# For example: The cell could visually show a progressbar. Now to sort this progress column the sort value of the cell should be set to the progress value which is a number and easily sortable. 
+# 
+# Structure of SortableTable:
+# On the top there is a TopRow with all the column names that can be clicked to sort the table.
+# Then there is a ScrollContainer holding both, RowContainerFilled and RowContainerEmpty.
+# RowContainerFilled contains the rows that actually show a data set, whereas RowContainerEmpty only visually fills up the available space with empty color alternating rows.
+
 
 
 extends ScrollContainer
@@ -51,8 +69,8 @@ signal context_invoked
 func _ready():
 	
 	register_table()
-	
-	
+
+
 
 
 
@@ -110,6 +128,7 @@ func set_row_color_by_string(row, color_string):
 ################
 
 # first row and column is 1, not 0
+# content has to be a node that can be added as a child to the cell
 func set_cell_content(row, column, child): 
 	RowContainerFilled.set_cell_content(row, column, child)
 

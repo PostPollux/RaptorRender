@@ -47,7 +47,8 @@ func set_item_names():
 		self.set_item_text(10, "Reboot Computers")
 		self.set_item_text(12, "Execute command on clients")
 		self.set_item_text(14, "Remove Clients")
-	
+
+
 
 func enable_disable_items():
 	
@@ -105,7 +106,7 @@ func enable_disable_items():
 		# Remove Client
 		if status == "5_offline":
 			self.set_item_disabled(14, false)
-	
+
 
 
 
@@ -183,9 +184,9 @@ func _on_ContextMenu_index_pressed(index):
 				RaptorRender.rr_data.clients[selected].error_count = 0
 			
 			RaptorRender.ClientsTable.refresh()
-		
-		
-		
+			
+			
+			
 		7:  # Separator
 			pass	
 			
@@ -209,7 +210,7 @@ func _on_ContextMenu_index_pressed(index):
 					for mac_address_of_selected in mac_addresses_of_selected:
 						mac_address_of_selected = mac_address_of_selected.replace(":","")  # remove ":"
 						mac_addresses.append(mac_address_of_selected)
-				
+			
 			
 			# create an UDP Socket	
 			var socketUDP = PacketPeerUDP.new()
@@ -317,8 +318,4 @@ func _on_ContextMenu_index_pressed(index):
 			RaptorRender.ClientsTable.refresh()
 
 
-
-
-
-	
 

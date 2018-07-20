@@ -14,16 +14,18 @@ func _ready():
 		CurrentJobLabel.text = ""
 		
 	set_correct_visibility_of_link_button()
-	
-	
+
+
+
 func set_correct_visibility_of_link_button():
 	
 	if job_id == "":
 		JobLinkButton.visible = false
 	else:
 		JobLinkButton.visible = true
-	
-	
+
+
+
 func _on_TextureButton_pressed():
 	RaptorRender.ClientsTable.clear_selection()
 	RaptorRender.JobsTable.select_by_id(job_id)

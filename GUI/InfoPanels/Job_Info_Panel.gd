@@ -18,7 +18,7 @@ onready var TimeRemainingLabel = $"TabContainer/Details/ScrollContainer/MarginCo
 
 func _ready():
 	RaptorRender.register_job_info_panel(self)
-	
+
 
 func reset_to_first_tab():
 	JobInfoTabContainer.current_tab = 0

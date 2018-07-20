@@ -17,6 +17,13 @@ var row_position # position of the row in the table. First row is 1, not 0.
 var id # unique id of the representing content
 var sort_values = [] # e.g. sort_values[5-1] holds the value that is used to sort column 5
 
+var even = false
+var selected = false
+var row_height
+
+var SortableTable
+
+# cell references
 var CellsClipContainerArray = [] # used to clip the cell content
 var CellsArray = [] # references to the actual cells. For appending childs as content.
 var CellsColorRectArray = [] # used for highlighting the primary sort column
@@ -37,23 +44,17 @@ var row_color_black
 var even_odd_brightness_difference
 var hover_brightness_boost
 
-
+# references to child nodes
 onready var HBoxForCells = $"HBoxContainer"
 onready var RowBackgroundColorRect = $"BackgroundColor"
 
-var SortableTable
-
-
-
-var even = false
-var selected = false
-
-var row_height
 
 # signals
 signal row_clicked
 signal row_clicked_rmb
 signal drag_select
+
+
 
 
 
@@ -86,12 +87,49 @@ func _ready():
 
 
 
+
+######################
+### basic row handling
+######################
+
+
+func set_row_position(pos):
+	row_position = pos
+	update_row_even_or_odd()
+	update_row_color_reset()
+
+
+
 func update_row_even_or_odd():
 	if row_position:
 		if (row_position % 2) == 0:
 			even = true
 		else:
 			even = false
+
+
+
+func set_selected (sel):
+	selected = sel
+	if selected:
+		update_row_color_select()
+	else:
+		update_row_color_reset()
+
+
+
+func set_row_height(height):
+	row_height = height
+	rect_min_size.y = height
+	set_cell_height(height)
+
+
+
+
+
+#################
+### cell handling
+#################
 
 
 # create the cells
@@ -146,6 +184,58 @@ func create_cells():
 
 
 
+# put the cell references into arrays
+func fill_CellArrays ():
+	
+	CellsArray.clear()
+	
+	for Cell in CellsClipContainerArray:
+		var CellColorRect = Cell.get_child(0)
+		var CellMarginContainer = Cell.get_child(1)
+		CellsColorRectArray.append(CellColorRect)
+		CellsArray.append(CellMarginContainer)
+
+
+
+# add a child node as content to a cell
+func set_cell_content(column, child):
+	
+	if column <= column_count:
+		if CellsArray[column-1].get_child_count() > 0: 
+			var childs = CellsArray[column-1].get_children() 
+			for child in childs: 
+				child.queue_free() 
+		CellsArray[column-1].add_child(child)
+
+
+
+# the width has to be set manually, as the "fill, expand" flag doesn't work with parent container that is used for clipping
+func set_cell_width(column, width):
+	if column <= column_count:
+		CellsClipContainerArray[column-1].rect_min_size.x = width
+		CellsColorRectArray[column-1].rect_min_size.x = width
+
+
+
+func set_cell_height(height):
+	if HBoxForCells != null:
+		for ClipContainer in CellsClipContainerArray:
+			ClipContainer.rect_min_size.y = height
+		for CellMarginContainer in CellsArray:
+			CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
+		for CellColorRect in CellsColorRectArray:
+			CellColorRect.rect_size.y = HBoxForCells.rect_size.y
+
+
+
+
+
+
+
+##################
+### color handling
+##################
+
 
 func set_initial_colors():
 	row_color = SortableTable.row_color
@@ -166,12 +256,6 @@ func set_initial_colors():
 	row_color_selected_odd = row_color_selected.lightened(hover_brightness_boost)
 
 
-func set_row_color(color):
-	
-	row_color_even = color
-	row_color_odd = color.lightened(even_odd_brightness_difference)
-
-
 
 func set_row_color_by_string(color_string):
 	
@@ -185,48 +269,19 @@ func set_row_color_by_string(color_string):
 
 
 
-
-func fill_CellArrays ():
+func set_row_color(color):
 	
-	CellsArray.clear()
-	
-	for Cell in CellsClipContainerArray:
-		var CellColorRect = Cell.get_child(0)
-		var CellMarginContainer = Cell.get_child(1)
-		CellsColorRectArray.append(CellColorRect)	
-		CellsArray.append(CellMarginContainer)	
+	row_color_even = color
+	row_color_odd = color.lightened(even_odd_brightness_difference)
 
 
 
-####### Setters for Variables #########		
-
-func set_row_position(pos):
-	row_position = pos
-	update_row_even_or_odd()
-	update_row_color_reset()
+func modulate_cell_color(column, color):
+	CellsColorRectArray[column-1].set_modulate( color )
 
 
 
-func set_selected (sel):
-	selected = sel
-	if selected:
-		update_row_color_select()
-	else:
-		update_row_color_reset()
-
-
-
-
-
-####### Modify Row #########	
-
-
-func set_row_height(height):
-	row_height = height
-	rect_min_size.y = height
-	set_cell_height(height)
-
-
+# highlight the row when hovering it
 func update_row_color_hover():
 	if selected:
 		if even:
@@ -242,6 +297,7 @@ func update_row_color_hover():
 
 
 
+# highlight the row when it is selected
 func update_row_color_select():
 	if even:
 		RowBackgroundColorRect.color = row_color_selected_even
@@ -250,6 +306,7 @@ func update_row_color_select():
 
 
 
+# reset row color to default
 func update_row_color_reset():
 	if selected: 
 		if even:
@@ -265,46 +322,12 @@ func update_row_color_reset():
 
 
 
-####### Modify Cells #########	
-
-func set_cell_content(column, child):
-	
-	if column <= column_count:
-		if CellsArray[column-1].get_child_count() > 0: 
-			var childs = CellsArray[column-1].get_children() 
-			for child in childs: 
-				child.queue_free() 
-		CellsArray[column-1].add_child(child)
 
 
+###################
+### signal handling
+###################
 
-func set_cell_width(column, width):
-	if column <= column_count:
-		CellsClipContainerArray[column-1].rect_min_size.x = width
-		CellsColorRectArray[column-1].rect_min_size.x = width
-			
-
-
-func set_cell_height(height):
-	if HBoxForCells != null:
-		for ClipContainer in CellsClipContainerArray:
-			ClipContainer.rect_min_size.y = height
-		for CellMarginContainer in CellsArray:
-			CellMarginContainer.rect_min_size.y = HBoxForCells.rect_size.y - CellMarginContainer.margin_left - CellMarginContainer.margin_right
-		for CellColorRect in CellsColorRectArray:
-			CellColorRect.rect_size.y = HBoxForCells.rect_size.y
-
-
-
-func modulate_cell_color(column, color):
-	CellsColorRectArray[column-1].set_modulate( color )
-
-
-
-
-
-
-#### Signal handling ####
 
 func _on_SortabelTableRow_mouse_entered():
 	update_row_color_hover()
@@ -312,9 +335,10 @@ func _on_SortabelTableRow_mouse_entered():
 		emit_signal("drag_select", row_position)
 
 
+
 func _on_SortabelTableRow_mouse_exited():
 	update_row_color_reset()
-	
+
 
 
 func _on_SortabelTableRow_gui_input(ev):

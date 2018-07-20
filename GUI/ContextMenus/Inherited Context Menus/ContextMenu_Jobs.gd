@@ -23,6 +23,7 @@ func _ready():
 	self.visible = false
 
 
+
 func set_item_names():
 	
 	if RaptorRender.JobsTable.get_selected_ids().size() <= 1:
@@ -47,7 +48,8 @@ func set_item_names():
 		self.set_item_text(11, "Open Output Directories")
 		self.set_item_text(12, "Open Scene Directories")
 		self.set_item_text(14, "Remove Jobs")
-	
+
+
 
 func enable_disable_items():
 	
@@ -101,11 +103,9 @@ func enable_disable_items():
 		
 		# Remove Job
 		self.set_item_disabled(14, false)
-	
 
 
 
-	
 
 func _on_ContextMenu_index_pressed(index):
 	
@@ -219,7 +219,7 @@ func _on_ContextMenu_index_pressed(index):
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
-	
+				
 				RaptorRender.rr_data.jobs[selected].errors = 0
 				
 			RaptorRender.JobsTable.refresh()
@@ -282,7 +282,7 @@ func _on_ContextMenu_index_pressed(index):
 							var arguments = [output_path]
 							var execute_output =[]
 							OS.execute("xdg-open", arguments, false, execute_output)
-
+							
 						else:
 							print ("Directory does not exist!")
 				
@@ -305,8 +305,8 @@ func _on_ContextMenu_index_pressed(index):
 							
 						else:
 							print ("Directory does not exist!")
-			
-		
+				
+				
 				# Mac OS
 				"OSX" :
 					
@@ -322,7 +322,7 @@ func _on_ContextMenu_index_pressed(index):
 							var arguments = [output_path]
 							var execute_output =[]
 							OS.execute("open", arguments, false, execute_output)
-
+							
 						else:
 							print ("Directory does not exist!")
 		
@@ -349,7 +349,7 @@ func _on_ContextMenu_index_pressed(index):
 							var arguments = [output_path]
 							var execute_output =[]
 							OS.execute("xdg-open", arguments, false, execute_output)
-
+							
 						else:
 							print ("Directory does not exist!")
 				
@@ -372,8 +372,8 @@ func _on_ContextMenu_index_pressed(index):
 							
 						else:
 							print ("Directory does not exist!")
-			
-		
+					
+					
 				# Mac OS
 				"OSX" :
 					
@@ -389,7 +389,7 @@ func _on_ContextMenu_index_pressed(index):
 							var arguments = [output_path]
 							var execute_output =[]
 							OS.execute("open", arguments, false, execute_output)
-
+							
 						else:
 							print ("Directory does not exist!")
 		

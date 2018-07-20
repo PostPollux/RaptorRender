@@ -24,28 +24,31 @@ func _ready():
 		
 	match_color_to_status()
 	show_progress()
-	
-	
-	
+
+
+
 func resize():
 	# set correct size
 	rect_min_size.x = CellContainer.rect_min_size.x - 5
 	show_progress()
-	
+
+
 
 func set_chunks (total, finished, active):
 	chunks_total = total
 	chunks_finished = finished
 	chunks_active = active
-	
-	
+
+
+
 func match_color_to_status():
 	match job_status:
 		"normal": BarFinished.set_color_finished()
 		"paused": BarFinished.set_color_paused()
 		"cancelled": BarFinished.set_color_cancelled()
-	
-	
+
+
+
 func show_progress():
 	
 	
@@ -63,8 +66,8 @@ func show_progress():
 	
 	
 	ProgressLabel.text = String( int( float(chunks_finished) / float(chunks_total) * 100.0 ) ) + " %"
-	
-	
+
+
 
 
 

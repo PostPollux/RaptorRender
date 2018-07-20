@@ -32,9 +32,13 @@ func _ready():
 	PrimaryUp.visible = primary_up_visible
 	SecondaryDown.visible = secondary_down_visible
 	SecondaryUp.visible = secondary_up_visible
-	
+
+
+
 func set_name(button_name):
 	NameLabel.text = button_name
+
+
 
 func reset_button():
 	primary_sort_column = false
@@ -45,6 +49,8 @@ func reset_button():
 	PrimaryUp.visible = false
 	SecondaryDown.visible = false
 	SecondaryUp.visible = false
+
+
 
 func show_correct_icon():
 	
@@ -79,8 +85,9 @@ func show_correct_icon():
 			PrimaryUp.visible = false
 			SecondaryDown.visible = false
 			SecondaryUp.visible = true
-			
-			
+
+
+
 
 func _on_ColumnButton_pressed():
 	
