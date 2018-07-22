@@ -417,6 +417,12 @@ func _on_ContextMenu_index_pressed(index):
 				
 				# remove the row from the table
 				RaptorRender.JobsTable.remove_row(selected)
+				
+			# hide the Jobs Info Panel
+			RaptorRender.JobsTable.clear_selection()
+			RaptorRender.JobInfoPanel.visible = false
+			RaptorRender.JobInfoPanel.reset_to_first_tab()
+			
 			
 			# RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
