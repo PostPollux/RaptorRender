@@ -874,12 +874,14 @@ func register_table(SortableTable):
 			JobsTable = SortableTable
 			JobsTable.connect("refresh_table_content", self, "refresh_jobs_table")
 			JobsTable.connect("something_just_selected", self, "job_selected")
+			JobsTable.connect("selection_cleared", self, "job_selection_cleared")
 			JobsTable.connect("context_invoked", self, "jobs_context_menu_invoked")
 			
 		"clients": 
 			ClientsTable = SortableTable 
 			ClientsTable.connect("refresh_table_content", self, "refresh_clients_table")
 			ClientsTable.connect("something_just_selected", self, "client_selected")
+			ClientsTable.connect("selection_cleared", self, "client_selection_cleared")
 			ClientsTable.connect("context_invoked", self, "client_context_menu_invoked")
 
 
@@ -902,17 +904,23 @@ func client_selected(id_of_row):
 	JobInfoPanel.reset_to_first_tab()
 	ClientInfoPanel.update_client_info_panel(id_of_row)
 	ClientInfoPanel.visible = true
-	
-	
-	
-	
+
+
+func client_selection_cleared():
+	ClientInfoPanel.visible = false
+
+
+
 func job_selected(id_of_row):
 	ClientsTable.clear_selection()
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
 	JobInfoPanel.update_job_info_panel(id_of_row)
 	JobInfoPanel.visible = true
-	
+
+
+func job_selection_cleared():
+	JobInfoPanel.visible = false
 
 
 func client_context_menu_invoked():

@@ -179,5 +179,6 @@ func select_SortableRows(row_position):
 		for Row in SortableRows:
 			Row.set_selected(false)
 		RowContainerFilled.selected_row_ids.clear()
+		SortableTable.emit_selection_cleared_signal()
 
 

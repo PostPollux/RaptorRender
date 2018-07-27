@@ -318,9 +318,11 @@ func select_SortableRows(row_position):
 		ClickedRow.set_selected(true)
 		selected_row_ids.append(ClickedRow.id)
 	
+	# emit correct signal
 	if selected_row_ids.size() > 0:
 		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1] )
-
+	else:
+		SortableTable.emit_selection_cleared_signal()
 
 
 func drag_select_SortableRows(row_position):
@@ -365,9 +367,11 @@ func select_all():
 		
 	else:
 		selected_row_ids.clear()
+		
 		for Row in SortableRows:
 			Row.set_selected(false)
-
+		
+		SortableTable.emit_selection_cleared_signal()
 
 
 func update_selection():

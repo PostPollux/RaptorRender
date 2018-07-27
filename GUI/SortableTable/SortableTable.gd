@@ -61,6 +61,7 @@ var previous_scroll_vertical = 0
 # signals
 signal refresh_table_content
 signal something_just_selected
+signal selection_cleared
 signal context_invoked
 
 
@@ -191,6 +192,8 @@ func emit_selection_signal(last_selected):
 	emit_signal("something_just_selected", last_selected)
 
 
+func emit_selection_cleared_signal():
+	emit_signal("selection_cleared")
 
 
 #############
