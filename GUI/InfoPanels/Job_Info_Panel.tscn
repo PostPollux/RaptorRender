@@ -659,7 +659,7 @@ focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
-size_flags_vertical = 1
+size_flags_vertical = 4
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -667,7 +667,7 @@ group = null
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 6 )
-_sections_unfolded = [ "Rect", "Textures" ]
+_sections_unfolded = [ "Rect", "Size Flags", "Textures" ]
 
 [node name="SceneFileLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="1"]
 
@@ -724,7 +724,7 @@ focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
-size_flags_vertical = 1
+size_flags_vertical = 4
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -732,7 +732,7 @@ group = null
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 6 )
-_sections_unfolded = [ "Rect", "Textures" ]
+_sections_unfolded = [ "Rect", "Size Flags", "Textures" ]
 
 [node name="OutputFilesLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2" index="1"]
 
