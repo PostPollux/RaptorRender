@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://GUI/InfoPanels/Job_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/job_status/200x100/job_status_finished_200x100.png" type="Texture" id=2]
 [ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
-
+[ext_resource path="res://GUI/icons/link/15x15/link_default_15x15.png" type="Texture" id=4]
+[ext_resource path="res://GUI/icons/link/15x15/link_clicked_15x15.png" type="Texture" id=5]
+[ext_resource path="res://GUI/icons/link/15x15/link_hover_15x15.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFontData" id=1]
 
@@ -348,6 +350,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="progress" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer" index="2"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -537,7 +540,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 294.0
 margin_right = 655.0
-margin_bottom = 343.0
+margin_bottom = 346.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -557,7 +560,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 655.0
-margin_bottom = 49.0
+margin_bottom = 52.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -573,7 +576,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 655.0
-margin_bottom = 49.0
+margin_bottom = 52.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -591,7 +594,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 15.0
 margin_right = 655.0
-margin_bottom = 49.0
+margin_bottom = 52.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -622,7 +625,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags", "Visibility", "custom_colors" ]
 
-[node name="label" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer" index="1"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -630,15 +633,123 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
 margin_right = 640.0
-margin_bottom = 49.0
+margin_bottom = 33.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 5
+alignment = 0
+_sections_unfolded = [ "custom_constants" ]
+
+[node name="OpenSceneFolderButton" type="TextureButton" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 15.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 15, 15 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="SceneFileLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_right = 90.0
+margin_bottom = 14.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-text = "Source File
-Output files"
+text = "Source File"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "Visibility" ]
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 37.0
+margin_right = 640.0
+margin_bottom = 52.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 5
+alignment = 0
+_sections_unfolded = [ "custom_constants" ]
+
+[node name="OpenOutputFolderButton" type="TextureButton" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 15.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 15, 15 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="OutputFilesLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_right = 96.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Output files"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -685,5 +796,9 @@ size_flags_vertical = 1
 tab_align = 1
 scrolling_enabled = true
 _sections_unfolded = [ "Rect" ]
+
+[connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
+
+[connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OpenOutputFolderButton" to="." method="_on_OpenOutputFolderButton_pressed"]
 
 

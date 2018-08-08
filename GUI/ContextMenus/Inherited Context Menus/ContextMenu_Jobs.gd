@@ -261,137 +261,23 @@ func _on_ContextMenu_index_pressed(index):
 			pass
 			
 			
+			
 		11:  # Open Output Folder
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
-			var platform = OS.get_name()
 			
-			match platform:
+			for selected in selected_ids:
 				
-				# Linux
-				"X11" :
-					
-					for selected in selected_ids:
-						
-						var output_path = RaptorRender.rr_data.jobs[selected].output_directory
-						output_path = output_path.replace("\\","/") # convert path to unix style
-						
-						var output_directory = Directory.new()
-						
-						if	output_directory.dir_exists( output_path ):
-							
-							var arguments = [output_path]
-							var execute_output =[]
-							OS.execute("xdg-open", arguments, false, execute_output)
-							
-						else:
-							print ("Directory does not exist!")
-				
-				
-				# Windows
-				"Windows" :
-					
-					for selected in selected_ids:
-						
-						var output_path = RaptorRender.rr_data.jobs[selected].output_directory
-						output_path = output_path.replace("/","\\") # convert path windows style
-						
-						var output_directory = Directory.new()
-						
-						if	output_directory.dir_exists( output_path ):
-							
-							var arguments = [output_path]
-							var execute_output =[]
-							OS.execute("explorer", arguments, false, execute_output)
-							
-						else:
-							print ("Directory does not exist!")
-				
-				
-				# Mac OS
-				"OSX" :
-					
-					for selected in selected_ids:
-						
-						var output_path = RaptorRender.rr_data.jobs[selected].output_directory
-						output_path = output_path.replace("\\","/") # convert path to unix style
-						
-						var output_directory = Directory.new()
-						
-						if	output_directory.dir_exists( output_path ):
-							
-							var arguments = [output_path]
-							var execute_output =[]
-							OS.execute("open", arguments, false, execute_output)
-							
-						else:
-							print ("Directory does not exist!")
+				JobFunctions.open_folder( RaptorRender.rr_data.jobs[selected].output_directory )
 		
 		
 		
 		12:  # Open Scene Folder
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
-			var platform = OS.get_name()
 			
-			match platform:
+			for selected in selected_ids:
 				
-				# Linux
-				"X11" :
-					
-					for selected in selected_ids:
-						
-						var output_path = RaptorRender.rr_data.jobs[selected].scene_directory
-						output_path = output_path.replace("\\","/") # convert path to unix style
-						
-						var output_directory = Directory.new()
-						
-						if	output_directory.dir_exists( output_path ):
-							
-							var arguments = [output_path]
-							var execute_output =[]
-							OS.execute("xdg-open", arguments, false, execute_output)
-							
-						else:
-							print ("Directory does not exist!")
-				
-				
-				# Windows
-				"Windows" :
-					
-					for selected in selected_ids:
-						
-						var output_path = RaptorRender.rr_data.jobs[selected].scene_directory
-						output_path = output_path.replace("/","\\") # convert path windows style
-						
-						var output_directory = Directory.new()
-						
-						if	output_directory.dir_exists( output_path ):
-							
-							var arguments = [output_path]
-							var execute_output =[]
-							OS.execute("explorer", arguments, false, execute_output)
-							
-						else:
-							print ("Directory does not exist!")
-					
-					
-				# Mac OS
-				"OSX" :
-					
-					for selected in selected_ids:
-						
-						var output_path = RaptorRender.rr_data.jobs[selected].scene_directory
-						output_path = output_path.replace("\\","/") # convert path to unix style
-						
-						var output_directory = Directory.new()
-						
-						if	output_directory.dir_exists( output_path ):
-							
-							var arguments = [output_path]
-							var execute_output =[]
-							OS.execute("open", arguments, false, execute_output)
-							
-						else:
-							print ("Directory does not exist!")
+				JobFunctions.open_folder( RaptorRender.rr_data.jobs[selected].scene_directory )
+		
 		
 		
 		

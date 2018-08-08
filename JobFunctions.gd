@@ -16,3 +16,63 @@ func get_chunk_counts_TotalFinishedActive(job_id):
 		chunks_total += 1
 
 	return [chunks_total, chunks_finished, chunks_active]
+
+
+
+
+func open_folder(path):
+
+	var platform = OS.get_name()
+	
+	match platform:
+		
+		# Linux
+		"X11" :
+			
+			var corrected_path = path.replace("\\","/") # convert path to unix style
+			
+			var dir = Directory.new()
+			
+			if dir.dir_exists( corrected_path ):
+				
+				var arguments = [corrected_path]
+				var execute_output =[]
+				OS.execute("xdg-open", arguments, false, execute_output)
+				
+			else:
+				print ("Directory does not exist!")
+		
+		
+		# Windows
+		"Windows" :
+			
+			var corrected_path = path.replace("/","\\") # convert path windows style
+			
+			var dir = Directory.new()
+			
+			if dir.dir_exists( corrected_path ):
+				
+				var arguments = [corrected_path]
+				var execute_output =[]
+				OS.execute("explorer", arguments, false, execute_output)
+				
+			else:
+				print ("Directory does not exist!")
+		
+		
+		
+		# Mac OS
+		"OSX" :
+			
+			var corrected_path = path.replace("\\","/") # convert path to unix style
+			
+			var dir = Directory.new()
+			
+			if dir.dir_exists( corrected_path ):
+				
+				var arguments = [corrected_path]
+				var execute_output =[]
+				OS.execute("open", arguments, false, execute_output)
+				
+			else:
+				print ("Directory does not exist!")

@@ -15,6 +15,11 @@ onready var ActiveClientsLabel = $"TabContainer/Details/ScrollContainer/MarginCo
 onready var TimeRenderedLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/TimeRenderedLabel"
 onready var TimeRemainingLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/TimeRemainingLabel"
 
+onready var SceneFileLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SceneFileLabel"
+onready var OutputFilesLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OutputFilesLabel"
+
+var current_displayed_job_id
+
 
 func _ready():
 	RaptorRender.register_job_info_panel(self)
@@ -25,6 +30,8 @@ func reset_to_first_tab():
 
 
 func update_job_info_panel(job_id):
+	
+	current_displayed_job_id = job_id
 	
 	var selected_job = RaptorRender.rr_data.jobs[job_id]
 	
@@ -113,3 +120,23 @@ func update_job_info_panel(job_id):
 		TimeRemainingLabel.text = "Time remaining:  " + TimeFunctions.seconds_to_string( int( (selected_job["render_time"] * 1 / progress) - selected_job["render_time"]), 2 )
 	else:
 		TimeRemainingLabel.text = "Time remaining:  "
+		
+
+
+	###################
+	#  Files Section
+	###################
+	
+	# Scene File
+	SceneFileLabel.text = "Scene File:   " + selected_job["scene_directory"]
+	
+	# Scene File
+	OutputFilesLabel.text = "Output Files:   " + selected_job["output_directory"]
+
+
+func _on_OpenSceneFolderButton_pressed():
+	JobFunctions.open_folder( RaptorRender.rr_data.jobs[current_displayed_job_id].scene_directory )
+
+
+func _on_OpenOutputFolderButton_pressed():
+	JobFunctions.open_folder( RaptorRender.rr_data.jobs[current_displayed_job_id].output_directory )
