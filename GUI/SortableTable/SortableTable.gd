@@ -212,8 +212,7 @@ func _on_SortableTable_gui_input(ev):
 		else:
 			shift_ctrl_plus_scroll = false
 			self.scroll_horizontal = previous_scroll_horizontal
-			print(previous_scroll_horizontal)
-			print(self.scroll_horizontal )
+
 
 
 func _on_SortableTable_draw():
