@@ -57,6 +57,7 @@ onready var RowContainerEmpty = $ "VBox_TopRow_Content/RowScrollContainer/VBoxCo
 # variables needed for scrolling
 var previous_scroll_horizontal = 0
 var previous_scroll_vertical = 0
+var shift_ctrl_plus_scroll = false
 
 # signals
 signal refresh_table_content
@@ -202,14 +203,23 @@ func emit_selection_cleared_signal():
 
 func _on_SortableTable_gui_input(ev):
 			
+	
 	if ev.is_action_pressed("ui_mouse_wheel_up_or_down"):
+
 		if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
+			shift_ctrl_plus_scroll = true
 			RowScrollContainer.scroll_vertical = previous_scroll_vertical
 		else:
+			shift_ctrl_plus_scroll = false
 			self.scroll_horizontal = previous_scroll_horizontal
+			print(previous_scroll_horizontal)
+			print(self.scroll_horizontal )
 
 
 func _on_SortableTable_draw():
+	if !shift_ctrl_plus_scroll:
+		self.scroll_horizontal = previous_scroll_horizontal
+	
 	previous_scroll_horizontal = self.scroll_horizontal
 	previous_scroll_vertical = RowScrollContainer.scroll_vertical
 
