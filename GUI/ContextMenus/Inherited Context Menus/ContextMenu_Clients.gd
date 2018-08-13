@@ -263,7 +263,7 @@ func _on_ContextMenu_index_pressed(index):
 			if amount_of_computer_tried_to_wake_up > 1:
 				RaptorRender.NotificationSystem.add_info_notification("Info", String(amount_of_computer_tried_to_wake_up) + " machines should wake up soon, if they support WakeOnLan...", 9)
 			else:
-				RaptorRender.NotificationSystem.add_info_notification("Info", "Your machines should wake up soon, if it supports WakeOnLan...", 9)
+				RaptorRender.NotificationSystem.add_info_notification("Info", "Your machine should wake up soon, if it supports WakeOnLan...", 9)
 			
 			
 		9:  # Shutdown Client
