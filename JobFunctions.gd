@@ -40,7 +40,7 @@ func open_folder(path):
 				OS.execute("xdg-open", arguments, false, execute_output)
 				
 			else:
-				RaptorRender.NotificationSystem.add_error_notification("Error", "Directory seems not to exist!", 7)
+				RaptorRender.NotificationSystem.add_error_notification("Error", "Seems like directory does not exist!", 7)
 		
 		
 		# Windows
@@ -57,7 +57,7 @@ func open_folder(path):
 				OS.execute("explorer", arguments, false, execute_output)
 				
 			else:
-				RaptorRender.NotificationSystem.add_error_notification("Error", "Directory seems not to exist!", 7)
+				RaptorRender.NotificationSystem.add_error_notification("Error", "Seems like directory does not exist!", 7)
 		
 		
 		
@@ -75,4 +75,4 @@ func open_folder(path):
 				OS.execute("open", arguments, false, execute_output)
 				
 			else:
-				RaptorRender.NotificationSystem.add_error_notification("Error", "Directory seems not to exist!", 7)
+				RaptorRender.NotificationSystem.add_error_notification("Error", "Seems like directory does not exist!", 7)
