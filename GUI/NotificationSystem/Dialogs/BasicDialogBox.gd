@@ -12,7 +12,8 @@ onready var Message = $"BasicDialogContainer/MarginContainer/VBoxContainer/Text"
 
 onready var TweenAnimateIn = $"TweenAnimateIn"
 onready var TweenAnimateOut = $"TweenAnimateOut"
-
+onready var TweenMoveVertical = $"TweenMoveVertical"
+onready var size_getter = $"BasicDialogContainer/Control"
 
 var self_destruction = true
 var currently_self_destructing = false
@@ -23,6 +24,8 @@ var heading = "error"
 var message = "Some error message!"
 
 var animation_in_finshed = false
+
+var supposed_position_y = 50
 
 
 func _ready():
@@ -43,6 +46,8 @@ func _ready():
 		ProgressTexture.set_modulate(Color("00ffffff"))
 	
 	
+	
+	# move it to the right and start animation
 	self.margin_right = self.margin_right + 400
 	self.margin_left= self.margin_left + 400
 	
@@ -50,16 +55,12 @@ func _ready():
 
 
 
-func animate_in():
+func get_height():
 	
-	# animate in
-	var start_color = Color(1.0, 1.0, 1.0, 0.0)
-	var end_color = Color(1.0, 1.0, 1.0, 1.0)
-	TweenAnimateIn.interpolate_property(self, "modulate", start_color,  end_color, 1.5,Tween.TRANS_QUINT,Tween.EASE_OUT, 0)
-	TweenAnimateIn.interpolate_property(self, "margin_right", self.margin_right, 0, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
-	TweenAnimateIn.interpolate_property(self, "margin_left", self.margin_left, -24, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
-	TweenAnimateIn.start()
-	
+	var calculated_height = (Message.get_line_count() * ( Message.get_line_height() + 3 ) ) + 36
+	return calculated_height
+
+
 
 func _process(delta):
 	
@@ -82,6 +83,32 @@ func set_heading_and_text():
 	else:
 		Message.visible = false
 
+
+
+
+func animate_in():
+	
+	# animate in
+	var start_color = Color(1.0, 1.0, 1.0, 0.0)
+	var end_color = Color(1.0, 1.0, 1.0, 1.0)
+	TweenAnimateIn.interpolate_property(self, "modulate", start_color,  end_color, 1.5,Tween.TRANS_QUINT,Tween.EASE_OUT, 0)
+	TweenAnimateIn.interpolate_property(self, "margin_right", self.margin_right, 0, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
+	TweenAnimateIn.interpolate_property(self, "margin_left", self.margin_left, -24, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
+	TweenAnimateIn.start()
+
+
+
+
+
+func move_vertical(amout_to_move_down):
+	
+	supposed_position_y += amout_to_move_down
+	
+	# animate to new position
+	TweenMoveVertical.stop_all()
+	TweenMoveVertical.interpolate_property(self, "margin_top", self.margin_top, supposed_position_y, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
+	TweenMoveVertical.interpolate_property(self, "margin_bottom", self.margin_bottom, supposed_position_y + 24, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
+	TweenMoveVertical.start()
 
 
 
