@@ -5,8 +5,8 @@ var notifications_array = []
 
 
 #### preloads ####
-var ErrorNotificationRes = preload("res://GUI/NotificationSystem/Dialogs/InheritedDialogs/ErrorNotification.tscn")
-var InfoNotificationRes = preload("res://GUI/NotificationSystem/Dialogs/InheritedDialogs/InfoNotification.tscn")
+var ErrorNotificationRes = preload("res://GUI/NotificationSystem/NotificationBoxes/InheritedNotificationBoxes/ErrorNotification.tscn")
+var InfoNotificationRes = preload("res://GUI/NotificationSystem/NotificationBoxes/InheritedNotificationBoxes/InfoNotification.tscn")
 
 
 
@@ -14,15 +14,17 @@ var InfoNotificationRes = preload("res://GUI/NotificationSystem/Dialogs/Inherite
 
 func _ready():
 	
-	pass
+	register_notification_system()
 
 
-func _input(event):
-		
-	if Input.is_key_pressed(KEY_M):
-		add_info_notification("INFO", "Something happened!", 5)
-	if Input.is_key_pressed(KEY_N):
-		add_error_notification("Error", "Something went wrong! Something went wrong! Something went wrong! Something went wrong! Something went wrong!", 7)
+
+
+# register to RaptorRender script
+func register_notification_system():
+	if RaptorRender != null:
+		RaptorRender.register_notification_system(self)
+
+
 
 
 
@@ -64,5 +66,3 @@ func move_all_notifications_down(height_of_new_notification):
 			notification.move_vertical(height_of_new_notification + 30)
 
 
-#func _process(delta):
-#	pass

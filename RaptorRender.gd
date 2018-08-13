@@ -13,6 +13,8 @@ var CurrentJobLinkRes = preload("res://GUI/specific_sortable_table_cell_elements
 
 
 
+var NotificationSystem
+
 var JobsTable
 var ClientsTable
 
@@ -41,8 +43,8 @@ func _ready():
 				"note": "eine Notiz",
 				"errors": 2,
 				"pools": ["AE_Plugins"],
-				"scene_directory" : "/home/johannes/Downloads/",
-				"output_directory" : "/home/johannes/GodotTest/",
+				"scene_directory" : "/home/johannes/Downlfoads/",
+				"output_directory" : "/home/johannes/GodogtTest/",
 				"render_time" : 345,
 				"chunks": {
 					"1":{
@@ -853,8 +855,12 @@ func _ready():
 		}
 	}
 	
-	
-	
+
+
+func register_notification_system(NotificationSystemReference):
+	NotificationSystem = NotificationSystemReference
+
+
 func register_client_info_panel(InfoPanel):  
 	
 	ClientInfoPanel = InfoPanel

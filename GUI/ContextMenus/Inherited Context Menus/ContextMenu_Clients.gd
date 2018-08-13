@@ -167,7 +167,8 @@ func _on_ContextMenu_index_pressed(index):
 			
 		
 		4:  # Configure Client	
-			print ( "Configure Client - not implemented yet")
+			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
+			
 			
 			
 		
@@ -198,7 +199,7 @@ func _on_ContextMenu_index_pressed(index):
 			# first six bytes are all 255 in hex so "FF" -> FF FF FF FF FF FF
 			# next 96 bytes are 16 repetitions of the destination Mac adress (which are also 6 bytes in hex each)
 			
-			
+			var amount_of_computer_tried_to_wake_up = 0
 			var mac_addresses = []
 			
 			# fill the mac_addresses array with all the mac addresssess that are supposed to recieve a WOL package
@@ -206,6 +207,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			for selected in selected_ids:
 				if RaptorRender.rr_data.clients[selected].status == "5_offline":
+					amount_of_computer_tried_to_wake_up  += 1
 					var mac_addresses_of_selected = RaptorRender.rr_data.clients[selected].mac_addresses
 					for mac_address_of_selected in mac_addresses_of_selected:
 						mac_address_of_selected = mac_address_of_selected.replace(":","")  # remove ":"
@@ -258,11 +260,14 @@ func _on_ContextMenu_index_pressed(index):
 			# close UDP Socket
 			socketUDP.close()
 			
-			
+			if amount_of_computer_tried_to_wake_up > 1:
+				RaptorRender.NotificationSystem.add_info_notification("Info", String(amount_of_computer_tried_to_wake_up) + " machines should wake up soon, if they support WakeOnLan...", 9)
+			else:
+				RaptorRender.NotificationSystem.add_info_notification("Info", "Your machines should wake up soon, if it supports WakeOnLan...", 9)
 			
 			
 		9:  # Shutdown Client
-			print ( "Shutdown client - not implemented yet")
+			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
 			
 #			# Linux
 #			var arguments = ["-P", "now", "Raptor Render shuts down your System!"]
@@ -276,7 +281,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		10:  # Reboot Client
-			print ( "Reboot Client - not implemented yet")
+			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
 			
 #			# Linux 
 #			var arguments = ["-r", "now", "Raptor Render reboots your System!"]
@@ -294,7 +299,7 @@ func _on_ContextMenu_index_pressed(index):
 		
 		
 		12:  # Execute Command
-			print ( "Execute Command - not implemented yet")
+			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
 		
 		
 		

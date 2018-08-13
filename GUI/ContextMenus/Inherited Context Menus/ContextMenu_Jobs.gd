@@ -211,7 +211,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		6:  # Configure Job
-			print ("Configure Job - Not Implemented yet!")
+			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
 		
 		
 		
