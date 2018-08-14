@@ -9,6 +9,7 @@
 
 [sub_resource type="DynamicFontData" id=1]
 
+hinting = 2
 font_path = "res://GUI/fonts/Caliban.ttf"
 
 [sub_resource type="DynamicFont" id=2]
@@ -90,6 +91,7 @@ scroll_horizontal_enabled = true
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
+scroll_deadzone = 0
 _sections_unfolded = [ "Margin", "Scroll", "Size Flags" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer" index="0"]
@@ -480,7 +482,7 @@ min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 48.99
+value = 0.0
 exp_edit = false
 rounded = false
 texture_under = ExtResource( 3 )
@@ -644,7 +646,7 @@ min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 48.99
+value = 0.0
 exp_edit = false
 rounded = false
 texture_under = ExtResource( 3 )
