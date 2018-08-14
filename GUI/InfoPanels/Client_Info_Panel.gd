@@ -100,6 +100,8 @@ func update_client_info_panel(client_id):
 		
 	CPULabel.text = cpu_text
 	
+	CPUUsageBar.update_cpu_usage_bar()
+	
 	
 	
 	
@@ -110,6 +112,7 @@ func update_client_info_panel(client_id):
 	var size_in_gb =  String( float(selected_client["memory"]) / 1024 / 1024 )
 	RAMLabel.text = size_in_gb.left(size_in_gb.find(".")+ 3) + " GB"
 	
+	MemoryUsageBar.update_memory_usage_bar()
 	
 	
 	
