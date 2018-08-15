@@ -17,6 +17,7 @@ var NotificationSystem
 
 var JobsTable
 var ClientsTable
+var ChunksTable
 
 var ContextMenu_Clients
 var ContextMenu_Jobs
@@ -883,12 +884,17 @@ func register_table(SortableTable):
 			JobsTable.connect("selection_cleared", self, "job_selection_cleared")
 			JobsTable.connect("context_invoked", self, "jobs_context_menu_invoked")
 			
+		"chunks":
+			ChunksTable = SortableTable 
+		
 		"clients": 
 			ClientsTable = SortableTable 
 			ClientsTable.connect("refresh_table_content", self, "refresh_clients_table")
 			ClientsTable.connect("something_just_selected", self, "client_selected")
 			ClientsTable.connect("selection_cleared", self, "client_selection_cleared")
 			ClientsTable.connect("context_invoked", self, "client_context_menu_invoked")
+			
+		
 
 
 
