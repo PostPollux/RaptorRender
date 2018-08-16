@@ -219,9 +219,13 @@ func _on_SortableTable_draw():
 	
 	if !shift_ctrl_plus_scroll and !Input.is_mouse_button_pressed(BUTTON_LEFT):
 		self.scroll_horizontal = previous_scroll_horizontal
+		
+		previous_scroll_vertical = RowScrollContainer.scroll_vertical
+		previous_scroll_horizontal = self.scroll_horizontal
 	
-	previous_scroll_horizontal = self.scroll_horizontal
-	previous_scroll_vertical = RowScrollContainer.scroll_vertical
+	else:
+		previous_scroll_horizontal = self.scroll_horizontal
+		
 
 
 
