@@ -216,7 +216,8 @@ func _on_SortableTable_gui_input(ev):
 
 
 func _on_SortableTable_draw():
-	if !shift_ctrl_plus_scroll:
+	
+	if !shift_ctrl_plus_scroll and !Input.is_mouse_button_pressed(BUTTON_LEFT):
 		self.scroll_horizontal = previous_scroll_horizontal
 	
 	previous_scroll_horizontal = self.scroll_horizontal
