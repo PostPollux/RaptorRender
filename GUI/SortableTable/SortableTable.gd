@@ -121,7 +121,7 @@ func create_row(id):
 	RowContainerEmpty.update_positions_of_empty_rows()
 
 
-
+# remove a specific row
 func remove_row(id):
 	
 	RowContainerFilled.remove_row(id)

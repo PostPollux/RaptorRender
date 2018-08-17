@@ -506,6 +506,14 @@ func _ready():
 						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
+					"4":{
+						"status" : "2_queued",
+						"frames_to_calculate" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
+						"number_of_tries" : 1
+					},
 					"5":{
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
@@ -515,14 +523,6 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					},
-					"7":{
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
@@ -1597,8 +1597,17 @@ func refresh_chunks_table(job_id):
 	# get all chunks
 	var chunks_array = rr_data.jobs[job_id].chunks.keys()
 	
+	# remove unneded filled rows of the ChunksTable
+	if chunks_array.size() < ChunksTable.RowContainerFilled.SortableRows.size():
+		
+		for remove_id in range(chunks_array.size() + 1, ChunksTable.RowContainerFilled.SortableRows.size() + 1):
+			
+			ChunksTable.remove_row( String(remove_id) )
+	
+	
+	
 	# display number of chunks in the Tabname
-	#JobsTable.get_parent().name = "Jobs (" + String ( jobs_array.size() ) + ")"
+	#ChunksTable.get_parent().name = "Chunks (" + String ( chunks_array.size() ) + ")"
 	
 	
 	#### Fill Chunks Table ####

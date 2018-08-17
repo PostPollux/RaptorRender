@@ -125,14 +125,14 @@ func initialize_row(id):
 
 
 
-# removing a row
+# removing a specific row
 func remove_row(id):
 	
 	# remove from selection
 	selected_row_ids.erase(id)
 	
 	# remove the node
-	SortableRows[ id_position_dict[id] -1 ].free()
+	SortableRows[ id_position_dict[id] - 1 ].free()
 	
 	# remove the references in the Sortable Rows Array
 	SortableRows.remove( id_position_dict[id] - 1  )
