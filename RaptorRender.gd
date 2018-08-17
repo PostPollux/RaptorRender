@@ -49,59 +49,59 @@ func _ready():
 				"render_time" : 345,
 				"chunks": {
 					"1":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"client" : "id2",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "active",
+						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
-						"number_of_tries" : 1
+						"client" : "id12",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
+						"number_of_tries" : 5
 					},
 					"4":{
-						"status" : "active",
+						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"client" : "id7",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
-						"number_of_tries" : 1
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
+						"number_of_tries" : 2
 					},
 					"6":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"client" : "id8",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -124,59 +124,43 @@ func _ready():
 				"render_time" : 3645,
 				"chunks": {
 					"1":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "active",
+						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "active",
+						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"4":{
-						"status" : "active",
+						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
-						"number_of_tries" : 1
-					},
-					"6":{
-						"status" : "queued",
-						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
-						"number_of_tries" : 1
-					},
-					"7":{
-						"status" : "finished",
-						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -199,59 +183,59 @@ func _ready():
 				"render_time" : 45,
 				"chunks": {
 					"1":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"4":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -274,59 +258,59 @@ func _ready():
 				"render_time" : 54445,
 				"chunks": {
 					"1":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"4":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -349,59 +333,59 @@ func _ready():
 				"render_time" : 2487,
 				"chunks": {
 					"1":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"4":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -424,59 +408,59 @@ func _ready():
 				"render_time" : 3433578,
 				"chunks": {
 					"1":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"4":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -499,51 +483,51 @@ func _ready():
 				"render_time" : 4578,
 				"chunks": {
 					"1":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "queued",
+						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -912,6 +896,7 @@ func register_context_menu(ContextMenu):
 			
 func client_selected(id_of_row):
 	JobsTable.clear_selection()
+	ChunksTable.clear_selection()
 	JobInfoPanel.visible = false
 	JobInfoPanel.reset_to_first_tab()
 	ClientInfoPanel.update_client_info_panel(id_of_row)
@@ -925,10 +910,12 @@ func client_selection_cleared():
 
 func job_selected(id_of_row):
 	ClientsTable.clear_selection()
+	ChunksTable.clear_selection()
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
 	JobInfoPanel.update_job_info_panel(id_of_row)
 	JobInfoPanel.visible = true
+	refresh_chunks_table(id_of_row)
 
 
 func job_selection_cleared():
@@ -984,59 +971,59 @@ func _input(event):
 				"render_time" : 345,
 				"chunks": {
 					"1":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "active",
+						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"4":{
-						"status" : "active",
+						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "finished",
+						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : "",
-						"time_finished" : "",
+						"time_started" : 1528523180,
+						"time_finished" : 1528583180,
 						"number_of_tries" : 1
 					}
 				}
@@ -1591,7 +1578,301 @@ func refresh_jobs_table():
 	JobsTable.sort()
 	
 
+func refresh_chunks_table(job_id):
+	
+	
+	# define the columns of the jobs table ####
+	var status_column = 1
+	var number_column = 2
+	var frames_column = 3
+	var client_column = 4
+	var rendertime_column = 5
+	var started_column = 6
+	var finished_column = 7
+	var tries_column = 8
+	
+	
+	
+	# get all chunks
+	var chunks_array = rr_data.jobs[job_id].chunks.keys()
+	
+	# display number of chunks in the Tabname
+	#JobsTable.get_parent().name = "Jobs (" + String ( jobs_array.size() ) + ")"
+	
+	
+	#### Fill Chunks Table ####
+	
+	var count = 1
+	
+	for chunk in chunks_array:
 
+		##############################################
+		### update modified cells in row if row exists
+		##############################################
+		
+		if ChunksTable.RowContainerFilled.id_position_dict.has(chunk):
+			
+			# get reference to the row
+			var row_position = ChunksTable.RowContainerFilled.id_position_dict[chunk]
+			var row = ChunksTable.get_row_by_position( row_position )
+			
+			# update all cells that have changed
+			
+			
+			
+			### Status Icon ###
+			
+			# only change when value is different
+			if (row.sort_values[status_column] != rr_data.jobs[job_id].chunks[chunk].status):
+				
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, status_column )
+				
+				# change the cell value
+				var icon = ImageTexture.new()
+				
+				if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
+					if colorize_table_rows:
+						ChunksTable.set_row_color_by_string(row_position, "blue")
+						
+				elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
+					if colorize_table_rows:
+						ChunksTable.set_row_color_by_string(row_position, "yellow")
+						
+				elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
+					if colorize_table_rows:
+						ChunksTable.set_row_color_by_string(row_position, "red")
+						
+				elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
+						
+				elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
+					if colorize_table_rows:
+						ChunksTable.set_row_color_by_string(row_position, "green")
+						
+				elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
+					icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
+					if colorize_table_rows:
+						ChunksTable.set_row_color_by_string(row_position, "black")
+						cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
+						
+				cell.get_child(0).set_texture(icon)
+				
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
+			
+
+
+			### Number ###
+
+			# only change when value is different
+			if (row.sort_values[number_column] != chunk):
+
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, number_column )
+
+				# change the cell value
+				cell.get_child(0).text = chunk
+
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, number_column, chunk)
+
+
+
+
+			### Client ###
+
+			# only change when value is different
+			if (row.sort_values[client_column] != rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name ):
+
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, client_column )
+
+				# change the cell value
+				cell.get_child(0).text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
+
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, client_column, rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
+
+
+
+
+			### Time Started ###
+
+			# only change when value is different
+			if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_started):
+
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, started_column )
+
+				# change the cell value
+				cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_started, 1)
+
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, started_column,  rr_data.jobs[job_id].chunks[chunk].time_started)
+
+
+
+
+			### Time Finished ###
+
+			# only change when value is different
+			if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_finished):
+
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, finished_column )
+
+				# change the cell value
+				cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_finished, 1)
+
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, finished_column,  rr_data.jobs[job_id].chunks[chunk].time_finished)
+
+
+
+			### Number of tries ###
+
+			# only change when value is different
+			if (row.sort_values[tries_column] != rr_data.jobs[job_id].chunks[chunk].number_of_tries):
+
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, tries_column )
+
+				# change the cell value
+				cell.get_child(0).text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+
+
+			
+		##########################################################
+		### create the row if row with given id does not exist yet
+		##########################################################
+		
+		else:
+			
+			ChunksTable.create_row(chunk)
+			
+			
+			### Status Icon ###
+			
+			var StatusIcon = TextureRect.new()
+			StatusIcon.set_expand(true)
+			StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
+			StatusIcon.set_v_size_flags(3) # fill + expand
+			StatusIcon.set_h_size_flags(3) # fill + expand
+			StatusIcon.rect_min_size.x = 54
+			
+			var icon = ImageTexture.new()
+			
+			
+			if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
+				if colorize_table_rows:
+					ChunksTable.set_row_color_by_string(count, "blue")
+					
+			elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
+				if colorize_table_rows:
+					ChunksTable.set_row_color_by_string(count, "yellow")
+					
+			elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
+				if colorize_table_rows:
+					ChunksTable.set_row_color_by_string(count, "red")
+					
+			elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
+					
+			elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
+				if colorize_table_rows:
+					ChunksTable.set_row_color_by_string(count, "green")
+					
+			elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
+				icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
+				if colorize_table_rows:
+					ChunksTable.set_row_color_by_string(count, "black")
+					StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
+					
+			StatusIcon.set_texture(icon)
+			ChunksTable.set_cell_content(count, status_column, StatusIcon)
+			
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
+			
+			
+
+			### Number ###
+
+			var LabelNumber = Label.new()
+			LabelNumber.text = chunk
+			ChunksTable.set_cell_content(count, number_column, LabelNumber)
+
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, number_column,  chunk)
+
+
+
+
+			### Client ###
+
+			var LabelClient = Label.new()
+
+			LabelClient.text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
+			ChunksTable.set_cell_content(count, client_column, LabelClient)
+
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, client_column,  rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
+
+
+
+
+			### Time Started ###
+
+			var LabelTimeStarted = Label.new()
+
+			LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_started, 1 )
+			ChunksTable.set_cell_content(count, started_column, LabelTimeStarted)
+
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, started_column,  rr_data.jobs[job_id].chunks[chunk].time_started)
+
+
+
+
+			### Time Finished ###
+
+			var LabelTimeFinished = Label.new()
+
+			LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_finished, 1 )
+			ChunksTable.set_cell_content(count, finished_column, LabelTimeFinished)
+
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, finished_column,  rr_data.jobs[job_id].chunks[chunk].time_finished)
+
+
+
+			### Number of tries ###
+
+			var LabelNumberOfTries = Label.new()
+			LabelNumberOfTries.text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+			ChunksTable.set_cell_content(count, tries_column, LabelNumberOfTries)
+
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+
+		
+		count += 1
+	
+	ChunksTable.sort()
+	
+	
 func refresh_clients_table():
 	
 	
