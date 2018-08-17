@@ -11,8 +11,8 @@ func get_chunk_counts_TotalFinishedActive(job_id):
 	for chunk_key in chunk_keys:
 		var chunk_status = RaptorRender.rr_data.jobs[job_id].chunks[chunk_key].status
 		match chunk_status:
-			"active": chunks_active += 1
-			"finished": chunks_finished += 1
+			"1_rendering": chunks_active += 1
+			"5_finished": chunks_finished += 1
 		chunks_total += 1
 
 	return [chunks_total, chunks_finished, chunks_active]

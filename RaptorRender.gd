@@ -1660,30 +1660,30 @@ func refresh_chunks_table(job_id):
 				var icon = ImageTexture.new()
 				
 				if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
-					icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
+					icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_rendering_58x30.png")
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(row_position, "blue")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
-					icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
+					icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_queued_58x30.png")
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(row_position, "yellow")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
-					icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
+					icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_error_58x30.png")
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(row_position, "red")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
-					icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
+					icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_paused_58x30.png")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
-					icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
+					icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_finished_58x30.png")
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(row_position, "green")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
-					icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
+					icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_cancelled_58x30.png")
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(row_position, "black")
 						cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
@@ -1802,30 +1802,30 @@ func refresh_chunks_table(job_id):
 			
 			
 			if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
-				icon.load("res://GUI/icons/job_status/58x30/job_status_rendering_58x30.png")
+				icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_rendering_58x30.png")
 				if colorize_table_rows:
 					ChunksTable.set_row_color_by_string(count, "blue")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
-				icon.load("res://GUI/icons/job_status/58x30/job_status_queued_58x30.png")
+				icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_queued_58x30.png")
 				if colorize_table_rows:
 					ChunksTable.set_row_color_by_string(count, "yellow")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
-				icon.load("res://GUI/icons/job_status/58x30/job_status_error_58x30.png")
+				icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_error_58x30.png")
 				if colorize_table_rows:
 					ChunksTable.set_row_color_by_string(count, "red")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
-				icon.load("res://GUI/icons/job_status/58x30/job_status_paused_58x30.png")
+				icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_paused_58x30.png")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
-				icon.load("res://GUI/icons/job_status/58x30/job_status_finished_58x30.png")
+				icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_finished_58x30.png")
 				if colorize_table_rows:
 					ChunksTable.set_row_color_by_string(count, "green")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
-				icon.load("res://GUI/icons/job_status/58x30/job_status_cancelled_58x30.png")
+				icon.load("res://GUI/icons/chunk_status/58x30/chunk_status_cancelled_58x30.png")
 				if colorize_table_rows:
 					ChunksTable.set_row_color_by_string(count, "black")
 					StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
