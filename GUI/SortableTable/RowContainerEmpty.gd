@@ -43,10 +43,6 @@ func _ready():
 	update_width_of_RowContainerEmpty()
 	
 	update_positions_of_empty_rows()
-	
-	initialize_column_widths()
-	
-	highlight_column(TopRow.sort_column_primary)
 
 
 
@@ -70,7 +66,23 @@ func create_empty_row():
 		
 		self.add_child(SortableTableRow)
 		EmptyRows.append(SortableTableRow)
-
+		
+		
+		# initialize column widths and highlight cell if needed
+		var column = 1
+		
+		for ColumnButton in TopRow.ColumnButtons:
+		
+			# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
+			SortableTableRow.set_cell_width(column, ColumnButton.rect_min_size.x)
+			
+			# highlight the cell
+			if column == TopRow.sort_column_primary:
+				SortableTableRow.modulate_cell_color(column,Color("18ffffff"))
+			else:
+				SortableTableRow.modulate_cell_color(column,Color("00ffffff"))
+		
+			column += 1
 
 
 func remove_empty_row():
