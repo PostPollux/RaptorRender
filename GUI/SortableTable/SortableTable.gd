@@ -74,7 +74,12 @@ func _ready():
 
 
 
-
+func _input(event):
+	
+	# save the position of the vertical scroll as soon as shift or control is pressed
+	if Input.is_action_just_pressed("ui_shift") or Input.is_action_just_pressed("ui_ctrl") :
+		previous_scroll_vertical = RowScrollContainer.scroll_vertical
+	
 
 
 ################
@@ -220,11 +225,7 @@ func _on_SortableTable_draw():
 	if !shift_ctrl_plus_scroll and !Input.is_mouse_button_pressed(BUTTON_LEFT):
 		self.scroll_horizontal = previous_scroll_horizontal
 		
-		previous_scroll_vertical = RowScrollContainer.scroll_vertical
-		previous_scroll_horizontal = self.scroll_horizontal
-	
-	else:
-		previous_scroll_horizontal = self.scroll_horizontal
+	previous_scroll_horizontal = self.scroll_horizontal
 		
 
 
