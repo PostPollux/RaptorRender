@@ -1582,14 +1582,15 @@ func refresh_chunks_table(job_id):
 	
 	
 	# define the columns of the jobs table ####
-	var status_column = 1
-	var number_column = 2
+	var number_column = 1
+	var status_column = 2
 	var frames_column = 3
 	var client_column = 4
 	var rendertime_column = 5
-	var started_column = 6
-	var finished_column = 7
-	var tries_column = 8
+	var tries_column = 6
+	var started_column = 7
+	var finished_column = 8
+	
 	
 	
 	
@@ -1617,9 +1618,27 @@ func refresh_chunks_table(job_id):
 			var row = ChunksTable.get_row_by_position( row_position )
 			
 			# update all cells that have changed
+
+
+
+
+			### Number ###
 			
+			# only change when value is different
+			if (row.sort_values[number_column] != chunk):
 			
-			
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, number_column )
+				
+				# change the cell value
+				cell.get_child(0).text = chunk
+				
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, number_column, chunk)
+
+
+
+
 			### Status Icon ###
 			
 			# only change when value is different
@@ -1667,51 +1686,54 @@ func refresh_chunks_table(job_id):
 			
 
 
-			### Number ###
-
-			# only change when value is different
-			if (row.sort_values[number_column] != chunk):
-
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, number_column )
-
-				# change the cell value
-				cell.get_child(0).text = chunk
-
-				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, number_column, chunk)
 
 
 
 
 			### Client ###
-
+			
 			# only change when value is different
 			if (row.sort_values[client_column] != rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name ):
-
+			
 				# get reference to the cell
 				var cell = ChunksTable.get_cell( row_position, client_column )
-
+				
 				# change the cell value
 				cell.get_child(0).text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
-
+				
 				# update sort_value
 				ChunksTable.set_cell_sort_value(row_position, client_column, rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
 
 
 
+			### Number of tries ###
+			
+			# only change when value is different
+			if (row.sort_values[tries_column] != rr_data.jobs[job_id].chunks[chunk].number_of_tries):
+				
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, tries_column )
+				
+				# change the cell value
+				cell.get_child(0).text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+				
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+
+
+
 
 			### Time Started ###
-
+		
 			# only change when value is different
 			if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_started):
-
+			
 				# get reference to the cell
 				var cell = ChunksTable.get_cell( row_position, started_column )
-
+				
 				# change the cell value
 				cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_started, 1)
-
+				
 				# update sort_value
 				ChunksTable.set_cell_sort_value(row_position, started_column,  rr_data.jobs[job_id].chunks[chunk].time_started)
 
@@ -1719,34 +1741,21 @@ func refresh_chunks_table(job_id):
 
 
 			### Time Finished ###
-
+			
 			# only change when value is different
 			if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_finished):
-
+			
 				# get reference to the cell
 				var cell = ChunksTable.get_cell( row_position, finished_column )
-
+				
 				# change the cell value
 				cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_finished, 1)
-
+				
 				# update sort_value
 				ChunksTable.set_cell_sort_value(row_position, finished_column,  rr_data.jobs[job_id].chunks[chunk].time_finished)
 
 
 
-			### Number of tries ###
-
-			# only change when value is different
-			if (row.sort_values[tries_column] != rr_data.jobs[job_id].chunks[chunk].number_of_tries):
-
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, tries_column )
-
-				# change the cell value
-				cell.get_child(0).text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
-
-				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
 
 
 			
@@ -1757,7 +1766,19 @@ func refresh_chunks_table(job_id):
 		else:
 			
 			ChunksTable.create_row(chunk)
+
+
+
+			### Number ###
 			
+			var LabelNumber = Label.new()
+			LabelNumber.text = chunk
+			ChunksTable.set_cell_content(count, number_column, LabelNumber)
+			
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, number_column,  chunk)
+
+
 			
 			### Status Icon ###
 			
@@ -1808,38 +1829,41 @@ func refresh_chunks_table(job_id):
 			
 			
 
-			### Number ###
-
-			var LabelNumber = Label.new()
-			LabelNumber.text = chunk
-			ChunksTable.set_cell_content(count, number_column, LabelNumber)
-
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, number_column,  chunk)
-
 
 
 
 			### Client ###
 
 			var LabelClient = Label.new()
-
+			
 			LabelClient.text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
 			ChunksTable.set_cell_content(count, client_column, LabelClient)
-
+			
 			# update sort_value
 			ChunksTable.set_cell_sort_value(count, client_column,  rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
 
 
 
 
+			### Number of tries ###
+			
+			var LabelNumberOfTries = Label.new()
+			LabelNumberOfTries.text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+			ChunksTable.set_cell_content(count, tries_column, LabelNumberOfTries)
+			
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+
+
+
+
 			### Time Started ###
-
+			
 			var LabelTimeStarted = Label.new()
-
+			
 			LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_started, 1 )
 			ChunksTable.set_cell_content(count, started_column, LabelTimeStarted)
-
+			
 			# update sort_value
 			ChunksTable.set_cell_sort_value(count, started_column,  rr_data.jobs[job_id].chunks[chunk].time_started)
 
@@ -1847,25 +1871,16 @@ func refresh_chunks_table(job_id):
 
 
 			### Time Finished ###
-
+			
 			var LabelTimeFinished = Label.new()
-
+			
 			LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_finished, 1 )
 			ChunksTable.set_cell_content(count, finished_column, LabelTimeFinished)
-
+			
 			# update sort_value
 			ChunksTable.set_cell_sort_value(count, finished_column,  rr_data.jobs[job_id].chunks[chunk].time_finished)
 
 
-
-			### Number of tries ###
-
-			var LabelNumberOfTries = Label.new()
-			LabelNumberOfTries.text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
-			ChunksTable.set_cell_content(count, tries_column, LabelNumberOfTries)
-
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
 
 		
 		count += 1

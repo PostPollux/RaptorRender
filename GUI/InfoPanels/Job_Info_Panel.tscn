@@ -59,7 +59,6 @@ _sections_unfolded = [ "Rect", "Size Flags" ]
 [node name="Details" type="Tabs" parent="TabContainer" index="0"]
 
 editor/display_folded = true
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -762,6 +761,7 @@ _sections_unfolded = [ "Size Flags", "Visibility" ]
 
 [node name="Chunk List" type="Tabs" parent="TabContainer" index="1"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -803,10 +803,8 @@ margin_top = 0.0
 margin_right = 695.0
 margin_bottom = 338.0
 scroll_deadzone = 0
-column_names = [ "Status", "No.", "Frames", "Client", "Rendertime", "Start", "Finished", "Tries" ]
-column_widths_initial = [ 60, 42, 100, 100, 100, 100, 100, 60 ]
-sort_column_primary = 2
-sort_column_secondary = 3
+column_names = [ "", "Status", "Frames", "Client", "Rendertime", "Tries", "Start", "Finished" ]
+column_widths_initial = [ 20, 60, 100, 100, 100, 50, 160, 160 ]
 row_color_red = Color( 0.392157, 0.247059, 0.231373, 1 )
 row_color_blue = Color( 0.231373, 0.313726, 0.392157, 1 )
 row_color_green = Color( 0.231373, 0.352941, 0.231373, 1 )
