@@ -51,8 +51,10 @@ onready var RowBackgroundColorRect = $"BackgroundColor"
 
 # signals
 signal row_clicked
+signal row_clicked_middle
 signal row_clicked_rmb
 signal drag_select
+signal drag_select_middle
 
 
 
@@ -333,6 +335,8 @@ func _on_SortabelTableRow_mouse_entered():
 	update_row_color_hover()
 	if Input.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("drag_select", row_position)
+	if Input.is_action_pressed("ui_middle_mouse_button"):
+		emit_signal("drag_select_middle", row_position)
 
 
 
@@ -344,6 +348,8 @@ func _on_SortabelTableRow_mouse_exited():
 func _on_SortabelTableRow_gui_input(ev):
 	if ev.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("row_clicked", row_position)
+	if ev.is_action_pressed("ui_middle_mouse_button"):
+		emit_signal("row_clicked_middle", row_position)
 	if ev.is_action_pressed("ui_right_mouse_button"):
 		emit_signal("row_clicked_rmb", row_position)
 
