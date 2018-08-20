@@ -206,6 +206,18 @@ func emit_selection_cleared_signal():
 ### Scrolling
 #############
 
+
+func scroll_to_row (row_id):
+	
+	var row_position = RowContainerFilled.id_position_dict[row_id]
+	var position_of_row_in_px = row_position * row_height
+	
+	var scroll_value = position_of_row_in_px - (RowScrollContainer.rect_size.y / 2)
+
+	RowScrollContainer.scroll_vertical = scroll_value
+
+
+
 func _on_SortableTable_gui_input(ev):
 			
 	
@@ -226,8 +238,7 @@ func _on_SortableTable_draw():
 		self.scroll_horizontal = previous_scroll_horizontal
 		
 	previous_scroll_horizontal = self.scroll_horizontal
-		
-
+	
 
 
 

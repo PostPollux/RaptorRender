@@ -32,4 +32,8 @@ func _on_TextureButton_pressed():
 	RaptorRender.JobInfoPanel.update_job_info_panel(job_id)
 	RaptorRender.ClientInfoPanel.visible = false
 	RaptorRender.JobInfoPanel.visible = true
+	
+	# scroll table to correct position
+	RaptorRender.JobsTable.scroll_to_row(job_id)
+	
 
