@@ -6,7 +6,7 @@
 [ext_resource path="res://GUI/SortableTable/RowContainerFilled.gd" type="Script" id=4]
 [ext_resource path="res://GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=5]
 
-[node name="SortableTable" type="ScrollContainer"]
+[node name="SortableTable" type="ScrollContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -27,6 +27,7 @@ scroll_horizontal_enabled = true
 scroll_horizontal = 0
 scroll_vertical_enabled = false
 scroll_vertical = 0
+scroll_deadzone = 0
 script = ExtResource( 2 )
 _sections_unfolded = [ "Grow Direction", "Margin", "Mouse", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
 column_names = null
@@ -36,12 +37,18 @@ sort_column_secondary = 2
 row_height = 30
 row_color = Color( 0.235294, 0.235294, 0.235294, 1 )
 row_color_selected = Color( 0.584314, 0.384314, 0.282353, 1 )
+row_color_red = Color( 0.392157, 0.247059, 0.231373, 1 )
+row_color_blue = Color( 0.231373, 0.313726, 0.392157, 1 )
+row_color_green = Color( 0.231373, 0.352941, 0.231373, 1 )
+row_color_yellow = Color( 0.345098, 0.352941, 0.231373, 1 )
+row_color_black = Color( 0.113725, 0.113725, 0.113725, 1 )
 row_brightness_difference = 0.05
 hover_brightness_boost = 0.1
 table_id = "custom id"
 
 [node name="VBox_TopRow_Content" type="VBoxContainer" parent="." index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -135,6 +142,7 @@ scroll_horizontal_enabled = false
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
+scroll_deadzone = 0
 _sections_unfolded = [ "Mouse", "Scroll", "Size Flags" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBox_TopRow_Content/RowScrollContainer" index="0"]
@@ -207,6 +215,15 @@ custom_constants/separation = 0
 alignment = 0
 script = ExtResource( 5 )
 _sections_unfolded = [ "Mouse", "custom_constants" ]
+
+[node name="AutoScrollTween" type="Tween" parent="." index="3"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
 [connection signal="draw" from="." to="." method="_on_SortableTable_draw"]
 

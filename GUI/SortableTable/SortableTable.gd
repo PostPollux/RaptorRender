@@ -53,6 +53,7 @@ export (String) var table_id = "custom id"
 onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
 onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled" 
 onready var RowContainerEmpty = $ "VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
+onready var AutoScrollTween = $"AutoScrollTween"
 
 # variables needed for scrolling
 var previous_scroll_horizontal = 0
@@ -214,7 +215,8 @@ func scroll_to_row (row_id):
 	
 	var scroll_value = position_of_row_in_px - (RowScrollContainer.rect_size.y / 2)
 
-	RowScrollContainer.scroll_vertical = scroll_value
+	AutoScrollTween.interpolate_property(RowScrollContainer, "scroll_vertical", RowScrollContainer.scroll_vertical, scroll_value, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
+	AutoScrollTween.start()
 
 
 
