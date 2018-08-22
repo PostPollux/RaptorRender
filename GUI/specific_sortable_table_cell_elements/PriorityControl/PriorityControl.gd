@@ -51,3 +51,45 @@ func _on_minus_pressed():
 		RaptorRender.rr_data.jobs[job_id].priority = max(RaptorRender.rr_data.jobs[job_id].priority - 5, 0)
 		LabelPriority.text = String ( RaptorRender.rr_data.jobs[job_id].priority )
 	# RaptorRender.TableJobs.refresh()
+
+
+
+
+func _on_plus_mouse_entered():
+	
+	# mark row as hovered, otherwise the row hover color would disappear, if the mouse is over the button
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color_hover()
+	
+	# modulate button on hover
+	if !PlusButton.disabled:
+		PlusButton.set_modulate(Color(0.75, 1, 0.75, 1)) # green
+
+
+
+func _on_plus_mouse_exited():
+	
+	# reset row hover color. It's needed, because otherwise if we fast pass the button with the mouse, the row would stay highlighted
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color_reset()
+	
+	# reset button modulation
+	PlusButton.set_modulate(Color(1, 1, 1, 1))
+
+
+
+func _on_minus_mouse_entered():
+	
+	# mark row as hovered, otherwise the row hover color would disappear, if the mouse is over the button
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color_hover()
+	
+	# modulate button on hover
+	if!MinusButton.disabled:
+		MinusButton.set_modulate(Color(1, 0.75, 0.75, 1)) # red
+
+
+
+# reset row hover color. It's needed, because otherwise if we fast pass the button with the mouse, the row would stay highlighted
+func _on_minus_mouse_exited():
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color_reset()
+	
+	# reset button modulation
+	MinusButton.set_modulate(Color(1, 1, 1, 1))

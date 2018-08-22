@@ -8,7 +8,7 @@
 [ext_resource path="res://GUI/icons/plus_minus/15x15/minus_mouse_down_15x15.png" type="Texture" id=6]
 [ext_resource path="res://GUI/icons/plus_minus/15x15/minus_disabled_15x15.png" type="Texture" id=7]
 
-[node name="HBoxContainer" type="HBoxContainer" index="0"]
+[node name="HBoxContainer" type="HBoxContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -104,7 +104,15 @@ texture_pressed = ExtResource( 6 )
 texture_disabled = ExtResource( 7 )
 _sections_unfolded = [ "Focus", "Mouse", "Rect", "Size Flags", "Textures" ]
 
+[connection signal="mouse_entered" from="plus" to="." method="_on_plus_mouse_entered"]
+
+[connection signal="mouse_exited" from="plus" to="." method="_on_plus_mouse_exited"]
+
 [connection signal="pressed" from="plus" to="." method="_on_plus_pressed"]
+
+[connection signal="mouse_entered" from="minus" to="." method="_on_minus_mouse_entered"]
+
+[connection signal="mouse_exited" from="minus" to="." method="_on_minus_mouse_exited"]
 
 [connection signal="pressed" from="minus" to="." method="_on_minus_pressed"]
 

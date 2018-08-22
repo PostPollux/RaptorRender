@@ -37,3 +37,27 @@ func _on_TextureButton_pressed():
 	RaptorRender.JobsTable.scroll_to_row(job_id)
 	
 
+
+
+
+
+
+
+
+func _on_TextureButton_mouse_entered():
+	
+	# mark row as hovered, otherwise the row hover color would disappear, if the mouse is over the button
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color_hover()
+	
+	# modulate button on hover
+	if !JobLinkButton.disabled:
+		JobLinkButton.set_modulate(Color(1, 0.75, 0.5, 1)) # orange
+
+
+func _on_TextureButton_mouse_exited():
+	
+	# reset row hover color. It's needed, because otherwise if we fast pass the button with the mouse, the row would stay highlighted
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color_reset()
+	
+	# reset button modulation
+	JobLinkButton.set_modulate(Color(1, 1, 1, 1))

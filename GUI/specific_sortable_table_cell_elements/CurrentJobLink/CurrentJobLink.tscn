@@ -72,6 +72,10 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[connection signal="mouse_entered" from="TextureButton" to="." method="_on_TextureButton_mouse_entered"]
+
+[connection signal="mouse_exited" from="TextureButton" to="." method="_on_TextureButton_mouse_exited"]
+
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
 
 
