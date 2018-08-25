@@ -53,7 +53,7 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"2":{
@@ -61,23 +61,23 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id2",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"3":{
 						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id12",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_started" : 1535194239,
+						"time_finished" : 0,
 						"number_of_tries" : 5
 					},
 					"4":{
 						"status" : "1_rendering",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id7",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_started" : 1535194219,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"5":{
@@ -85,7 +85,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523280,
 						"number_of_tries" : 2
 					},
 					"6":{
@@ -93,7 +93,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id8",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523230,
 						"number_of_tries" : 1
 					},
 					"7":{
@@ -101,7 +101,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523280,
 						"number_of_tries" : 1
 					}
 				}
@@ -128,7 +128,7 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"2":{
@@ -136,7 +136,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"3":{
@@ -144,7 +144,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"4":{
@@ -152,7 +152,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"5":{
@@ -160,7 +160,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
 				}
@@ -187,7 +187,7 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"2":{
@@ -195,7 +195,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"3":{
@@ -203,7 +203,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"4":{
@@ -211,7 +211,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"5":{
@@ -219,7 +219,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"6":{
@@ -227,7 +227,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"7":{
@@ -235,7 +235,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
 				}
@@ -262,7 +262,7 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"2":{
@@ -270,7 +270,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"3":{
@@ -278,7 +278,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"4":{
@@ -286,7 +286,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"5":{
@@ -294,7 +294,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523200,
 						"number_of_tries" : 1
 					},
 					"6":{
@@ -302,7 +302,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523280,
 						"number_of_tries" : 1
 					},
 					"7":{
@@ -310,7 +310,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523380,
 						"number_of_tries" : 1
 					}
 				}
@@ -337,7 +337,7 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523280,
 						"number_of_tries" : 1
 					},
 					"2":{
@@ -345,7 +345,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523275,
 						"number_of_tries" : 1
 					},
 					"3":{
@@ -353,7 +353,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523299,
 						"number_of_tries" : 1
 					},
 					"4":{
@@ -361,7 +361,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523268,
 						"number_of_tries" : 1
 					},
 					"5":{
@@ -369,7 +369,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523245,
 						"number_of_tries" : 1
 					},
 					"6":{
@@ -377,7 +377,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523222,
 						"number_of_tries" : 1
 					},
 					"7":{
@@ -385,7 +385,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523200,
 						"number_of_tries" : 1
 					}
 				}
@@ -412,7 +412,7 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"2":{
@@ -420,7 +420,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"3":{
@@ -428,7 +428,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"4":{
@@ -436,7 +436,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523380,
 						"number_of_tries" : 1
 					},
 					"5":{
@@ -444,7 +444,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523480,
 						"number_of_tries" : 1
 					},
 					"6":{
@@ -452,7 +452,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523580,
 						"number_of_tries" : 1
 					},
 					"7":{
@@ -460,7 +460,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 1528523680,
 						"number_of_tries" : 1
 					}
 				}
@@ -487,7 +487,7 @@ func _ready():
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"2":{
@@ -495,7 +495,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"3":{
@@ -503,7 +503,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"4":{
@@ -511,7 +511,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"5":{
@@ -519,7 +519,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
 					"6":{
@@ -527,7 +527,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
+						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
 				}
