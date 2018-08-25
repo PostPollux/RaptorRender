@@ -6,7 +6,7 @@ export (Color) var longest_rendertime_color = Color ("ff0000")
 export (bool) var draw_outline = true
 export (Color) var outline_color = Color("000000")
 
-export (int) var spacing_inbetween = 5
+export (int) var desired_spacing_inbetween = 5
 export (int) var spacing_top = 20
 
 
@@ -46,7 +46,11 @@ func draw_ChunkTimeGraph(job_id):
 	
 	var chunk_count = RaptorRender.rr_data.jobs[job_id].chunks.keys().size()
 	
+	var spacing_inbetween = desired_spacing_inbetween
+	
 	var bar_width = (total_width - chunk_count * spacing_inbetween) / chunk_count 
+	
+	
 	
 	# reducue spacing, if bar is smaller than the spacing
 	while bar_width < spacing_inbetween:

@@ -853,6 +853,7 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
+desired_spacing_inbetween = 5
 
 [node name="History" type="Tabs" parent="TabContainer" index="3"]
 
