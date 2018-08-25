@@ -18,6 +18,8 @@ onready var TimeRemainingLabel = $"TabContainer/Details/ScrollContainer/MarginCo
 onready var SceneFileLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SceneFileLabel"
 onready var OutputFilesLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OutputFilesLabel"
 
+onready var ChunkTimeGraph = $"TabContainer/Graphs/ChunkTimeGraph"
+
 var current_displayed_job_id
 
 
@@ -133,7 +135,17 @@ func update_job_info_panel(job_id):
 	# Scene File
 	OutputFilesLabel.text = "Output Files:   " + selected_job["output_directory"]
 
-
+	
+	
+	
+	################
+	#  update Graphs
+	################
+	
+	ChunkTimeGraph.job_id = job_id
+	
+	
+	
 func _on_OpenSceneFolderButton_pressed():
 	JobFunctions.open_folder( RaptorRender.rr_data.jobs[current_displayed_job_id].scene_directory )
 

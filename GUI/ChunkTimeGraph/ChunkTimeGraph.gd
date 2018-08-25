@@ -9,25 +9,40 @@ export (Color) var outline_color = Color("000000")
 export (int) var spacing_inbetween = 5
 export (int) var spacing_top = 20
 
+
+var job_id = ""
+
+
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	print (OS.get_unix_time())
 	pass
+
+
+
+
+func _process(delta):
+	
+	# only refresh when graph is visible
+	if self.is_visible_in_tree():
+		
+		#if job_id != "":
+		update()
+
 
 
 func _draw():
 	
-	draw_ChunkTimeGraph("4")
+	#if job_id != "":
+	draw_ChunkTimeGraph(job_id)
 
 
 
 
 func draw_ChunkTimeGraph(job_id):
 	
-	var total_width = self.margin_right - self.margin_left
-	var total_height = self.margin_bottom - self.margin_top
-	var bottom = self.margin_bottom
+	var total_width = self.rect_size.x
+	var total_height = self.rect_size.y
+	
+	var bottom = self.rect_size.y - 5
 	
 	var chunk_count = RaptorRender.rr_data.jobs[job_id].chunks.keys().size()
 	
@@ -43,7 +58,7 @@ func draw_ChunkTimeGraph(job_id):
 	# calculate shortest and longest rendertimes
 	
 	var shortest_rendertime = 0
-	var longest_rendertime = 0
+	var longest_rendertime = 1
 	
 	
 	for chunk_number in range(1, chunk_count + 1):
@@ -64,6 +79,8 @@ func draw_ChunkTimeGraph(job_id):
 			shortest_rendertime = chunk_rendertime	
 		if chunk_rendertime > longest_rendertime:
 			longest_rendertime = chunk_rendertime
+		if longest_rendertime == shortest_rendertime:
+			longest_rendertime += 1
 		if finished and chunk_rendertime < shortest_rendertime:
 			shortest_rendertime = chunk_rendertime
 		
@@ -95,6 +112,4 @@ func draw_ChunkTimeGraph(job_id):
 
 
 
-func _process(delta):
-	update()
-#	pass
+
