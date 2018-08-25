@@ -50,8 +50,10 @@ func _ready():
 	var hardware_info_timer = Timer.new()
 	hardware_info_timer.name = "Hardware Info Timer"
 	hardware_info_timer.wait_time = 2
-	hardware_info_timer.connect("timeout",self,"_on_hardware_info_timer_timeout") 
-	get_tree().get_root().get_node("Node").add_child(hardware_info_timer)
+	hardware_info_timer.connect("timeout",self,"_on_hardware_info_timer_timeout")
+	var root_node = get_tree().get_root().get_node("Node")
+	if root_node != null:
+		root_node.add_child(hardware_info_timer)
 	hardware_info_timer.start()
 	
 	
