@@ -8,6 +8,7 @@ export (Color) var outline_color = Color("000000")
 
 export (int) var desired_spacing_inbetween = 5
 export (int) var spacing_top = 20
+export (int) var spacing_bottom = 5
 
 
 var job_id = ""
@@ -45,7 +46,7 @@ func draw_ChunkTimeGraph(job_id):
 	var total_width = self.rect_size.x
 	var total_height = self.rect_size.y
 	
-	var bottom = self.rect_size.y - 5
+	var bottom = self.rect_size.y - spacing_bottom
 	
 	var chunk_count = RaptorRender.rr_data.jobs[job_id].chunks.keys().size()
 	
@@ -125,7 +126,7 @@ func draw_ChunkTimeGraph(job_id):
 		var bar_color = shortest_rendertime_color.linear_interpolate(longest_rendertime_color, color_interpolation_factor)
 		
 		# highlight bar and emit signal when hovering
-		if local_mouse_pos.x > bar_left and local_mouse_pos.x < bar_left + bar_width + spacing_inbetween:
+		if local_mouse_pos.x > bar_left and local_mouse_pos.x < bar_left + bar_width + spacing_inbetween and local_mouse_pos.y > 0 and local_mouse_pos.y < total_height:
 			draw_rect(bar_rect, bar_color.lightened(0.5), true)
 			emit_signal("chunk_hovered", chunk_number + 1)
 		
@@ -137,10 +138,10 @@ func draw_ChunkTimeGraph(job_id):
 
 
 	# draw top line
-	draw_rect(Rect2(Vector2(0, spacing_top - 5), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
+	draw_rect(Rect2(Vector2(0, spacing_top - spacing_bottom), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
 	
 	# draw bottom line
-	draw_rect(Rect2(Vector2(0, bottom -  float (shortest_rendertime) / float(longest_rendertime) * total_height + 5 ), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
+	draw_rect(Rect2(Vector2(0, bottom -  float (shortest_rendertime) / float(longest_rendertime) * total_height + spacing_bottom ), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
 
 	# draw average line
-	draw_rect(Rect2(Vector2(0, bottom -  float (average_rendertime) / float(longest_rendertime) * total_height + 5 ), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
+	draw_rect(Rect2(Vector2(0, bottom -  float (average_rendertime) / float(longest_rendertime) * total_height + spacing_bottom ), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
