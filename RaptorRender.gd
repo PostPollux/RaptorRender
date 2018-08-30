@@ -343,7 +343,7 @@ func _ready():
 					"2":{
 						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "id4",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523275,
 						"number_of_tries" : 1
@@ -351,7 +351,7 @@ func _ready():
 					"3":{
 						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "id8",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523299,
 						"number_of_tries" : 1
@@ -367,7 +367,7 @@ func _ready():
 					"5":{
 						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "id10",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523245,
 						"number_of_tries" : 1
@@ -383,7 +383,7 @@ func _ready():
 					"7":{
 						"status" : "5_finished",
 						"frames_to_calculate" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "id7",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
 						"number_of_tries" : 1
@@ -452,7 +452,7 @@ func _ready():
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
-						"time_finished" : 1528523580,
+						"time_finished" : 1528523620,
 						"number_of_tries" : 1
 					},
 					"7":{

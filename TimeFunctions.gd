@@ -37,9 +37,14 @@ func time_elapsed_as_string(unix_time_stamp_start, unix_time_stamp_end, display_
 			if hours > 0: str_elapsed += String(hours) + " h  "
 			if minutes > 0: str_elapsed += String(minutes) + " min  "
 			if seconds > 0: str_elapsed += String(seconds) + " sec"
+		3:
+			if days > 0: str_elapsed += String(days) + " d  "
+			if hours > 0: str_elapsed += String(hours) + " h  "
+			if minutes > 0: str_elapsed += String(minutes) + " m  "
+			if seconds > 0: str_elapsed += String(seconds) + " s"
 			
 	
-	return str_elapsed
+	return str_elapsed.strip_edges()
 	
 	
 func seconds_to_string(sec, display_mode):
@@ -58,6 +63,11 @@ func seconds_to_string(sec, display_mode):
 			if hours > 0: str_sec += String(hours) + " h  "
 			if minutes > 0: str_sec += String(minutes) + " min  "
 			if seconds > 0: str_sec += String(seconds) + " sec"
+		3: 
+			if days > 0: str_sec += String(days) + " d  "
+			if hours > 0: str_sec += String(hours) + " h  "
+			if minutes > 0: str_sec += String(minutes) + " m  "
+			if seconds > 0: str_sec += String(seconds) + " s"
 
-	return str_sec
+	return str_sec.strip_edges()
 	

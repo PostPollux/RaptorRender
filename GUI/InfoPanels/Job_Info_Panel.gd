@@ -142,7 +142,7 @@ func update_job_info_panel(job_id):
 	#  update Graphs
 	################
 	
-	ChunkTimeGraph.job_id = job_id
+	ChunkTimeGraph.set_job_id(job_id)
 	
 	
 	
