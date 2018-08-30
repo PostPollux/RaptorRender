@@ -7,9 +7,10 @@ export (bool) var draw_outline = true
 export (Color) var outline_color = Color("000000")
 
 export (int) var desired_spacing_inbetween = 5
-export (int) var spacing_top = 20
+export (int) var spacing_top = 25
 export (int) var spacing_bottom = 5
 
+export (Font) var font
 
 var job_id = ""
 
@@ -55,7 +56,9 @@ func draw_ChunkTimeGraph(job_id):
 	var bar_width = (total_width - chunk_count * spacing_inbetween) / chunk_count 
 	
 	var local_mouse_pos = self.get_local_mouse_position()
-	var global_mouse_pos = get_viewport().get_mouse_position()
+	
+	var rendering_chunk= false
+	var finished_chunk = false
 	
 	# reducue spacing, if bar is smaller than the spacing
 	while bar_width < spacing_inbetween:
@@ -82,10 +85,13 @@ func draw_ChunkTimeGraph(job_id):
 			chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started
 			finished = true
 			rendertimes_array.append(chunk_rendertime)
+			finished_chunk = true
+			
 		if chunk_dict.status == "1_rendering":
 			chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
 			finished = false
 			rendertimes_array.append(chunk_rendertime)
+			rendering_chunk = true
 			
 		if shortest_rendertime == 0:
 			shortest_rendertime = chunk_rendertime	
@@ -117,7 +123,7 @@ func draw_ChunkTimeGraph(job_id):
 		if chunk_dict.status == "1_rendering":
 			chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
 		
-		var bar_height = ( float (chunk_rendertime) / float(longest_rendertime) ) * (total_height - spacing_top)
+		var bar_height = ( float (chunk_rendertime) / float(longest_rendertime) ) * (total_height - spacing_top - spacing_bottom)
 		
 		var color_interpolation_factor = float((chunk_rendertime - shortest_rendertime)) / float((longest_rendertime - shortest_rendertime))
 		
@@ -136,12 +142,38 @@ func draw_ChunkTimeGraph(job_id):
 		if draw_outline:
 			draw_rect(bar_rect, outline_color, false)
 
-
-	# draw top line
-	draw_rect(Rect2(Vector2(0, spacing_top - spacing_bottom), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
 	
-	# draw bottom line
-	draw_rect(Rect2(Vector2(0, bottom -  float (shortest_rendertime) / float(longest_rendertime) * total_height + spacing_bottom ), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
-
-	# draw average line
-	draw_rect(Rect2(Vector2(0, bottom -  float (average_rendertime) / float(longest_rendertime) * total_height + spacing_bottom ), Vector2(total_width, -1)),Color(1,1,1,0.5), true)
+	
+	# draw longest render time line + time indicator
+	if rendering_chunk or finished_chunk:
+		var longest_time_string = TimeFunctions.seconds_to_string(longest_rendertime, 3)
+		var longest_rendertime_line_y = spacing_top 
+		
+		draw_line(Vector2(0, longest_rendertime_line_y), Vector2(total_width, longest_rendertime_line_y), Color(1,1,1,0.5), 1.0, false)
+		draw_rect(Rect2(Vector2(0, longest_rendertime_line_y - 1), Vector2(longest_time_string.length() * 10 + 20, -20)),Color(0,0,0,0.25), true)
+		
+		draw_string(font, Vector2 (10, longest_rendertime_line_y - 1 - 5 ), longest_time_string, Color(1,1,1,1), - 1)
+		
+	
+	# draw shortest render time line + time indicator
+	if finished_chunk and longest_rendertime - shortest_rendertime > 1:
+		if shortest_rendertime > 0:
+			var shortest_time_string = TimeFunctions.seconds_to_string(shortest_rendertime, 3)
+			var shortest_rendertime_line_y = bottom - float (shortest_rendertime) / float(longest_rendertime) * (total_height - spacing_top - spacing_bottom)
+			
+			draw_line(Vector2(0, shortest_rendertime_line_y), Vector2(total_width, shortest_rendertime_line_y), Color(1,1,1,0.5), 1.0, false)
+			draw_rect(Rect2(Vector2(0, shortest_rendertime_line_y + 1), Vector2(shortest_time_string.length() * 10 + 20, 20)),Color(0,0,0,0.25), true)
+			
+			draw_string(font, Vector2 (10, shortest_rendertime_line_y + 15 ), shortest_time_string, Color(1,1,1,1), - 1)
+			
+	
+	# draw average render time line + time indicator
+	if finished_chunk and average_rendertime > 0:
+		var average_time_string = TimeFunctions.seconds_to_string(average_rendertime, 3)
+		
+		var average_rendertime_line_y = bottom -  float (average_rendertime) / float(longest_rendertime) * (total_height - spacing_top - spacing_bottom)
+		
+		draw_line(Vector2(average_time_string.length() * 10 + 20, average_rendertime_line_y), Vector2(total_width, average_rendertime_line_y), Color(1,1,1,0.5), 1.0, false)
+		draw_rect(Rect2(Vector2(0, average_rendertime_line_y - 10), Vector2(average_time_string.length() * 10 + 20, 20)),Color(0,0,0,0.25), true)
+		
+		draw_string(font, Vector2 (10, average_rendertime_line_y + 5 ), average_time_string, Color(1,1,1,1), - 1)

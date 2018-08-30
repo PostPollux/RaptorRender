@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GUI/ChunkTimeGraph/ChunkTimeGraph.gd" type="Script" id=1]
+[ext_resource path="res://GUI/fonts/Hack-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 15
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 2 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="ChunkTimeGraph" type="Control" index="0"]
 
@@ -24,7 +33,9 @@ shortest_rendertime_color = Color( 0.576471, 0.815686, 0.317647, 1 )
 longest_rendertime_color = Color( 1, 0, 0, 1 )
 draw_outline = true
 outline_color = Color( 0, 0, 0, 1 )
-spacing_inbetween = 5
-spacing_top = 20
+desired_spacing_inbetween = 5
+spacing_top = 25
+spacing_bottom = 5
+font = SubResource( 1 )
 
 
