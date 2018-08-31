@@ -28,7 +28,17 @@ func fill_chunk_info_box(chunk_number):
 	# chunk name
 	ChunkNameLabel.text = "Chunk:  " + String (chunk_number)
 	
+	
 	# chunk frames
+	
+	var first_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames[0]
+	var last_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames.size() - 1]
+	
+	if first_chunk_frame == last_chunk_frame:
+		ChunkFramesLabel.text = "Frame: " + String(first_chunk_frame)
+	else:
+		ChunkFramesLabel.text = "Frames: " + String(first_chunk_frame) + " - " + String(last_chunk_frame)
+	
 	
 	# chunk client
 	if  RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client == "":
@@ -51,7 +61,7 @@ func fill_chunk_info_box(chunk_number):
 		ChunkRendertimeLabel.text = "Time rendered:  " + TimeFunctions.seconds_to_string(chunk_rendertime,3)
 	
 	else:
-		ChunkRendertimeLabel.text =  "Time rendered:  Not started yet"
+		ChunkRendertimeLabel.text =  "Time rendered:  -"
 		
 	
 	
