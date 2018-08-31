@@ -50,7 +50,7 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -58,7 +58,7 @@ func _ready():
 					},
 					"2":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id2",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -66,7 +66,7 @@ func _ready():
 					},
 					"3":{
 						"status" : "1_rendering",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id12",
 						"time_started" : 1535194239,
 						"time_finished" : 0,
@@ -74,7 +74,7 @@ func _ready():
 					},
 					"4":{
 						"status" : "1_rendering",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id7",
 						"time_started" : 1535194219,
 						"time_finished" : 0,
@@ -82,7 +82,7 @@ func _ready():
 					},
 					"5":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -90,7 +90,7 @@ func _ready():
 					},
 					"6":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id8",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523230,
@@ -98,7 +98,7 @@ func _ready():
 					},
 					"7":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -125,7 +125,7 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -133,7 +133,7 @@ func _ready():
 					},
 					"2":{
 						"status" : "1_rendering",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 0,
@@ -141,7 +141,7 @@ func _ready():
 					},
 					"3":{
 						"status" : "1_rendering",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [28,29,30,31],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 0,
@@ -149,7 +149,7 @@ func _ready():
 					},
 					"4":{
 						"status" : "1_rendering",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [32],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 0,
@@ -157,7 +157,7 @@ func _ready():
 					},
 					"5":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [33,34,35,36],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -184,7 +184,7 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -192,7 +192,7 @@ func _ready():
 					},
 					"2":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -200,7 +200,7 @@ func _ready():
 					},
 					"3":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -208,7 +208,7 @@ func _ready():
 					},
 					"4":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -216,7 +216,7 @@ func _ready():
 					},
 					"5":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -224,7 +224,7 @@ func _ready():
 					},
 					"6":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -232,7 +232,7 @@ func _ready():
 					},
 					"7":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -259,7 +259,7 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -267,7 +267,7 @@ func _ready():
 					},
 					"2":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -275,7 +275,7 @@ func _ready():
 					},
 					"3":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -283,7 +283,7 @@ func _ready():
 					},
 					"4":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -291,7 +291,7 @@ func _ready():
 					},
 					"5":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
@@ -299,7 +299,7 @@ func _ready():
 					},
 					"6":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -307,7 +307,7 @@ func _ready():
 					},
 					"7":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523380,
@@ -334,7 +334,7 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -342,7 +342,7 @@ func _ready():
 					},
 					"2":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id4",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523275,
@@ -350,7 +350,7 @@ func _ready():
 					},
 					"3":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id8",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523299,
@@ -358,7 +358,7 @@ func _ready():
 					},
 					"4":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523268,
@@ -366,7 +366,7 @@ func _ready():
 					},
 					"5":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id10",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523245,
@@ -374,7 +374,7 @@ func _ready():
 					},
 					"6":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523222,
@@ -382,7 +382,7 @@ func _ready():
 					},
 					"7":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id7",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
@@ -409,7 +409,7 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -417,7 +417,7 @@ func _ready():
 					},
 					"2":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -425,7 +425,7 @@ func _ready():
 					},
 					"3":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -433,7 +433,7 @@ func _ready():
 					},
 					"4":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523380,
@@ -441,7 +441,7 @@ func _ready():
 					},
 					"5":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523480,
@@ -449,7 +449,7 @@ func _ready():
 					},
 					"6":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523620,
@@ -457,7 +457,7 @@ func _ready():
 					},
 					"7":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523680,
@@ -484,7 +484,7 @@ func _ready():
 				"chunks": {
 					"1":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -492,7 +492,7 @@ func _ready():
 					},
 					"2":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -500,7 +500,7 @@ func _ready():
 					},
 					"3":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -508,7 +508,7 @@ func _ready():
 					},
 					"4":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -516,7 +516,7 @@ func _ready():
 					},
 					"5":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -524,7 +524,7 @@ func _ready():
 					},
 					"6":{
 						"status" : "2_queued",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -972,7 +972,7 @@ func _input(event):
 				"chunks": {
 					"1":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [20,21,22,23],
+						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528583180,
@@ -980,7 +980,7 @@ func _input(event):
 					},
 					"2":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528583180,
@@ -988,7 +988,7 @@ func _input(event):
 					},
 					"3":{
 						"status" : "1_rendering",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528583180,
@@ -996,7 +996,7 @@ func _input(event):
 					},
 					"4":{
 						"status" : "1_rendering",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528583180,
@@ -1004,7 +1004,7 @@ func _input(event):
 					},
 					"5":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528583180,
@@ -1012,7 +1012,7 @@ func _input(event):
 					},
 					"6":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528583180,
@@ -1020,7 +1020,7 @@ func _input(event):
 					},
 					"7":{
 						"status" : "5_finished",
-						"frames_to_calculate" : [24,25,26,27],
+						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
 						"time_finished" : 1528583180,
@@ -1648,6 +1648,7 @@ func refresh_chunks_table(job_id):
 
 
 
+
 			### Status Icon ###
 			
 			# only change when value is different
@@ -1694,6 +1695,28 @@ func refresh_chunks_table(job_id):
 				ChunksTable.set_cell_sort_value(row_position, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
 			
 
+
+
+
+			### Frames ###
+			
+			# only change when value is different
+			if (row.sort_values[frames_column] != rr_data.jobs[job_id].chunks[chunk].frames[0] ):
+			
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, frames_column )
+				
+				var first_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[0]
+				var last_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[ rr_data.jobs[job_id].chunks[chunk].frames.size() - 1]
+				
+				# change the cell value
+				if first_chunk_frame == last_chunk_frame:
+					cell.get_child(0).text = String(first_chunk_frame)
+				else:
+					cell.get_child(0).text = String(first_chunk_frame) + " - " + String(last_chunk_frame)
+				
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, frames_column, first_chunk_frame)
 
 
 
@@ -1845,6 +1868,26 @@ func refresh_chunks_table(job_id):
 			ChunksTable.set_cell_sort_value(count, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
 			
 			
+
+
+
+
+			### Frames ###
+			
+			var LabelFrames = Label.new()
+			var first_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[0]
+			var last_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[ rr_data.jobs[job_id].chunks[chunk].frames.size() - 1]
+			
+			if first_chunk_frame == last_chunk_frame:
+				LabelFrames.text = String(first_chunk_frame)
+			else:
+				LabelFrames.text = String(first_chunk_frame) + " - " + String(last_chunk_frame)
+			
+			ChunksTable.set_cell_content(count, frames_column, LabelFrames)
+			
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, frames_column,  first_chunk_frame)
+
 
 
 
