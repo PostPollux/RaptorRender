@@ -18,7 +18,7 @@ onready var TimeRemainingLabel = $"TabContainer/Details/ScrollContainer/MarginCo
 onready var SceneFileLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SceneFileLabel"
 onready var OutputFilesLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OutputFilesLabel"
 
-onready var ChunkTimeGraph = $"TabContainer/Graphs/ChunkTimeGraph"
+onready var ChunkTimeGraph = $"TabContainer/Graph/ChunkTimeGraph"
 
 var current_displayed_job_id
 

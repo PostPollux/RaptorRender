@@ -5,11 +5,11 @@ var chunk
 
 # references to other nodes of sortable table
 onready var BarGraph = $"BarGraph"
-onready var ChunkNameLabel = $"ChunkInfoBox/MarginContainer/VBoxContainer/ChunkNameLabel"
-onready var ChunkFramesLabel = $"ChunkInfoBox/MarginContainer/VBoxContainer/ChunkFramesLabel"
-onready var ChunkClientLabel = $"ChunkInfoBox/MarginContainer/VBoxContainer/ChunkClientLabel"
-onready var ChunkRendertimeLabel = $"ChunkInfoBox/MarginContainer/VBoxContainer/ChunkRendertimeLabel"
-onready var ChunkTriesLabel = $"ChunkInfoBox/MarginContainer/VBoxContainer/ChunkTriesLabel"
+onready var ChunkNameLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
+onready var ChunkClientLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
+onready var ChunkRendertimeLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
+onready var ChunkTriesLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesValueLabel"
+onready var ChunkInfoBox = $"ClipContainer/ChunkInfoBox"
 
 
 
@@ -29,25 +29,23 @@ func fill_chunk_info_box(chunk_number):
 	chunk = chunk_number
 	
 	# chunk name
-	ChunkNameLabel.text = "Chunk:  " + String (chunk_number)
-	
-	
-	# chunk frames
 	
 	var first_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames[0]
 	var last_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames.size() - 1]
 	
 	if first_chunk_frame == last_chunk_frame:
-		ChunkFramesLabel.text = "Frame: " + String(first_chunk_frame)
+		ChunkNameLabel.text = String (chunk_number) + "  (Frame: " + String(first_chunk_frame) + ")"
 	else:
-		ChunkFramesLabel.text = "Frames: " + String(first_chunk_frame) + " - " + String(last_chunk_frame)
+		ChunkNameLabel.text = String (chunk_number) + "  (" +  String(first_chunk_frame) + " - " + String(last_chunk_frame) + ")" 
+	
+	
 	
 	
 	# chunk client
 	if  RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client == "":
-		ChunkClientLabel.text = "Client:  None assigned yet" 
+		ChunkClientLabel.text = "-" 
 	else:
-		ChunkClientLabel.text = "Client:  " + RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client ].name
+		ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client ].name
 		
 	
 	# chunk render time
@@ -57,18 +55,29 @@ func fill_chunk_info_box(chunk_number):
 	
 	if chunk_dict.status == "5_finished": 
 		chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started
-		ChunkRendertimeLabel.text = "Time rendered:  " + TimeFunctions.seconds_to_string(chunk_rendertime,3)
+		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
 		
 	elif chunk_dict.status == "1_rendering":
 		chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
-		ChunkRendertimeLabel.text = "Time rendered:  " + TimeFunctions.seconds_to_string(chunk_rendertime,3)
+		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
 	
 	else:
-		ChunkRendertimeLabel.text =  "Time rendered:  -"
+		ChunkRendertimeLabel.text =  "-"
 		
 	
 	
 	
 	# chunk tries
 	
-	ChunkTriesLabel.text = "Tries:  " + String( RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].number_of_tries)
+	ChunkTriesLabel.text = String( RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].number_of_tries)
+
+
+
+# reset labels if mouse leaves the graph
+func _on_BarGraph_mouse_exited():
+	ChunkNameLabel.text = ""
+	ChunkClientLabel.text = "" 
+	ChunkRendertimeLabel.text =  ""
+	ChunkTriesLabel.text = ""
+	
+

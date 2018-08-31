@@ -199,7 +199,7 @@ func _on_BarGraph_gui_input(ev):
 	# test for double click
 	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:
         
-		# find doubleclicked chunk
+		# find double clicked chunk
 		var chunk = self.get_parent().chunk
 		
 		# switch tab
