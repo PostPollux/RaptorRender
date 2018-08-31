@@ -25,6 +25,9 @@ func _ready():
 func reset_to_first_tab():
 	ClientInfoTabContainer.current_tab = 0
 
+func set_tab(tab_number):
+	ClientInfoTabContainer.current_tab = tab_number
+
 
 func update_client_info_panel(client_id):
 	

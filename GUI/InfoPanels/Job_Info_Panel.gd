@@ -30,6 +30,9 @@ func _ready():
 func reset_to_first_tab():
 	JobInfoTabContainer.current_tab = 0
 
+func set_tab(tab_number):
+	JobInfoTabContainer.current_tab = tab_number
+
 
 func update_job_info_panel(job_id):
 	

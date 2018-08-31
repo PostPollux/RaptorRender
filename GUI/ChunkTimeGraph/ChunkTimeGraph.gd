@@ -1,6 +1,7 @@
 extends VBoxContainer
 
 var job_id = ""
+var chunk
 
 # references to other nodes of sortable table
 onready var BarGraph = $"BarGraph"
@@ -24,6 +25,8 @@ func set_job_id(job_ID):
 	
 	
 func fill_chunk_info_box(chunk_number):
+	
+	chunk = chunk_number
 	
 	# chunk name
 	ChunkNameLabel.text = "Chunk:  " + String (chunk_number)

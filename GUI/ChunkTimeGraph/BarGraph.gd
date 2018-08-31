@@ -189,3 +189,24 @@ func draw_ChunkTimeGraph(job_id):
 		draw_rect(Rect2(Vector2(0, average_rendertime_line_y - 9), Vector2(average_time_string.length() * 10 + 20, 20)),Color(0,0,0,0.25), true)
 		
 		draw_string(font, Vector2 (10, average_rendertime_line_y + 6 ), average_time_string, Color(1,1,1,1), - 1)
+
+
+
+
+
+func _on_BarGraph_gui_input(ev):
+	
+	# test for double click
+	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:
+        
+		# find doubleclicked chunk
+		var chunk = self.get_parent().chunk
+		
+		# switch tab
+		RaptorRender.JobInfoPanel.set_tab(1)
+		
+		# select and autofocus correct chunk
+		RaptorRender.ChunksTable.clear_selection()
+		RaptorRender.ChunksTable.select_by_id(String(chunk))
+		RaptorRender.ChunksTable.scroll_to_row(String(chunk))
+	
