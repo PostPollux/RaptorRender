@@ -20,7 +20,7 @@ use_filter = true
 font_data = SubResource( 1 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="ClientsInfoPanel" type="MarginContainer" index="0"]
+[node name="ClientsInfoPanel" type="MarginContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -77,6 +77,7 @@ _sections_unfolded = [ "Rect", "Size Flags" ]
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Details" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -1075,26 +1076,5 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags" ]
-
-[node name="History" type="Tabs" parent="TabContainer" index="1"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-tab_align = 1
-scrolling_enabled = true
-_sections_unfolded = [ "Rect" ]
 
 
