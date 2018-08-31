@@ -52,7 +52,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -60,7 +60,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id2",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -127,7 +127,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -159,7 +159,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
@@ -186,7 +186,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -194,7 +194,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -202,7 +202,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -210,7 +210,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -218,7 +218,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -226,7 +226,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -234,7 +234,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
@@ -261,7 +261,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -269,7 +269,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -277,7 +277,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -285,7 +285,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -411,7 +411,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -419,7 +419,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -427,7 +427,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -486,7 +486,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [20,21,22,23],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -494,7 +494,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -502,7 +502,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -510,7 +510,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -518,7 +518,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
@@ -526,7 +526,7 @@ func _ready():
 						"status" : "2_queued",
 						"frames_to_calculate" : [24,25,26,27],
 						"client" : "id1",
-						"time_started" : 1528523180,
+						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
@@ -1741,10 +1741,15 @@ func refresh_chunks_table(job_id):
 				var cell = ChunksTable.get_cell( row_position, started_column )
 				
 				# change the cell value
-				cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_started, 1)
+				var time_started = rr_data.jobs[job_id].chunks[chunk].time_started
 				
+				if time_started != 0:
+					cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
+				else:
+					cell.get_child(0).text = "-"
+					
 				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, started_column,  rr_data.jobs[job_id].chunks[chunk].time_started)
+				ChunksTable.set_cell_sort_value(row_position, started_column,  time_started)
 
 
 
@@ -1758,12 +1763,15 @@ func refresh_chunks_table(job_id):
 				var cell = ChunksTable.get_cell( row_position, finished_column )
 				
 				# change the cell value
-				cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_finished, 1)
+				var time_finished = rr_data.jobs[job_id].chunks[chunk].time_finished
 				
+				if time_finished != 0:
+					cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1)
+				else:
+					cell.get_child(0).text = "-"
+					
 				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, finished_column,  rr_data.jobs[job_id].chunks[chunk].time_finished)
-
-
+				ChunksTable.set_cell_sort_value(row_position, finished_column, time_finished)
 
 
 
@@ -1870,11 +1878,16 @@ func refresh_chunks_table(job_id):
 			
 			var LabelTimeStarted = Label.new()
 			
-			LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_started, 1 )
+			var time_started = rr_data.jobs[job_id].chunks[chunk].time_started
+			
+			if time_started != 0:
+				LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1 )
+			else:
+				LabelTimeStarted.text = "-"
 			ChunksTable.set_cell_content(count, started_column, LabelTimeStarted)
 			
 			# update sort_value
-			ChunksTable.set_cell_sort_value(count, started_column,  rr_data.jobs[job_id].chunks[chunk].time_started)
+			ChunksTable.set_cell_sort_value(count, started_column, time_started)
 
 
 
@@ -1883,11 +1896,16 @@ func refresh_chunks_table(job_id):
 			
 			var LabelTimeFinished = Label.new()
 			
-			LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(rr_data.jobs[job_id].chunks[chunk].time_finished, 1 )
+			var time_finished = rr_data.jobs[job_id].chunks[chunk].time_finished
+			
+			if time_finished != 0:
+				LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1 )
+			else:
+				LabelTimeFinished.text = "-"
 			ChunksTable.set_cell_content(count, finished_column, LabelTimeFinished)
 			
 			# update sort_value
-			ChunksTable.set_cell_sort_value(count, finished_column,  rr_data.jobs[job_id].chunks[chunk].time_finished)
+			ChunksTable.set_cell_sort_value(count, finished_column, time_finished)
 
 
 
