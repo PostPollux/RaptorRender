@@ -1738,6 +1738,36 @@ func refresh_chunks_table(job_id):
 
 
 
+
+			### Rendertime ###
+			
+			var chunk_rendertime = 0
+			
+			if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
+				chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
+				
+			elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
+				chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
+			
+			# only change when value is different
+			if (row.sort_values[rendertime_column] != chunk_rendertime ):
+			
+				# get reference to the cell
+				var cell = ChunksTable.get_cell( row_position, rendertime_column )
+				
+				# change the cell value
+				if chunk_rendertime != 0:
+					cell.get_child(0).text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
+				else:
+					cell.get_child(0).text = "-"
+					
+				# update sort_value
+				ChunksTable.set_cell_sort_value(row_position, rendertime_column, chunk_rendertime)
+
+
+
+
+
 			### Number of tries ###
 			
 			# only change when value is different
@@ -1901,6 +1931,29 @@ func refresh_chunks_table(job_id):
 			
 			# update sort_value
 			ChunksTable.set_cell_sort_value(count, client_column,  rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
+
+
+
+			### Rendertime ###
+			
+			var LabelRendertime = Label.new()
+			var chunk_rendertime = 0
+			
+			if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
+				chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
+				LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
+				
+			elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
+				chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
+				LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
+			else:
+				LabelRendertime.text = "-"
+				
+			ChunksTable.set_cell_content(count, rendertime_column, LabelRendertime)
+			
+			# update sort_value
+			ChunksTable.set_cell_sort_value(count, rendertime_column,  chunk_rendertime)
+
 
 
 
