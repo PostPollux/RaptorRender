@@ -7,7 +7,8 @@
 [ext_resource path="res://GUI/icons/link/15x15/link_clicked_15x15.png" type="Texture" id=5]
 [ext_resource path="res://GUI/icons/link/15x15/link_hover_15x15.png" type="Texture" id=6]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=7]
-[ext_resource path="res://GUI/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GUI/InfoPanels/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=8]
+
 
 [sub_resource type="DynamicFontData" id=1]
 
