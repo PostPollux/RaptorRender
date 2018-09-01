@@ -1,7 +1,17 @@
+#///////////////////#
+# ChunkTimeBarGraph #
+#///////////////////#
+
+# The BarGraph is just one control node that uses custom draw function to draw the graph.
+# It shows the rendertime of each chunk of a given job.
+
+
 extends Control
 
+# variables to customize look of the graph
 export (Color) var shortest_rendertime_color = Color ("93d051") 
 export (Color) var longest_rendertime_color = Color ("ff0000")
+export (Color) var not_started_color = Color(0.75,0.75,0.75,1)
 
 export (bool) var draw_outline = false
 export (Color) var outline_color = Color("000000")
@@ -12,10 +22,13 @@ export (int) var spacing_bottom = 5
 
 export (Font) var font
 
+# other variables
 var job_id = ""
 
-
+# signals
 signal chunk_hovered
+
+
 
 
 func _ready():
@@ -29,20 +42,20 @@ func _process(delta):
 	# only refresh when graph is visible
 	if self.is_visible_in_tree():
 		
-		#if job_id != "":
-		update()
+		update() # triggers the "_draw" func
 
 
 
 func _draw():
 	
-	#if job_id != "":
-	draw_ChunkTimeGraph(job_id)
+	draw_ChunkTimeGraph(job_id) # remember: all custom draw functions have to be called from the draw func
 
 
 
 
 func draw_ChunkTimeGraph(job_id):
+	
+	# define variables
 	
 	var total_width = self.rect_size.x
 	var total_height = self.rect_size.y
@@ -60,7 +73,9 @@ func draw_ChunkTimeGraph(job_id):
 	var rendering_chunk= false
 	var finished_chunk = false
 	
+	
 	# reducue spacing, if bar is smaller than the spacing
+	
 	while bar_width < spacing_inbetween:
 		spacing_inbetween -= 1
 		bar_width = (total_width - chunk_count * spacing_inbetween) / chunk_count 
@@ -109,6 +124,7 @@ func draw_ChunkTimeGraph(job_id):
 	
 	
 	# draw the bars
+	
 	for chunk_number in range(0, chunk_count):
 		
 		var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number + 1)]
@@ -135,7 +151,7 @@ func draw_ChunkTimeGraph(job_id):
 			bar_color = shortest_rendertime_color.linear_interpolate(longest_rendertime_color, color_interpolation_factor)
 		else:
 			bar_rect = Rect2(Vector2(bar_left, bottom), Vector2(bar_width, -2))
-			bar_color = Color(0.75,0.75,0.75,1)
+			bar_color = not_started_color
 			
 		
 		# highlight bar and emit signal when hovering
@@ -161,23 +177,8 @@ func draw_ChunkTimeGraph(job_id):
 		draw_rect(Rect2(Vector2(0, longest_rendertime_line_y - 1), Vector2(longest_time_string.length() * 10 + 20, -20)),Color(0,0,0,0.25), true)
 		
 		draw_string(font, Vector2 (10, longest_rendertime_line_y - 1 - 5 ), longest_time_string, Color(1,1,1,1), - 1)
-		
 	
-	# draw shortest render time line + time indicator
-	if finished_chunk and longest_rendertime - shortest_rendertime > 1:
-		if shortest_rendertime > 0:
-			var shortest_time_string = TimeFunctions.seconds_to_string(shortest_rendertime, 3)
-			var shortest_rendertime_line_y = bottom - float (shortest_rendertime) / float(longest_rendertime) * (total_height - spacing_top - spacing_bottom)
-			
-			draw_line(Vector2(0, shortest_rendertime_line_y), Vector2(total_width, shortest_rendertime_line_y), Color(1,1,1,0.5), 1.0, false)
-			
-			# draw time indicator on the bottom of the line. Only draw it on top if there is not enough space downwards
-			if bottom - shortest_rendertime_line_y > 10:
-				draw_rect(Rect2(Vector2(0, shortest_rendertime_line_y + 1), Vector2(shortest_time_string.length() * 10 + 20, 20)),Color(0,0,0,0.25), true)
-				draw_string(font, Vector2 (10, shortest_rendertime_line_y + 16 ), shortest_time_string, Color(1,1,1,1), - 1)
-			else:
-				draw_rect(Rect2(Vector2(0, shortest_rendertime_line_y - 1), Vector2(shortest_time_string.length() * 10 + 20, -20)),Color(0,0,0,0.25), true)
-				draw_string(font, Vector2 (10, shortest_rendertime_line_y - 1 - 5), shortest_time_string, Color(1,1,1,1), - 1)
+	
 	
 	# draw average render time line + time indicator
 	if finished_chunk and average_rendertime > 0:
@@ -189,11 +190,29 @@ func draw_ChunkTimeGraph(job_id):
 		draw_rect(Rect2(Vector2(0, average_rendertime_line_y - 9), Vector2(average_time_string.length() * 10 + 20, 20)),Color(0,0,0,0.25), true)
 		
 		draw_string(font, Vector2 (10, average_rendertime_line_y + 6 ), average_time_string, Color(1,1,1,1), - 1)
+	
+	
+	# draw shortest render time line + time indicator
+	if finished_chunk and longest_rendertime - shortest_rendertime > 1:
+		if shortest_rendertime > 0:
+			var shortest_time_string = TimeFunctions.seconds_to_string(shortest_rendertime, 3)
+			var shortest_rendertime_line_y = bottom - float (shortest_rendertime) / float(longest_rendertime) * (total_height - spacing_top - spacing_bottom)
+			
+			draw_line(Vector2(0, shortest_rendertime_line_y), Vector2(total_width, shortest_rendertime_line_y), Color(1,1,1,0.5), 1.0, false)
+			
+			# draw time indicator on the bottom of the line. Only draw it on top if there is not enough space on the bottom
+			if bottom - shortest_rendertime_line_y > 10:
+				draw_rect(Rect2(Vector2(0, shortest_rendertime_line_y + 1), Vector2(shortest_time_string.length() * 10 + 20, 20)),Color(0,0,0,0.25), true)
+				draw_string(font, Vector2 (10, shortest_rendertime_line_y + 16 ), shortest_time_string, Color(1,1,1,1), - 1)
+			else:
+				draw_rect(Rect2(Vector2(0, shortest_rendertime_line_y - 1), Vector2(shortest_time_string.length() * 10 + 20, -20)),Color(0,0,0,0.25), true)
+				draw_string(font, Vector2 (10, shortest_rendertime_line_y - 1 - 5), shortest_time_string, Color(1,1,1,1), - 1)
+	
+	
 
 
 
-
-
+# Double click on a bar to select the chunk in the Chunk List
 func _on_BarGraph_gui_input(ev):
 	
 	# test for double click

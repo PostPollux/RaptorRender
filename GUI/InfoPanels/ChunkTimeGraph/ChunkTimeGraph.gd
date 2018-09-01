@@ -1,10 +1,19 @@
+#////////////////#
+# ChunkTimeGraph #
+#////////////////#
+
+# The ChunkTimeGraph is the ChunkTimeBarGraph plus an additional info box 
+# that shows some infos for the hovered chunk.
+# This script mainly handles the filling of the info box.
+
+
 extends VBoxContainer
 
 var job_id = ""
 var chunk
 
-# references to other nodes of sortable table
-onready var BarGraph = $"BarGraph"
+# references to other nodes of ChunkTimeGraph
+onready var BarGraph = $"ChunkTimeBarGraph"
 onready var ChunkNameLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
 onready var ChunkClientLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
 onready var ChunkRendertimeLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
@@ -16,6 +25,7 @@ onready var ChunkInfoBox = $"ClipContainer/ChunkInfoBox"
 
 func _ready():
 	
+	# connect signals
 	BarGraph.connect("chunk_hovered", self, "fill_chunk_info_box")
 
 
@@ -39,14 +49,12 @@ func fill_chunk_info_box(chunk_number):
 		ChunkNameLabel.text = String (chunk_number) + "  (" +  String(first_chunk_frame) + " - " + String(last_chunk_frame) + ")" 
 	
 	
-	
-	
 	# chunk client
 	if  RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client == "":
 		ChunkClientLabel.text = "-" 
 	else:
 		ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client ].name
-		
+	
 	
 	# chunk render time
 	var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)]
@@ -63,8 +71,6 @@ func fill_chunk_info_box(chunk_number):
 	
 	else:
 		ChunkRendertimeLabel.text =  "-"
-		
-	
 	
 	
 	# chunk tries
@@ -79,5 +85,5 @@ func _on_BarGraph_mouse_exited():
 	ChunkClientLabel.text = "" 
 	ChunkRendertimeLabel.text =  ""
 	ChunkTriesLabel.text = ""
-	
+
 
