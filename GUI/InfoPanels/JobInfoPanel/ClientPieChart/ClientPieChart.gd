@@ -25,7 +25,7 @@ func _ready():
 	pass
 
 func _process(delta):
-	pass
+	update()
 
 
 
@@ -39,8 +39,6 @@ func _draw():
 	
 	
 	var chunk_count = RaptorRender.rr_data.jobs[job_id].chunks.keys().size()
-	
-	
 	
 	
 	var unique_clients = []
@@ -66,13 +64,18 @@ func _draw():
 	
 	# create clients_with_counts array
 	for client in unique_clients:
-		clients_with_counts.append( [ client, count_dictionary[client] ] )
+		if client != "": 
+			clients_with_counts.append( [ client, count_dictionary[client] ] )
 	
 	
 	# sort the array 
 	clients_with_counts.sort_custom( self, "sort_clients_by_chunk_counts" )
-#	if unique_clients.has(""):
-#		clients_with_counts
+	
+	
+	# add the unassigned chunks at the end of the array so they are always on the left side
+	if unique_clients.has(""):
+		clients_with_counts.append( [ "", count_dictionary[""] ] )
+	
 	
 	# limit spacing size to half of smallest segment or shut of spacing if there is only one client
 	var spacing_between_segments_in_degrees = desired_spacing_between_segments_in_degrees
@@ -85,21 +88,22 @@ func _draw():
 	if unique_clients.size() == 1:
 		spacing_between_segments_in_degrees = 0
 	
+	
 	# draw the individual segments
 	var start_of_segment_in_degrees = 0  # 12 o'clock
 	var client_number = 1
 	
 	for client in clients_with_counts:
 		
+		# define position an angles
 		var percentage_of_rendered_chunks = float(client[1]) / float(chunk_count)
-
-		
 		var center = Vector2(self.rect_size.x / 2 , self.rect_size.y / 2)
 		var radius = (min(rect_size.x, rect_size.y) / 2 ) * 0.8
 		var angle_from = start_of_segment_in_degrees
 		var angle_to = start_of_segment_in_degrees + 360 * percentage_of_rendered_chunks - spacing_between_segments_in_degrees
 		
 		
+		# define color
 		var color
 		var color_interpolation_factor = float(client_number) / float(unique_clients.size())
 		
@@ -109,10 +113,27 @@ func _draw():
 			color = most_chunks_rendered_color.linear_interpolate(least_chunks_rendered_color, color_interpolation_factor)
 		
 		var quality = 360 * percentage_of_rendered_chunks * 0.5 + 2
+		
+		# calculate degrees between mouse position and the center of the pie chart
+		var mouse_pos_relative_to_center = self.get_local_mouse_position() - center
+		var raw_angle_mouse_to_center = rad2deg( Vector2(0, -1).angle_to(mouse_pos_relative_to_center))
+		var angle_mouse_to_center = raw_angle_mouse_to_center
+		
+		if  raw_angle_mouse_to_center < 0:
+			angle_mouse_to_center =  180 + (180 - abs(raw_angle_mouse_to_center))
+		
+		# highlight hoverd segment
+		var local_mouse_pos = self.get_local_mouse_position()
+		if local_mouse_pos.x > 0 and local_mouse_pos.x < self.rect_size.x and local_mouse_pos.y > 0 and local_mouse_pos.y < self.rect_size.y:
+			if angle_mouse_to_center > angle_from and angle_mouse_to_center < angle_to:
+				radius = (min(rect_size.x, rect_size.y) / 2 ) * 0.83
+		
+		# actually draw the segment
 		draw_circle_segment_as_arc(quality, center, radius, angle_from, angle_to, color, filled_percentage)
 		if draw_outline:
 			draw_circle_segment_as_arc_outline(quality, center, radius, angle_from, angle_to, outline_color, filled_percentage, outline_thickness)
 		
+		# advance variables
 		start_of_segment_in_degrees = angle_to + spacing_between_segments_in_degrees
 		client_number += 1
 
@@ -120,7 +141,8 @@ func _draw():
 func sort_clients_by_chunk_counts(a,b):
 	
 	# a custom sort function must return true if the first argument (a) is less than the second (b)
-	return a[0] > b[0] or a[1] > b[1] 
+	
+	return a[1] > b[1]
 
 
 
