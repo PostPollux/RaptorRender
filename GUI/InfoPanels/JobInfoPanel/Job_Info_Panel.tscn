@@ -825,8 +825,9 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="Graph" type="Tabs" parent="TabContainer" index="2"]
+[node name="Graphs" type="Tabs" parent="TabContainer" index="2"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -845,7 +846,7 @@ tab_align = 1
 scrolling_enabled = true
 _sections_unfolded = [ "Rect" ]
 
-[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Graph" index="0"]
+[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Graphs" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -861,14 +862,14 @@ split_offset = 60
 collapsed = false
 dragger_visibility = 0
 
-[node name="ChunkTimeGraph" parent="TabContainer/Graph/VSplitContainer" index="0" instance=ExtResource( 8 )]
+[node name="ChunkTimeGraph" parent="TabContainer/Graphs/VSplitContainer" index="0" instance=ExtResource( 8 )]
 
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 695.0
 margin_bottom = 336.0
 
-[node name="ClientPieChart" parent="TabContainer/Graph/VSplitContainer" index="1" instance=ExtResource( 9 )]
+[node name="ClientPieChart" parent="TabContainer/Graphs/VSplitContainer" index="1" instance=ExtResource( 9 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -878,6 +879,8 @@ margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _sections_unfolded = [ "Margin", "Size Flags" ]
+most_chunks_rendered_color = Color( 0.317647, 0.570558, 0.815686, 1 )
+least_chunks_rendered_color = Color( 0.742188, 0.391388, 0.555825, 1 )
 
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 

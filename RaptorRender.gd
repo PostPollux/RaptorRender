@@ -67,7 +67,7 @@ func _ready():
 					"3":{
 						"status" : "1_rendering",
 						"frames" : [24,25,26,27],
-						"client" : "id12",
+						"client" : "id2",
 						"time_started" : 1535194239,
 						"time_finished" : 0,
 						"number_of_tries" : 5
@@ -386,6 +386,118 @@ func _ready():
 						"client" : "id7",
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
+						"number_of_tries" : 1
+					},
+					"8":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523190,
+						"number_of_tries" : 1
+					},
+					"9":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523285,
+						"number_of_tries" : 1
+					},
+					"10":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523230,
+						"number_of_tries" : 1
+					},
+					"11":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id13",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523250,
+						"number_of_tries" : 1
+					},
+					"12":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id13",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523270,
+						"number_of_tries" : 1
+					},
+					"13":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id15",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523260,
+						"number_of_tries" : 1
+					},
+					"14":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id16",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523320,
+						"number_of_tries" : 1
+					},
+					"15":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id2",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523290,
+						"number_of_tries" : 1
+					},
+					"16":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id2",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523255,
+						"number_of_tries" : 1
+					},
+					"17":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523430,
+						"number_of_tries" : 1
+					},
+					"18":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523190,
+						"number_of_tries" : 1
+					},
+					"19":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523270,
+						"number_of_tries" : 1
+					},
+					"20":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523275,
+						"number_of_tries" : 1
+					},
+					"21":{
+						"status" : "5_finished",
+						"frames" : [24,25,26,27],
+						"client" : "id1",
+						"time_started" : 1528523180,
+						"time_finished" : 1528523220,
 						"number_of_tries" : 1
 					}
 				}

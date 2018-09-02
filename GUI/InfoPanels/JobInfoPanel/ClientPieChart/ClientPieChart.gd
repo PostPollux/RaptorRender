@@ -2,6 +2,24 @@ extends Control
 
 var job_id
 
+# variables to customize look of the graph
+
+#export (Color) var not_started_color = Color(0.75,0.75,0.75,1)
+export (float) var filled_percentage = 0.3
+
+export (Color) var most_chunks_rendered_color = Color ("5191d0") 
+export (Color) var least_chunks_rendered_color = Color ("bd638d")
+
+export (bool) var draw_outline = false
+export (Color) var outline_color = Color("000000")
+export (int) var outline_thickness = 2
+
+
+export (int) var desired_spacing_between_segments_in_degrees = 2
+
+
+
+
 func _ready():
 	pass
 
@@ -10,19 +28,89 @@ func _process(delta):
 
 
 
-
+func set_job_id(job_ID):
+	job_id = job_ID
+	update()
 
 
 
 func _draw():
-	var center = Vector2(self.rect_size.x / 2 , self.rect_size.y / 2)
-	var radius = (min(rect_size.x, rect_size.y) / 2 ) * 0.8
-	var angle_from = 0
-	var angle_to = 180
-	var color = Color(1.0, 0.0, 0.0)
 	
-	draw_circle_segment_as_arc(32, center, radius, angle_from, angle_to, color, 0.3)
-	draw_circle_segment_as_arc_outline(32, center, radius, angle_from, angle_to, Color(0,0,0,1), 0.3, 5)
+	
+	var chunk_count = RaptorRender.rr_data.jobs[job_id].chunks.keys().size()
+	
+	
+	
+	
+	var unique_clients = []
+	var count_dictionary = {}
+	var clients_with_counts = []
+	
+	
+	# unique clients
+	for chunk in range(1, chunk_count + 1):
+		if not unique_clients.has( RaptorRender.rr_data.jobs[job_id].chunks[String(chunk)].client ):
+			unique_clients.append( RaptorRender.rr_data.jobs[job_id].chunks[String(chunk)].client )
+	
+	
+	# create the count dictionary
+	for client in unique_clients:
+		count_dictionary[client] = 0
+	
+	
+	# now count how often each client occures
+	for chunk in range(1, chunk_count + 1):
+		count_dictionary[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk)].client ] += 1
+	
+	
+	# create clients_with_counts array
+	for client in unique_clients:
+		clients_with_counts.append( [ client, count_dictionary[client] ] )
+	
+	
+	# sort the array 
+	clients_with_counts.sort_custom( self, "sort_clients_by_chunk_counts" )
+	
+	# limit spacing size to half of smallest segment or shut of spacing if there is only one client
+	var spacing_between_segments_in_degrees = desired_spacing_between_segments_in_degrees
+	
+	if desired_spacing_between_segments_in_degrees > 0:
+		var smallest_segement_in_degrees = 360 * ( float(clients_with_counts[ clients_with_counts.size() - 1][1]) / float(chunk_count) )
+		if float(desired_spacing_between_segments_in_degrees) > float(smallest_segement_in_degrees) / float(2) :
+			spacing_between_segments_in_degrees = float(smallest_segement_in_degrees) / float(2)
+	
+	if unique_clients.size() == 1:
+		spacing_between_segments_in_degrees = 0
+	
+	# draw the individual segments
+	var start_of_segment_in_degrees = 0  # 12 o'clock
+	var client_number = 1
+	
+	for client in clients_with_counts:
+		
+		var percentage_of_rendered_chunks = float(client[1]) / float(chunk_count)
+
+		
+		var center = Vector2(self.rect_size.x / 2 , self.rect_size.y / 2)
+		var radius = (min(rect_size.x, rect_size.y) / 2 ) * 0.8
+		var angle_from = start_of_segment_in_degrees
+		var angle_to = start_of_segment_in_degrees + 360 * percentage_of_rendered_chunks - spacing_between_segments_in_degrees
+		
+		var color_interpolation_factor = float(client_number) / float(unique_clients.size())
+		var color = most_chunks_rendered_color.linear_interpolate(least_chunks_rendered_color, color_interpolation_factor)
+		var quality = 360 * percentage_of_rendered_chunks * 0.5 + 2
+		draw_circle_segment_as_arc(quality, center, radius, angle_from, angle_to, color, filled_percentage)
+		if draw_outline:
+			draw_circle_segment_as_arc_outline(quality, center, radius, angle_from, angle_to, outline_color, filled_percentage, outline_thickness)
+		
+		start_of_segment_in_degrees = angle_to + spacing_between_segments_in_degrees
+		client_number += 1
+
+
+func sort_clients_by_chunk_counts(a,b):
+	
+	# a custom sort function must return true if the first argument (a) is less than the second (b)
+	return a[1] > b[1] 
 
 
 
