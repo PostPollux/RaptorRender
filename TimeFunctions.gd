@@ -34,14 +34,14 @@ func time_elapsed_as_string(unix_time_stamp_start, unix_time_stamp_end, display_
 		1: str_elapsed = "%02d:%02d:%02d:%02d" % [days, hours, minutes, seconds]
 		2:
 			if days > 0: str_elapsed += String(days) + " d  "
-			if hours > 0: str_elapsed += String(hours) + " h  "
-			if minutes > 0: str_elapsed += String(minutes) + " min  "
-			if seconds > 0: str_elapsed += String(seconds) + " sec"
+			if days > 0 or hours > 0: str_elapsed += String(hours) + " h  "
+			if hours > 0 or minutes > 0: str_elapsed += String(minutes) + " min  "
+			if minutes > 0 or seconds > 0: str_elapsed += String(seconds) + " sec"
 		3:
 			if days > 0: str_elapsed += String(days) + " d  "
-			if hours > 0: str_elapsed += String(hours) + " h  "
-			if minutes > 0: str_elapsed += String(minutes) + " m  "
-			if seconds > 0: str_elapsed += String(seconds) + " s"
+			if days > 0 or hours > 0: str_elapsed += String(hours) + " h  "
+			if hours > 0 or minutes > 0: str_elapsed += String(minutes) + " m  "
+			if minutes > 0 or seconds > 0: str_elapsed += String(seconds) + " s"
 			
 	
 	return str_elapsed.strip_edges()
@@ -60,14 +60,14 @@ func seconds_to_string(sec, display_mode):
 		1: str_sec = "%02d:%02d:%02d:%02d" % [days, hours, minutes, seconds]
 		2: 
 			if days > 0: str_sec += String(days) + " d  "
-			if hours > 0: str_sec += String(hours) + " h  "
-			if minutes > 0: str_sec += String(minutes) + " min  "
-			if seconds > 0: str_sec += String(seconds) + " sec"
+			if days > 0 or hours > 0: str_sec += String(hours) + " h  "
+			if hours > 0 or minutes > 0: str_sec += String(minutes) + " min  "
+			if minutes > 0 or seconds > 0: str_sec += String(seconds) + " sec"
 		3: 
 			if days > 0: str_sec += String(days) + " d  "
-			if hours > 0: str_sec += String(hours) + " h  "
-			if minutes > 0: str_sec += String(minutes) + " m  "
-			if seconds > 0: str_sec += String(seconds) + " s"
+			if days > 0 or hours > 0: str_sec += String(hours) + " h  "
+			if hours > 0 or minutes > 0: str_sec += String(minutes) + " m  "
+			if minutes > 0 or seconds > 0: str_sec += String(seconds) + " s"
 
 	return str_sec.strip_edges()
 	
