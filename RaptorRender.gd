@@ -51,7 +51,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -59,7 +59,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id2",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -126,7 +126,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -158,7 +158,7 @@ func _ready():
 					5:{
 						"status" : "2_queued",
 						"frames" : [33,34,35,36],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -185,7 +185,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -193,7 +193,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -201,7 +201,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -209,7 +209,7 @@ func _ready():
 					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -217,7 +217,7 @@ func _ready():
 					5:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -225,7 +225,7 @@ func _ready():
 					6:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -233,7 +233,7 @@ func _ready():
 					7:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -260,7 +260,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -268,7 +268,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -276,7 +276,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -284,7 +284,7 @@ func _ready():
 					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -522,7 +522,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -530,7 +530,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -538,7 +538,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -597,7 +597,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -605,7 +605,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -613,7 +613,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -621,7 +621,7 @@ func _ready():
 					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -629,7 +629,7 @@ func _ready():
 					5:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -637,7 +637,7 @@ func _ready():
 					6:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : "",
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -1836,18 +1836,35 @@ func refresh_chunks_table(job_id):
 
 			### Client ###
 			
-			# only change when value is different
-			if (row.sort_values[client_column] != rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name ):
+			if rr_data.jobs[job_id].chunks[chunk].client == "":
+				
+				# only change when value is different
+				if (row.sort_values[client_column] != "-" ):
+				
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, client_column )
+					
+					# change the cell value
+					cell.get_child(0).text = "-"
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, client_column, "-")
 			
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, client_column )
+			
+			else:
 				
-				# change the cell value
-				cell.get_child(0).text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
+				# only change when value is different
+				if (row.sort_values[client_column] != rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name ):
 				
-				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, client_column, rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
-
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, client_column )
+					
+					# change the cell value
+					cell.get_child(0).text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, client_column, rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
+	
 
 
 
@@ -2038,11 +2055,18 @@ func refresh_chunks_table(job_id):
 
 			var LabelClient = Label.new()
 			
-			LabelClient.text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
-			ChunksTable.set_cell_content(count, client_column, LabelClient)
+			if rr_data.jobs[job_id].chunks[chunk].client == "":
+				LabelClient.text = "-"
+				ChunksTable.set_cell_content(count, client_column, LabelClient)
+				
+				# update sort_value
+				ChunksTable.set_cell_sort_value(count, client_column,  "-")
+			else:
+				LabelClient.text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
+				ChunksTable.set_cell_content(count, client_column, LabelClient)
 			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, client_column,  rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
+				# update sort_value
+				ChunksTable.set_cell_sort_value(count, client_column,  rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
 
 
 

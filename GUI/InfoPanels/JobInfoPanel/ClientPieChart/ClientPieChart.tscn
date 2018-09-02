@@ -19,6 +19,7 @@ _sections_unfolded = [ "Margin" ]
 filled_percentage = 0.3
 most_chunks_rendered_color = Color( 0.317647, 0.568627, 0.815686, 1 )
 least_chunks_rendered_color = Color( 0.741176, 0.388235, 0.552941, 1 )
+chunks_not_assigned_color = Color( 0.74902, 0.74902, 0.74902, 1 )
 draw_outline = false
 outline_color = Color( 0, 0, 0, 1 )
 outline_thickness = 2

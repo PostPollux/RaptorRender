@@ -878,8 +878,6 @@ margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _sections_unfolded = [ "Margin", "Size Flags" ]
-most_chunks_rendered_color = Color( 0.317647, 0.570558, 0.815686, 1 )
-least_chunks_rendered_color = Color( 0.742188, 0.391388, 0.555825, 1 )
 
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 

@@ -9,6 +9,7 @@ export (float) var filled_percentage = 0.3
 
 export (Color) var most_chunks_rendered_color = Color ("5191d0") 
 export (Color) var least_chunks_rendered_color = Color ("bd638d")
+export (Color) var chunks_not_assigned_color = Color ("bfbfbf")
 
 export (bool) var draw_outline = false
 export (Color) var outline_color = Color("000000")
@@ -70,6 +71,8 @@ func _draw():
 	
 	# sort the array 
 	clients_with_counts.sort_custom( self, "sort_clients_by_chunk_counts" )
+#	if unique_clients.has(""):
+#		clients_with_counts
 	
 	# limit spacing size to half of smallest segment or shut of spacing if there is only one client
 	var spacing_between_segments_in_degrees = desired_spacing_between_segments_in_degrees
@@ -96,8 +99,15 @@ func _draw():
 		var angle_from = start_of_segment_in_degrees
 		var angle_to = start_of_segment_in_degrees + 360 * percentage_of_rendered_chunks - spacing_between_segments_in_degrees
 		
+		
+		var color
 		var color_interpolation_factor = float(client_number) / float(unique_clients.size())
-		var color = most_chunks_rendered_color.linear_interpolate(least_chunks_rendered_color, color_interpolation_factor)
+		
+		if client[0] == "":
+			color = chunks_not_assigned_color
+		else:
+			color = most_chunks_rendered_color.linear_interpolate(least_chunks_rendered_color, color_interpolation_factor)
+		
 		var quality = 360 * percentage_of_rendered_chunks * 0.5 + 2
 		draw_circle_segment_as_arc(quality, center, radius, angle_from, angle_to, color, filled_percentage)
 		if draw_outline:
@@ -110,7 +120,7 @@ func _draw():
 func sort_clients_by_chunk_counts(a,b):
 	
 	# a custom sort function must return true if the first argument (a) is less than the second (b)
-	return a[1] > b[1] 
+	return a[0] > b[0] or a[1] > b[1] 
 
 
 
