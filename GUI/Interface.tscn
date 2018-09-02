@@ -2,8 +2,8 @@
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
-[ext_resource path="res://GUI/InfoPanels/Client_Info_Panel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://GUI/InfoPanels/Job_Info_Panel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Clients.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Jobs.tscn" type="PackedScene" id=6]
 [ext_resource path="res://GUI/NotificationSystem/NotificationSystem.tscn" type="PackedScene" id=7]
@@ -121,14 +121,8 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
-scroll_deadzone = 0
 column_names = [ "Status", "Name", "Priority", "Clients", "Progress", "Type", "Creator", "Time Created", "Frames", "Errors", "Pools", "Note" ]
 column_widths_initial = [ 60, 220, 80, 70, 120, 100, 90, 165, 140, 70, 100, 150 ]
-row_color_red = Color( 0.392157, 0.247059, 0.231373, 1 )
-row_color_blue = Color( 0.231373, 0.313726, 0.392157, 1 )
-row_color_green = Color( 0.231373, 0.352941, 0.231373, 1 )
-row_color_yellow = Color( 0.345098, 0.352941, 0.231373, 1 )
-row_color_black = Color( 0.113725, 0.113725, 0.113725, 1 )
 table_id = "jobs"
 
 [node name="TabContainerClients" type="TabContainer" parent="Control/HSplitContainer/VSplitContainer" index="1"]
@@ -177,12 +171,8 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
-scroll_deadzone = 0
 column_names = [ "Status", "Name", "Username", "Platform", "CPU", "RAM", "Current Job", "Errors", "Pools", "Note", "RR-Version" ]
 column_widths_initial = [ 60, 100, 100, 100, 100, 60, 150, 60, 200, 150, 90 ]
-row_color_red = Color( 0.392157, 0.247059, 0.231373, 1 )
-row_color_blue = Color( 0.231373, 0.313726, 0.392157, 1 )
-row_color_green = Color( 0.231373, 0.352941, 0.231373, 1 )
 row_color_yellow = Color( 0.346293, 0.352941, 0.231373, 1 )
 row_color_black = Color( 0.117188, 0.117188, 0.117188, 1 )
 table_id = "clients"

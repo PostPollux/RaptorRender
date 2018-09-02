@@ -1,11 +1,15 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://GUI/InfoPanels/Client_Info_Panel.gd" type="Script" id=1]
+[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/client_status/200x100/client_status_online_200x100.png" type="Texture" id=2]
-[ext_resource path="res://GUI/InfoPanels/textures/usage_status_under_texture.tres" type="Texture" id=3]
-[ext_resource path="res://GUI/InfoPanels/textures/usage_status_progress_texture.tres" type="Texture" id=4]
-[ext_resource path="res://GUI/InfoPanels/cpu_usage.gd" type="Script" id=5]
-[ext_resource path="res://GUI/InfoPanels/memory_usage.gd" type="Script" id=6]
+[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/textures/usage_status_under_texture.tres" type="Texture" id=3]
+[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/textures/usage_status_progress_texture.tres" type="Texture" id=4]
+[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/cpu_usage.gd" type="Script" id=5]
+[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/memory_usage.gd" type="Script" id=6]
+
+
+
+
 
 [sub_resource type="DynamicFontData" id=1]
 

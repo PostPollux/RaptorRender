@@ -1,14 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://GUI/InfoPanels/Job_Info_Panel.gd" type="Script" id=1]
+[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/job_status/200x100/job_status_finished_200x100.png" type="Texture" id=2]
 [ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/icons/link/15x15/link_default_15x15.png" type="Texture" id=4]
 [ext_resource path="res://GUI/icons/link/15x15/link_clicked_15x15.png" type="Texture" id=5]
 [ext_resource path="res://GUI/icons/link/15x15/link_hover_15x15.png" type="Texture" id=6]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=7]
-[ext_resource path="res://GUI/InfoPanels/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=8]
-
+[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFontData" id=1]
 
@@ -23,7 +23,7 @@ use_filter = true
 font_data = SubResource( 1 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="JobInfoPanel" type="MarginContainer"]
+[node name="JobInfoPanel" type="MarginContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -827,7 +827,6 @@ size_flags_vertical = 1
 
 [node name="Graph" type="Tabs" parent="TabContainer" index="2"]
 
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -846,14 +845,39 @@ tab_align = 1
 scrolling_enabled = true
 _sections_unfolded = [ "Rect" ]
 
-[node name="ChunkTimeGraph" parent="TabContainer/Graph" index="0" instance=ExtResource( 8 )]
+[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Graph" index="0"]
 
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+split_offset = 60
+collapsed = false
+dragger_visibility = 0
+
+[node name="ChunkTimeGraph" parent="TabContainer/Graph/VSplitContainer" index="0" instance=ExtResource( 8 )]
+
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 0.0
-margin_bottom = 0.0
+margin_right = 695.0
+margin_bottom = 336.0
+
+[node name="ClientPieChart" parent="TabContainer/Graph/VSplitContainer" index="1" instance=ExtResource( 9 )]
+
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 348.0
+margin_right = 695.0
+margin_bottom = 564.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_sections_unfolded = [ "Margin", "Size Flags" ]
 
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 

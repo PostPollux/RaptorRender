@@ -201,7 +201,7 @@ func draw_ChunkTimeGraph(job_id):
 			draw_line(Vector2(0, shortest_rendertime_line_y), Vector2(total_width, shortest_rendertime_line_y), Color(1,1,1,0.5), 1.0, false)
 			
 			# draw time indicator on the bottom of the line. Only draw it on top if there is not enough space on the bottom
-			if bottom - shortest_rendertime_line_y > 10:
+			if bottom - shortest_rendertime_line_y > 25:
 				draw_rect(Rect2(Vector2(0, shortest_rendertime_line_y + 1), Vector2(shortest_time_string.length() * 10 + 20, 20)),Color(0,0,0,0.25), true)
 				draw_string(font, Vector2 (10, shortest_rendertime_line_y + 16 ), shortest_time_string, Color(1,1,1,1), - 1)
 			else:
