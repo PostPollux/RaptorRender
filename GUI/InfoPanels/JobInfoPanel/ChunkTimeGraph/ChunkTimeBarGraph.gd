@@ -94,7 +94,7 @@ func draw_ChunkTimeGraph(job_id):
 		var chunk_rendertime = 0
 		var finished
 		
-		var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)]
+		var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
 		
 		if chunk_dict.status == "5_finished": 
 			chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started
@@ -127,7 +127,7 @@ func draw_ChunkTimeGraph(job_id):
 	
 	for chunk_number in range(0, chunk_count):
 		
-		var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number + 1)]
+		var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number + 1]
 		
 		var bar_left = chunk_number * (bar_width + spacing_inbetween)
 		
@@ -226,6 +226,6 @@ func _on_BarGraph_gui_input(ev):
 		
 		# select and autofocus correct chunk
 		RaptorRender.ChunksTable.clear_selection()
-		RaptorRender.ChunksTable.select_by_id(String(chunk))
-		RaptorRender.ChunksTable.scroll_to_row(String(chunk))
+		RaptorRender.ChunksTable.select_by_id(chunk)
+		RaptorRender.ChunksTable.scroll_to_row(chunk)
 	

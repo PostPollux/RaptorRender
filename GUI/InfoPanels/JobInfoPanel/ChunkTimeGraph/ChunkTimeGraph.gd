@@ -40,8 +40,8 @@ func fill_chunk_info_box(chunk_number):
 	
 	# chunk name
 	
-	var first_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames[0]
-	var last_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].frames.size() - 1]
+	var first_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[0]
+	var last_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames.size() - 1]
 	
 	if first_chunk_frame == last_chunk_frame:
 		ChunkNameLabel.text = String (chunk_number) + "  (Frame: " + String(first_chunk_frame) + ")"
@@ -50,14 +50,14 @@ func fill_chunk_info_box(chunk_number):
 	
 	
 	# chunk client
-	if  RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client == "":
+	if  RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].client == "":
 		ChunkClientLabel.text = "-" 
 	else:
-		ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].client ].name
+		ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].client ].name
 	
 	
 	# chunk render time
-	var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)]
+	var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
 	
 	var chunk_rendertime = 0
 	
@@ -75,7 +75,7 @@ func fill_chunk_info_box(chunk_number):
 	
 	# chunk tries
 	
-	ChunkTriesLabel.text = String( RaptorRender.rr_data.jobs[job_id].chunks[String(chunk_number)].number_of_tries)
+	ChunkTriesLabel.text = String( RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].number_of_tries)
 
 
 

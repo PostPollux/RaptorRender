@@ -48,7 +48,7 @@ func _ready():
 				"output_directory" : "/home/johannes/GodogtTest/",
 				"render_time" : 345,
 				"chunks": {
-					"1":{
+					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
 						"client" : "id1",
@@ -56,7 +56,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"2":{
+					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id2",
@@ -64,7 +64,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"3":{
+					3:{
 						"status" : "1_rendering",
 						"frames" : [24,25,26,27],
 						"client" : "id2",
@@ -72,7 +72,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 5
 					},
-					"4":{
+					4:{
 						"status" : "1_rendering",
 						"frames" : [24,25,26,27],
 						"client" : "id7",
@@ -80,7 +80,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"5":{
+					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -88,7 +88,7 @@ func _ready():
 						"time_finished" : 1528523280,
 						"number_of_tries" : 2
 					},
-					"6":{
+					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id8",
@@ -96,7 +96,7 @@ func _ready():
 						"time_finished" : 1528523230,
 						"number_of_tries" : 1
 					},
-					"7":{
+					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -123,7 +123,7 @@ func _ready():
 				"output_directory" : "\\home\\johannes\\GodotTest\\",
 				"render_time" : 3645,
 				"chunks": {
-					"1":{
+					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
 						"client" : "id1",
@@ -131,7 +131,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"2":{
+					2:{
 						"status" : "1_rendering",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -139,7 +139,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"3":{
+					3:{
 						"status" : "1_rendering",
 						"frames" : [28,29,30,31],
 						"client" : "id1",
@@ -147,7 +147,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"4":{
+					4:{
 						"status" : "1_rendering",
 						"frames" : [32],
 						"client" : "id1",
@@ -155,7 +155,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"5":{
+					5:{
 						"status" : "2_queued",
 						"frames" : [33,34,35,36],
 						"client" : "id1",
@@ -182,7 +182,7 @@ func _ready():
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 45,
 				"chunks": {
-					"1":{
+					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
 						"client" : "id1",
@@ -190,7 +190,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"2":{
+					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -198,7 +198,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"3":{
+					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -206,7 +206,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"4":{
+					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -214,7 +214,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"5":{
+					5:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -222,7 +222,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"6":{
+					6:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -230,7 +230,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"7":{
+					7:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -257,7 +257,7 @@ func _ready():
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 54445,
 				"chunks": {
-					"1":{
+					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
 						"client" : "id1",
@@ -265,7 +265,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"2":{
+					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -273,7 +273,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"3":{
+					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -281,7 +281,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"4":{
+					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -289,7 +289,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"5":{
+					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -297,7 +297,7 @@ func _ready():
 						"time_finished" : 1528523200,
 						"number_of_tries" : 1
 					},
-					"6":{
+					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -305,7 +305,7 @@ func _ready():
 						"time_finished" : 1528523280,
 						"number_of_tries" : 1
 					},
-					"7":{
+					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -332,7 +332,7 @@ func _ready():
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 2487,
 				"chunks": {
-					"1":{
+					1:{
 						"status" : "5_finished",
 						"frames" : [20,21,22,23],
 						"client" : "id1",
@@ -340,7 +340,7 @@ func _ready():
 						"time_finished" : 1528523280,
 						"number_of_tries" : 1
 					},
-					"2":{
+					2:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id4",
@@ -348,7 +348,7 @@ func _ready():
 						"time_finished" : 1528523275,
 						"number_of_tries" : 1
 					},
-					"3":{
+					3:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id8",
@@ -356,7 +356,7 @@ func _ready():
 						"time_finished" : 1528523299,
 						"number_of_tries" : 1
 					},
-					"4":{
+					4:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -364,7 +364,7 @@ func _ready():
 						"time_finished" : 1528523268,
 						"number_of_tries" : 1
 					},
-					"5":{
+					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id10",
@@ -372,7 +372,7 @@ func _ready():
 						"time_finished" : 1528523245,
 						"number_of_tries" : 1
 					},
-					"6":{
+					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -380,7 +380,7 @@ func _ready():
 						"time_finished" : 1528523222,
 						"number_of_tries" : 1
 					},
-					"7":{
+					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id7",
@@ -388,7 +388,7 @@ func _ready():
 						"time_finished" : 1528523200,
 						"number_of_tries" : 1
 					},
-					"8":{
+					8:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -396,7 +396,7 @@ func _ready():
 						"time_finished" : 1528523190,
 						"number_of_tries" : 1
 					},
-					"9":{
+					9:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -404,7 +404,7 @@ func _ready():
 						"time_finished" : 1528523285,
 						"number_of_tries" : 1
 					},
-					"10":{
+					10:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -412,7 +412,7 @@ func _ready():
 						"time_finished" : 1528523230,
 						"number_of_tries" : 1
 					},
-					"11":{
+					11:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id13",
@@ -420,7 +420,7 @@ func _ready():
 						"time_finished" : 1528523250,
 						"number_of_tries" : 1
 					},
-					"12":{
+					12:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id13",
@@ -428,7 +428,7 @@ func _ready():
 						"time_finished" : 1528523270,
 						"number_of_tries" : 1
 					},
-					"13":{
+					13:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id15",
@@ -436,7 +436,7 @@ func _ready():
 						"time_finished" : 1528523260,
 						"number_of_tries" : 1
 					},
-					"14":{
+					14:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id16",
@@ -444,7 +444,7 @@ func _ready():
 						"time_finished" : 1528523320,
 						"number_of_tries" : 1
 					},
-					"15":{
+					15:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id2",
@@ -452,7 +452,7 @@ func _ready():
 						"time_finished" : 1528523290,
 						"number_of_tries" : 1
 					},
-					"16":{
+					16:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id2",
@@ -460,7 +460,7 @@ func _ready():
 						"time_finished" : 1528523255,
 						"number_of_tries" : 1
 					},
-					"17":{
+					17:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -468,7 +468,7 @@ func _ready():
 						"time_finished" : 1528523430,
 						"number_of_tries" : 1
 					},
-					"18":{
+					18:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -476,7 +476,7 @@ func _ready():
 						"time_finished" : 1528523190,
 						"number_of_tries" : 1
 					},
-					"19":{
+					19:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -484,7 +484,7 @@ func _ready():
 						"time_finished" : 1528523270,
 						"number_of_tries" : 1
 					},
-					"20":{
+					20:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -492,7 +492,7 @@ func _ready():
 						"time_finished" : 1528523275,
 						"number_of_tries" : 1
 					},
-					"21":{
+					21:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -519,7 +519,7 @@ func _ready():
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 3433578,
 				"chunks": {
-					"1":{
+					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
 						"client" : "id1",
@@ -527,7 +527,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"2":{
+					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -535,7 +535,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"3":{
+					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -543,7 +543,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"4":{
+					4:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -551,7 +551,7 @@ func _ready():
 						"time_finished" : 1528523380,
 						"number_of_tries" : 1
 					},
-					"5":{
+					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -559,7 +559,7 @@ func _ready():
 						"time_finished" : 1528523480,
 						"number_of_tries" : 1
 					},
-					"6":{
+					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -567,7 +567,7 @@ func _ready():
 						"time_finished" : 1528523620,
 						"number_of_tries" : 1
 					},
-					"7":{
+					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -594,7 +594,7 @@ func _ready():
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 4578,
 				"chunks": {
-					"1":{
+					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
 						"client" : "id1",
@@ -602,7 +602,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"2":{
+					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -610,7 +610,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"3":{
+					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -618,7 +618,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"4":{
+					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -626,7 +626,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"5":{
+					5:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -634,7 +634,7 @@ func _ready():
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					},
-					"6":{
+					6:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
 						"client" : "id1",
@@ -1714,7 +1714,7 @@ func refresh_chunks_table(job_id):
 		
 		for remove_id in range(chunks_array.size() + 1, ChunksTable.RowContainerFilled.SortableRows.size() + 1):
 			
-			ChunksTable.remove_row( String(remove_id) )
+			ChunksTable.remove_row( remove_id )
 	
 	
 	
@@ -1954,7 +1954,7 @@ func refresh_chunks_table(job_id):
 			### Number ###
 			
 			var LabelNumber = Label.new()
-			LabelNumber.text = chunk
+			LabelNumber.text = String(chunk)
 			ChunksTable.set_cell_content(count, number_column, LabelNumber)
 			
 			# update sort_value

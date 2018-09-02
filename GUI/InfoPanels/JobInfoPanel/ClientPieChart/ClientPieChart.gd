@@ -49,8 +49,8 @@ func _draw():
 	
 	# unique clients
 	for chunk in range(1, chunk_count + 1):
-		if not unique_clients.has( RaptorRender.rr_data.jobs[job_id].chunks[String(chunk)].client ):
-			unique_clients.append( RaptorRender.rr_data.jobs[job_id].chunks[String(chunk)].client )
+		if not unique_clients.has( RaptorRender.rr_data.jobs[job_id].chunks[chunk].client ):
+			unique_clients.append( RaptorRender.rr_data.jobs[job_id].chunks[chunk].client )
 	
 	
 	# create the count dictionary
@@ -60,7 +60,7 @@ func _draw():
 	
 	# now count how often each client occures
 	for chunk in range(1, chunk_count + 1):
-		count_dictionary[ RaptorRender.rr_data.jobs[job_id].chunks[String(chunk)].client ] += 1
+		count_dictionary[ RaptorRender.rr_data.jobs[job_id].chunks[chunk].client ] += 1
 	
 	
 	# create clients_with_counts array
