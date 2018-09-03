@@ -18,8 +18,10 @@ export (int) var outline_thickness = 2
 
 export (int) var desired_spacing_between_segments_in_degrees = 2
 
+onready var NameLabel = $"NameLabel"
+onready var ChunksLabel = $"ChunksLabel"
 
-
+signal segment_hovered
 
 func _ready():
 	pass
@@ -122,11 +124,12 @@ func _draw():
 		if  raw_angle_mouse_to_center < 0:
 			angle_mouse_to_center =  180 + (180 - abs(raw_angle_mouse_to_center))
 		
-		# highlight hoverd segment
+		# highlight hoverd segment and fill labels
 		var local_mouse_pos = self.get_local_mouse_position()
 		if local_mouse_pos.x > 0 and local_mouse_pos.x < self.rect_size.x and local_mouse_pos.y > 0 and local_mouse_pos.y < self.rect_size.y:
 			if angle_mouse_to_center > angle_from and angle_mouse_to_center < angle_to:
 				radius = (min(rect_size.x, rect_size.y) / 2 ) * 0.83
+				emit_signal("segment_hovered", client)
 		
 		# actually draw the segment
 		draw_circle_segment_as_arc(quality, center, radius, angle_from, angle_to, color, filled_percentage)
@@ -221,3 +224,17 @@ func draw_circle_arc(quality, center, radius, angle_from, angle_to, color):
 
 	for index_point in range(nb_points):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color)
+
+
+func _on_ClientPieChart_segment_hovered(client_with_chunk_count):
+	
+	if client_with_chunk_count[0] == "":
+		NameLabel.text = "not assigned yet"
+	else:
+		NameLabel.text = RaptorRender.rr_data.clients[ client_with_chunk_count[0] ].name
+	ChunksLabel.text = "Chunks: " + String(client_with_chunk_count[1])
+
+
+func _on_ClientPieChart_mouse_exited():
+	NameLabel.text = ""
+	ChunksLabel.text = ""
