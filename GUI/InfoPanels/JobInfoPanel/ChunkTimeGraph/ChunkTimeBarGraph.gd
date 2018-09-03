@@ -219,7 +219,7 @@ func _on_BarGraph_gui_input(ev):
 	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:
         
 		# find double clicked chunk
-		var chunk = self.get_parent().chunk
+		var chunk = self.get_parent().get_parent().chunk
 		
 		# switch tab
 		RaptorRender.JobInfoPanel.set_tab(1)
@@ -229,3 +229,5 @@ func _on_BarGraph_gui_input(ev):
 		RaptorRender.ChunksTable.select_by_id(chunk)
 		RaptorRender.ChunksTable.scroll_to_row(chunk)
 	
+
+

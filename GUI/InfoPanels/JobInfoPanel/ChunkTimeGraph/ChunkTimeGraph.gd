@@ -7,23 +7,26 @@
 # This script mainly handles the filling of the info box.
 
 
-extends VBoxContainer
+extends MarginContainer
 
 var job_id = ""
 var chunk
 
 # references to other nodes of ChunkTimeGraph
-onready var BarGraph = $"ChunkTimeBarGraph"
-onready var ChunkNameLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
-onready var ChunkClientLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
-onready var ChunkRendertimeLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
-onready var ChunkTriesLabel = $"ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesValueLabel"
-onready var ChunkInfoBox = $"ClipContainer/ChunkInfoBox"
+onready var BarGraph = $"VBoxContainer/ChunkTimeBarGraph"
+onready var ChunkNameLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
+onready var ChunkClientLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
+onready var ChunkRendertimeLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
+onready var ChunkTriesLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesValueLabel"
+onready var ChunkInfoBox = $"VBoxContainer/ClipContainer/ChunkInfoBox"
+onready var GraphOptions = $"GraphOptions"
 
 
 
 
 func _ready():
+	
+	GraphOptions.visible = false
 	
 	# connect signals
 	BarGraph.connect("chunk_hovered", self, "fill_chunk_info_box")
@@ -86,4 +89,17 @@ func _on_BarGraph_mouse_exited():
 	ChunkRendertimeLabel.text =  ""
 	ChunkTriesLabel.text = ""
 
+
+
+
+func _on_OptionsButton_pressed():
+	if GraphOptions.visible:
+		GraphOptions.visible = false
+	else:
+		GraphOptions.visible = true
+
+
+func _on_AccumulateTriesCheckBox_toggled(button_pressed):
+	GraphOptions.visible = false
+	RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
 

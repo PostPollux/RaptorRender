@@ -229,7 +229,7 @@ func draw_circle_arc(quality, center, radius, angle_from, angle_to, color):
 func _on_ClientPieChart_segment_hovered(client_with_chunk_count):
 	
 	if client_with_chunk_count[0] == "":
-		NameLabel.text = "not assigned yet"
+		NameLabel.text = "not assigned"
 	else:
 		NameLabel.text = RaptorRender.rr_data.clients[ client_with_chunk_count[0] ].name
 	ChunksLabel.text = "Chunks: " + String(client_with_chunk_count[1])
