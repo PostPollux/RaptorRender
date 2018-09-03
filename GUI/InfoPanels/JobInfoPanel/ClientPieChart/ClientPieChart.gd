@@ -114,7 +114,7 @@ func _draw():
 		else:
 			color = most_chunks_rendered_color.linear_interpolate(least_chunks_rendered_color, color_interpolation_factor)
 		
-		var quality = 360 * percentage_of_rendered_chunks * 0.5 + 2
+		var quality = 360 * percentage_of_rendered_chunks * 2 + 2
 		
 		# calculate degrees between mouse position and the center of the pie chart
 		var mouse_pos_relative_to_center = self.get_local_mouse_position() - center
