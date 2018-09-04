@@ -835,6 +835,71 @@ func get_graphic_cards():
 
 
 
+# Get Hard Drive Information
+func get_hard_drive_info():
+	
+	var platform = OS.get_name()
+	
+	match platform:
+		
+		# Linux
+		"X11" :
+		
+			# use "lsblk" and "df" in terminal to get some hard drive infos
+			
+			var drive_array = [] # holds a dictionary for each drive. The dict will hold the following keys: name, mountpoint, label, size, hotplug, used
+			
+			var output = [] #                         show these columns   |  format as json  | filter only mounted ones | remove line with "boot"
+			                #                                     v                      v          v             .------------------'
+			var arguments = ["-c","lsblk --output 'NAME,MOUNTPOINT,LABEL,SIZE,HOTPLUG' --json | grep '/' | grep -v 'boot'"]
+			OS.execute("bash", arguments, true, output)
+			
+			# split String in lines
+			var splitted_output = output[0].split('\n', false, 0)  
+			
+			for line in splitted_output:
+				line = line.strip_edges(true,true)
+				
+				# remove "," at the end
+				if line.right(line.length() - 1) == ",":
+					line = line.left(line.length() - 1)
+					
+				# Convert String to Dictionaries and add them to the array
+				drive_array.append(parse_json(line))
+			
+			
+			# now get the percentage of used disk space 
+			for drive in drive_array:
+				
+				# use the "df" command to find the percentage
+				arguments = ["-c","df | grep '" + drive.name + "'"]
+				OS.execute("bash", arguments, true, output)
+				
+				var used = output[0].left (output[0].find("%") ) # take the left part of the string befor "%"
+				used = used.right ( used.length() - 3 ) # take the last three characters
+				used = int( used.strip_edges(true,true) ) # remove white spaces and convert to int
+				
+				drive.used = used
+			
+		
+		
+#		# Windows
+#		"Windows" :
+#
+#			# get number of threads
+#			var output = []
+#			var arguments = ['/C','wmic path win32_VideoController get name /Value']
+#
+#			OS.execute('CMD.exe', arguments, true, output)
+#
+#			var graphics = output[0].strip_edges(true,true)  # strip away empty stuff
+#			graphics = graphics.split("=")[1]  # Take the string behind the "="
+#
+#			graphic_cards_array.append(graphics)
+#
+#			return graphic_cards_array
+
+
 
 
 ##############################################################
