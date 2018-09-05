@@ -666,6 +666,7 @@ func _ready():
 				"memory": 32610232,
 				"memory_usage": 22,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
@@ -686,6 +687,7 @@ func _ready():
 				"memory": 16305116,
 				"memory_usage": 10,
 				"graphics": ["Intel Onboard"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
@@ -706,6 +708,7 @@ func _ready():
 				"memory": 65220464,
 				"memory_usage": 22,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
@@ -726,6 +729,7 @@ func _ready():
 				"memory": 8150060,
 				"memory_usage": 11,
 				"graphics": ["Intel Onboard"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
@@ -746,6 +750,7 @@ func _ready():
 				"memory": 4075030,
 				"memory_usage": 38,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
@@ -766,6 +771,7 @@ func _ready():
 				"memory": 16305116,
 				"memory_usage": 45,
 				"graphics": ["Intel Onboard"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
@@ -786,6 +792,7 @@ func _ready():
 				"memory": 32610232,
 				"memory_usage": 37,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
@@ -806,6 +813,7 @@ func _ready():
 				"memory": 16305116,
 				"memory_usage": 64,
 				"graphics": ["Intel Onboard"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
@@ -826,6 +834,7 @@ func _ready():
 				"memory": 32610232,
 				"memory_usage": 22,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
@@ -846,6 +855,7 @@ func _ready():
 				"memory": 16305116,
 				"memory_usage": 29,
 				"graphics": ["Intel Onboard"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": "my workstation"
 			},
@@ -866,6 +876,7 @@ func _ready():
 				"memory": 65220464,
 				"memory_usage": 34,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": "NVidia GTX 970"
 			},
@@ -886,6 +897,7 @@ func _ready():
 				"memory": 16305116,
 				"memory_usage": 23,
 				"graphics": ["Intel Onboard"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
@@ -906,6 +918,7 @@ func _ready():
 				"memory": 4075030,
 				"memory_usage": 82,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
@@ -926,6 +939,7 @@ func _ready():
 				"memory": 2030015,
 				"memory_usage": 72,
 				"graphics": ["NVidia GTX 970"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": "Just a slow computer"
 			},
@@ -946,6 +960,7 @@ func _ready():
 				"memory": 120440928,
 				"memory_usage": 25,
 				"graphics": ["Intel Onboard"],
+				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": "The Monster Machine!"
 			}

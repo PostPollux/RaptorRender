@@ -18,6 +18,7 @@ var ip_addresses # array of all used ip addresses
 var total_memory # total memory in kb
 var cpu_info  # array: [Model Name, MHz, number of sockets, number of cores, number of threads] 
 var graphic_cards # array with the name of all graphic cards found in the system
+var hard_drives # array with a dict for each hard drive. The dict has the following keys:  name, label, size, percentage_used, type
 
 var memory_usage # percentage of memory used (int Value between 0 and 100)
 var cpu_usage # percentage of cpu usage (int Value between 0 and 100)
@@ -66,6 +67,7 @@ func _ready():
 	total_memory = get_total_memory()
 	cpu_info = get_cpu_info()
 	graphic_cards = get_graphic_cards()
+	hard_drives = get_hard_drive_info()
 	memory_usage = 0
 	cpu_usage = 0
 	
@@ -73,7 +75,6 @@ func _ready():
 	create_client_dict()
 	
 	RaptorRender.rr_data.clients[mac_addresses[0]] = client
-	
 
 
 
@@ -95,6 +96,7 @@ func create_client_dict():
 		"memory": total_memory,
 		"memory_usage": memory_usage,
 		"graphics": graphic_cards,
+		"hard_drives": hard_drives,
 		"software": ["Blender", "Natron"],
 		"note": ""
 	}
@@ -840,6 +842,10 @@ func get_hard_drive_info():
 	
 	var platform = OS.get_name()
 	
+	# a array with an universal dictionary for each drive. The dict will hold the following keys: 
+	# name, label, size, percentage_used, type (1 Local Disk, 2 Removable Disk, 3 Network Drive)
+	var drive_dict_array = [] 
+		
 	match platform:
 		
 		# Linux
@@ -847,12 +853,14 @@ func get_hard_drive_info():
 		
 			# use "lsblk" and "df" in terminal to get some hard drive infos
 			
-			var drive_array = [] # holds a dictionary for each drive. The dict will hold the following keys: name, mountpoint, label, size, hotplug, used
+			var linux_drive_array = [] # a array with a dictionary for each drive. The dict will hold the following keys: name, mountpoint, label, size, rm, used
 			
-			var output = [] #                         show these columns   |  format as json  | filter only mounted ones | remove line with "boot"
-			                #                                     v                      v          v             .------------------'
-			var arguments = ["-c","lsblk --output 'NAME,MOUNTPOINT,LABEL,SIZE,HOTPLUG' --json | grep '/' | grep -v 'boot'"]
+			var output = [] #                     show these columns   |  format as json  | filter only mounted ones | remove line with "boot"
+			                #                                v                      v          v             .------------------'
+			var arguments = ["-c","lsblk --output 'NAME,MOUNTPOINT,LABEL,SIZE,RM' --json | grep '/' | grep -v 'boot'"]
 			OS.execute("bash", arguments, true, output)
+			
+			# each line is one mounted hard drive. Now clean the string and convert that json output to a dict
 			
 			# split String in lines
 			var splitted_output = output[0].split('\n', false, 0)  
@@ -865,11 +873,11 @@ func get_hard_drive_info():
 					line = line.left(line.length() - 1)
 					
 				# Convert String to Dictionaries and add them to the array
-				drive_array.append(parse_json(line))
+				linux_drive_array.append(parse_json(line))
 			
 			
-			# now get the percentage of used disk space 
-			for drive in drive_array:
+			# now get the percentage of used disk space. As "lsblk" does not show this we have to use "df" and filter it by the names received in the step before
+			for drive in linux_drive_array:
 				
 				# use the "df" command to find the percentage
 				arguments = ["-c","df | grep '" + drive.name + "'"]
@@ -879,28 +887,70 @@ func get_hard_drive_info():
 				used = used.right ( used.length() - 3 ) # take the last three characters
 				used = int( used.strip_edges(true,true) ) # remove white spaces and convert to int
 				
-				drive.used = used
+				drive.percentage_used = used
 			
+			
+			# fill the "drive_dict_array"
+			for drive in linux_drive_array:
+				
+				# format size string
+				var size_str = drive.size.insert( drive.size.length() - 1 , " ")
+				size_str = size_str.insert(size_str.length(), "B")
+				
+				
+				# handling null in drive label
+				var label_str
+				if drive.label == null:
+					label_str = ""
+				else:
+					label_str = drive.label
+				
+				
+				# set correct type
+				var type
+				if drive.rm == "0":
+					type = 1 # local disk
+				else: 
+					type = 2 # removable disk
+					
+					
+				# create the final dict
+				drive_dict_array.append( { 
+					"name": drive.name, 
+					"label": label_str, 
+					"size": size_str, 
+					"percentage_used": drive.percentage_used, 
+					"type": type } )
+			
+			
+			return drive_dict_array
 		
 		
-#		# Windows
-#		"Windows" :
-#
-#			# get number of threads
-#			var output = []
-#			var arguments = ['/C','wmic path win32_VideoController get name /Value']
-#
-#			OS.execute('CMD.exe', arguments, true, output)
-#
-#			var graphics = output[0].strip_edges(true,true)  # strip away empty stuff
-#			graphics = graphics.split("=")[1]  # Take the string behind the "="
-#
-#			graphic_cards_array.append(graphics)
-#
-#			return graphic_cards_array
+		
+		# Windows
+		"Windows" :
+		
+			# get drive info output
+			var output = []
+			var arguments = ['/C','wmic logicaldisk get DriveType,FreeSpace,Name,Size,VolumeName /Value']
+			
+			OS.execute('CMD.exe', arguments, true, output)
+			
+			
+			var drive_info = output[0].strip_edges(true,true)  # strip away empty stuff
+			
+			
+			# split String in lines
+			var splitted_output = drive_info.split('\n', false, 0)  # split and don't allow empty
+			
+			for line in splitted_output:
+				line = line.strip_edges(true,true)
+			
+			
+			
+			return drive_dict_array
 
 
-# wmic logicaldisk get DriveType,FreeSpace,Name,Size,VolumeName /Value
 
 #drivetype
 #0	Unknown
@@ -955,6 +1005,11 @@ func _on_hardware_info_timer_timeout():
 	cpu_usage = int (get_cpu_usage() )
 	
 	
+	# hard drive info
+	hard_drives = get_hard_drive_info()
+	
+	
 	# change the values
 	RaptorRender.rr_data.clients[mac_addresses[0]].memory_usage = memory_usage
 	RaptorRender.rr_data.clients[mac_addresses[0]].cpu_usage = cpu_usage
+	RaptorRender.rr_data.clients[mac_addresses[0]].hard_drives = hard_drives

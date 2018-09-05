@@ -17,6 +17,11 @@ onready var MACLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VB
 onready var CPUUsageBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/cpu_usage"
 onready var MemoryUsageBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/memory_usage"
 
+onready var HardDriveContainer = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/hard_drives_specs/HBoxContainer/MarginContainer/VBoxContainer/HardDriveContainer"
+
+# preload Resources
+var HardDriveRes = preload("res://GUI/InfoPanels/ClientInfoPanel/hard_drive.tscn")
+
 
 func _ready():
 	RaptorRender.register_client_info_panel(self)
@@ -116,6 +121,29 @@ func update_client_info_panel(client_id):
 	RAMLabel.text = size_in_gb.left(size_in_gb.find(".")+ 3) + " GB"
 	
 	MemoryUsageBar.update_memory_usage_bar()
+	
+	
+	
+	######################
+	#  Hard Drives Section
+	######################
+	var old = HardDriveContainer.get_children()
+	
+	for o in old:
+		o.free()
+	
+	var drive_count = 0
+	for drive in selected_client["hard_drives"]:
+		
+		var HardDrive = HardDriveRes.instance()
+		HardDrive.client_id = client_id
+		HardDrive.drive_number = drive_count
+		
+		HardDriveContainer.add_child(HardDrive)
+		
+		drive_count += 1
+	
+	
 	
 	
 	
