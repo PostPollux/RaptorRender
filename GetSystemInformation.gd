@@ -900,6 +900,41 @@ func get_hard_drive_info():
 #			return graphic_cards_array
 
 
+# wmic logicaldisk get DriveType,FreeSpace,Name,Size,VolumeName /Value
+
+#drivetype
+#0	Unknown
+#1	No Root Directory
+#2	Removable Disk
+#3	Local Disk
+#4	Network Drive
+#5	Compact Disc
+#6	RAM Disk
+
+#
+#
+#
+#DriveType=3
+#FreeSpace=625624137728
+#Name=C:
+#Size=999589384192
+#VolumeName=System
+#
+#
+#DriveType=2
+#FreeSpace=16283660288
+#Name=D:
+#Size=32009875456
+#VolumeName=
+#
+#
+#DriveType=4
+#FreeSpace=8648387871744
+#Name=Z:
+#Size=22442512199680
+#VolumeName=Daten
+#
+#
 
 
 ##############################################################
