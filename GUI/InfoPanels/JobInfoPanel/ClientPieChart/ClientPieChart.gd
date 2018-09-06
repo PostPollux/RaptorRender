@@ -13,6 +13,7 @@ export (Color) var chunks_not_assigned_color = Color ("bfbfbf")
 
 export (bool) var draw_outline = false
 export (Color) var outline_color = Color("000000")
+export (Color) var outline_color_highlighted = Color("FFFFFF")
 export (int) var outline_thickness = 2
 
 
@@ -20,6 +21,8 @@ export (int) var desired_spacing_between_segments_in_degrees = 2
 
 onready var NameLabel = $"NameLabel"
 onready var ChunksLabel = $"ChunksLabel"
+
+var hovered_client
 
 signal segment_hovered
 
@@ -125,17 +128,24 @@ func _draw():
 			angle_mouse_to_center =  180 + (180 - abs(raw_angle_mouse_to_center))
 		
 		# highlight hoverd segment and fill labels
+		var highlight = false
 		var local_mouse_pos = self.get_local_mouse_position()
 		if local_mouse_pos.x > 0 and local_mouse_pos.x < self.rect_size.x and local_mouse_pos.y > 0 and local_mouse_pos.y < self.rect_size.y:
 			if angle_mouse_to_center > angle_from and angle_mouse_to_center < angle_to:
+				highlight = true
+				color = color.lightened(0.4)
 				radius = (min(rect_size.x, rect_size.y) / 2 ) * 0.83
+				
 				emit_signal("segment_hovered", client)
 		
 		# actually draw the segment
 		draw_circle_segment_as_arc(quality, center, radius, angle_from, angle_to, color, filled_percentage)
 		if draw_outline:
-			draw_circle_segment_as_arc_outline(quality, center, radius, angle_from, angle_to, outline_color, filled_percentage, outline_thickness)
-		
+			if highlight:
+				draw_circle_segment_as_arc_outline(quality, center, radius, angle_from, angle_to, outline_color_highlighted, filled_percentage, outline_thickness)
+			else:
+				draw_circle_segment_as_arc_outline(quality, center, radius, angle_from, angle_to, outline_color, filled_percentage, outline_thickness)
+			
 		# advance variables
 		start_of_segment_in_degrees = angle_to + spacing_between_segments_in_degrees
 		client_number += 1
@@ -228,6 +238,8 @@ func draw_circle_arc(quality, center, radius, angle_from, angle_to, color):
 
 func _on_ClientPieChart_segment_hovered(client_with_chunk_count):
 	
+	hovered_client = client_with_chunk_count[0]
+	
 	if client_with_chunk_count[0] == "":
 		NameLabel.text = "not assigned"
 	else:
@@ -238,3 +250,20 @@ func _on_ClientPieChart_segment_hovered(client_with_chunk_count):
 func _on_ClientPieChart_mouse_exited():
 	NameLabel.text = ""
 	ChunksLabel.text = ""
+
+
+# Double click on segment to select the client
+func _on_ClientPieChart_gui_input(ev):
+	
+	# test for double click
+	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:
+		
+		# find double clicked client
+		var client = hovered_client
+		
+		# select and autofocus correct client
+		RaptorRender.JobsTable.clear_selection()
+		RaptorRender.ClientsTable.clear_selection()
+		RaptorRender.ClientsTable.select_by_id(client)
+		RaptorRender.client_selected(client)
+		RaptorRender.ClientsTable.scroll_to_row(client)

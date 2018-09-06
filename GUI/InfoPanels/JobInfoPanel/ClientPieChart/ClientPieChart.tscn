@@ -22,6 +22,7 @@ least_chunks_rendered_color = Color( 0.741176, 0.388235, 0.552941, 1 )
 chunks_not_assigned_color = Color( 0.74902, 0.74902, 0.74902, 1 )
 draw_outline = false
 outline_color = Color( 0, 0, 0, 1 )
+outline_color_highlighted = Color( 1, 1, 1, 1 )
 outline_thickness = 2
 desired_spacing_between_segments_in_degrees = 2
 
@@ -68,6 +69,8 @@ valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[connection signal="gui_input" from="." to="." method="_on_ClientPieChart_gui_input"]
 
 [connection signal="mouse_exited" from="." to="." method="_on_ClientPieChart_mouse_exited"]
 
