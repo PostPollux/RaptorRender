@@ -956,9 +956,31 @@ func get_hard_drive_info():
 				elif line_values[0] == "4":
 					type = 3 # network dive
 				
+				
 				# create size string
 				var size = int(line_values[3])
-				var size_str = String(size / 1024 / 1024 ) + " GB"
+				var size_str = ""
+				
+				if size > 1099511627776: # 1 TB
+					size_str = String(float(size) / 1024 / 1024 / 1024 / 1024) + " TB"
+					
+					# if there is a "." then show only one decimal
+					if size_str.find("."):	
+						size_str = size_str.left( size_str.find(".") + 1 ) + size_str.right ( size_str.find(" ") - 1)
+						
+				elif size > 1073741824: # 1 GB
+					size_str = String(size / 1024 / 1024 / 1024 ) + " GB"
+					
+				elif size > 1048576: # 1 MB
+					size_str = String(size / 1024 / 1024 ) + " MB"
+					
+				else:
+					size_str = "wtf! That's small!"
+				
+				
+				
+				
+				
 				
 				# calculate percentage used
 				var percentage_used = float ( int(line_values[3]) - int(line_values[1]) )    / float (line_values[3]) * 100
