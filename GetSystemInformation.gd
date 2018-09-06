@@ -932,19 +932,46 @@ func get_hard_drive_info():
 		
 			# get drive info output
 			var output = []
-			var arguments = ['/C','wmic logicaldisk get DriveType,FreeSpace,Name,Size,VolumeName /Value']
+			var arguments = ['/C','wmic logicaldisk get DriveType,FreeSpace,Name,Size,VolumeName']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
 			
-			var drive_info = output[0].strip_edges(true,true)  # strip away empty stuff
-			
-			
 			# split String in lines
-			var splitted_output = drive_info.split('\n', false, 0)  # split and don't allow empty
+			var splitted_output = output[0].split('\n', false, 0)  # split and don't allow empty
 			
-			for line in splitted_output:
-				line = line.strip_edges(true,true)
+			# start from second row (because first one are the labels
+			for line in range (1, splitted_output.size() - 1):
+				
+				# split each row into it's values and remove the empty spaces
+				var line_values = splitted_output[line].split(' ', false, 0)  
+			
+			
+				# set correct type
+				var type
+				if line_values[0] == "3":
+					type = 1 # local disk
+				elif line_values[0] == "2":
+					type = 2 # removable disk
+				elif line_values[0] == "4":
+					type = 3 # network dive
+				
+				# create size string
+				var size = int(line_values[3])
+				var size_str = String(size / 1024 / 1024 ) + " GB"
+				
+				# calculate percentage used
+				var percentage_used = float ( int(line_values[3]) - int(line_values[1]) )    / float (line_values[3]) * 100
+				
+			
+				# create the drive_dict_array
+				
+				drive_dict_array.append( { 
+					"name": line_values[2], 
+					"label": line_values[4], 
+					"size": size_str, 
+					"percentage_used": percentage_used, 
+					"type": type } )
 			
 			
 			
