@@ -893,9 +893,18 @@ func get_hard_drive_info():
 			# fill the "drive_dict_array"
 			for drive in linux_drive_array:
 				
-				# format size string
-				var size_str = drive.size.insert( drive.size.length() - 1 , " ")
-				size_str = size_str.insert(size_str.length(), "B")
+				# format size string #
+				
+				var size_str = drive.size.insert( drive.size.length() - 1 , " ") # add space
+				
+				# remove decimals if size is GBs
+				if size_str.ends_with("G"):
+					if size_str.find(",") > 0:
+						size_str.erase( size_str.find(",") , 2)
+					if size_str.find(".") > 0:
+						size_str.erase( size_str.find(".") , 2)
+				
+				size_str = size_str.insert(size_str.length(), "B") # add a B at the end
 				
 				
 				# handling null in drive label
@@ -965,9 +974,9 @@ func get_hard_drive_info():
 					size_str = String(float(size) / 1024 / 1024 / 1024 / 1024) + " TB"
 					
 					# if there is a "." then show only one decimal
-					if size_str.find("."):	
+					if size_str.find(".") > 0:
 						size_str = size_str.left( size_str.find(".") + 1 ) + size_str.right ( size_str.find(" ") - 1)
-						
+					
 				elif size > 1073741824: # 1 GB
 					size_str = String(size / 1024 / 1024 / 1024 ) + " GB"
 					
@@ -979,13 +988,10 @@ func get_hard_drive_info():
 				
 				
 				
-				
-				
-				
 				# calculate percentage used
 				var percentage_used = float ( int(line_values[3]) - int(line_values[1]) )    / float (line_values[3]) * 100
 				
-			
+				
 				# create the drive_dict_array
 				
 				drive_dict_array.append( { 
