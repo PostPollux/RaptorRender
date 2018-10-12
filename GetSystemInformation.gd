@@ -790,7 +790,7 @@ func get_graphic_cards():
 			
 			# run "lspci | grep -E 'VGA|3D'" to get a list of all graphics devices
 			var output = []
-			var arguments = ["-c","lspci | grep -E 'VGA|3D'"] # filter the output of lspci by VGA and 3D
+			var arguments = ["-c","lspci | grep -E 'VGA|3D'"] # filter the output of lspci by lines containing "VGA" or "3D"
 			OS.execute("bash", arguments, true, output)
 			
 			# split String in lines
