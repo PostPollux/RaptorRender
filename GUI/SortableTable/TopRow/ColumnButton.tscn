@@ -6,199 +6,95 @@
 [ext_resource path="res://GUI/SortableTable/images/primary_up_32x32.png" type="Texture" id=4]
 [ext_resource path="res://GUI/SortableTable/images/secondary_up_32x32.png" type="Texture" id=5]
 
-[node name="ColumnButton" type="Button" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ColumnButton" type="Button"]
 margin_right = 156.0
 margin_bottom = 22.0
-rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-flat = false
-align = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect", "Theme" ]
 
-[node name="MarginContainer" type="MarginContainer" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
 custom_constants/margin_left = 3
 custom_constants/margin_bottom = 0
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 3.0
 margin_right = 156.0
 margin_bottom = 22.0
-rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
-alignment = 0
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
 margin_top = 4.0
-margin_right = 140.0
+margin_right = 145.0
 margin_bottom = 18.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 4
 text = "Sample Button"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags" ]
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 140.0
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+margin_left = 145.0
 margin_right = 153.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 3
 custom_constants/margin_right = 5
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="primary_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="0"]
-
+[node name="primary_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer"]
 visible = false
 modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 8.0
-margin_right = 16.0
+margin_right = 8.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
 
-[node name="secondary_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="1"]
-
+[node name="secondary_down" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer"]
 visible = false
 modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 8.0
-margin_right = 16.0
+margin_right = 8.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
 
-[node name="primary_up" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="2"]
-
+[node name="primary_up" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer"]
 visible = false
 modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 8.0
-margin_right = 16.0
+margin_right = 8.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
 
-[node name="secondary_up" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" index="3"]
-
+[node name="secondary_up" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer"]
 visible = false
 modulate = Color( 0.515747, 0.602618, 0.660156, 1 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 8.0
-margin_right = 16.0
+margin_right = 8.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 8, 8 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 5 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
 
 [connection signal="pressed" from="." to="." method="_on_ColumnButton_pressed"]
-
-

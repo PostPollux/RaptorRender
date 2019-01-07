@@ -40,6 +40,7 @@ onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContai
 var ColumnSplitterRes = preload("res://GUI/SortableTable/TopRow/ColumnSplitter.tscn")
 var ColumnButtonRes = preload("res://GUI/SortableTable/TopRow/ColumnButton.tscn")
 
+var just_initialized = true # variable for workaround
 
 
 
@@ -52,6 +53,10 @@ func _ready():
 	sort_column_secondary = SortableTable.sort_column_secondary
 	
 	generate_top_row()
+	
+	# offset first collumn by one pixel (used for the workaround below)
+	ColumnButtons[0].rect_min_size.x = column_widths[0] + 1
+	column_widths[0] = column_widths[0] + 1
 
 
 
@@ -62,7 +67,12 @@ func _process(delta):
 	
 	if dragging_splitter:
 		resize_column_by_drag()
-
+	
+	# small workaround needed since Godot 3.1 (it will resize the first collumn one time after the first draw the refresh all top buttons which will then show the little arrows)
+	if just_initialized:
+		ColumnButtons[0].rect_min_size.x = column_widths[0] - 1
+		column_widths[0] = column_widths[0] - 1
+		just_initialized = false
 
 
 
