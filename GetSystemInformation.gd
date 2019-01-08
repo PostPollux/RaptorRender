@@ -8,10 +8,10 @@
 
 extends Node
 
-var client
+var client : Dictionary
 
-var hostname
-var username
+var hostname : String
+var username : String
 var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version (XP,7,10)), third item: additional info (Linux Distribution, Windows version (Pro, Home, Ultimate))
 var mac_addresses # array of all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
 var ip_addresses # array of all used ip addresses
@@ -26,9 +26,12 @@ var cpu_usage # percentage of cpu usage (int Value between 0 and 100)
 
 var recent_cpu_stat_values = [] # only relevant for Linux. Used to calculate cpu usage
 
-var user_data_dir
+var user_data_dir : String
+
+var collect_hardware_info_thread : Thread
 
 
+	
 
 func _ready():
 	
@@ -37,7 +40,7 @@ func _ready():
 	# create .bat file to read cpu usage (only for Windows)
 	if OS.get_name() == "Windows":
 		
-		var bat_file = File.new()
+		var bat_file : File = File.new()
 		
 		if bat_file.open("user://get_win_cpu_usage.bat", File.WRITE) != 0:
 			print("Error opening file")
@@ -47,16 +50,19 @@ func _ready():
 			bat_file.close()
 	
 	
+	# create a new thread used for constantly updating the hardware info in the background
+	collect_hardware_info_thread = Thread.new()
+	
 	# create timer to constantly get the cpu and memory load
-	var hardware_info_timer = Timer.new()
+	var hardware_info_timer : Timer = Timer.new()
 	hardware_info_timer.name = "Hardware Info Timer"
 	hardware_info_timer.wait_time = 2
 	hardware_info_timer.connect("timeout",self,"_on_hardware_info_timer_timeout")
-	var root_node = get_tree().get_root().get_node("Node")
+	var root_node : Node = get_tree().get_root().get_node("Node")
 	if root_node != null:
 		root_node.add_child(hardware_info_timer)
+	print("timer created")
 	hardware_info_timer.start()
-	
 	
 	# fill the variables
 	hostname = get_hostname()
@@ -155,7 +161,7 @@ func get_MAC_addresses():
 	
 	var mac_addresses = []
 	
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -229,7 +235,7 @@ func get_IP_addresses():
 	
 	var ip_addresses = []
 	
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -273,9 +279,9 @@ func get_IP_addresses():
 # returns total memory in kb
 func get_total_memory():
 	
-	var mem_total = 0
+	var mem_total : int = 0
 	
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -337,9 +343,9 @@ func get_total_memory():
 # returns available memory in kb
 func get_available_memory():
 	
-	var mem_available = 0
+	var mem_available : int = 0
 	
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -404,11 +410,11 @@ func get_cpu_info():
 	
 	var cpu = []
 	
-	var model_name = ""
-	var GHz = 0.0
-	var sockets = 0
-	var cores = 0
-	var threads = 0
+	var model_name : String = ""
+	var GHz : float = 0.0
+	var sockets : int = 0
+	var cores : int = 0
+	var threads : int  = 0
 	
 	var platform = OS.get_name()
 	
@@ -425,13 +431,13 @@ func get_cpu_info():
 			
 			if cpuinfo_file.file_exists(cpuinfo_file_path):
 				
-				var number_of_empty_lines = 0
+				var number_of_empty_lines : int = 0
 				
 				cpuinfo_file.open(cpuinfo_file_path,1)
 				
 				while true:
 					
-					var line = cpuinfo_file.get_line()
+					var line : String = cpuinfo_file.get_line()
 					
 					if line.begins_with("model name"):
 						line = line.right(10) #cut off beginning
@@ -440,9 +446,9 @@ func get_cpu_info():
 						line = line.strip_edges(true,true) # remove nonprintable characters
 						model_name = line
 						
-						GHz = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
-						GHz = GHz.left(GHz.rfind("GHz", -1))
-						GHz = float (GHz)
+						var GHz_string : String = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
+						GHz_string = GHz_string.left(GHz_string.rfind("GHz", -1))
+						GHz = float (GHz_string)
 						
 						
 						
@@ -467,7 +473,7 @@ func get_cpu_info():
 						line = line.strip_edges(true,true) # remove nonprintable characters
 						line = line.right(1) # cut off ":" 
 						line = line.strip_edges(true,true) # remove nonprintable characters
-						var physical_id = int(line)	
+						var physical_id : int = int(line)	
 						if physical_id > sockets:
 							sockets = physical_id
 					
@@ -501,9 +507,9 @@ func get_cpu_info():
 			model_name = output[0].strip_edges(true,true)  # strip away empty stuff
 			model_name = model_name.split("=")[1]  # Take the string behind the "="
 			
-			GHz = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
-			GHz = GHz.left(GHz.rfind("GHz", -1))
-			GHz = float (GHz)
+			var GHz_string = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
+			GHz_string = GHz_string.left(GHz_string.rfind("GHz", -1))
+			GHz = float (GHz_string)
 			
 			
 			# get number of sockets
@@ -512,9 +518,9 @@ func get_cpu_info():
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			sockets = output[0].strip_edges(true,true)  # strip away empty stuff
-			sockets = sockets.split("=")[1]  # Take the string behind the "="
-			sockets = int(sockets)
+			var sockets_string : String = output[0].strip_edges(true,true)  # strip away empty stuff
+			sockets_string = sockets_string.split("=")[1]  # Take the string behind the "="
+			sockets = int(sockets_string)
 			
 			
 			# get number of cores
@@ -523,8 +529,8 @@ func get_cpu_info():
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			cores = output[0].strip_edges(true,true)  # strip away empty stuff
-			cores = cores.split("=")[1]  # Take the string behind the "="
+			var cores_string : String = output[0].strip_edges(true,true)  # strip away empty stuff
+			cores_string = cores_string.split("=")[1]  # Take the string behind the "="
 			cores = int(cores)
 			
 			
@@ -534,9 +540,9 @@ func get_cpu_info():
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			threads = output[0].strip_edges(true,true)  # strip away empty stuff
-			threads = threads.split("=")[1]  # Take the string behind the "="
-			threads = int(threads)
+			var threads_string : String = output[0].strip_edges(true,true)  # strip away empty stuff
+			threads_string = threads_string.split("=")[1]  # Take the string behind the "="
+			threads = int(threads_string)
 			
 			# build the array
 			cpu.append(model_name)
@@ -555,7 +561,7 @@ func get_cpu_usage():
 	
 	var cpu_usage_as_float = 0.0
 	
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -645,11 +651,11 @@ func get_cpu_usage():
 
 
 # returns the name of the computer
-func get_hostname():
+func get_hostname() -> String:
 	
 	var hostname = ""
 	
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -675,15 +681,16 @@ func get_hostname():
 			hostname = hostname_output[0].strip_edges(true,true)
 			
 			return hostname
-
+	
+	return hostname
 
 
 # returns the current logged in username
-func get_username():
+func get_username() -> String:
 	
 	var username = ""
 	
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -711,7 +718,8 @@ func get_username():
 			username = username_output[0].strip_edges(true,true)
 			
 			return username
-			
+	
+	return username	
 
 
 
@@ -1046,8 +1054,25 @@ func get_hard_drive_info():
 ### Timer Function to get cpu and memory usage every x seconds
 ##############################################################
 
-
 func _on_hardware_info_timer_timeout():
+	
+	# collect the current hardware info in a separate thread. Whithout threading we would have a lag in the UI under Windows each time the function were called.
+	start_collect_hardware_info_thread()
+	
+	
+func start_collect_hardware_info_thread():
+	if collect_hardware_info_thread.is_active():
+		# Already working
+		return
+		
+	# start the thread	
+	collect_hardware_info_thread.start(self, "collect_current_hardware_info","")
+	
+	
+	
+func collect_current_hardware_info(something):
+	
+	print("reading current hardware info in separate thread...")
 	
 	# set memory usage
 	var mem_available = get_available_memory()
@@ -1068,3 +1093,15 @@ func _on_hardware_info_timer_timeout():
 	RaptorRender.rr_data.clients[mac_addresses[0]].memory_usage = memory_usage
 	RaptorRender.rr_data.clients[mac_addresses[0]].cpu_usage = cpu_usage
 	RaptorRender.rr_data.clients[mac_addresses[0]].hard_drives = hard_drives
+	
+	# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
+	
+	call_deferred("join_collect_hardware_info_thread")
+	
+	
+	
+func join_collect_hardware_info_thread():
+	
+	# this will effectively stop the thread
+	collect_hardware_info_thread.wait_to_finish()
+	
