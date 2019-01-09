@@ -10,21 +10,23 @@ extends Node
 
 var client : Dictionary
 
+var platform : String # to decide which function to call depending on os
+
 var hostname : String
 var username : String
-var platform_info # Array. First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version (XP,7,10)), third item: additional info (Linux Distribution, Windows version (Pro, Home, Ultimate))
-var mac_addresses # array of all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
-var ip_addresses # array of all used ip addresses
-var total_memory # total memory in kb
-var cpu_info  # array: [Model Name, MHz, number of sockets, number of cores, number of threads] 
-var graphic_cards # array with the name of all graphic cards found in the system
-var hard_drives # array with a dict for each hard drive. The dict has the following keys:  name, label, size, percentage_used, type
+var platform_info : Array # First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version (XP,7,10)), third item: additional info (Linux Distribution, Windows version (Pro, Home, Ultimate))
+var mac_addresses : Array # all mac addresses as strings formatted like xx:xx:xx:xx:xx:xx
+var ip_addresses : Array # all used ip addresses
+var total_memory : int # total memory in kb
+var cpu_info : Array # [Model Name, MHz, number of sockets, number of cores, number of threads] 
+var graphic_cards : Array # names of all graphic cards found in the system
+var hard_drives : Array # array with a dict for each hard drive. The dict has the following keys:  name, label, size, percentage_used, type
 
-var memory_usage # percentage of memory used (int Value between 0 and 100)
-var cpu_usage # percentage of cpu usage (int Value between 0 and 100)
+var memory_usage : int # percentage of memory used (int Value between 0 and 100)
+var cpu_usage : int # percentage of cpu usage (int Value between 0 and 100)
 
 
-var recent_cpu_stat_values = [] # only relevant for Linux. Used to calculate cpu usage
+var recent_cpu_stat_values : Array = [] # only relevant for Linux. Used to calculate cpu usage
 
 var user_data_dir : String
 
@@ -35,6 +37,10 @@ var collect_hardware_info_thread : Thread
 
 func _ready():
 	
+	# get current platform to call correct functions
+	platform  = OS.get_name()
+	
+	# save user data directory to a variable
 	user_data_dir = OS.get_user_data_dir()
 	
 	# create .bat file to read cpu usage (only for Windows)
@@ -116,7 +122,7 @@ func create_client_dict():
 
 func print_hardware_info():
 	
-	var mem_available = get_available_memory()
+	var mem_available : int = get_available_memory()
 	
 	print(" ")
 	print ("Hostname: " + hostname)
@@ -157,11 +163,9 @@ func print_hardware_info():
 
 
 # returns the MAC Adresses as a String Array with ":" inbetween
-func get_MAC_addresses():
+func get_MAC_addresses() -> Array:
 	
-	var mac_addresses = []
-	
-	var platform : String = OS.get_name()
+	var mac_addresses : Array = []
 	
 	match platform:
 		
@@ -170,18 +174,18 @@ func get_MAC_addresses():
 			
 			# In linux networkadapter files ar stored in "/sys/class/net/" it's easy to read the mac addresses from there 
 			
-			var dir = Directory.new()
-			var network_adapters_directory_path = "/sys/class/net/"
+			var dir : Directory = Directory.new()
+			var network_adapters_directory_path : String = "/sys/class/net/"
 			
 			if dir.dir_exists( network_adapters_directory_path ):
-				var adapter_directories = []
+				var adapter_directories : Array = []
 				
 				dir.open(network_adapters_directory_path)
 				
 				dir.list_dir_begin()
 				
 				while true:
-					var adapter_dir = dir.get_next()
+					var adapter_dir : String = dir.get_next()
 					if adapter_dir == "":
 						break
 					elif not adapter_dir.begins_with("."):
@@ -193,13 +197,13 @@ func get_MAC_addresses():
 					
 					for adapter_dir in adapter_directories:
 						
-						var address_file_path = network_adapters_directory_path + adapter_dir + "/address"
+						var address_file_path : String = network_adapters_directory_path + adapter_dir + "/address"
 						
-						var address_file = File.new()
+						var address_file : File = File.new()
 						
 						if address_file.file_exists(address_file_path):
 							address_file.open(address_file_path,1)
-							var mac_address = address_file.get_as_text().strip_edges(true,true)
+							var mac_address : String = address_file.get_as_text().strip_edges(true,true)
 							if mac_address != "00:00:00:00:00:00":
 								mac_addresses.append(mac_address)
 						
@@ -210,44 +214,43 @@ func get_MAC_addresses():
 		"Windows" :
 		
 			# invoke getmac with format option csv
-			var getmac_output = []
-			var arguments = ["/fo", "csv"]
+			var getmac_output : Array = []
+			var arguments : Array = ["/fo", "csv"]
 			OS.execute("getmac", arguments, true, getmac_output)   
 			
 			# split String in lines
-			var splitted_output = getmac_output[0].split('\n', false, 0)  
+			var splitted_output : Array = getmac_output[0].split('\n', false, 0)  
 			
 			# extract the mac addresses from the second line onwards
 			for i in range( 1, splitted_output.size()):
-				var mac_address = splitted_output[i].right(1).left(17)  # cut off beginning and ending of the line to extract the mac-address
+				var mac_address : String = splitted_output[i].right(1).left(17)  # cut off beginning and ending of the line to extract the mac-address
 				mac_address = mac_address.replace("-",":")
 				
 				mac_addresses.append(mac_address)
 				
 			
 			return mac_addresses
-
+	
+	return mac_addresses
 
 
 
 # returns the IP Adresses as a String Array
-func get_IP_addresses():
+func get_IP_addresses() -> Array:
 	
-	var ip_addresses = []
-	
-	var platform : String = OS.get_name()
+	var ip_addresses : Array = []
 	
 	match platform:
 		
 		# Linux
 		"X11" : 
 			# get a list of ip addresses by filtering the "ip addr show" command
-			var output = []
-			var arguments = ["-c","ip addr show  | grep -Eo 'inet ([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'"]
+			var output : Array = []
+			var arguments : Array = ["-c","ip addr show  | grep -Eo 'inet ([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'"]
 			OS.execute("bash", arguments, true, output)
 			
 			# split String in lines
-			var splitted_output = output[0].split('\n', false, 0)  
+			var splitted_output : Array = output[0].split('\n', false, 0)  
 			
 			for line in splitted_output:
 				ip_addresses.append(line)
@@ -258,30 +261,29 @@ func get_IP_addresses():
 		# Windows
 		"Windows" :
 			# get a list of ip addresses by filtering the "arp -a" command
-			var output = []
-			var arguments = ['/C arp -a | findstr /C:"---"']
+			var output : Array = []
+			var arguments : Array = ['/C arp -a | findstr /C:"---"']
 			OS.execute('CMD.exe', arguments, true, output)
 			
 			# split String in lines
-			var splitted_output = output[0].split('\n', false, 0)  
+			var splitted_output : Array = output[0].split('\n', false, 0)  
 			
 			for line in splitted_output:
-				var splitted_line = line.split(" ", false, 0)
+				var splitted_line : Array = line.split(" ", false, 0)
 				
 				ip_addresses.append(splitted_line[1])
 			
 			
 			return ip_addresses
-
+	
+	return ip_addresses
 
 
 
 # returns total memory in kb
-func get_total_memory():
+func get_total_memory() -> int:
 	
 	var mem_total : int = 0
-	
-	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -290,19 +292,16 @@ func get_total_memory():
 			
 			# just read the file /proc/meminfo
 			
-			var meminfo_file_path = "/proc/meminfo"
+			var meminfo_file_path : String = "/proc/meminfo"
 			
-			var meminfo_file = File.new()
+			var meminfo_file : File = File.new()
 			
 			if meminfo_file.file_exists(meminfo_file_path):
-				
-				
-				
 				
 				meminfo_file.open(meminfo_file_path,1)
 				
 				while true:
-					var line = meminfo_file.get_line()
+					var line : String = meminfo_file.get_line()
 					
 					if line.begins_with("MemTotal"):
 						line = line.right(10) #cut off beginning
@@ -325,27 +324,25 @@ func get_total_memory():
 		"Windows" :
 		
 			# get total memory
-			var output = []
-			var arguments = ['/C','wmic OS get TotalVisibleMemorySize /Value']
+			var output : Array = []
+			var arguments : Array = ['/C','wmic OS get TotalVisibleMemorySize /Value']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			var mem_total_str = output[0].strip_edges(true,true)  # strip away empty stuff
+			var mem_total_str : String = output[0].strip_edges(true,true)  # strip away empty stuff
 			mem_total_str = mem_total_str.split("=")[1]  # Take the string behind the "="
 			mem_total = int(mem_total_str)
 			
 			return mem_total
-
-
+		
+	return mem_total
 
 
 
 # returns available memory in kb
-func get_available_memory():
+func get_available_memory() -> int:
 	
 	var mem_available : int = 0
-	
-	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -354,18 +351,16 @@ func get_available_memory():
 			
 			# just read the file /proc/meminfo
 			
-			var meminfo_file_path = "/proc/meminfo"
+			var meminfo_file_path : String = "/proc/meminfo"
 			
-			var meminfo_file = File.new()
+			var meminfo_file : File = File.new()
 			
 			if meminfo_file.file_exists(meminfo_file_path):
-				
-				
-				
+						
 				meminfo_file.open(meminfo_file_path,1)
 				
 				while true:
-					var line = meminfo_file.get_line()
+					var line : String = meminfo_file.get_line()
 					
 					if line.begins_with("MemAvailable"):
 						line = line.right(13) #cut off beginning
@@ -389,34 +384,33 @@ func get_available_memory():
 		"Windows" :
 			
 			# get free memory
-			var output = []
-			var arguments = ['/C','wmic OS get FreePhysicalMemory /Value']
+			var output : Array = []
+			var arguments : Array = ['/C','wmic OS get FreePhysicalMemory /Value']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			var mem_available_str = output[0].strip_edges(true,true)  # strip away empty stuff
+			var mem_available_str : String = output[0].strip_edges(true,true)  # strip away empty stuff
 			mem_available_str = mem_available_str.split("=")[1]  # Take the string behind the "="
 			mem_available = int(mem_available_str)
 			
 			return mem_available
-
+	
+	return mem_available
 
 
 
 
 
 # returns an array [Model Name, MHz, number of sockets, number of cores, number of threads] 
-func get_cpu_info():
+func get_cpu_info() -> Array:
 	
-	var cpu = []
+	var cpu : Array = []
 	
 	var model_name : String = ""
 	var GHz : float = 0.0
 	var sockets : int = 0
 	var cores : int = 0
 	var threads : int  = 0
-	
-	var platform = OS.get_name()
 	
 	match platform:
 		
@@ -425,9 +419,9 @@ func get_cpu_info():
 			
 			# just read the file /proc/cpuinfo
 			
-			var cpuinfo_file_path = "/proc/cpuinfo"
+			var cpuinfo_file_path : String = "/proc/cpuinfo"
 			
-			var cpuinfo_file = File.new()
+			var cpuinfo_file : File = File.new()
 			
 			if cpuinfo_file.file_exists(cpuinfo_file_path):
 				
@@ -499,15 +493,15 @@ func get_cpu_info():
 		"Windows" :
 			
 			# get model name and GHz
-			var output = []
-			var arguments = ['/C','wmic cpu get Name /Value']
+			var output : Array = []
+			var arguments : Array = ['/C','wmic cpu get Name /Value']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
 			model_name = output[0].strip_edges(true,true)  # strip away empty stuff
 			model_name = model_name.split("=")[1]  # Take the string behind the "="
 			
-			var GHz_string = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
+			var GHz_string : String = model_name.right(model_name.rfind(" ", -1) + 1) # remove beginning from model name to get the GHz
 			GHz_string = GHz_string.left(GHz_string.rfind("GHz", -1))
 			GHz = float (GHz_string)
 			
@@ -552,16 +546,15 @@ func get_cpu_info():
 			cpu.append(threads)
 			
 			return cpu
+		
+	return cpu
 
 
 
 
-
-func get_cpu_usage():
+func get_cpu_usage() -> float:
 	
 	var cpu_usage_as_float = 0.0
-	
-	var platform : String = OS.get_name()
 	
 	match platform:
 		
@@ -577,24 +570,24 @@ func get_cpu_usage():
 			# read the file twice with a time offset. Substract the first values from the second ones. 
 			# usage = time spent by user and system devided by total time spent ( user + system + idle)
 			
-			var cpu_usage_file_path = "/proc/stat"
+			var cpu_usage_file_path : String = "/proc/stat"
 			
-			var cpu_usage_file = File.new()
+			var cpu_usage_file : File = File.new()
 			
 			if cpu_usage_file.file_exists(cpu_usage_file_path):
 				
-				var number_of_empty_lines = 0
+				var number_of_empty_lines : int = 0
 				
 				cpu_usage_file.open(cpu_usage_file_path,1)
 				
-				var line = cpu_usage_file.get_line() # get the first line
+				var line : String = cpu_usage_file.get_line() # get the first line
 				
 				line = line.strip_edges(true, true) # remove nonprintable characters
-				var current_cpu_stat_values = line.split(" ", false, 0) # convert the line to an array
+				var current_cpu_stat_values : Array = line.split(" ", false, 0) # convert the line to an array
 				
 				if (recent_cpu_stat_values.size() > 0):
-					var time_spent_user_plus_system = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3])
-					var time_spent_user_plus_system_plus_idle = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3]) + int(current_cpu_stat_values[4]) - int(recent_cpu_stat_values[4])
+					var time_spent_user_plus_system : int = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3])
+					var time_spent_user_plus_system_plus_idle : int = int(current_cpu_stat_values[1]) - int(recent_cpu_stat_values[1]) + int(current_cpu_stat_values[3]) - int(recent_cpu_stat_values[3]) + int(current_cpu_stat_values[4]) - int(recent_cpu_stat_values[4])
 					cpu_usage_as_float = time_spent_user_plus_system * 100 / time_spent_user_plus_system_plus_idle
 					
 				recent_cpu_stat_values = current_cpu_stat_values
@@ -617,18 +610,18 @@ func get_cpu_usage():
 			
 			# read the win_cpu_load.txt file
 			
-			var win_cpu_usage_file_path = user_data_dir + "/win_cpu_usage.txt"
+			var win_cpu_usage_file_path : String = user_data_dir + "/win_cpu_usage.txt"
 			win_cpu_usage_file_path = win_cpu_usage_file_path.replace("/","\\")
 			
-			var win_cpu_usage_file = File.new()
+			var win_cpu_usage_file : File = File.new()
 			
 			if win_cpu_usage_file.file_exists(win_cpu_usage_file_path):
 				
-				var output = []
-				var arguments = ['/C', 'type ' + win_cpu_usage_file_path]
+				var output : Array = []
+				var arguments : Array = ['/C', 'type ' + win_cpu_usage_file_path]
 				
 				OS.execute('CMD.exe', arguments, true, output)
-				var cpu_usage_str = output[0].strip_edges(true,true)  # strip away empty stuff
+				var cpu_usage_str : String = output[0].strip_edges(true,true)  # strip away empty stuff
 				
 				if cpu_usage_str.find("=") >= 0:
 					cpu_usage_str = cpu_usage_str.split("=")[1]  # Take the string behind the "="
@@ -636,18 +629,18 @@ func get_cpu_usage():
 			
 			
 			# execute the ".bat" file to save current cpu load which will be read next time
-			var bat_file_path = user_data_dir + "\\get_win_cpu_usage.bat"
+			var bat_file_path : String = user_data_dir + "\\get_win_cpu_usage.bat"
 			bat_file_path = bat_file_path.replace("/","\\")
 			
-			var output = []
-			var arguments = ['/C', bat_file_path]
+			var output : Array = []
+			var arguments : Array = ['/C', bat_file_path]
 			
 			OS.execute("CMD.exe", arguments, false, output)
 			
 			
 			return cpu_usage_as_float
 
-
+	return cpu_usage_as_float
 
 
 # returns the name of the computer
@@ -655,15 +648,13 @@ func get_hostname() -> String:
 	
 	var hostname = ""
 	
-	var platform : String = OS.get_name()
-	
 	match platform:
 		
 		# Linux
 		"X11" : 
 			
-			var hostname_output = []
-			var arguments = []
+			var hostname_output : Array = []
+			var arguments : Array = []
 			OS.execute("hostname", arguments, true, hostname_output)
 			
 			hostname = hostname_output[0].strip_edges(true,true)
@@ -674,8 +665,8 @@ func get_hostname() -> String:
 		# Windows
 		"Windows" :
 		
-			var hostname_output = []
-			var arguments = []
+			var hostname_output : Array = []
+			var arguments : Array= []
 			OS.execute("hostname", arguments, true, hostname_output)
 			
 			hostname = hostname_output[0].strip_edges(true,true)
@@ -697,8 +688,8 @@ func get_username() -> String:
 		# Linux
 		"X11" : 
 			
-			var username_output = []
-			var arguments = []
+			var username_output : Array = []
+			var arguments : Array = []
 			
 			OS.execute('whoami', arguments, true, username_output)
 			
@@ -710,8 +701,8 @@ func get_username() -> String:
 		# Windows
 		"Windows" :
 		
-			var username_output = []
-			var arguments = ['/C','echo %username%']
+			var username_output : Array = []
+			var arguments : Array = ['/C','echo %username%']
 			
 			OS.execute('CMD.exe', arguments, true, username_output)
 			
@@ -724,11 +715,9 @@ func get_username() -> String:
 
 
 # returns the name of the platform
-func get_platform_info():
+func get_platform_info() -> Array:
 	
 	var platform_info_array = []
-	
-	var platform = OS.get_name()
 	
 	match platform:
 		
@@ -738,14 +727,14 @@ func get_platform_info():
 			platform_info_array.append("Linux")
 			
 			# Kernel Version
-			var output = []
-			var arguments = ["-r"]
+			var output : Array = []
+			var arguments : Array = ["-r"]
 			
 			OS.execute("uname", arguments, true, output)
 			
-			var position_to_split = output[0].find_last("-")
+			var position_to_split : Array = output[0].find_last("-")
 			
-			var kernel_version = output[0].left(position_to_split) # take the left part of the string
+			var kernel_version : String = output[0].left(position_to_split) # take the left part of the string
 			
 			platform_info_array.append(kernel_version) 
 			
@@ -759,15 +748,15 @@ func get_platform_info():
 			platform_info_array.append("Windows")
 			
 			# Windows Version
-			var output = []
-			var arguments = ['/C','wmic os get Caption /Value']
+			var output : Array = []
+			var arguments : Array = ['/C','wmic os get Caption /Value']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			var version_str = output[0].strip_edges(true,true)  # strip away empty stuff
+			var version_str : String = output[0].strip_edges(true,true)  # strip away empty stuff
 			version_str = version_str.split("=")[1]  # Take the string behind the "="
 			version_str = version_str.replace("Microsoft","").replace("Windows","").strip_edges(true,true)
-			var version_str_splitted = version_str.split(" ")
+			var version_str_splitted : Array = version_str.split(" ")
 			
 			platform_info_array.append(version_str_splitted[0])
 			if version_str_splitted.size() > 1:
@@ -782,14 +771,15 @@ func get_platform_info():
 			
 			return platform_info_array
 
-
+	return platform_info_array
+	
+	
+	
 
 # return the names of the graphics devices
-func get_graphic_cards():
+func get_graphic_cards() -> Array:
 	
 	var graphic_cards_array = []
-	
-	var platform = OS.get_name()
 	
 	match platform:
 		
@@ -797,17 +787,17 @@ func get_graphic_cards():
 		"X11" :
 			
 			# run "lspci | grep -E 'VGA|3D'" to get a list of all graphics devices
-			var output = []
-			var arguments = ["-c","lspci | grep -E 'VGA|3D'"] # filter the output of lspci by lines containing "VGA" or "3D"
+			var output : Array = []
+			var arguments : Array = ["-c","lspci | grep -E 'VGA|3D'"] # filter the output of lspci by lines containing "VGA" or "3D"
 			OS.execute("bash", arguments, true, output)
 			
 			# split String in lines
-			var splitted_output = output[0].split('\n', false, 0)  
+			var splitted_output : Array = output[0].split('\n', false, 0)  
 			
 			for line in splitted_output:
 				
 				# remove stuff at the beginning of the line
-				var position_to_split = line.find(": ")
+				var position_to_split : int = line.find(": ")
 				line = line.right(position_to_split + 2)
 				
 				# remove stuff at the end of the line
@@ -829,30 +819,28 @@ func get_graphic_cards():
 		"Windows" :
 			
 			# get number of threads
-			var output = []
-			var arguments = ['/C','wmic path win32_VideoController get name /Value']
+			var output : Array = []
+			var arguments : Array = ['/C','wmic path win32_VideoController get name /Value']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
-			var graphics = output[0].strip_edges(true,true)  # strip away empty stuff
+			var graphics : String = output[0].strip_edges(true,true)  # strip away empty stuff
 			graphics = graphics.split("=")[1]  # Take the string behind the "="
 			
 			graphic_cards_array.append(graphics)
 			
 			return graphic_cards_array
 			
-			
+	return graphic_cards_array
 
 
 
 # Get Hard Drive Information
 func get_hard_drive_info():
 	
-	var platform = OS.get_name()
-	
 	# a array with an universal dictionary for each drive. The dict will hold the following keys: 
 	# name, label, size, percentage_used, type (1 Local Disk, 2 Removable Disk, 3 Network Drive)
-	var drive_dict_array = [] 
+	var drive_dict_array : Array = [] 
 		
 	match platform:
 		
@@ -861,17 +849,17 @@ func get_hard_drive_info():
 		
 			# use "lsblk" and "df" in terminal to get some hard drive infos
 			
-			var linux_drive_array = [] # a array with a dictionary for each drive. The dict will hold the following keys: name, mountpoint, label, size, rm, used
+			var linux_drive_array : Array = [] # a array with a dictionary for each drive. The dict will hold the following keys: name, mountpoint, label, size, rm, used
 			
-			var output = [] #                     show these columns   |  format as json  | filter only mounted ones | remove line with "boot" |  remove snap mounted drives
-			                #                                v                      v          v             .------------------'     .------------------'
-			var arguments = ["-c","lsblk --output 'NAME,MOUNTPOINT,LABEL,SIZE,RM' --json | grep '/' | grep -v 'boot' | grep -v 'snapd\/snap'"]
+			var output : Array = [] #                     show these columns   |  format as json  | filter only mounted ones | remove line with "boot" |  remove snap mounted drives
+			                        #                                v                      v          v             .------------------'     .------------------'
+			var arguments : Array = ["-c","lsblk --output 'NAME,MOUNTPOINT,LABEL,SIZE,RM' --json | grep '/' | grep -v 'boot' | grep -v 'snapd\/snap'"]
 			OS.execute("bash", arguments, true, output)
 			
 			# each line is one mounted hard drive. Now clean the string and convert that json output to a dict
 			
 			# split String in lines
-			var splitted_output = output[0].split('\n', false, 0)  
+			var splitted_output : Array = output[0].split('\n', false, 0)  
 			
 			for line in splitted_output:
 				line = line.strip_edges(true,true)
@@ -891,11 +879,11 @@ func get_hard_drive_info():
 				arguments = ["-c","df | grep '" + drive.name + "'"]
 				OS.execute("bash", arguments, true, output)
 				
-				var used = output[0].left (output[0].find("%") ) # take the left part of the string befor "%"
+				var used : String = output[0].left (output[0].find("%") ) # take the left part of the string befor "%"
 				used = used.right ( used.length() - 3 ) # take the last three characters
-				used = int( used.strip_edges(true,true) ) # remove white spaces and convert to int
+				used =  used.strip_edges(true,true) # remove white spaces
 				
-				drive.percentage_used = used
+				drive.percentage_used = int(used)
 			
 			
 			# fill the "drive_dict_array"
@@ -903,7 +891,7 @@ func get_hard_drive_info():
 				
 				# format size string #
 				
-				var size_str = drive.size.insert( drive.size.length() - 1 , " ") # add space
+				var size_str : String = drive.size.insert( drive.size.length() - 1 , " ") # add space
 				
 				# remove decimals if size is GBs
 				if size_str.ends_with("G"):
@@ -916,7 +904,7 @@ func get_hard_drive_info():
 				
 				
 				# handling null in drive label
-				var label_str
+				var label_str : String
 				if drive.label == null:
 					label_str = ""
 				else:
@@ -924,7 +912,7 @@ func get_hard_drive_info():
 				
 				
 				# set correct type
-				var type
+				var type : int
 				if drive.rm == false:
 					type = 1 # local disk
 				else: 
@@ -948,24 +936,25 @@ func get_hard_drive_info():
 		"Windows" :
 		
 			# get drive info output
-			var output = []
-			var arguments = ['/C','wmic logicaldisk get DriveType,FreeSpace,Name,Size,VolumeName']
+			var output : Array = []
+			var arguments : Array = ['/C','wmic logicaldisk get DriveType,FreeSpace,Name,Size,VolumeName']
 			
 			OS.execute('CMD.exe', arguments, true, output)
 			
 			
 			# split String in lines
-			var splitted_output = output[0].split('\n', false, 0)  # split and don't allow empty
+			var splitted_output : Array = output[0].split('\n', false, 0)  # split and don't allow empty
 			
 			# start from second row (because first one are the labels
 			for line in range (1, splitted_output.size() - 1):
 				
 				# split each row into it's values and remove the empty spaces
-				var line_values = splitted_output[line].split(' ', false, 0)  
+				var line_values : Array = splitted_output[line].split(' ', false, 0)  
 			
 			
 				# set correct type
-				var type
+				# (windows drivetypes: 0 Unknown, 1 No Root Directory, 2 Removable Disk, 3 Local Disk,4 Network Drive, 5 Compact Disc, 6 RAM Disk)
+				var type : int
 				if line_values[0] == "3":
 					type = 1 # local disk
 				elif line_values[0] == "2":
@@ -975,8 +964,8 @@ func get_hard_drive_info():
 				
 				
 				# create size string
-				var size = int(line_values[3])
-				var size_str = ""
+				var size : int = int(line_values[3])
+				var size_str : String = ""
 				
 				if size > 1099511627776: # 1 TB
 					size_str = String(float(size) / 1024 / 1024 / 1024 / 1024) + " TB"
@@ -997,7 +986,7 @@ func get_hard_drive_info():
 				
 				
 				# calculate percentage used
-				var percentage_used = float ( int(line_values[3]) - int(line_values[1]) )    / float (line_values[3]) * 100
+				var percentage_used : float = float ( int(line_values[3]) - int(line_values[1]) )    / float (line_values[3]) * 100
 				
 				
 				# create the drive_dict_array
@@ -1015,39 +1004,6 @@ func get_hard_drive_info():
 
 
 
-#drivetype
-#0	Unknown
-#1	No Root Directory
-#2	Removable Disk
-#3	Local Disk
-#4	Network Drive
-#5	Compact Disc
-#6	RAM Disk
-
-#
-#
-#
-#DriveType=3
-#FreeSpace=625624137728
-#Name=C:
-#Size=999589384192
-#VolumeName=System
-#
-#
-#DriveType=2
-#FreeSpace=16283660288
-#Name=D:
-#Size=32009875456
-#VolumeName=
-#
-#
-#DriveType=4
-#FreeSpace=8648387871744
-#Name=Z:
-#Size=22442512199680
-#VolumeName=Daten
-#
-#
 
 
 ##############################################################
@@ -1062,7 +1018,7 @@ func _on_hardware_info_timer_timeout():
 	
 func start_collect_hardware_info_thread():
 	if collect_hardware_info_thread.is_active():
-		# Already working
+		# stop here if already working
 		return
 		
 	# start the thread	
@@ -1070,13 +1026,13 @@ func start_collect_hardware_info_thread():
 	
 	
 	
-func collect_current_hardware_info(something):
+func collect_current_hardware_info(args):
 	
 	print("reading current hardware info in separate thread...")
 	
 	# set memory usage
-	var mem_available = get_available_memory()
-	var mem_usage_as_float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100
+	var mem_available : int = get_available_memory()
+	var mem_usage_as_float : float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100
 	
 	memory_usage = int(mem_usage_as_float)
 	
@@ -1095,7 +1051,6 @@ func collect_current_hardware_info(something):
 	RaptorRender.rr_data.clients[mac_addresses[0]].hard_drives = hard_drives
 	
 	# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
-	
 	call_deferred("join_collect_hardware_info_thread")
 	
 	
