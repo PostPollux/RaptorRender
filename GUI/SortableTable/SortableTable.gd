@@ -20,6 +20,7 @@
 
 extends ScrollContainer
 
+class_name SortableTable
 
 
 # column names and width arrays
@@ -27,27 +28,27 @@ export (Array, String) var column_names
 export (Array, int) var column_widths_initial
 
 # variables needed for sorting
-export (int) var sort_column_primary = 1
-export (int) var sort_column_secondary = 2
-var sort_column_primary_reversed = false
-var sort_column_secondary_reversed = false
+export (int) var sort_column_primary : int = 1
+export (int) var sort_column_secondary : int = 2
+var sort_column_primary_reversed : bool = false
+var sort_column_secondary_reversed : bool = false
 
 # row height
-export (int) var row_height = 30
+export (int) var row_height : int = 30
 
 # color variables
-export (Color) var row_color = Color("3c3c3c")
-export (Color) var row_color_selected = Color("956248")
-export (Color) var row_color_red = Color("643f3b")
-export (Color) var row_color_blue = Color("3b5064")
-export (Color) var row_color_green = Color("3b5a3b")
-export (Color) var row_color_yellow = Color("585a3b")
-export (Color) var row_color_black = Color("1d1d1d")
-export (float) var row_brightness_difference = 0.05
-export (float) var hover_brightness_boost = 0.1
+export (Color) var row_color : Color = Color("3c3c3c")
+export (Color) var row_color_selected : Color = Color("956248")
+export (Color) var row_color_red : Color = Color("643f3b")
+export (Color) var row_color_blue : Color = Color("3b5064")
+export (Color) var row_color_green : Color = Color("3b5a3b")
+export (Color) var row_color_yellow : Color = Color("585a3b")
+export (Color) var row_color_black : Color = Color("1d1d1d")
+export (float) var row_brightness_difference : float = 0.05
+export (float) var hover_brightness_boost : float = 0.1
 
 # id needed in the registring function of the RaptorRender autoload script
-export (String) var table_id = "custom id"
+export (String) var table_id : String = "custom id"
 
 # references to child nodes
 onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
@@ -58,7 +59,7 @@ onready var AutoScrollTween = $"AutoScrollTween"
 # variables needed for scrolling
 var previous_scroll_horizontal = 0
 var previous_scroll_vertical = 0
-var shift_ctrl_plus_scroll = false
+var shift_ctrl_plus_scroll : bool = false
 
 # signals
 signal refresh_table_content

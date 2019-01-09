@@ -5,7 +5,7 @@ extends Node
 # convert a hex string to a PoolByteArray 
 # (hex string can be marked with 0x at the beginning, but doesn't have to)
 
-func hex_string_to_PoolByteArray(hex_string):
+func hex_string_to_PoolByteArray(hex_string : String) -> Array:
 	
 	# convert to lower case
 	hex_string = hex_string.to_lower() 
@@ -20,21 +20,21 @@ func hex_string_to_PoolByteArray(hex_string):
 		return []
 	
 	# split the string to a string array where each element contains one hex-blob
-	var hex_string_splitted = []
+	var hex_string_splitted : Array = []
 	
 	for i in range(0, hex_string.length()/2):
 		hex_string_splitted.append(hex_string.substr(i*2,2))
 		
 		
 	# convert each hex-blob to an integer
-	var converted_int_array = []
+	var converted_int_array : Array = []
 	
 	for hex_blob in hex_string_splitted:
 		
-		var converted_int = 0
+		var converted_int : int = 0
 		
-		var first_digit = 0 
-		var second_digit = 0 
+		var first_digit : int = 0 
+		var second_digit : int = 0 
 		
 		match hex_blob.substr(0,1):
 			"0": first_digit = 0
@@ -77,7 +77,7 @@ func hex_string_to_PoolByteArray(hex_string):
 		converted_int_array.append(converted_int)
 	
 	
-	var hex_as_PoolByteArray = PoolByteArray(converted_int_array)
+	var hex_as_PoolByteArray : Array = PoolByteArray(converted_int_array)
 	
 	return hex_as_PoolByteArray
 	

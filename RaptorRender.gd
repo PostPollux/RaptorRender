@@ -3,7 +3,7 @@ extends Node
 
 ###### Settings Variables ########
 
-var colorize_table_rows = false
+var colorize_table_rows : bool = false
 
 
 #### preloads ####
@@ -13,11 +13,11 @@ var CurrentJobLinkRes = preload("res://GUI/specific_sortable_table_cell_elements
 
 
 
-var NotificationSystem
+var NotificationSystem : NotificationSystem
 
-var JobsTable
-var ClientsTable
-var ChunksTable
+var JobsTable : SortableTable
+var ClientsTable : SortableTable
+var ChunksTable : SortableTable
 
 var ContextMenu_Clients
 var ContextMenu_Jobs
@@ -969,8 +969,9 @@ func _ready():
 	
 
 
-func register_notification_system(NotificationSystemReference):
-	NotificationSystem = NotificationSystemReference
+func register_notification_system(NotificationSystemInstance : NotificationSystem):
+	NotificationSystem = NotificationSystemInstance
+
 
 
 func register_client_info_panel(InfoPanel):  
@@ -978,35 +979,34 @@ func register_client_info_panel(InfoPanel):
 	ClientInfoPanel = InfoPanel
 
 
+
 func register_job_info_panel(InfoPanel):  
 	
 	JobInfoPanel = InfoPanel
 
 
-func register_table(SortableTable):  
 
-	var sortable_table_id = SortableTable.table_id  
+func register_table(SortableTableInstance : SortableTable):  
+
+	var sortable_table_id : String = SortableTableInstance.table_id  
 	
 	match sortable_table_id: 
 		"jobs":
-			JobsTable = SortableTable
+			JobsTable = SortableTableInstance
 			JobsTable.connect("refresh_table_content", self, "refresh_jobs_table")
 			JobsTable.connect("something_just_selected", self, "job_selected")
 			JobsTable.connect("selection_cleared", self, "job_selection_cleared")
 			JobsTable.connect("context_invoked", self, "jobs_context_menu_invoked")
 			
 		"chunks":
-			ChunksTable = SortableTable 
+			ChunksTable = SortableTableInstance
 		
 		"clients": 
-			ClientsTable = SortableTable 
+			ClientsTable = SortableTableInstance
 			ClientsTable.connect("refresh_table_content", self, "refresh_clients_table")
 			ClientsTable.connect("something_just_selected", self, "client_selected")
 			ClientsTable.connect("selection_cleared", self, "client_selection_cleared")
 			ClientsTable.connect("context_invoked", self, "client_context_menu_invoked")
-			
-		
-
 
 
 

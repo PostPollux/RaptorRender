@@ -32,7 +32,6 @@ size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="TopRow" type="MarginContainer" parent="VBox_TopRow_Content"]
-editor/display_folded = true
 margin_right = 615.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )

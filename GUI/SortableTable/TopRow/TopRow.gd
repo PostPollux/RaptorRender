@@ -10,6 +10,8 @@
 
 extends MarginContainer
 
+class_name SortableTableTopRow
+
 
 # variables for defining the buttons and splitters
 var Splitters = []

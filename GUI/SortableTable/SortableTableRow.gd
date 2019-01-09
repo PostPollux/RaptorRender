@@ -11,42 +11,44 @@
 
 extends MarginContainer
 
+class_name SortableTableRow
 
-var column_count
-var row_position # position of the row in the table. First row is 1, not 0.
+
+var column_count : int
+var row_position : int # position of the row in the table. First row is 1, not 0.
 var id # unique id of the representing content
-var sort_values = [] # e.g. sort_values[5-1] holds the value that is used to sort column 5
+var sort_values : Array = [] # e.g. sort_values[5-1] holds the value that is used to sort column 5
 
-var even = false
-var selected = false
-var row_height
+var even : bool = false
+var selected : bool = false
+var row_height : int
 
-var SortableTable
+var SortableTable : SortableTable
 
 # cell references
-var CellsClipContainerArray = [] # used to clip the cell content
-var CellsArray = [] # references to the actual cells. For appending childs as content.
-var CellsColorRectArray = [] # used for highlighting the primary sort column
+var CellsClipContainerArray : Array  = [] # used to clip the cell content
+var CellsArray : Array = [] # references to the actual cells. For appending childs as content.
+var CellsColorRectArray : Array = [] # used for highlighting the primary sort column
 
 # row colors
-var row_color
-var row_color_even 
-var row_color_odd 
-var row_color_selected 
-var row_color_selected_even
-var row_color_selected_odd
-var row_color_red
-var row_color_blue
-var row_color_green
-var row_color_yellow
-var row_color_black
+var row_color : Color
+var row_color_even : Color
+var row_color_odd : Color
+var row_color_selected : Color
+var row_color_selected_even : Color
+var row_color_selected_odd : Color
+var row_color_red : Color
+var row_color_blue : Color
+var row_color_green : Color
+var row_color_yellow : Color
+var row_color_black : Color
 
-var even_odd_brightness_difference
-var hover_brightness_boost
+var even_odd_brightness_difference : float
+var hover_brightness_boost : float
 
 # references to child nodes
-onready var HBoxForCells = $"HBoxContainer"
-onready var RowBackgroundColorRect = $"BackgroundColor"
+onready var HBoxForCells : HBoxContainer = $"HBoxContainer"
+onready var RowBackgroundColorRect : ColorRect = $"BackgroundColor"
 
 
 # signals
@@ -95,7 +97,7 @@ func _ready():
 ######################
 
 
-func set_row_position(pos):
+func set_row_position(pos : int):
 	row_position = pos
 	update_row_even_or_odd()
 	update_row_color_reset()
@@ -111,7 +113,7 @@ func update_row_even_or_odd():
 
 
 
-func set_selected (sel):
+func set_selected (sel : bool):
 	selected = sel
 	if selected:
 		update_row_color_select()
@@ -120,7 +122,7 @@ func set_selected (sel):
 
 
 
-func set_row_height(height):
+func set_row_height(height : int):
 	row_height = height
 	rect_min_size.y = height
 	set_cell_height(height)
@@ -142,13 +144,13 @@ func create_cells():
 	
 	for i in range(column_count):
 		
-		var CellClipContainer = Container.new()
+		var CellClipContainer : Container = Container.new()
 		CellClipContainer.name = "cell_clip_container_" + String(i+1)
 		CellClipContainer.rect_clip_content = true
 		CellClipContainer.set_v_size_flags(3) # fill + expand
 		CellClipContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		
-		var CellColorRect = ColorRect.new()
+		var CellColorRect : ColorRect = ColorRect.new()
 		CellColorRect.name = "cell_color_rect"
 		CellColorRect.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		CellColorRect.set_v_size_flags(3) # fill + expand
@@ -156,7 +158,7 @@ func create_cells():
 		CellColorRect.rect_min_size.y = row_height
 		CellColorRect.set_modulate(Color("00ffffff"))
 		
-		var CellMarginContainer = MarginContainer.new()
+		var CellMarginContainer : MarginContainer = MarginContainer.new()
 		CellMarginContainer.name = "cell_margin_container"
 		CellMarginContainer.set_v_size_flags(3) # fill + expand
 		CellMarginContainer.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
@@ -169,13 +171,13 @@ func create_cells():
 		# add the cell to the HBoxContainer and to the CellsClipContainerArray
 		CellClipContainer.add_child(CellColorRect)
 		CellClipContainer.add_child(CellMarginContainer)
-		var HBoxForCells = $"HBoxContainer"
+		var HBoxForCells : HBoxContainer = $"HBoxContainer"
 		HBoxForCells.add_child(CellClipContainer)
 		CellsClipContainerArray.append(CellClipContainer)
 		
 		
 		# add a line to separate the individual cells visually
-		var VerticalLine = VSeparator.new()
+		var VerticalLine : VSeparator = VSeparator.new()
 		VerticalLine.set_mouse_filter(Control.MOUSE_FILTER_IGNORE)
 		HBoxForCells.add_child(VerticalLine)
 		
@@ -192,19 +194,19 @@ func fill_CellArrays ():
 	CellsArray.clear()
 	
 	for Cell in CellsClipContainerArray:
-		var CellColorRect = Cell.get_child(0)
-		var CellMarginContainer = Cell.get_child(1)
+		var CellColorRect : ColorRect = Cell.get_child(0)
+		var CellMarginContainer : MarginContainer = Cell.get_child(1)
 		CellsColorRectArray.append(CellColorRect)
 		CellsArray.append(CellMarginContainer)
 
 
 
 # add a child node as content to a cell
-func set_cell_content(column, child):
+func set_cell_content(column : int, child : Node):
 	
 	if column <= column_count:
 		if CellsArray[column-1].get_child_count() > 0: 
-			var childs = CellsArray[column-1].get_children() 
+			var childs : Array = CellsArray[column-1].get_children() 
 			for child in childs: 
 				child.queue_free() 
 		CellsArray[column-1].add_child(child)
@@ -212,14 +214,14 @@ func set_cell_content(column, child):
 
 
 # the width has to be set manually, as the "fill, expand" flag doesn't work with parent container that is used for clipping
-func set_cell_width(column, width):
+func set_cell_width(column : int, width : int):
 	if column <= column_count:
 		CellsClipContainerArray[column-1].rect_min_size.x = width
 		CellsColorRectArray[column-1].rect_min_size.x = width
 
 
 
-func set_cell_height(height):
+func set_cell_height(height : int):
 	if HBoxForCells != null:
 		for ClipContainer in CellsClipContainerArray:
 			ClipContainer.rect_min_size.y = height
@@ -271,15 +273,15 @@ func set_row_color_by_string(color_string):
 
 
 
-func set_row_color(color):
+func set_row_color(color : Color):
 	
 	row_color_even = color
 	row_color_odd = color.lightened(even_odd_brightness_difference)
 
 
 
-func modulate_cell_color(column, color):
-	CellsColorRectArray[column-1].set_modulate( color )
+func modulate_cell_color(column : int, color : Color):
+	CellsColorRectArray[column - 1].set_modulate( color )
 
 
 
@@ -345,7 +347,7 @@ func _on_SortabelTableRow_mouse_exited():
 
 
 
-func _on_SortabelTableRow_gui_input(ev):
+func _on_SortabelTableRow_gui_input(ev : InputEvent):
 	if ev.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("row_clicked", row_position)
 	if ev.is_action_pressed("ui_middle_mouse_button"):

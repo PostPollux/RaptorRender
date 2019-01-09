@@ -1028,8 +1028,6 @@ func start_collect_hardware_info_thread():
 	
 func collect_current_hardware_info(args):
 	
-	print("reading current hardware info in separate thread...")
-	
 	# set memory usage
 	var mem_available : int = get_available_memory()
 	var mem_usage_as_float : float = ( float(total_memory) - float(mem_available) )  / float(total_memory) * 100

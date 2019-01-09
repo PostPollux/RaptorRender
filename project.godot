@@ -8,9 +8,38 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Control",
+"class": "NotificationSystem",
+"language": "GDScript",
+"path": "res://GUI/NotificationSystem/NotificationSystem.gd"
+}, {
+"base": "ScrollContainer",
+"class": "SortableTable",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/SortableTable.gd"
+}, {
+"base": "MarginContainer",
+"class": "SortableTableRow",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/SortableTableRow.gd"
+}, {
+"base": "VBoxContainer",
+"class": "SortableTableRowContainerFilled",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/RowContainerFilled.gd"
+}, {
+"base": "MarginContainer",
+"class": "SortableTableTopRow",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/TopRow/TopRow.gd"
+} ]
 _global_script_class_icons={
-
+"NotificationSystem": "",
+"SortableTable": "",
+"SortableTableRow": "",
+"SortableTableRowContainerFilled": "",
+"SortableTableTopRow": ""
 }
 
 [application]

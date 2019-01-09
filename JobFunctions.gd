@@ -1,15 +1,15 @@
 extends Node
 
-func get_chunk_counts_TotalFinishedActive(job_id):
+func get_chunk_counts_TotalFinishedActive(job_id) -> Array:
 
-	var chunk_keys = RaptorRender.rr_data.jobs[job_id].chunks.keys()
-			
-	var chunks_total = 0
-	var chunks_finished = 0
-	var chunks_active = 0
+	var chunk_keys : Array = RaptorRender.rr_data.jobs[job_id].chunks.keys()
+	
+	var chunks_total : int = 0
+	var chunks_finished : int = 0
+	var chunks_active : int = 0
 	
 	for chunk_key in chunk_keys:
-		var chunk_status = RaptorRender.rr_data.jobs[job_id].chunks[chunk_key].status
+		var chunk_status : String = RaptorRender.rr_data.jobs[job_id].chunks[chunk_key].status
 		match chunk_status:
 			"1_rendering": chunks_active += 1
 			"5_finished": chunks_finished += 1
@@ -20,23 +20,23 @@ func get_chunk_counts_TotalFinishedActive(job_id):
 
 
 
-func open_folder(path):
+func open_folder(path : String):
 
-	var platform = OS.get_name()
+	var platform : String = OS.get_name()
 	
 	match platform:
 		
 		# Linux
 		"X11" :
 			
-			var corrected_path = path.replace("\\","/") # convert path to unix style
+			var corrected_path : String = path.replace("\\","/") # convert path to unix style
 			
-			var dir = Directory.new()
+			var dir : Directory = Directory.new()
 			
 			if dir.dir_exists( corrected_path ):
 				
-				var arguments = [corrected_path]
-				var execute_output =[]
+				var arguments : Array = [corrected_path]
+				var execute_output : Array =[]
 				OS.execute("xdg-open", arguments, false, execute_output)
 				
 			else:
@@ -46,14 +46,14 @@ func open_folder(path):
 		# Windows
 		"Windows" :
 			
-			var corrected_path = path.replace("/","\\") # convert path windows style
+			var corrected_path : String = path.replace("/","\\") # convert path windows style
 			
-			var dir = Directory.new()
+			var dir : Directory = Directory.new()
 			
 			if dir.dir_exists( corrected_path ):
 				
-				var arguments = [corrected_path]
-				var execute_output =[]
+				var arguments : Array = [corrected_path]
+				var execute_output : Array = []
 				OS.execute("explorer", arguments, false, execute_output)
 				
 			else:
@@ -64,14 +64,14 @@ func open_folder(path):
 		# Mac OS
 		"OSX" :
 			
-			var corrected_path = path.replace("\\","/") # convert path to unix style
+			var corrected_path : String = path.replace("\\","/") # convert path to unix style
 			
-			var dir = Directory.new()
+			var dir : Directory = Directory.new()
 			
 			if dir.dir_exists( corrected_path ):
 				
-				var arguments = [corrected_path]
-				var execute_output =[]
+				var arguments : Array = [corrected_path]
+				var execute_output : Array = []
 				OS.execute("open", arguments, false, execute_output)
 				
 			else:
