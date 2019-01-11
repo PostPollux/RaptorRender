@@ -85,6 +85,8 @@ func _ready():
 	RowContainerEmpty.create_initial_empty_rows()
 	
 	
+	
+	
 	# connect signals
 	TopRow.connect("sort_invoked", self, "sort")
 	RowContainerEmpty.connect("selection_cleared", self, "emit_selection_cleared_signal")
@@ -130,6 +132,14 @@ func sort():
 	RowContainerFilled.update_id_position_dict()
 	RowContainerFilled.update_positions_of_rows()
 
+
+##################
+### handle columns
+##################
+
+func set_column_width(column : int, width : int):
+	RowContainerFilled.set_column_width( column, width)
+	RowContainerEmpty.set_column_width( column, width)
 
 
 

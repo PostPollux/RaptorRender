@@ -497,11 +497,11 @@ func add_id_to_selection(id):
 
 
 func resize_columns():
-	
+
 	var count : int = 1
-	
+
 	for ColumnButton in TopRow.ColumnButtons:
-		
+
 		# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
 		set_column_width(count, ColumnButton.rect_min_size.x)
 		count += 1

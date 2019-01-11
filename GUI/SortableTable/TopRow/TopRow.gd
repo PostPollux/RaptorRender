@@ -41,7 +41,7 @@ onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContai
 var ColumnSplitterRes = preload("res://GUI/SortableTable/TopRow/ColumnSplitter.tscn")
 var ColumnButtonRes = preload("res://GUI/SortableTable/TopRow/ColumnButton.tscn")
 
-var just_initialized : bool = true # variable for workaround
+var just_initialized : bool = false # variable for workaround
 
 
 signal sort_invoked
@@ -83,10 +83,9 @@ func generate_top_row():
 	for column_name in column_names:
 		
 		# column button
-		var ColumnButton = ColumnButtonRes.instance()
+		var ColumnButton : SortableTableCollumnButton = ColumnButtonRes.instance()
 		ColumnButton.column_button_name = column_name
 		ColumnButton.id = count
-		print (column_name)
 		ColumnButton.rect_min_size.x = column_widths[count - 1]
 		ColumnButton.connect("column_button_pressed", self, "column_button_pressed")
 		if count == sort_column_primary:
@@ -116,6 +115,8 @@ func generate_top_row():
 	# offset first collumn by one pixel (used for the workaround below)
 	ColumnButtons[0].rect_min_size.x = column_widths[0] + 1
 	column_widths[0] = column_widths[0] + 1
+	
+	just_initialized = true
 
 
 
@@ -137,15 +138,15 @@ func resize_column_by_drag():
 	if Input.is_mouse_button_pressed(1):
 		
 		# resize the ColumnButton of the TopRow
-		var mouse_pos_x = get_viewport().get_mouse_position().x
-		var calculated_size = min_size_of_column_before_dragging + (mouse_pos_x - mouse_position_x_before_dragging)
+		var mouse_pos_x : int = get_viewport().get_mouse_position().x
+		var calculated_size : int = min_size_of_column_before_dragging + (mouse_pos_x - mouse_position_x_before_dragging)
 		if calculated_size < 12:
 			calculated_size = 12
 		ColumnButtons[dragging_splitter_id - 1].rect_min_size.x = calculated_size
 		column_widths[dragging_splitter_id - 1] = calculated_size
 		
 		# apply the size of the ColumnButton of the TopRow to all the rows of the table
-		var column_width = column_widths[dragging_splitter_id - 1]
+		var column_width : int = column_widths[dragging_splitter_id - 1]
 		RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
 		RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
 	
@@ -155,7 +156,7 @@ func resize_column_by_drag():
 	else:
 		
 		# apply the size of the ColumnButton of the TopRow to all the rows of the table
-		var column_width = ColumnButtons[dragging_splitter_id - 1].rect_size.x
+		var column_width : int = ColumnButtons[dragging_splitter_id - 1].rect_size.x
 		RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
 		RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
 		
@@ -178,7 +179,7 @@ func column_button_pressed(column_id):
 		SortableTable.sort_column_primary = sort_column_primary
 		SortableTable.sort_column_primary_reversed = sort_column_primary_reversed
 		
-		var count = 1
+		var count : int = 1
 		for ColumnButton in ColumnButtons:
 		
 			if count != column_id:
@@ -194,7 +195,7 @@ func column_button_pressed(column_id):
 		SortableTable.sort_column_secondary = sort_column_secondary
 		SortableTable.sort_column_secondary_reversed = sort_column_secondary_reversed
 	
-	var count = 1
+	var count : int = 1
 	for ColumnButton in ColumnButtons:
 		
 		# highlight the primary column
