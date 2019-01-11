@@ -24,8 +24,8 @@ class_name SortableTable
 
 
 # column names and width arrays
-export (Array, String) var column_names
-export (Array, int) var column_widths_initial
+export (Array, String) var column_names = []
+export (Array, int) var column_widths = []
 
 # variables needed for sorting
 export (int) var sort_column_primary : int = 1
@@ -104,8 +104,7 @@ func _input(event):
 
 func set_top_row():
 	TopRow.column_names = column_names
-	TopRow.column_widths_initial = column_widths_initial
-	TopRow.column_widths = column_widths_initial
+	TopRow.column_widths = column_widths 
 	TopRow.sort_column_primary = sort_column_primary
 	TopRow.sort_column_secondary = sort_column_secondary
 	

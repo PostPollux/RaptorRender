@@ -9,65 +9,37 @@
 [sub_resource type="DynamicFont" id=1]
 
 size = 12
-use_mipmaps = false
 use_filter = true
 extra_spacing_bottom = 4
 font_data = ExtResource( 4 )
-_sections_unfolded = [ "Extra Spacing", "Font", "Font/fallback", "Settings" ]
 
 [node name="BasicNotificationBox" type="Control"]
-
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
 margin_left = -24.0
 margin_top = 50.0
 margin_bottom = 74.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Focus", "Visibility" ]
 
-[node name="BasicNotificationContainer" type="MarginContainer" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="BasicNotificationContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -316.0
 margin_top = -1.0
 margin_right = 3.0
 margin_bottom = 25.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
-_sections_unfolded = [ "Margin" ]
 
-[node name="Background" type="NinePatchRect" parent="BasicNotificationContainer" index="0"]
-
+[node name="Background" type="NinePatchRect" parent="BasicNotificationContainer"]
 modulate = Color( 0.695313, 0.221236, 0.254569, 1 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 343.0
 margin_bottom = 59.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 2 )
@@ -75,26 +47,13 @@ patch_margin_left = 25
 patch_margin_top = 25
 patch_margin_right = 25
 patch_margin_bottom = 25
-_sections_unfolded = [ "Mouse", "Patch Margin", "Size Flags", "Visibility" ]
 
-[node name="Control" type="Control" parent="BasicNotificationContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Control" type="Control" parent="BasicNotificationContainer"]
 margin_right = 343.0
 margin_bottom = 59.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Margin", "Mouse", "Rect" ]
 
-[node name="DecorativeImage" type="TextureRect" parent="BasicNotificationContainer/Control" index="0"]
-
+[node name="DecorativeImage" type="TextureRect" parent="BasicNotificationContainer/Control"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -103,219 +62,85 @@ margin_left = -119.0
 margin_top = -86.0
 margin_right = 9.0
 margin_bottom = -1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 5
-_sections_unfolded = [ "Mouse", "Size Flags" ]
 
-[node name="MarginContainer" type="MarginContainer" parent="BasicNotificationContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="MarginContainer" type="MarginContainer" parent="BasicNotificationContainer"]
 margin_right = 343.0
 margin_bottom = 59.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_constants/margin_right = 110
 custom_constants/margin_top = 10
 custom_constants/margin_left = 15
 custom_constants/margin_bottom = 10
-_sections_unfolded = [ "Margin", "Mouse", "custom_constants" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BasicNotificationContainer/MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VBoxContainer" type="VBoxContainer" parent="BasicNotificationContainer/MarginContainer"]
 margin_left = 15.0
 margin_top = 10.0
 margin_right = 233.0
 margin_bottom = 49.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_constants/separation = 0
-alignment = 0
-_sections_unfolded = [ "Mouse", "custom_constants" ]
 
-[node name="Heading" type="Label" parent="BasicNotificationContainer/MarginContainer/VBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Heading" type="Label" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
 margin_right = 218.0
 margin_bottom = 17.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 5
 custom_fonts/font = SubResource( 1 )
 text = "Heading"
 valign = 1
 uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Anchor", "Margin", "Mouse", "Rect", "Size Flags", "custom_fonts" ]
 
-[node name="Text" type="Label" parent="BasicNotificationContainer/MarginContainer/VBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Text" type="Label" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
 margin_top = 17.0
 margin_right = 218.0
 margin_bottom = 31.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Some error message"
 valign = 1
 autowrap = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Mouse", "Size Flags" ]
 
-[node name="CenterContainerButtons" type="CenterContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer" index="2"]
-
+[node name="CenterContainerButtons" type="CenterContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 31.0
 margin_right = 218.0
 margin_bottom = 37.0
 rect_min_size = Vector2( 0, 6 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 3
-use_top_left = false
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerButtons" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer" type="HBoxContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerButtons"]
 margin_left = 109.0
 margin_top = 3.0
 margin_right = 109.0
 margin_bottom = 3.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
 
-[node name="CenterContainerProgress" type="CenterContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer" index="3"]
-
+[node name="CenterContainerProgress" type="CenterContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 37.0
 margin_right = 218.0
 margin_bottom = 39.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-use_top_left = false
-_sections_unfolded = [ "Mouse", "Size Flags" ]
 
-[node name="ProgressTexture" type="TextureRect" parent="BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerProgress" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ProgressTexture" type="TextureRect" parent="BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerProgress"]
 margin_left = 34.0
 margin_right = 184.0
 margin_bottom = 2.0
 rect_min_size = Vector2( 150, 2 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
 texture = ExtResource( 5 )
 expand = true
-stretch_mode = 0
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "Visibility" ]
 
-[node name="TweenAnimateIn" type="Tween" parent="." index="1"]
+[node name="TweenAnimateIn" type="Tween" parent="."]
 
-repeat = false
-playback_process_mode = 1
-playback_speed = 1.0
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
-_sections_unfolded = [ "playback" ]
+[node name="TweenAnimateOut" type="Tween" parent="."]
 
-[node name="TweenAnimateOut" type="Tween" parent="." index="2"]
-
-repeat = false
-playback_process_mode = 1
-playback_speed = 1.0
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
-_sections_unfolded = [ "playback" ]
-
-[node name="TweenMoveVertical" type="Tween" parent="." index="3"]
-
-repeat = false
-playback_process_mode = 1
-playback_speed = 1.0
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
-_sections_unfolded = [ "playback" ]
+[node name="TweenMoveVertical" type="Tween" parent="."]
 
 [connection signal="gui_input" from="BasicNotificationContainer" to="." method="_on_BasicNotificationContainer_gui_input"]
-
 [connection signal="mouse_entered" from="BasicNotificationContainer" to="." method="_on_BasicNotificationContainer_mouse_entered"]
-
 [connection signal="mouse_exited" from="BasicNotificationContainer" to="." method="_on_BasicNotificationContainer_mouse_exited"]
-
 [connection signal="tween_completed" from="TweenAnimateIn" to="." method="_on_TweenAnimateIn_tween_completed"]
-
 [connection signal="tween_completed" from="TweenAnimateOut" to="." method="_on_TweenAnimateOut_tween_completed"]
-
-

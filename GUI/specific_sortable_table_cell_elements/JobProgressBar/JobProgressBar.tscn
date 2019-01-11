@@ -3,19 +3,10 @@
 [ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.gd" type="Script" id=1]
 [ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/ColorRect_finished.gd" type="Script" id=2]
 
-
-[node name="JobProgressBar" type="MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="JobProgressBar" type="MarginContainer"]
 margin_right = 153.0
 margin_bottom = 23.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 2
@@ -23,93 +14,45 @@ custom_constants/margin_top = 4
 custom_constants/margin_left = 2
 custom_constants/margin_bottom = 4
 script = ExtResource( 1 )
-_sections_unfolded = [ "Mouse", "Size Flags", "custom_constants" ]
 
-[node name="ColorRect_bg" type="ColorRect" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ColorRect_bg" type="ColorRect" parent="."]
 margin_left = 2.0
 margin_top = 4.0
 margin_right = 151.0
-margin_bottom = 22.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
+margin_bottom = 19.0
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 color = Color( 0.175781, 0.175781, 0.175781, 1 )
-_sections_unfolded = [ "Mouse" ]
 
-[node name="ColorRect_active" type="ColorRect" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ColorRect_active" type="ColorRect" parent="."]
 margin_left = 2.0
 margin_top = 4.0
 margin_right = 62.0
-margin_bottom = 22.0
+margin_bottom = 19.0
 rect_min_size = Vector2( 60, 0 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
-size_flags_vertical = 1
 color = Color( 0.110596, 0.47752, 0.589844, 1 )
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags" ]
 
-[node name="ColorRect_finished" type="ColorRect" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ColorRect_finished" type="ColorRect" parent="."]
 margin_left = 2.0
 margin_top = 4.0
 margin_right = 22.0
-margin_bottom = 22.0
+margin_bottom = 19.0
 rect_min_size = Vector2( 20, 0 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
-size_flags_vertical = 1
 color = Color( 0.454324, 0.683594, 0.264359, 1 )
 script = ExtResource( 2 )
-_sections_unfolded = [ "Anchor", "Mouse", "Rect", "Size Flags" ]
 color_finished = Color( 0.45098, 0.682353, 0.262745, 1 )
 color_finished_paused = Color( 0.515625, 0.515625, 0.515625, 1 )
 color_finished_cancelled = Color( 0.0976562, 0.0976562, 0.0976562, 1 )
 
-[node name="ProgressLabel" type="Label" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ProgressLabel" type="Label" parent="."]
 margin_left = 2.0
-margin_top = 6.0
+margin_top = 4.0
 margin_right = 151.0
-margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+margin_bottom = 18.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "95 %"
 align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_colors" ]
-
 

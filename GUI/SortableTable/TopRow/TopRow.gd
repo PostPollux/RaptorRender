@@ -17,9 +17,8 @@ class_name SortableTableTopRow
 var Splitters : Array = []
 var ColumnButtons : Array = []
 
-var column_names : Array = ["column 1", "column 2"]
-var column_widths_initial : Array = [100,100]
-var column_widths : Array = [100, 100]
+var column_names : Array = []
+var column_widths : Array = []
 
 # variables for dragging and resizing the columns
 var dragging_splitter : bool = false
@@ -87,7 +86,8 @@ func generate_top_row():
 		var ColumnButton = ColumnButtonRes.instance()
 		ColumnButton.column_button_name = column_name
 		ColumnButton.id = count
-		ColumnButton.rect_min_size.x = column_widths_initial[count - 1]
+		print (column_name)
+		ColumnButton.rect_min_size.x = column_widths[count - 1]
 		ColumnButton.connect("column_button_pressed", self, "column_button_pressed")
 		if count == sort_column_primary:
 			ColumnButton.primary_sort_column = true
