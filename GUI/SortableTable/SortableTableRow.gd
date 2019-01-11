@@ -21,9 +21,7 @@ var sort_values : Array = [] # e.g. sort_values[5-1] holds the value that is use
 
 var even : bool = false
 var selected : bool = false
-var row_height : int
-
-var SortableTable : SortableTable
+var row_height : int = 30
 
 # cell references
 var CellsClipContainerArray : Array  = [] # used to clip the cell content
@@ -31,20 +29,22 @@ var CellsArray : Array = [] # references to the actual cells. For appending chil
 var CellsColorRectArray : Array = [] # used for highlighting the primary sort column
 
 # row colors
-var row_color : Color
+var row_color : Color = Color("3c3c3c")
+var row_color_selected : Color = Color("956248")
+var row_color_red : Color = Color("643f3b")
+var row_color_blue : Color = Color("3b5064")
+var row_color_green : Color = Color("3b5a3b")
+var row_color_yellow : Color = Color("585a3b")
+var row_color_black : Color = Color("1d1d1d")
+
+var even_odd_brightness_difference : float = 0.05
+var hover_brightness_boost : float = 0.1
+
 var row_color_even : Color
 var row_color_odd : Color
-var row_color_selected : Color
 var row_color_selected_even : Color
 var row_color_selected_odd : Color
-var row_color_red : Color
-var row_color_blue : Color
-var row_color_green : Color
-var row_color_yellow : Color
-var row_color_black : Color
 
-var even_odd_brightness_difference : float
-var hover_brightness_boost : float
 
 # references to child nodes
 onready var HBoxForCells : HBoxContainer = $"HBoxContainer"
@@ -63,30 +63,9 @@ signal drag_select_middle
 
 
 func _ready():
-	
-	SortableTable = self.get_parent().SortableTable
-	
-	set_initial_colors()
-	
-	row_height = SortableTable.row_height
-	
-	# determine if row id is even or odd
+	set_additional_colors()
 	update_row_even_or_odd()
-	
-	# assign column color
-	if selected:
-		if even:
-			RowBackgroundColorRect.color = row_color_selected_even
-			
-		else:
-			RowBackgroundColorRect.color = row_color_selected_odd
-	
-	else:
-		if even:
-			RowBackgroundColorRect.color = row_color_even
-			
-		else:
-			RowBackgroundColorRect.color = row_color_odd
+	update_row_color_reset()
 
 
 
@@ -222,6 +201,7 @@ func set_cell_width(column : int, width : int):
 
 
 func set_cell_height(height : int):
+	
 	if HBoxForCells != null:
 		for ClipContainer in CellsClipContainerArray:
 			ClipContainer.rect_min_size.y = height
@@ -241,18 +221,7 @@ func set_cell_height(height : int):
 ##################
 
 
-func set_initial_colors():
-	row_color = SortableTable.row_color
-	
-	row_color_selected = SortableTable.row_color_selected
-	row_color_red = SortableTable.row_color_red
-	row_color_blue = SortableTable.row_color_blue
-	row_color_green = SortableTable.row_color_green
-	row_color_yellow = SortableTable.row_color_yellow
-	row_color_black = SortableTable.row_color_black
-	
-	even_odd_brightness_difference = SortableTable.row_brightness_difference
-	hover_brightness_boost = SortableTable.hover_brightness_boost
+func set_additional_colors():
 	
 	row_color_even = row_color
 	row_color_odd = row_color.lightened(even_odd_brightness_difference)

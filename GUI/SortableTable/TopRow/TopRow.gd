@@ -14,52 +14,42 @@ class_name SortableTableTopRow
 
 
 # variables for defining the buttons and splitters
-var Splitters = []
-var ColumnButtons = []
+var Splitters : Array = []
+var ColumnButtons : Array = []
 
-var column_names = []
-var column_widths_initial = []
-var column_widths = []
+var column_names : Array = ["column 1", "column 2"]
+var column_widths_initial : Array = [100,100]
+var column_widths : Array = [100, 100]
 
 # variables for dragging and resizing the columns
-var dragging_splitter = false
-var dragging_splitter_id
-var mouse_position_x_before_dragging
-var min_size_of_column_before_dragging
+var dragging_splitter : bool = false
+var dragging_splitter_id : int
+var mouse_position_x_before_dragging : int
+var min_size_of_column_before_dragging : int
 
 # variables for sort functionality
-var sort_column_primary
-var sort_column_secondary
-var sort_column_primary_reversed = false
-var sort_column_secondary_reversed = false
+var sort_column_primary : int = 1
+var sort_column_secondary : int = 2
+var sort_column_primary_reversed : bool = false
+var sort_column_secondary_reversed : bool = false
 
 # references to other nodes of sortable table
 onready var SortableTable = $"../.."
-onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContainerFilled"
+onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContainerFilled" #as SortableTableRowContainerFilled
 onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
 
 # preload Resources
 var ColumnSplitterRes = preload("res://GUI/SortableTable/TopRow/ColumnSplitter.tscn")
 var ColumnButtonRes = preload("res://GUI/SortableTable/TopRow/ColumnButton.tscn")
 
-var just_initialized = true # variable for workaround
+var just_initialized : bool = true # variable for workaround
 
+
+signal sort_invoked
 
 
 func _ready():
-	
-	column_names = SortableTable.column_names
-	column_widths_initial = SortableTable.column_widths_initial
-	column_widths = column_widths_initial
-	sort_column_primary = SortableTable.sort_column_primary
-	sort_column_secondary = SortableTable.sort_column_secondary
-	
-	generate_top_row()
-	
-	# offset first collumn by one pixel (used for the workaround below)
-	ColumnButtons[0].rect_min_size.x = column_widths[0] + 1
-	column_widths[0] = column_widths[0] + 1
-
+	pass
 
 
 
@@ -88,7 +78,7 @@ func generate_top_row():
 	for CurrentNode in $HBoxContainer.get_children():
 		CurrentNode.queue_free()
 	
-	var count = 1
+	var count : int = 1
 	
 	# create buttons and splitters
 	for column_name in column_names:
@@ -97,7 +87,7 @@ func generate_top_row():
 		var ColumnButton = ColumnButtonRes.instance()
 		ColumnButton.column_button_name = column_name
 		ColumnButton.id = count
-		ColumnButton.rect_min_size.x = column_widths_initial[count -1]
+		ColumnButton.rect_min_size.x = column_widths_initial[count - 1]
 		ColumnButton.connect("column_button_pressed", self, "column_button_pressed")
 		if count == sort_column_primary:
 			ColumnButton.primary_sort_column = true
@@ -121,7 +111,11 @@ func generate_top_row():
 		$HBoxContainer.add_child(Splitter)
 		
 		count += 1
-
+	
+	
+	# offset first collumn by one pixel (used for the workaround below)
+	ColumnButtons[0].rect_min_size.x = column_widths[0] + 1
+	column_widths[0] = column_widths[0] + 1
 
 
 
@@ -157,7 +151,7 @@ func resize_column_by_drag():
 	
 	
 	
-	# Left mouse button released	
+	# Left mouse button released
 	else:
 		
 		# apply the size of the ColumnButton of the TopRow to all the rows of the table
@@ -193,7 +187,7 @@ func column_button_pressed(column_id):
 				
 			count += 1
 	
-	# column set to be the secondary sort column	
+	# column set to be the secondary sort column
 	if ColumnButtons[column_id - 1].secondary_sort_column:
 		sort_column_secondary = column_id
 		sort_column_secondary_reversed = ColumnButtons[column_id - 1].sort_column_secondary_reversed
@@ -208,7 +202,7 @@ func column_button_pressed(column_id):
 			RowContainerFilled.highlight_column(sort_column_primary)
 			RowContainerEmpty.highlight_column(sort_column_primary)
 		
-		# show the correct icon	
+		# show the correct icon
 		if ColumnButton.secondary_sort_column == true:
 			ColumnButton.show_correct_icon()
 		
@@ -218,43 +212,4 @@ func column_button_pressed(column_id):
 		count += 1
 	
 	# sort the table
-	SortableTable.sort()
-
-
-
-###### Not Used at the moment #####
-
-#func _on_VBox_TopRow_Content_resized():
-#	if ColumnButtons.size() > 0:
-#		expand_last_column_if_space_available ()
-#		pass
-#
-#func expand_last_column_if_space_available ():
-#
-#
-#	var column_button_count = ColumnButtons.size()
-#	var LastColumnButton = ColumnButtons[column_button_count - 1]
-#
-#	var available_size = 0
-#	var size_all_columns = 0
-#
-#	for i in column_widths:
-#		size_all_columns += i
-#
-#	#available_size = column_widths[column_button_count - 1] + (SortableTable.rect_size.x - size_all_columns - column_button_count * 3)
-#	available_size = SortableTable.rect_size.x - size_all_columns
-#	print (SortableTable.rect_size.x) # <- There seems to be a bug in Godot Engine. Remote inspector shows correct size of the ScrollContainer whereas in the script it's always the size of the content of the container.
-#
-#	# set the size of the last button in the TopRow
-#	LastColumnButton.rect_min_size.x = LastColumnButton.rect_min_size.x + available_size - 12
-#	column_widths[column_button_count - 1] = LastColumnButton.rect_min_size.x
-#
-#	# apply the size of the ColumnButton of the TopRow to all the rows of the table
-#	var column_width = column_widths[column_button_count - 1]
-#	if RowContainerFilled.SortableRows:
-#		RowContainerFilled.set_column_width(column_button_count, column_width)
-#	if RowContainerEmpty.EmptyRows:
-#		RowContainerEmpty.set_column_width(column_button_count, column_width)
-#
-
-#############
+	emit_signal("sort_invoked")

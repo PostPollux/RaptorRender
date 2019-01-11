@@ -51,14 +51,15 @@ export (float) var hover_brightness_boost : float = 0.1
 export (String) var table_id : String = "custom id"
 
 # references to child nodes
-onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
-onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled" 
+onready var TopRow : SortableTableTopRow = $"VBox_TopRow_Content/TopRow"
+onready var RowScrollContainer : ScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
+onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled"
 onready var RowContainerEmpty = $ "VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
-onready var AutoScrollTween = $"AutoScrollTween"
+onready var AutoScrollTween : Tween = $"AutoScrollTween"
 
 # variables needed for scrolling
-var previous_scroll_horizontal = 0
-var previous_scroll_vertical = 0
+var previous_scroll_horizontal : int = 0
+var previous_scroll_vertical : int = 0
 var shift_ctrl_plus_scroll : bool = false
 
 # signals
@@ -73,7 +74,20 @@ signal context_invoked
 func _ready():
 	
 	register_table()
-
+	
+	RowContainerFilled.row_height = row_height
+	
+	# set up top row
+	set_top_row()
+	
+	# set up empty rows
+	RowContainerEmpty.row_height = row_height
+	RowContainerEmpty.create_initial_empty_rows()
+	
+	
+	# connect signals
+	TopRow.connect("sort_invoked", self, "sort")
+	RowContainerEmpty.connect("selection_cleared", self, "emit_selection_cleared_signal")
 
 
 func _input(event):
@@ -87,6 +101,16 @@ func _input(event):
 ################
 ### manage table
 ################
+
+func set_top_row():
+	TopRow.column_names = column_names
+	TopRow.column_widths_initial = column_widths_initial
+	TopRow.column_widths = column_widths_initial
+	TopRow.sort_column_primary = sort_column_primary
+	TopRow.sort_column_secondary = sort_column_secondary
+	
+	TopRow.generate_top_row()
+
 
 # register to RaptorRender script
 func register_table():
