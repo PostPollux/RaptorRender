@@ -160,19 +160,6 @@ func update_width_of_RowContainerEmpty():
 ##################
 
 
-func initialize_column_widths():
-	
-	var column = 1
-	
-	for ColumnButton in TopRow.ColumnButtons:
-		
-		# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
-		set_column_width(column, ColumnButton.rect_min_size.x)
-		
-		column += 1
-
-
-
 func set_column_width(column, width):
 	
 	for Row in EmptyRows:
@@ -182,13 +169,15 @@ func set_column_width(column, width):
 
 # function to highlight the primary sort column 
 func highlight_column(column):
-	if TopRow:
-		if column <= TopRow.ColumnButtons.size() and column > 0:
-			for i in range(1, TopRow.ColumnButtons.size() + 1) :
-				for Row in EmptyRows:
-					Row.modulate_cell_color(i,Color("00ffffff"))
-			for Row in EmptyRows:
-				Row.modulate_cell_color(column,Color("18ffffff"))
+	
+	# reset the color of each cell in each row
+	for Row in EmptyRows:
+		for i in range(1, Row.column_count + 1) :
+			Row.modulate_cell_color(i,Color("00ffffff"))
+	
+	# highlight the correct cell in each row
+	for Row in EmptyRows:
+		Row.modulate_cell_color(column,Color("18ffffff"))
 
 
 
@@ -240,7 +229,6 @@ func select_SortableRows_middle_mouse(row_position):
 				if SortableRows[i-1].selected == true:
 					SortableRows[i-1].set_selected(false)
 					RowContainerFilled.selected_row_ids.erase(SortableRows[i-1].id)
-		
 
 
 

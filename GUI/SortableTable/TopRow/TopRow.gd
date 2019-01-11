@@ -32,19 +32,18 @@ var sort_column_secondary : int = 2
 var sort_column_primary_reversed : bool = false
 var sort_column_secondary_reversed : bool = false
 
-# references to other nodes of sortable table
-onready var SortableTable = $"../.."
-onready var RowContainerFilled = $"../RowScrollContainer/VBoxContainer/RowContainerFilled" #as SortableTableRowContainerFilled
-onready var RowContainerEmpty = $"../RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
-
 # preload Resources
 var ColumnSplitterRes = preload("res://GUI/SortableTable/TopRow/ColumnSplitter.tscn")
 var ColumnButtonRes = preload("res://GUI/SortableTable/TopRow/ColumnButton.tscn")
 
 var just_initialized : bool = false # variable for workaround
 
-
+# signals
 signal sort_invoked
+signal column_resized
+signal column_highlighted
+signal primary_sort_column_updated
+signal secondary_sort_column_updated
 
 
 func _ready():
@@ -147,8 +146,8 @@ func resize_column_by_drag():
 		
 		# apply the size of the ColumnButton of the TopRow to all the rows of the table
 		var column_width : int = column_widths[dragging_splitter_id - 1]
-		RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
-		RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
+		
+		emit_signal("column_resized", dragging_splitter_id, column_width)
 	
 	
 	
@@ -157,8 +156,8 @@ func resize_column_by_drag():
 		
 		# apply the size of the ColumnButton of the TopRow to all the rows of the table
 		var column_width : int = ColumnButtons[dragging_splitter_id - 1].rect_size.x
-		RowContainerFilled.set_column_width(dragging_splitter_id, column_width)
-		RowContainerEmpty.set_column_width(dragging_splitter_id, column_width)
+		
+		emit_signal("column_resized", dragging_splitter_id, column_width)
 		
 		# stop dragging logic
 		dragging_splitter = false
@@ -176,8 +175,7 @@ func column_button_pressed(column_id):
 	if ColumnButtons[column_id - 1].primary_sort_column:
 		sort_column_primary = column_id
 		sort_column_primary_reversed = ColumnButtons[column_id - 1].sort_column_primary_reversed
-		SortableTable.sort_column_primary = sort_column_primary
-		SortableTable.sort_column_primary_reversed = sort_column_primary_reversed
+		emit_signal("primary_sort_column_updated", sort_column_primary, sort_column_primary_reversed)
 		
 		var count : int = 1
 		for ColumnButton in ColumnButtons:
@@ -192,16 +190,14 @@ func column_button_pressed(column_id):
 	if ColumnButtons[column_id - 1].secondary_sort_column:
 		sort_column_secondary = column_id
 		sort_column_secondary_reversed = ColumnButtons[column_id - 1].sort_column_secondary_reversed
-		SortableTable.sort_column_secondary = sort_column_secondary
-		SortableTable.sort_column_secondary_reversed = sort_column_secondary_reversed
-	
+		emit_signal("secondary_sort_column_updated", sort_column_secondary, sort_column_secondary_reversed)
+		
 	var count : int = 1
 	for ColumnButton in ColumnButtons:
 		
 		# highlight the primary column
 		if ColumnButton.primary_sort_column == true:
-			RowContainerFilled.highlight_column(sort_column_primary)
-			RowContainerEmpty.highlight_column(sort_column_primary)
+			emit_signal("column_highlighted", sort_column_primary)
 		
 		# show the correct icon
 		if ColumnButton.secondary_sort_column == true:

@@ -198,13 +198,15 @@ func reset_all_row_colors_to_default():
 
 
 func highlight_column(column : int):
-	if TopRow:
-		if column <= TopRow.ColumnButtons.size() and column > 0:
-			for i in range(1, TopRow.ColumnButtons.size() + 1) :
-				for Row in SortableRows:
-					Row.modulate_cell_color(i, Color("00ffffff"))
-			for Row in SortableRows:
-				Row.modulate_cell_color(column, Color("18ffffff"))
+	
+	# reset the color of each cell in each row
+	for Row in SortableRows:
+		for i in range(1, Row.column_count + 1) :
+			Row.modulate_cell_color(i,Color("00ffffff"))
+	
+	# highlight the correct cell in each row
+	for Row in SortableRows:
+		Row.modulate_cell_color(column,Color("18ffffff"))
 
 
 
@@ -494,18 +496,6 @@ func add_id_to_selection(id):
 ##################
 ### resize columns
 ##################
-
-
-func resize_columns():
-
-	var count : int = 1
-
-	for ColumnButton in TopRow.ColumnButtons:
-
-		# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
-		set_column_width(count, ColumnButton.rect_min_size.x)
-		count += 1
-
 
 
 func set_column_width(column : int, width : int):

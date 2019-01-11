@@ -89,6 +89,10 @@ func _ready():
 	
 	# connect signals
 	TopRow.connect("sort_invoked", self, "sort")
+	TopRow.connect("column_resized", self, "set_column_width")
+	TopRow.connect("column_highlighted", self, "highlight_column")
+	TopRow.connect("primary_sort_column_updated", self, "update_primary_sort_column")
+	TopRow.connect("secondary_sort_column_updated", self, "update_secondary_sort_column")
 	RowContainerEmpty.connect("selection_cleared", self, "emit_selection_cleared_signal")
 
 
@@ -97,7 +101,7 @@ func _input(event):
 	# save the position of the vertical scroll as soon as shift or control is pressed
 	if Input.is_action_just_pressed("ui_shift") or Input.is_action_just_pressed("ui_ctrl") :
 		previous_scroll_vertical = RowScrollContainer.scroll_vertical
-	
+
 
 
 ################
@@ -108,7 +112,9 @@ func set_top_row():
 	TopRow.column_names = column_names
 	TopRow.column_widths = column_widths 
 	TopRow.sort_column_primary = sort_column_primary
+	TopRow.sort_column_primary_reversed = sort_column_primary_reversed
 	TopRow.sort_column_secondary = sort_column_secondary
+	TopRow.sort_column_secondary_reversed = sort_column_secondary_reversed
 	
 	TopRow.generate_top_row()
 
@@ -133,6 +139,15 @@ func sort():
 	RowContainerFilled.update_positions_of_rows()
 
 
+func update_primary_sort_column(column : int, is_reversed : bool):
+	sort_column_primary = column
+	sort_column_primary_reversed = is_reversed
+
+
+func update_secondary_sort_column(column : int, is_reversed : bool):
+	sort_column_secondary = column
+	sort_column_secondary_reversed = is_reversed
+
 ##################
 ### handle columns
 ##################
@@ -140,6 +155,11 @@ func sort():
 func set_column_width(column : int, width : int):
 	RowContainerFilled.set_column_width( column, width)
 	RowContainerEmpty.set_column_width( column, width)
+
+
+func highlight_column(column : int):
+	RowContainerFilled.highlight_column(column)
+	RowContainerEmpty.highlight_column(column)
 
 
 
