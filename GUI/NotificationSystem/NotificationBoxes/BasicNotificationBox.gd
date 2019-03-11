@@ -13,26 +13,26 @@ extends Control
 
 
 # variables set by NotificationSystem when creating a notification
-var heading = ""
-var message = ""
-var self_destruction_time = 7
+var heading : String = ""
+var message : String = ""
+var self_destruction_time : int = 7
 
 # internal variables needed for logic
-var self_destruction = true
-var currently_self_destructing = false
-var self_destruct_timer
-var animation_in_finshed = false
-var supposed_position_y = 50
-var height
+var self_destruction : bool = true
+var currently_self_destructing : bool = false
+var self_destruct_timer : Timer
+var animation_in_finshed : bool = false
+var supposed_position_y : int = 50
+var height : int 
 
 # references to child nodes
-onready var Background = $"BasicNotificationContainer/Background"
-onready var ProgressTexture = $"BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerProgress/ProgressTexture"
-onready var Heading = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Heading"
-onready var Message = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Text"
-onready var TweenAnimateIn = $"TweenAnimateIn"
-onready var TweenAnimateOut = $"TweenAnimateOut"
-onready var TweenMoveVertical = $"TweenMoveVertical"
+onready var Background : NinePatchRect = $"BasicNotificationContainer/Background"
+onready var ProgressTexture : TextureRect= $"BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerProgress/ProgressTexture"
+onready var Heading : Label = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Heading"
+onready var Message : Label = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Text"
+onready var TweenAnimateIn : Tween = $"TweenAnimateIn"
+onready var TweenAnimateOut : Tween = $"TweenAnimateOut"
+onready var TweenMoveVertical : Tween = $"TweenMoveVertical"
 
 
 
@@ -88,12 +88,12 @@ func _process(delta):
 	
 	# animate the self destruction progress bar
 	if currently_self_destructing:
-		var size = ProgressTexture.get_parent().rect_size.x  *  ( self_destruct_timer.get_time_left() / float(self_destruction_time) )
-		ProgressTexture.rect_min_size.x = int(size)
+		var size : int = ProgressTexture.get_parent().rect_size.x  *  ( self_destruct_timer.get_time_left() / float(self_destruction_time) )
+		ProgressTexture.rect_min_size.x = size
 
 
 
-func start_timer_for_self_destruct(sec):
+func start_timer_for_self_destruct(sec : int):
 	
 	self_destruction = true
 	
@@ -176,8 +176,8 @@ func _on_BasicNotificationContainer_gui_input(ev):
 func animate_in():
 	
 	# animate in
-	var start_color = Color(1.0, 1.0, 1.0, 0.0)
-	var end_color = Color(1.0, 1.0, 1.0, 1.0)
+	var start_color : Color = Color(1.0, 1.0, 1.0, 0.0)
+	var end_color : Color = Color(1.0, 1.0, 1.0, 1.0)
 	TweenAnimateIn.interpolate_property(self, "modulate", start_color,  end_color, 1.5,Tween.TRANS_QUINT,Tween.EASE_OUT, 0)
 	TweenAnimateIn.interpolate_property(self, "margin_right", self.margin_right, 0, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
 	TweenAnimateIn.interpolate_property(self, "margin_left", self.margin_left, -24, 0.5,Tween.TRANS_QUART,Tween.EASE_OUT, 0)
@@ -188,8 +188,8 @@ func animate_in():
 func animate_out():
 	
 	# animate out
-	var start_color = Color(1.0, 1.0, 1.0, 1.0)
-	var end_color = Color(1.0, 1.0, 1.0, 0.0)
+	var start_color : Color = Color(1.0, 1.0, 1.0, 1.0)
+	var end_color : Color = Color(1.0, 1.0, 1.0, 0.0)
 	TweenAnimateOut.interpolate_property(self, "modulate", start_color,  end_color, 1.5,Tween.TRANS_QUINT,Tween.EASE_OUT, 0)
 	TweenAnimateOut.interpolate_property(self, "margin_right", self.margin_right, self.margin_right + 400, 1.5,Tween.TRANS_CUBIC,Tween.EASE_OUT, 0)
 	TweenAnimateOut.interpolate_property(self, "margin_left", self.margin_left, self.margin_left + 400, 1.5,Tween.TRANS_CUBIC,Tween.EASE_OUT, 0)
@@ -197,7 +197,7 @@ func animate_out():
 
 
 
-func move_vertical(amout_to_move_down):
+func move_vertical(amout_to_move_down : int):
 	
 	supposed_position_y += amout_to_move_down
 	
@@ -226,13 +226,3 @@ func _on_TweenAnimateOut_tween_completed(object, key):
 	
 	# remove the Dialogbox from the tree
 	self.queue_free()
-
-
-
-
-
-
-
-
-
-

@@ -3,20 +3,21 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/job_status_queued_200x100.png-1b2e3bea19e8ce2c7b7606e97f41fec3.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://GUI/icons/job_status/200x100/job_status_queued_200x100.png"
-source_md5="43b250197625b340f1f92ac0a78081b7"
-
 dest_files=[ "res://.import/job_status_queued_200x100.png-1b2e3bea19e8ce2c7b7606e97f41fec3.stex" ]
-dest_md5="4e4e7770ac175b3185b2091b4778b1c6"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

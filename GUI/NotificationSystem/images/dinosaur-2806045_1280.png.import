@@ -3,20 +3,21 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/dinosaur-2806045_1280.png-104664181773a38f67d1691c481f7117.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://GUI/NotificationSystem/images/dinosaur-2806045_1280.png"
-source_md5="e20b2fa37cff39767a28c7f64e43dccd"
-
 dest_files=[ "res://.import/dinosaur-2806045_1280.png-104664181773a38f67d1691c481f7117.stex" ]
-dest_md5="62e4ed1789f5b917f0e5d8451b5c0242"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

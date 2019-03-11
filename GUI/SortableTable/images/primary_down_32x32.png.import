@@ -3,20 +3,21 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/primary_down_32x32.png-0f58d1d938086c7acf46fd68f5a56be2.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://GUI/SortableTable/images/primary_down_32x32.png"
-source_md5="ddc9fa4d1ff09791ea9efdb68ccbe652"
-
 dest_files=[ "res://.import/primary_down_32x32.png-0f58d1d938086c7acf46fd68f5a56be2.stex" ]
-dest_md5="86bf1247ee6f8406ff1e36a680ff849c"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

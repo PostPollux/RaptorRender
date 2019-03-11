@@ -3,20 +3,21 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/NotificationBoxBackground.png-046b1ee982efec8c1079b69620caea6f.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://GUI/NotificationSystem/images/NotificationBoxBackground.png"
-source_md5="d9482166ecf176eab9b4268c653e42a6"
-
 dest_files=[ "res://.import/NotificationBoxBackground.png-046b1ee982efec8c1079b69620caea6f.stex" ]
-dest_md5="4f00cea071de598e696fec32c0dd71a3"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

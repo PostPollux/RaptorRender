@@ -7,7 +7,6 @@
 [ext_resource path="res://GUI/NotificationSystem/images/ProgressBar.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
-
 size = 12
 use_filter = true
 extra_spacing_bottom = 4
@@ -117,7 +116,6 @@ margin_right = 109.0
 margin_bottom = 3.0
 
 [node name="CenterContainerProgress" type="CenterContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 37.0
 margin_right = 218.0
 margin_bottom = 39.0

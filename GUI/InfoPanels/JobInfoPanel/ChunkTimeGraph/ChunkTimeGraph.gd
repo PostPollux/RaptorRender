@@ -9,15 +9,15 @@
 
 extends MarginContainer
 
-var job_id = ""
-var chunk
+var job_id : String = ""
+var hovered_chunk : int
 
 # references to other nodes of ChunkTimeGraph
 onready var BarGraph = $"VBoxContainer/ChunkTimeBarGraph"
-onready var ChunkNameLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
-onready var ChunkClientLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
-onready var ChunkRendertimeLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
-onready var ChunkTriesLabel = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesValueLabel"
+onready var ChunkNameLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
+onready var ChunkClientLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
+onready var ChunkRendertimeLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
+onready var ChunkTriesLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesValueLabel"
 onready var ChunkInfoBox = $"VBoxContainer/ClipContainer/ChunkInfoBox"
 onready var GraphOptions = $"GraphOptions"
 
@@ -32,19 +32,19 @@ func _ready():
 	BarGraph.connect("chunk_hovered", self, "fill_chunk_info_box")
 
 
-func set_job_id(job_ID):
+func set_job_id(job_ID : String):
 	job_id = job_ID
 	BarGraph.job_id = job_ID
 	
 	
-func fill_chunk_info_box(chunk_number):
+func fill_chunk_info_box(chunk_number : int):
 	
-	chunk = chunk_number
+	hovered_chunk = chunk_number
 	
 	# chunk name
 	
-	var first_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[0]
-	var last_chunk_frame = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames.size() - 1]
+	var first_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[0]
+	var last_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames.size() - 1]
 	
 	if first_chunk_frame == last_chunk_frame:
 		ChunkNameLabel.text = String (chunk_number) + "  (Frame: " + String(first_chunk_frame) + ")"
@@ -60,9 +60,9 @@ func fill_chunk_info_box(chunk_number):
 	
 	
 	# chunk render time
-	var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
+	var chunk_dict : Dictionary = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
 	
-	var chunk_rendertime = 0
+	var chunk_rendertime : int = 0
 	
 	if chunk_dict.status == "5_finished": 
 		chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started

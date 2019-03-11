@@ -3,20 +3,21 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/plus_mouse_down_15x15.png-8dbd9c51e0c5a05ee57321bc34a7eaca.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://GUI/icons/plus_minus/15x15/plus_mouse_down_15x15.png"
-source_md5="1812ca1d40a4ab7df2703534caad4bd3"
-
 dest_files=[ "res://.import/plus_mouse_down_15x15.png-8dbd9c51e0c5a05ee57321bc34a7eaca.stex" ]
-dest_md5="98b31d6ca844d6b7d9298fbc013c2c84"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true
