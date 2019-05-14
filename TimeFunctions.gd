@@ -17,8 +17,8 @@ func time_stamp_to_date_as_string(unix_time_stamp : int, display_mode : int) -> 
 		1: str_date = "%04d-%02d-%02d  %02d:%02d:%02d" % [date.year, date.month, date.day, date.hour, date.minute, date.second]
 		2: str_date = "%02d.%02d.%04d  %02d:%02d:%02d" % [date.day, date.month, date.year, date.hour, date.minute, date.second]
 	return str_date
-	
-	
+
+
 func time_elapsed_as_string(unix_time_stamp_start : int, unix_time_stamp_end : int, display_mode : int) -> String:
 	
 	var elapsed : int = unix_time_stamp_end - unix_time_stamp_start
@@ -45,8 +45,8 @@ func time_elapsed_as_string(unix_time_stamp_start : int, unix_time_stamp_end : i
 			
 	
 	return str_elapsed.strip_edges()
-	
-	
+
+
 func seconds_to_string(sec : int, display_mode : int) -> String:
 	
 	var days : int = sec / 86400
@@ -70,4 +70,3 @@ func seconds_to_string(sec : int, display_mode : int) -> String:
 			if minutes > 0 or seconds > 0: str_sec += String(seconds) + " s"
 
 	return str_sec.strip_edges()
-	

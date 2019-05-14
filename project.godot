@@ -61,6 +61,7 @@ TimeFunctions="*res://TimeFunctions.gd"
 JobFunctions="*res://JobFunctions.gd"
 GetSystemInformation="*res://GetSystemInformation.gd"
 Converters="*res://Converters.gd"
+CommandlineManager="*res://CommandlineManager.gd"
 
 [debug]
 
