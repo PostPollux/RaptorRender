@@ -51,17 +51,17 @@ _global_script_class_icons={
 [application]
 
 config/name="RaptorRender"
-run/main_scene="res://GUI/Interface.tscn"
+run/main_scene="res://RaptorRenderMainScene.tscn"
 config/icon="res://Main_Icons/RR_Icon_64_1.png"
 
 [autoload]
 
-RaptorRender="*res://RaptorRender.gd"
-TimeFunctions="*res://TimeFunctions.gd"
-JobFunctions="*res://JobFunctions.gd"
-GetSystemInformation="*res://GetSystemInformation.gd"
-Converters="*res://Converters.gd"
-CommandlineManager="*res://CommandlineManager.gd"
+RaptorRender="*res://singelton scripts/RaptorRender.gd"
+TimeFunctions="*res://singelton scripts/TimeFunctions.gd"
+JobFunctions="*res://singelton scripts/JobFunctions.gd"
+GetSystemInformation="*res://singelton scripts/GetSystemInformation.gd"
+Converters="*res://singelton scripts/Converters.gd"
+CommandlineManager="*res://singelton scripts/CommandLineManager.gd"
 
 [debug]
 
