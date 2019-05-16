@@ -3,7 +3,7 @@
 #////////////////////#
 
 # This script handles 
-# - execute a commandline render instruction in a separate processes and redirect it's output into a file
+# - executing a commandline render instruction in a separate processes and redirect it's output into a file
 # - continuously read and monitor the output file while rendering to detect errors and successes
 # - abort rendering by killing the process
 
@@ -15,26 +15,28 @@ extends Node
 
 var invoke_render_pid : int 
 
-var current_redirected_output_file : File
+var active_render_log_file : File
 var current_commandline_instructions : String
 
 var file_pointer_position : int = 0
 
-var read_redirected_output_file_thread : Thread
+var read_log_file_thread : Thread
 
+var active_render_log_file_name : String
 
 var log_data_dir_str : String
 
 var currently_rendering : bool = false
 
-var get_cmd_line_output_timer : Timer 
+var read_log_timer : Timer 
 
 
+signal log_partly_read
 
 
 func _ready():
 	
-	# save user data directory to a variable
+	
 	log_data_dir_str = OS.get_user_data_dir() + "/logs/"
 	
 	
@@ -44,31 +46,87 @@ func _ready():
 	if !log_data_dir.dir_exists(log_data_dir_str):
 		log_data_dir.make_dir(log_data_dir_str)
 		
+	# create the thread this script is using
+	read_log_file_thread = Thread.new()
 	
-	# create timer to constantly read the current output log in a specific interval 
-	get_cmd_line_output_timer = Timer.new()
-	get_cmd_line_output_timer.name = "Command Line Output Timer"
-	get_cmd_line_output_timer.wait_time = 1
-	get_cmd_line_output_timer.connect("timeout",self,"_on_get_cmd_line_output_timer_timeout")
+	# initialize file object
+	active_render_log_file = File.new()
+	
+	# create timer to constantly read the current render log in a specific interval 
+	read_log_timer = Timer.new()
+	read_log_timer.name = "Read Log Timer"
+	read_log_timer.wait_time = 1
+	read_log_timer.connect("timeout",self,"_on_read_log_timer_timeout")
 	var root_node : Node = get_tree().get_root().get_node("RaptorRenderMainScene")
 	if root_node != null:
-		root_node.add_child(get_cmd_line_output_timer)
+		root_node.add_child(read_log_timer)
 	
 
 
-func _on_get_cmd_line_output_timer_timeout():
+func _on_read_log_timer_timeout():
+	start_read_log_file_thread()
+
+
+func start_read_log_file_thread():
+	if read_log_file_thread.is_active():
+		# stop here if already working
+		return
+		
+	# start the thread	
+	read_log_file_thread.start(self, "read_log_file","")
+
+
+
+func read_log_file(args):
 	
-	pass
+	var active_render_log_file_path : String = OS.get_user_data_dir() + "/logs/" + active_render_log_file_name + ".txt"
+	
+	var lines_read : String = ""
+	
+	if active_render_log_file.file_exists(active_render_log_file_path):
+		
+		active_render_log_file.open(active_render_log_file_path, 1)
+		
+		active_render_log_file.seek(file_pointer_position)
+		
+		
+		while true:
+			var line : String = active_render_log_file.get_line()
+			
+			line = RenderLogValidator.validate_log_line(line)
+			
+			lines_read += line
+			
+			
+			# break loop if end of file is reached
+			if active_render_log_file.eof_reached():
+				file_pointer_position = active_render_log_file.get_position()
+				break
+			
+			# add new line break if end of file is not reached yet
+			lines_read += "\n"
+		
+	
+	emit_signal("log_partly_read", lines_read)
+	
+	# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
+	call_deferred("join_read_log_file_thread")
 
 
-func start_render_process (cmdline_instruction : String, output_file_name : String):
+func join_read_log_file_thread():
+	# this will effectively stop the thread
+	read_log_file_thread.wait_to_finish()
+
+
+
+func start_render_process (cmdline_instruction : String, log_file_name : String):
 	
 	if currently_rendering:
 		kill_current_render_process()
 		
 	else:
 		var output : Array = []
-		var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_dir_str + output_file_name + ".txt 2>&1"]
+		var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_dir_str + log_file_name + ".txt 2>&1"]
 		
 		invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
 		
@@ -76,14 +134,16 @@ func start_render_process (cmdline_instruction : String, output_file_name : Stri
 		
 		currently_rendering = true
 		
-		get_cmd_line_output_timer.start()
+		active_render_log_file_name = log_file_name
+		file_pointer_position = 0
+		read_log_timer.start()
 
 
 
 
 func check_if_render_process_is_running() -> bool:
 	
-	# this will retun 0 if the process exists, and something else, if it doesn't exist
+	# this command will retun 0 if the process id exists, and something else, if it doesn't exist
 	var output : Array = []
 	var arguments : Array = ["-c","kill -0 " + String(invoke_render_pid) + " && echo \"$?\""]
 	OS.execute("bash", arguments, true, output)
@@ -93,7 +153,7 @@ func check_if_render_process_is_running() -> bool:
 		return true
 	else:
 		currently_rendering = false
-		get_cmd_line_output_timer.stop()
+		read_log_timer.stop()
 		return false
 
 
@@ -101,7 +161,7 @@ func check_if_render_process_is_running() -> bool:
 
 func kill_current_render_process():
 	
-	get_cmd_line_output_timer.stop()
+	read_log_timer.stop()
 	
 	OS.kill(invoke_render_pid)
 	

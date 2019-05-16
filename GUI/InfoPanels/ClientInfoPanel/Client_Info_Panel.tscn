@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/client_status/200x100/client_status_online_200x100.png" type="Texture" id=2]
@@ -6,13 +6,12 @@
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/textures/usage_status_progress_texture.tres" type="Texture" id=4]
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/cpu_usage.gd" type="Script" id=5]
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/memory_usage.gd" type="Script" id=6]
+[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/current render log panel.gd" type="Script" id=7]
 
 [sub_resource type="DynamicFontData" id=1]
-
 font_path = "res://GUI/fonts/Caliban.ttf"
 
 [sub_resource type="DynamicFont" id=2]
-
 size = 20
 use_filter = true
 font_data = SubResource( 1 )
@@ -34,6 +33,8 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
+editor/display_folded = true
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -51,7 +52,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer"]
-margin_right = 460.0
+margin_right = 470.0
 margin_bottom = 568.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -63,7 +64,7 @@ custom_constants/margin_bottom = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 440.0
+margin_right = 450.0
 margin_bottom = 548.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -433,3 +434,49 @@ margin_right = 405.0
 margin_bottom = 32.0
 text = "Windows 10"
 
+[node name="Current Render Log" type="Tabs" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="current render log panel" type="MarginContainer" parent="TabContainer/Current Render Log"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -62.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 7 )
+
+[node name="LogText" type="RichTextLabel" parent="TabContainer/Current Render Log/current render log panel"]
+margin_right = 470.0
+margin_bottom = 502.0
+focus_mode = 2
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+
+[node name="StartButton" type="Button" parent="TabContainer/Current Render Log"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 13.2964
+margin_top = -42.6482
+margin_right = 145.296
+margin_bottom = -6.64819
+rect_pivot_offset = Vector2( 67.6371, 18.9391 )
+text = "start render"
+
+[node name="KillButton" type="Button" parent="TabContainer/Current Render Log"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 151.801
+margin_top = -43.2244
+margin_right = 283.801
+margin_bottom = -7.22437
+rect_pivot_offset = Vector2( 67.6371, 18.9391 )
+text = "kill"
+[connection signal="pressed" from="TabContainer/Current Render Log/StartButton" to="TabContainer/Current Render Log/current render log panel" method="_on_Button_pressed"]
+[connection signal="pressed" from="TabContainer/Current Render Log/StartButton" to="TabContainer/Current Render Log/current render log panel" method="_on_StartButton_pressed"]
+[connection signal="pressed" from="TabContainer/Current Render Log/KillButton" to="TabContainer/Current Render Log/current render log panel" method="_on_KillButton_pressed"]

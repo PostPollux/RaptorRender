@@ -61,7 +61,8 @@ TimeFunctions="*res://singelton scripts/TimeFunctions.gd"
 JobFunctions="*res://singelton scripts/JobFunctions.gd"
 GetSystemInformation="*res://singelton scripts/GetSystemInformation.gd"
 Converters="*res://singelton scripts/Converters.gd"
-CommandlineManager="*res://singelton scripts/CommandLineManager.gd"
+CommandLineManager="*res://singelton scripts/CommandLineManager.gd"
+RenderLogValidator="*res://RenderLogValidator.gd"
 
 [debug]
 
