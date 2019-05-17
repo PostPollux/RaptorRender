@@ -54,18 +54,13 @@ func update_job_info_panel(job_id):
 	
 	var status = selected_job["status"]
 	
-	# Status Icon
-	var icon = ImageTexture.new()
-	
 	match status:
-		"1_rendering": icon.load("res://GUI/icons/job_status/200x100/job_status_rendering_200x100.png")
-		"2_queued":    icon.load("res://GUI/icons/job_status/200x100/job_status_queued_200x100.png")
-		"3_error":     icon.load("res://GUI/icons/job_status/200x100/job_status_error_200x100.png")
-		"4_paused":    icon.load("res://GUI/icons/job_status/200x100/job_status_paused_200x100.png")
-		"5_finished":  icon.load("res://GUI/icons/job_status/200x100/job_status_finished_200x100.png")
-		"6_cancelled": icon.load("res://GUI/icons/job_status/200x100/job_status_cancelled_200x100.png")
-		
-	StatusIconTexture.set_texture(icon)
+		"1_rendering": StatusIconTexture.set_modulate(RRColorScheme.state_active)
+		"2_queued":    StatusIconTexture.set_modulate(RRColorScheme.state_queued)
+		"3_error":     StatusIconTexture.set_modulate(RRColorScheme.state_error)
+		"4_paused":    StatusIconTexture.set_modulate(RRColorScheme.state_paused)
+		"5_finished":  StatusIconTexture.set_modulate(RRColorScheme.state_finished_or_online)
+		"6_cancelled": StatusIconTexture.set_modulate(RRColorScheme.state_offline_or_cancelled)
 	
 	
 	# Status text

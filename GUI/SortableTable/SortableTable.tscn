@@ -91,7 +91,6 @@ custom_constants/separation = 0
 script = ExtResource( 5 )
 
 [node name="AutoScrollTween" type="Tween" parent="."]
-
 [connection signal="draw" from="." to="." method="_on_SortableTable_draw"]
 [connection signal="gui_input" from="." to="." method="_on_SortableTable_gui_input"]
 [connection signal="resized" from="VBox_TopRow_Content" to="VBox_TopRow_Content/TopRow" method="_on_VBox_TopRow_Content_resized"]

@@ -80,6 +80,3 @@ func hex_string_to_PoolByteArray(hex_string : String) -> Array:
 	var hex_as_PoolByteArray : Array = PoolByteArray(converted_int_array)
 	
 	return hex_as_PoolByteArray
-	
-
-	

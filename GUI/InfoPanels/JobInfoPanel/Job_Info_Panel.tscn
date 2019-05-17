@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd" type="Script" id=1]
-[ext_resource path="res://GUI/icons/job_status/200x100/job_status_finished_200x100.png" type="Texture" id=2]
-[ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/icons/job_status/job_status_200x100.png" type="Texture" id=2]
+[ext_resource path="res://GUI/SortableTable/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/icons/link/15x15/link_default_15x15.png" type="Texture" id=4]
 [ext_resource path="res://GUI/icons/link/15x15/link_clicked_15x15.png" type="Texture" id=5]
 [ext_resource path="res://GUI/icons/link/15x15/link_hover_15x15.png" type="Texture" id=6]
@@ -11,11 +11,9 @@
 [ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFontData" id=1]
-
 font_path = "res://GUI/fonts/Caliban.ttf"
 
 [sub_resource type="DynamicFont" id=2]
-
 size = 20
 use_filter = true
 font_data = SubResource( 1 )
@@ -37,7 +35,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -341,6 +338,5 @@ margin_right = 695.0
 margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OpenOutputFolderButton" to="." method="_on_OpenOutputFolderButton_pressed"]

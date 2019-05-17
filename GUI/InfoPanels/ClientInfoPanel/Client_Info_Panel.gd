@@ -56,17 +56,13 @@ func update_client_info_panel(client_id):
 	
 	var status = selected_client["status"]
 	
-	
-	var icon = ImageTexture.new()
-	
 	match status:
-		"1_rendering": icon.load("res://GUI/icons/client_status/200x100/client_status_rendering_200x100.png")
-		"2_available": icon.load("res://GUI/icons/client_status/200x100/client_status_online_200x100.png")
-		"3_error":     icon.load("res://GUI/icons/client_status/200x100/client_status_error_200x100.png")
-		"4_disabled":  icon.load("res://GUI/icons/client_status/200x100/client_status_disabled_200x100.png")
-		"5_offline":   icon.load("res://GUI/icons/client_status/200x100/client_status_offline_200x100.png")
-		
-	StatusIconTexture.set_texture(icon)
+		"1_rendering": StatusIconTexture.set_modulate(RRColorScheme.state_active)
+		"2_available": StatusIconTexture.set_modulate(RRColorScheme.state_finished_or_online)
+		"3_error":     StatusIconTexture.set_modulate(RRColorScheme.state_error)
+		"4_disabled":  StatusIconTexture.set_modulate(RRColorScheme.state_paused)
+		"5_offline":   StatusIconTexture.set_modulate(RRColorScheme.state_offline_or_cancelled)
+
 	
 	
 	
