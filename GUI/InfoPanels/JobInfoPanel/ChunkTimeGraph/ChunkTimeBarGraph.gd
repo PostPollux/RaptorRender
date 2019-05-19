@@ -9,9 +9,9 @@
 extends Control
 
 # variables to customize look of the graph
-export (Color) var shortest_rendertime_color = Color ("93d051") 
-export (Color) var longest_rendertime_color = Color ("ff0000")
-export (Color) var not_started_color = Color(0.75,0.75,0.75,1)
+var shortest_rendertime_color : Color = RRColorScheme.chunk_time_graph_shortest
+var longest_rendertime_color : Color = RRColorScheme.chunk_time_graph_longest
+var not_started_color : Color = RRColorScheme.chunk_time_graph_not_started
 
 export (bool) var draw_outline = false
 export (Color) var outline_color = Color("000000")

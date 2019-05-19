@@ -6,7 +6,6 @@
 [ext_resource path="res://GUI/fonts/Hack-Regular.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=1]
-
 size = 15
 font_data = ExtResource( 4 )
 
@@ -89,7 +88,6 @@ rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 3 )
-shortest_rendertime_color = Color( 0.576471, 0.815686, 0.317647, 1 )
 font = SubResource( 1 )
 
 [node name="ClipContainer" type="Container" parent="VBoxContainer"]
@@ -220,7 +218,6 @@ margin_bottom = 27.0
 margin_right = 151.0
 margin_bottom = 24.0
 text = "Accumulate Tries"
-
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/PanelBg/OptionsButton" to="." method="_on_OptionsButton_pressed"]
 [connection signal="gui_input" from="VBoxContainer/ChunkTimeBarGraph" to="VBoxContainer/ChunkTimeBarGraph" method="_on_BarGraph_gui_input"]
 [connection signal="toggled" from="GraphOptions/MarginContainer/VBoxContainer/AccumulateTriesCheckBox" to="." method="_on_AccumulateTriesCheckBox_toggled"]

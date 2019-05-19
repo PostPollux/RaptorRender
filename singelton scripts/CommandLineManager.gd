@@ -73,11 +73,11 @@ func start_read_log_file_thread():
 		return
 		
 	# start the thread	
-	read_log_file_thread.start(self, "read_log_file","")
+	read_log_file_thread.start(self, "validate_log_file","")
 
 
 
-func read_log_file(args):
+func validate_log_file(args):
 	
 	var active_render_log_file_path : String = OS.get_user_data_dir() + "/logs/" + active_render_log_file_name + ".txt"
 	
@@ -93,9 +93,13 @@ func read_log_file(args):
 		while true:
 			var line : String = active_render_log_file.get_line()
 			
-			line = RenderLogValidator.validate_log_line(line)
+			RenderLogValidator.validate_log_line(line)
+			
+			
+			line = RenderLogValidator.highlight_log_line(line)
 			
 			lines_read += line
+			
 			
 			
 			# break loop if end of file is reached
