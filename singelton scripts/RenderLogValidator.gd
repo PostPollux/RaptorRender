@@ -15,15 +15,19 @@ signal success_detected
 
 
 
-# crp: current render process
+# CRP: current render process
 var job_type_settings_CRP : ConfigFile
 
 var possible_critical_error_strings_CRP : Array
 var critical_error_exclude_strings_CRP : Array
-var possible_error_strings_CRP : Array
-var possible_warning_strings_CRP : Array
 var possible_frame_success_strings_CRP : Array
 var possible_success_strings_CRP: Array
+
+var critical_error_regex_CRP : RegEx
+var critical_error_exclude_regex_CRP : RegEx
+var frame_success_regex_CRP : RegEx
+var success_regex_CRP : RegEx
+
 
 
 var job_type_settings_HIGHLIGHT : ConfigFile
@@ -35,15 +39,34 @@ var possible_warning_strings_HIGHLIGHT : Array
 var possible_frame_success_strings_HIGHLIGHT : Array
 var possible_success_strings_HIGHLIGHT: Array
 
-
+var critical_error_regex_HIGHLIGHT : RegEx
+var critical_error_exclude_regex_HIGHLIGHT : RegEx
+var error_regex_HIGHLIGHT : RegEx
+var warning_regex_HIGHLIGHT : RegEx
+var frame_success_regex_HIGHLIGHT : RegEx
+var success_regex_HIGHLIGHT : RegEx
 
 
 func _ready():
 	job_type_settings_CRP = ConfigFile.new()
 	job_type_settings_HIGHLIGHT = ConfigFile.new()
 	
+	critical_error_regex_CRP = RegEx.new()
+	critical_error_exclude_regex_CRP = RegEx.new()
+	frame_success_regex_CRP = RegEx.new()
+	success_regex_CRP = RegEx.new()
+	
+	critical_error_regex_HIGHLIGHT = RegEx.new()
+	critical_error_exclude_regex_HIGHLIGHT = RegEx.new()
+	error_regex_HIGHLIGHT = RegEx.new()
+	warning_regex_HIGHLIGHT = RegEx.new()
+	frame_success_regex_HIGHLIGHT = RegEx.new()
+	success_regex_HIGHLIGHT = RegEx.new()
+	
+	
 	load_job_type_settings_CRP()
 	load_job_type_settings_HIGHLIGHT()
+
 
 
 
@@ -52,24 +75,72 @@ func load_job_type_settings_CRP():
 	
 	job_type_settings_CRP.load("/home/johannes/git_projects/RaptorRender/JobTypes/Blender.cfg")
 		
-	possible_critical_error_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").split(";;",false)
-	critical_error_exclude_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log", "").split(";;",false)
-	possible_frame_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log", "").split(";;",false)
-	possible_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").split(";;",false)
+	if job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log_pattern_type", 0) != 5:
+		possible_critical_error_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" )
+		critical_error_regex_CRP.compile( regex_str )
+	
+	if job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log_pattern_type", 0) != 5:
+		critical_error_exclude_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log", "").replace("''","\"" )
+		critical_error_exclude_regex_CRP.compile( regex_str )
+	
+	if job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log_pattern_type", 0) != 5:
+		possible_frame_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log", "").replace("''","\"" )
+		frame_success_regex_CRP.compile( regex_str )
+	
+	if job_type_settings_CRP.get_value("RenderLogValidation", "success_log_pattern_type", 0) != 5:
+		possible_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").replace("''","\"" )
+		success_regex_CRP.compile( regex_str )
+
 
 
 
 func load_job_type_settings_HIGHLIGHT():
 	
 	job_type_settings_HIGHLIGHT.load("/home/johannes/git_projects/RaptorRender/JobTypes/Blender.cfg")
-		
-	possible_critical_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log", "").split(";;",false)
-	critical_error_exclude_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log", "").split(";;",false)
-	possible_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log", "").split(";;",false)
-	possible_warning_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log", "").split(";;",false)
-	possible_frame_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log", "").split(";;",false)
-	possible_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log", "").split(";;",false)
 	
+	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log_pattern_type", 0) != 5:
+		possible_critical_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" )
+		critical_error_regex_HIGHLIGHT.compile( regex_str )
+	
+	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log_pattern_type", 0) != 5:
+		critical_error_exclude_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log", "").replace("''","\"" )
+		critical_error_exclude_regex_HIGHLIGHT.compile( regex_str )
+	
+	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log_pattern_type", 0) != 5:
+		possible_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log", "").replace("''","\"" )
+		error_regex_HIGHLIGHT.compile( regex_str )
+	
+	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log_pattern_type", 0) != 5:
+		possible_warning_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log", "").replace("''","\"" )
+		warning_regex_HIGHLIGHT.compile( regex_str )
+	
+	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log_pattern_type", 0) != 5:
+		possible_frame_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log", "").replace("''","\"" )
+		frame_success_regex_HIGHLIGHT.compile( regex_str )
+	
+	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log_pattern_type", 0) != 5:
+		possible_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log", "").split(";;",false)
+	else:
+		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log", "").replace("''","\"" )
+		success_regex_HIGHLIGHT.compile( regex_str )
 
 
 
@@ -92,7 +163,7 @@ func highlight_log_line(line : String) -> String:
 				
 				if line.begins_with( string ):
 					
-					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, job_type_settings_HIGHLIGHT):
+					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, critical_error_exclude_regex_HIGHLIGHT, job_type_settings_HIGHLIGHT):
 						return "[color=#" + RRColorScheme.log_critical_error_ignored + "]" + line + "[/color]"
 						
 					return "[color=#" + RRColorScheme.log_critical_error + "]" + line + "[/color]"
@@ -103,7 +174,7 @@ func highlight_log_line(line : String) -> String:
 				
 				if line.ends_with( string ):
 					
-					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, job_type_settings_HIGHLIGHT):
+					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, critical_error_exclude_regex_HIGHLIGHT, job_type_settings_HIGHLIGHT):
 						return "[color=#" + RRColorScheme.log_critical_error_ignored + "]" + line + "[/color]"
 					
 					return "[color=#" + RRColorScheme.log_critical_error + "]" + line + "[/color]"
@@ -113,7 +184,7 @@ func highlight_log_line(line : String) -> String:
 			for string in possible_critical_error_strings_HIGHLIGHT:
 				
 				if line.find( string ) > -1:
-					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, job_type_settings_HIGHLIGHT):
+					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, critical_error_exclude_regex_HIGHLIGHT, job_type_settings_HIGHLIGHT):
 						return "[color=#" + RRColorScheme.log_critical_error_ignored + "]" + line + "[/color]"
 					
 					return "[color=#" + RRColorScheme.log_critical_error + "]" + line + "[/color]"
@@ -123,14 +194,18 @@ func highlight_log_line(line : String) -> String:
 			for string in possible_critical_error_strings_HIGHLIGHT:
 				
 				if line == string:
-					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, job_type_settings_HIGHLIGHT):
+					if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, critical_error_exclude_regex_HIGHLIGHT, job_type_settings_HIGHLIGHT):
 						return "[color=#" + RRColorScheme.log_critical_error_ignored + "]" + line + "[/color]"
 					
 					return "[color=#" + RRColorScheme.log_critical_error + "]" + line + "[/color]"
 		
 		# regex
 		5:
-			pass
+			if critical_error_regex_HIGHLIGHT.search(line):
+				if check_critical_against_exclusion(line, critical_error_exclude_strings_HIGHLIGHT, critical_error_exclude_regex_HIGHLIGHT, job_type_settings_HIGHLIGHT):
+						return "[color=#" + RRColorScheme.log_critical_error_ignored + "]" + line + "[/color]"
+				
+				return "[color=#" + RRColorScheme.log_critical_error + "]" + line + "[/color]"
 	
 	
 	
@@ -172,7 +247,9 @@ func highlight_log_line(line : String) -> String:
 		
 		# regex
 		5:
-			pass
+			if error_regex_HIGHLIGHT.search(line):
+				return "[color=#" + RRColorScheme.log_error + "]" + line + "[/color]"
+			
 	
 	
 	
@@ -214,7 +291,8 @@ func highlight_log_line(line : String) -> String:
 		
 		# regex
 		5:
-			pass
+			if warning_regex_HIGHLIGHT.search(line):
+				return "[color=#" + RRColorScheme.log_warning + "]" + line + "[/color]"
 	
 	
 	
@@ -256,7 +334,8 @@ func highlight_log_line(line : String) -> String:
 		
 		# regex
 		5:
-			pass
+			if frame_success_regex_HIGHLIGHT.search(line):
+				return "[color=#" + RRColorScheme.log_success + "]" + line + "[/color]"
 	
 	
 	
@@ -298,7 +377,8 @@ func highlight_log_line(line : String) -> String:
 		
 		# regex
 		5:
-			pass
+			if success_regex_HIGHLIGHT.search(line):
+				return "[color=#" + RRColorScheme.log_success + "]" + line + "[/color]"
 	
 	
 	return line
@@ -323,7 +403,7 @@ func validate_log_line(line : String):
 			for string in possible_critical_error_strings_CRP:
 				
 				if line.begins_with( string ):
-					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, job_type_settings_CRP):
+					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
 		
@@ -332,7 +412,7 @@ func validate_log_line(line : String):
 			for string in possible_critical_error_strings_CRP:
 				
 				if line.ends_with( string ):
-					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, job_type_settings_CRP):
+					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
 		
@@ -341,7 +421,7 @@ func validate_log_line(line : String):
 			for string in possible_critical_error_strings_CRP:
 				
 				if line.find( string ) > -1:
-					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, job_type_settings_CRP):
+					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
 		
@@ -350,13 +430,16 @@ func validate_log_line(line : String):
 			for string in possible_critical_error_strings_CRP:
 				
 				if line == string:
-					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, job_type_settings_CRP):
+					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
 		
 		# regex
 		5:
-			pass
+			if critical_error_regex_CRP.search(line):
+				if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
+					emit_signal("critical_error_detected")
+					print ("critical error detected!")
 	
 	
 	
@@ -402,7 +485,9 @@ func validate_log_line(line : String):
 		
 		# regex
 		5:
-			pass
+			if frame_success_regex_CRP.search(line):
+				emit_signal("frame_success_detected")
+				print ("frame_success detected!")
 	
 	
 	
@@ -447,7 +532,9 @@ func validate_log_line(line : String):
 		
 		# regex
 		5:
-			pass
+			if success_regex_CRP.search(line):
+				emit_signal("success_detected")
+				print ("success detected!")
 			
 
 
@@ -455,7 +542,7 @@ func validate_log_line(line : String):
 
 
 
-func check_critical_against_exclusion(line : String, critical_error_exclusion_strings : Array, job_type_settings : ConfigFile) -> bool:
+func check_critical_against_exclusion(line : String, critical_error_exclusion_strings : Array, critical_error_exclusion_regex : RegEx, job_type_settings : ConfigFile) -> bool:
 	
 	##### critical error exclusion validation #####
 	
@@ -495,7 +582,8 @@ func check_critical_against_exclusion(line : String, critical_error_exclusion_st
 		
 		# regex
 		5:
-			pass
+			if critical_error_exclusion_regex.search(line):
+				return true
 	
 	
 	return false
