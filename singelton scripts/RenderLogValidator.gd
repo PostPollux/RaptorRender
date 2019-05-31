@@ -2,8 +2,11 @@
 # RenderLogValidator #
 #////////////////////#
 
-# This script handles 
-# 
+# This script holds functions to detect errors, validate and colorize single log lines of the render process or already finished log files.
+# The rules for the validation first have to be loaded from a .cfg file for the respective renderer.
+# There are very similar functions all over this script. One named as "CRP" (Current Render Process) and the other named as "HIGHLIGHT". That's to ensure, that it is possible that your machine can simultaneously render and validat the output, while also show colorized log outputs of other jobs with other validation rules in the interface.
+# The CRP functions only send signals on successes or error detection, while the HIGHLIGHT functions return a colorized string.
+
 
 
 extends Node
@@ -76,25 +79,25 @@ func load_job_type_settings_CRP():
 	job_type_settings_CRP.load("/home/johannes/git_projects/RaptorRender/JobTypes/Blender.cfg")
 		
 	if job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log_pattern_type", 0) != 5:
-		possible_critical_error_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").split(";;",false)
+		possible_critical_error_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" )
 		critical_error_regex_CRP.compile( regex_str )
 	
 	if job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log_pattern_type", 0) != 5:
-		critical_error_exclude_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log", "").split(";;",false)
+		critical_error_exclude_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_exclude_log", "").replace("''","\"" )
 		critical_error_exclude_regex_CRP.compile( regex_str )
 	
 	if job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log_pattern_type", 0) != 5:
-		possible_frame_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log", "").split(";;",false)
+		possible_frame_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log", "").replace("''","\"" )
 		frame_success_regex_CRP.compile( regex_str )
 	
 	if job_type_settings_CRP.get_value("RenderLogValidation", "success_log_pattern_type", 0) != 5:
-		possible_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").split(";;",false)
+		possible_success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").replace("''","\"" )
 		success_regex_CRP.compile( regex_str )
@@ -107,37 +110,37 @@ func load_job_type_settings_HIGHLIGHT():
 	job_type_settings_HIGHLIGHT.load("/home/johannes/git_projects/RaptorRender/JobTypes/Blender.cfg")
 	
 	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log_pattern_type", 0) != 5:
-		possible_critical_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log", "").split(";;",false)
+		possible_critical_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" )
 		critical_error_regex_HIGHLIGHT.compile( regex_str )
 	
 	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log_pattern_type", 0) != 5:
-		critical_error_exclude_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log", "").split(";;",false)
+		critical_error_exclude_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_exclude_log", "").replace("''","\"" )
 		critical_error_exclude_regex_HIGHLIGHT.compile( regex_str )
 	
 	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log_pattern_type", 0) != 5:
-		possible_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log", "").split(";;",false)
+		possible_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "error_log", "").replace("''","\"" )
 		error_regex_HIGHLIGHT.compile( regex_str )
 	
 	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log_pattern_type", 0) != 5:
-		possible_warning_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log", "").split(";;",false)
+		possible_warning_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "warning_log", "").replace("''","\"" )
 		warning_regex_HIGHLIGHT.compile( regex_str )
 	
 	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log_pattern_type", 0) != 5:
-		possible_frame_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log", "").split(";;",false)
+		possible_frame_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "frame_success_log", "").replace("''","\"" )
 		frame_success_regex_HIGHLIGHT.compile( regex_str )
 	
 	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log_pattern_type", 0) != 5:
-		possible_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log", "").split(";;",false)
+		possible_success_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log", "").replace("''","\"" ).split(";;",false)
 	else:
 		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log", "").replace("''","\"" )
 		success_regex_HIGHLIGHT.compile( regex_str )
