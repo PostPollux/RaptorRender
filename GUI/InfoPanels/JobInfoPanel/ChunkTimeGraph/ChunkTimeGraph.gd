@@ -9,7 +9,7 @@
 
 extends MarginContainer
 
-var job_id : String = ""
+var job_id : int = -1
 var hovered_chunk : int
 
 # references to other nodes of ChunkTimeGraph
@@ -32,7 +32,7 @@ func _ready():
 	BarGraph.connect("chunk_hovered", self, "fill_chunk_info_box")
 
 
-func set_job_id(job_ID : String):
+func set_job_id(job_ID : int):
 	job_id = job_ID
 	BarGraph.job_id = job_ID
 	
@@ -53,7 +53,7 @@ func fill_chunk_info_box(chunk_number : int):
 	
 	
 	# chunk client
-	if  RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].client == "":
+	if  RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].client == -1:
 		ChunkClientLabel.text = "-" 
 	else:
 		ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].client ].name

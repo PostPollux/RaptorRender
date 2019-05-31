@@ -30,11 +30,11 @@ func _ready():
 func reset_to_first_tab():
 	ClientInfoTabContainer.current_tab = 0
 
-func set_tab(tab_number):
+func set_tab(tab_number : int ):
 	ClientInfoTabContainer.current_tab = tab_number
 
 
-func update_client_info_panel(client_id):
+func update_client_info_panel(client_id : int):
 	
 	
 	# set the id for the cpu usage bar so that it knows which value to get
@@ -83,7 +83,7 @@ func update_client_info_panel(client_id):
 	#  CPU Section
 	###############
 	
-	var cpu_text = ""
+	var cpu_text : String = ""
 	
 	cpu_text += selected_client["cpu"][0] + "\n"
 	
@@ -113,7 +113,7 @@ func update_client_info_panel(client_id):
 	#  Memory Section
 	###################	
 	
-	var size_in_gb =  String( float(selected_client["memory"]) / 1024 / 1024 )
+	var size_in_gb : String =  String( float(selected_client["memory"]) / 1024 / 1024 )
 	RAMLabel.text = size_in_gb.left(size_in_gb.find(".")+ 3) + " GB"
 	
 	MemoryUsageBar.update_memory_usage_bar()
@@ -147,7 +147,7 @@ func update_client_info_panel(client_id):
 	#  Graphics Section
 	###################
 	
-	var graphics_text = ""
+	var graphics_text : String = ""
 	for i in range(0, selected_client["graphics"].size()):
 		graphics_text += selected_client["graphics"][i] + "\n"
 		
@@ -162,7 +162,7 @@ func update_client_info_panel(client_id):
 	##################
 	
 	if selected_client["ip_addresses"].size() > 1:
-		var text = "IP Addresses: \n"
+		var text : String = "IP Addresses: \n"
 		for i in range(0, selected_client["ip_addresses"].size()):
 			text += " " + selected_client["ip_addresses"][i].replace(".", " . ") + "\n"
 		if text.ends_with("\n"):
@@ -175,7 +175,7 @@ func update_client_info_panel(client_id):
 		
 		
 	if selected_client["mac_addresses"].size() > 1:
-		var text = "MAC Addresses: \n"
+		var text : String = "MAC Addresses: \n"
 		for i in range(0, selected_client["mac_addresses"].size()):
 			text += " " + selected_client["mac_addresses"][i].to_upper().replace(":", " : ") + "\n"
 		if text.ends_with("\n"):

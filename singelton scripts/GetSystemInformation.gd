@@ -8,7 +8,7 @@
 
 extends Node
 
-var client : Dictionary
+
 
 var platform : String # to decide which function to call depending on os
 
@@ -32,6 +32,7 @@ var user_data_dir : String
 
 var collect_hardware_info_thread : Thread
 
+var unique_client_id : int
 
 	
 
@@ -84,20 +85,20 @@ func _ready():
 	cpu_usage = 0
 	
 	
-	create_client_dict()
-	
-	RaptorRender.rr_data.clients[mac_addresses[0]] = client
+	# add the client to the clients dictionary
+	unique_client_id = mac_addresses[0].hash()
+	RaptorRender.rr_data.clients[unique_client_id] = create_client_dict()
 
 
 
-func create_client_dict():
-	client = {
+func create_client_dict() -> Dictionary:
+	var new_client = {
 		"name": hostname,
 		"username": username,
 		"mac_addresses": mac_addresses,
 		"ip_addresses": ip_addresses,
 		"status": "4_disabled",
-		"current_job_id": "",
+		"current_job_id": -1,
 		"error_count": 0,
 		"platform": platform_info,
 		"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -112,6 +113,7 @@ func create_client_dict():
 		"software": ["Blender", "Natron"],
 		"note": ""
 	}
+	return new_client
 
 
 
@@ -1044,9 +1046,9 @@ func collect_current_hardware_info(args):
 	
 	
 	# change the values
-	RaptorRender.rr_data.clients[mac_addresses[0]].memory_usage = memory_usage
-	RaptorRender.rr_data.clients[mac_addresses[0]].cpu_usage = cpu_usage
-	RaptorRender.rr_data.clients[mac_addresses[0]].hard_drives = hard_drives
+	RaptorRender.rr_data.clients[unique_client_id].memory_usage = memory_usage
+	RaptorRender.rr_data.clients[unique_client_id].cpu_usage = cpu_usage
+	RaptorRender.rr_data.clients[unique_client_id].hard_drives = hard_drives
 	
 	# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
 	call_deferred("join_collect_hardware_info_thread")

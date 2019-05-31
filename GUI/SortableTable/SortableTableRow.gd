@@ -16,7 +16,7 @@ class_name SortableTableRow
 
 var column_count : int
 var row_position : int # position of the row in the table. First row is 1, not 0.
-var id # unique id of the representing content
+var id : int # unique id of the representing content
 var sort_values : Array = [] # e.g. sort_values[5-1] holds the value that is used to sort column 5
 
 var even : bool = false

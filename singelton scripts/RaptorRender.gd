@@ -31,7 +31,7 @@ func _ready():
 	
 	rr_data = {
 		"jobs": {
-			"1": {
+			1: {
 				"name": "city_build_v5",
 				"type": "Blender",
 				"priority": 50,
@@ -51,7 +51,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -59,7 +59,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -67,7 +67,7 @@ func _ready():
 					3:{
 						"status" : "1_rendering",
 						"frames" : [24,25,26,27],
-						"client" : "id2",
+						"client" : 2,
 						"time_started" : 1535194239,
 						"time_finished" : 0,
 						"number_of_tries" : 5
@@ -75,7 +75,7 @@ func _ready():
 					4:{
 						"status" : "1_rendering",
 						"frames" : [24,25,26,27],
-						"client" : "id7",
+						"client" : 7,
 						"time_started" : 1535194219,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -83,7 +83,7 @@ func _ready():
 					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
 						"number_of_tries" : 2
@@ -91,7 +91,7 @@ func _ready():
 					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id8",
+						"client" : 8,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523230,
 						"number_of_tries" : 1
@@ -99,14 +99,14 @@ func _ready():
 					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
 						"number_of_tries" : 1
 					}
 				}
 			},
-			"7" : {
+			7 : {
 				"name": "city_build_v6",
 				"type": "Blender",
 				"priority": 50,
@@ -126,7 +126,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -134,7 +134,7 @@ func _ready():
 					2:{
 						"status" : "1_rendering",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -142,7 +142,7 @@ func _ready():
 					3:{
 						"status" : "1_rendering",
 						"frames" : [28,29,30,31],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -150,7 +150,7 @@ func _ready():
 					4:{
 						"status" : "1_rendering",
 						"frames" : [32],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -158,14 +158,14 @@ func _ready():
 					5:{
 						"status" : "2_queued",
 						"frames" : [33,34,35,36],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
 				}
 			},
-			"2": {
+			2: {
 				"name": "city_unbuild_v02",
 				"type": "Blender",
 				"priority": 20,
@@ -185,7 +185,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -193,7 +193,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -201,7 +201,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -209,7 +209,7 @@ func _ready():
 					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -217,7 +217,7 @@ func _ready():
 					5:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -225,7 +225,7 @@ func _ready():
 					6:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -233,14 +233,14 @@ func _ready():
 					7:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
 					}
 				}
 			},
-			"3": {
+			3: {
 				"name": "Champions_League_Final_Shot3",
 				"type": "After Effects",
 				"priority": 20,
@@ -260,7 +260,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -268,7 +268,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -276,7 +276,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -284,7 +284,7 @@ func _ready():
 					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -292,7 +292,7 @@ func _ready():
 					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
 						"number_of_tries" : 1
@@ -300,7 +300,7 @@ func _ready():
 					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
 						"number_of_tries" : 1
@@ -308,14 +308,14 @@ func _ready():
 					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523380,
 						"number_of_tries" : 1
 					}
 				}
 			},
-			"4": {
+			4: {
 				"name": "job 4",
 				"type": "Natron",
 				"priority": 77,
@@ -335,7 +335,7 @@ func _ready():
 					1:{
 						"status" : "5_finished",
 						"frames" : [20,21,22,23],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
 						"number_of_tries" : 1
@@ -343,7 +343,7 @@ func _ready():
 					2:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id4",
+						"client" : 4,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523275,
 						"number_of_tries" : 1
@@ -351,7 +351,7 @@ func _ready():
 					3:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id8",
+						"client" : 8,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523299,
 						"number_of_tries" : 1
@@ -359,7 +359,7 @@ func _ready():
 					4:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523268,
 						"number_of_tries" : 1
@@ -367,7 +367,7 @@ func _ready():
 					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id10",
+						"client" : 10,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523245,
 						"number_of_tries" : 1
@@ -375,7 +375,7 @@ func _ready():
 					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523222,
 						"number_of_tries" : 1
@@ -383,7 +383,7 @@ func _ready():
 					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id7",
+						"client" : 7,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
 						"number_of_tries" : 1
@@ -391,7 +391,7 @@ func _ready():
 					8:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523190,
 						"number_of_tries" : 1
@@ -399,7 +399,7 @@ func _ready():
 					9:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523285,
 						"number_of_tries" : 1
@@ -407,7 +407,7 @@ func _ready():
 					10:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523230,
 						"number_of_tries" : 1
@@ -415,7 +415,7 @@ func _ready():
 					11:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id13",
+						"client" : 13,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523250,
 						"number_of_tries" : 1
@@ -423,7 +423,7 @@ func _ready():
 					12:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id13",
+						"client" : 13,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523270,
 						"number_of_tries" : 1
@@ -431,7 +431,7 @@ func _ready():
 					13:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id15",
+						"client" : 15,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523260,
 						"number_of_tries" : 1
@@ -439,7 +439,7 @@ func _ready():
 					14:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id16",
+						"client" : 16,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523320,
 						"number_of_tries" : 1
@@ -447,7 +447,7 @@ func _ready():
 					15:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id2",
+						"client" : 2,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523290,
 						"number_of_tries" : 1
@@ -455,7 +455,7 @@ func _ready():
 					16:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id2",
+						"client" : 2,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523255,
 						"number_of_tries" : 1
@@ -463,7 +463,7 @@ func _ready():
 					17:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523430,
 						"number_of_tries" : 1
@@ -471,7 +471,7 @@ func _ready():
 					18:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523190,
 						"number_of_tries" : 1
@@ -479,7 +479,7 @@ func _ready():
 					19:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523270,
 						"number_of_tries" : 1
@@ -487,7 +487,7 @@ func _ready():
 					20:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523275,
 						"number_of_tries" : 1
@@ -495,14 +495,14 @@ func _ready():
 					21:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523220,
 						"number_of_tries" : 1
 					}
 				}
 			},
-			"5": {
+			5: {
 				"name": "job 5",
 				"type": "Nuke",
 				"priority": 10,
@@ -522,7 +522,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -530,7 +530,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -538,7 +538,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -546,7 +546,7 @@ func _ready():
 					4:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523380,
 						"number_of_tries" : 1
@@ -554,7 +554,7 @@ func _ready():
 					5:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523480,
 						"number_of_tries" : 1
@@ -562,7 +562,7 @@ func _ready():
 					6:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523620,
 						"number_of_tries" : 1
@@ -570,14 +570,14 @@ func _ready():
 					7:{
 						"status" : "5_finished",
 						"frames" : [24,25,26,27],
-						"client" : "id1",
+						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523680,
 						"number_of_tries" : 1
 					}
 				}
 			},
-			"6": {
+			6: {
 				"name": "job 6",
 				"type": "3DS Max",
 				"priority": 10,
@@ -597,7 +597,7 @@ func _ready():
 					1:{
 						"status" : "2_queued",
 						"frames" : [20,21,22,23],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -605,7 +605,7 @@ func _ready():
 					2:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -613,7 +613,7 @@ func _ready():
 					3:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -621,7 +621,7 @@ func _ready():
 					4:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -629,7 +629,7 @@ func _ready():
 					5:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -637,7 +637,7 @@ func _ready():
 					6:{
 						"status" : "2_queued",
 						"frames" : [24,25,26,27],
-						"client" : "",
+						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
 						"number_of_tries" : 1
@@ -649,13 +649,13 @@ func _ready():
 		
 		
 		"clients": {
-			"id1": {
+			1: {
 				"name": "T-Rex1",
 				"username": "Johannes",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
 				"status": "2_available",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -670,13 +670,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
-			"id2": {
+			2: {
 				"name": "Raptor1",
 				"username": "Michael",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "4_disabled",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","7"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -691,13 +691,13 @@ func _ready():
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
-			"id3": {
+			3: {
 				"name": "T-Rex2",
 				"username": "Max",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
 				"status": "1_rendering",
-				"current_job_id": "1",
+				"current_job_id": 1,
 				"error_count": 0,
 				"platform": ["OSX","SnowLeopard"],
 				"pools": ["AE_Plugins"],
@@ -712,13 +712,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
-			"id4": {
+			4: {
 				"name": "Raptor2",
 				"username": "Chris",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.87"],
 				"status": "5_offline",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -733,13 +733,13 @@ func _ready():
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
-			"id5": {
+			5: {
 				"name": "T-Rex3",
 				"username": "Angela",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.15"],
 				"status": "3_error",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 1,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -754,13 +754,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
-			"id6": {
+			6: {
 				"name": "Raptor3",
 				"username": "Nicolaj",
 				"mac_addresses": ["10:7b:44:7a:fb:e2","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "5_offline",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","XP"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -775,13 +775,13 @@ func _ready():
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
-			"id7": {
+			7: {
 				"name": "T-Rex4",
 				"username": "Patrick",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
 				"status": "2_available",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -796,13 +796,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
-			"id8": {
+			8: {
 				"name": "Raptor1",
 				"username": "Florian",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "4_disabled",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": [],
@@ -817,13 +817,13 @@ func _ready():
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
-			"id9": {
+			9: {
 				"name": "T-Rex1",
 				"username": "Marcel",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
 				"status": "2_available",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -838,13 +838,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
-			"id10": {
+			10: {
 				"name": "Raptor1",
 				"username": "Andreas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "2_available",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": ["AE_Plugins", "8GB+ VRam"],
@@ -859,13 +859,13 @@ func _ready():
 				"software": ["Blender", "Natron"],
 				"note": "my workstation"
 			},
-			"id11": {
+			11: {
 				"name": "T-Rex2",
 				"username": "Thomas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
 				"status": "1_rendering",
-				"current_job_id": "7",
+				"current_job_id": 7,
 				"error_count": 0,
 				"platform": ["OSX","Snow Leopard"],
 				"pools": ["AE_Plugins"],
@@ -880,13 +880,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": "NVidia GTX 970"
 			},
-			"id12": {
+			12: {
 				"name": "Nedry",
 				"username": "Dennis",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.87"],
 				"status": "2_available",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": ["AE_Plugins", "8GB+ VRam", "third pool"],
@@ -901,13 +901,13 @@ func _ready():
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
-			"id13": {
+			13: {
 				"name": "T-Rex3",
 				"username": "Peter",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.15"],
 				"status": "3_error",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 5,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins", "8GB+ VRam"],
@@ -922,13 +922,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
-			"id15": {
+			15: {
 				"name": "Dr.Malcom",
 				"username": "Horst",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
 				"status": "2_available",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["8GB+ VRam"],
@@ -943,13 +943,13 @@ func _ready():
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": "Just a slow computer"
 			},
-			"id16": {
+			16: {
 				"name": "Hammond",
 				"username": "Daniel",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
 				"status": "4_disabled",
-				"current_job_id": "",
+				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","7"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -1021,7 +1021,7 @@ func register_context_menu(ContextMenu):
 			
 			
 			
-func client_selected(id_of_row):
+func client_selected(id_of_row : int):
 	JobsTable.clear_selection()
 	ChunksTable.clear_selection()
 	JobInfoPanel.visible = false
@@ -1162,7 +1162,7 @@ func _input(event):
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
 				"status": "1_rendering",
-				"current_job_id": "4",
+				"current_job_id": 4,
 				"error_count": 12,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["new pool", "new pools"],
@@ -1183,7 +1183,7 @@ func _input(event):
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
 				"status": "1_rendering",
-				"current_job_id": "4",
+				"current_job_id": 4,
 				"error_count": 12,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["new pool", "new pools"],
@@ -1851,7 +1851,7 @@ func refresh_chunks_table(job_id):
 
 			### Client ###
 			
-			if rr_data.jobs[job_id].chunks[chunk].client == "":
+			if rr_data.jobs[job_id].chunks[chunk].client == -1:
 				
 				# only change when value is different
 				if (row.sort_values[client_column] != "-" ):
@@ -2071,7 +2071,7 @@ func refresh_chunks_table(job_id):
 
 			var LabelClient = Label.new()
 			
-			if rr_data.jobs[job_id].chunks[chunk].client == "":
+			if rr_data.jobs[job_id].chunks[chunk].client == -1:
 				LabelClient.text = "-"
 				ChunksTable.set_cell_content(count, client_column, LabelClient)
 				

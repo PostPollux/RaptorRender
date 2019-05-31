@@ -140,7 +140,7 @@ func _on_ContextMenu_index_pressed(index):
 					# remove Clients from Job
 					for client in RaptorRender.rr_data.clients.keys():
 						if RaptorRender.rr_data.clients[client].current_job_id == selected:
-							RaptorRender.rr_data.clients[client].current_job_id = ""
+							RaptorRender.rr_data.clients[client].current_job_id = -1
 							RaptorRender.rr_data.clients[client].status = "2_available"
 					
 					# cancle active chunks
@@ -189,7 +189,7 @@ func _on_ContextMenu_index_pressed(index):
 					# remove Clients from Job
 					for client in RaptorRender.rr_data.clients.keys():
 						if RaptorRender.rr_data.clients[client].current_job_id == selected:
-							RaptorRender.rr_data.clients[client].current_job_id = ""
+							RaptorRender.rr_data.clients[client].current_job_id = -1
 							RaptorRender.rr_data.clients[client].status = "2_available"
 							
 					# cancle active chunks
@@ -250,7 +250,7 @@ func _on_ContextMenu_index_pressed(index):
 				for job in RaptorRender.rr_data.jobs.keys():
 					max_id = max(max_id, int(job))
 				
-				RaptorRender.rr_data.jobs[String( max_id + 1 )] = job_to_resubmit
+				RaptorRender.rr_data.jobs[max_id + 1 ] = job_to_resubmit
 				
 				
 			RaptorRender.JobsTable.refresh()
@@ -295,7 +295,7 @@ func _on_ContextMenu_index_pressed(index):
 				# remove Clients from Job
 				for client in RaptorRender.rr_data.clients.keys():
 					if RaptorRender.rr_data.clients[client].current_job_id == selected:
-						RaptorRender.rr_data.clients[client].current_job_id = ""
+						RaptorRender.rr_data.clients[client].current_job_id = -1
 						RaptorRender.rr_data.clients[client].status = "2_available"
 					
 				# Remove the job from the database

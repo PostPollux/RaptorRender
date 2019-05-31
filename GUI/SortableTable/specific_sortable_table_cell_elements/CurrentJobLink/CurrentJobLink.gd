@@ -8,7 +8,7 @@ func _ready():
 	JobLinkButton = $"TextureButton"
 	CurrentJobLabel = $"CurrentJobLabel"
 	
-	if job_id != "":
+	if job_id != -1:
 		CurrentJobLabel.text = String( RaptorRender.rr_data.jobs[job_id].name )
 	else:
 		CurrentJobLabel.text = ""
@@ -19,7 +19,7 @@ func _ready():
 
 func set_correct_visibility_of_link_button():
 	
-	if job_id == "":
+	if job_id == -1:
 		JobLinkButton.visible = false
 	else:
 		JobLinkButton.visible = true

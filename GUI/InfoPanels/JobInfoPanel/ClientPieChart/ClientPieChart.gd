@@ -22,7 +22,7 @@ export (int) var desired_spacing_between_segments_in_degrees : int  = 2
 onready var NameLabel : Label = $"NameLabel"
 onready var ChunksLabel : Label = $"ChunksLabel"
 
-var hovered_client_id : String
+var hovered_client_id : int
 
 signal segment_hovered
 
@@ -68,7 +68,7 @@ func _draw():
 	
 	# create clients_and_junk_counts array
 	for client in unique_clients:
-		if client != "": 
+		if client != -1: 
 			clients_and_junk_counts.append( [ client, count_dictionary[client] ] )
 	
 	
@@ -77,8 +77,8 @@ func _draw():
 	
 	
 	# add the unassigned chunks at the end of the array so they are always on the left side
-	if unique_clients.has(""):
-		clients_and_junk_counts.append( [ "", count_dictionary[""] ] )
+	if unique_clients.has(-1):
+		clients_and_junk_counts.append( [ -1, count_dictionary[-1] ] )
 	
 	
 	# limit spacing size to half of smallest segment or shut of spacing if there is only one client
@@ -111,7 +111,7 @@ func _draw():
 		var color : Color
 		var color_interpolation_factor = float(client_number) / float(unique_clients.size())
 		
-		if client_and_junk_count[0] == "":
+		if client_and_junk_count[0] == -1:
 			color = chunks_not_assigned_color
 		else:
 			color = most_chunks_rendered_color.linear_interpolate(least_chunks_rendered_color, color_interpolation_factor)
@@ -229,7 +229,7 @@ func _on_ClientPieChart_segment_hovered(client_and_chunk_count : Array):
 	
 	hovered_client_id = client_and_chunk_count[0]
 	
-	if client_and_chunk_count[0] == "":
+	if client_and_chunk_count[0] == -1:
 		NameLabel.text = "not assigned"
 	else:
 		NameLabel.text = RaptorRender.rr_data.clients[ client_and_chunk_count[0] ].name
@@ -248,7 +248,7 @@ func _on_ClientPieChart_gui_input(ev):
 	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:
 		
 		# find double clicked client
-		var client_id : String = hovered_client_id
+		var client_id : int = hovered_client_id
 		
 		# select and autofocus correct client
 		RaptorRender.JobsTable.clear_selection()
