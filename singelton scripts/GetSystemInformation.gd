@@ -90,14 +90,13 @@ func _ready():
 	RaptorRender.rr_data.clients[unique_client_id] = create_client_dict()
 
 
-
 func create_client_dict() -> Dictionary:
 	var new_client = {
 		"name": hostname,
 		"username": username,
 		"mac_addresses": mac_addresses,
 		"ip_addresses": ip_addresses,
-		"status": "4_disabled",
+		"status": "2_available",
 		"current_job_id": -1,
 		"error_count": 0,
 		"platform": platform_info,

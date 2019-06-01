@@ -43,8 +43,8 @@ func fill_chunk_info_box(chunk_number : int):
 	
 	# chunk name
 	
-	var first_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[0]
-	var last_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frames.size() - 1]
+	var first_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frame_start
+	var last_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frame_end
 	
 	if first_chunk_frame == last_chunk_frame:
 		ChunkNameLabel.text = String (chunk_number) + "  (Frame: " + String(first_chunk_frame) + ")"

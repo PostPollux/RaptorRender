@@ -85,7 +85,7 @@ func draw_ChunkTimeGraph(job_id):
 	# calculate shortest and longest rendertimes + average
 	
 	var shortest_rendertime = 0
-	var longest_rendertime = 1
+	var longest_rendertime = 0
 	var average_rendertime = 0
 	var rendertimes_array = []
 	
@@ -112,8 +112,6 @@ func draw_ChunkTimeGraph(job_id):
 			shortest_rendertime = chunk_rendertime	
 		if chunk_rendertime > longest_rendertime:
 			longest_rendertime = chunk_rendertime
-		if longest_rendertime == shortest_rendertime:
-			longest_rendertime += 1
 		if finished and chunk_rendertime < shortest_rendertime:
 			shortest_rendertime = chunk_rendertime
 	
@@ -139,10 +137,20 @@ func draw_ChunkTimeGraph(job_id):
 		if chunk_dict.status == "1_rendering":
 			chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
 		
-		var bar_height = ( float (chunk_rendertime) / float(longest_rendertime) ) * (total_height - spacing_top - spacing_bottom)
+		var bar_height : float = 0
+		var color_interpolation_factor : float = 0
 		
-		var color_interpolation_factor = float((chunk_rendertime - shortest_rendertime)) / float((longest_rendertime - shortest_rendertime))
+		if longest_rendertime != 0:
+			bar_height = ( float (chunk_rendertime) / float(longest_rendertime) ) * (total_height - spacing_top - spacing_bottom)
+		else:
+			bar_height = ( float (chunk_rendertime) / 1 ) * (total_height - spacing_top - spacing_bottom)
 		
+		
+		if longest_rendertime != shortest_rendertime:
+			color_interpolation_factor = float((chunk_rendertime - shortest_rendertime)) / float((longest_rendertime - shortest_rendertime))
+		else:
+			color_interpolation_factor = float((chunk_rendertime - shortest_rendertime)) / 1
+			
 		var bar_rect
 		var bar_color
 		

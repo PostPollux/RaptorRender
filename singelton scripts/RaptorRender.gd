@@ -27,30 +27,165 @@ var JobInfoPanel
 
 var rr_data = {}
 
+var current_job_id_for_chunks_table : int
+
+var update_tables_timer : Timer 
+
 func _ready():
+	
+	
+	# create timer to constantly distribute the work across the connected clients 
+	update_tables_timer = Timer.new()
+	update_tables_timer.name = "Distribute Job Timer"
+	update_tables_timer.wait_time = 1
+	update_tables_timer.connect("timeout",self,"update_all_visible_tables")
+	var root_node : Node = get_tree().get_root().get_node("RaptorRenderMainScene")
+	if root_node != null:
+		root_node.add_child(update_tables_timer)
+	
+	update_tables_timer.start()
 	
 	rr_data = {
 		"jobs": {
-			1: {
-				"name": "city_build_v5",
+			100: {
+				"name": "renderfarmtest",
 				"type": "Blender",
+				"type_version": "default",
 				"priority": 50,
 				"creator": "Johannes",
 				"time_created": 1528623180,
-				"status": "1_rendering",
+				"status": "2_queued",
+				"progress": 0,
+				"range_start": 10,
+				"range_end": 25,
+				"note": "blender test",
+				"errors": 0,
+				"pools": [],
+				"scene_path" : "/home/johannes/Schreibtisch/renderfarmtest.blend",
+				"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+				"render_time" : 0,
+				"SpecificJobSettings" : {},
+				"chunks": {
+					1:{
+						"status" : "2_queued",
+						"frame_start" : 10,
+						"frame_end" : 14,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					},
+					2:{
+						"status" : "2_queued",
+						"frame_start" : 15,
+						"frame_end" : 19,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					},
+					3:{
+						"status" : "2_queued",
+						"frame_start" : 20,
+						"frame_end" : 24,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					},
+					4:{
+						"status" : "2_queued",
+						"frame_start" : 25,
+						"frame_end" : 25,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					}
+				}
+			},
+			101: {
+				"name": "natron test",
+				"type": "Natron",
+				"type_version": "default",
+				"priority": 60,
+				"creator": "Johannes",
+				"time_created": 1528623180,
+				"status": "2_queued",
+				"progress": 0,
+				"range_start": 10,
+				"range_end": 25,
+				"note": "blender test",
+				"errors": 0,
+				"pools": [],
+				"scene_path" : "/home/johannes/Schreibtisch/natron_renderfarm_test.ntp",
+				"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+				"render_time" : 0,
+				"SpecificJobSettings" : {
+					"writer_name" : "Write1"
+				},
+				"chunks": {
+					1:{
+						"status" : "2_queued",
+						"frame_start" : 10,
+						"frame_end" : 14,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					},
+					2:{
+						"status" : "2_queued",
+						"frame_start" : 15,
+						"frame_end" : 19,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					},
+					3:{
+						"status" : "2_queued",
+						"frame_start" : 20,
+						"frame_end" : 24,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					},
+					4:{
+						"status" : "2_queued",
+						"frame_start" : 25,
+						"frame_end" : 25,
+						"client" : -1,
+						"time_started" : 0,
+						"time_finished" : 0,
+						"number_of_tries" : 0
+					}
+				}
+			},
+			1: {
+				"name": "city_build_v5",
+				"type": "Blender",
+				"type_version": "default",
+				"priority": 50,
+				"creator": "Johannes",
+				"time_created": 1528623180,
+				"status": "6_cancelled",
 				"progress": 28,
 				"range_start": 230,
 				"range_end": 780,
 				"note": "eine Notiz",
 				"errors": 2,
 				"pools": ["AE_Plugins"],
-				"scene_directory" : "/home/johannes/Downlfoads/",
+				"scene_path" : "/home/johannes/Downlfoads/test.blend",
 				"output_directory" : "/home/johannes/GodogtTest/",
 				"render_time" : 345,
+				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
 						"status" : "2_queued",
-						"frames" : [20,21,22,23],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -58,7 +193,8 @@ func _ready():
 					},
 					2:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -66,7 +202,8 @@ func _ready():
 					},
 					3:{
 						"status" : "1_rendering",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 2,
 						"time_started" : 1535194239,
 						"time_finished" : 0,
@@ -74,7 +211,8 @@ func _ready():
 					},
 					4:{
 						"status" : "1_rendering",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 7,
 						"time_started" : 1535194219,
 						"time_finished" : 0,
@@ -82,7 +220,8 @@ func _ready():
 					},
 					5:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -90,7 +229,8 @@ func _ready():
 					},
 					6:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 8,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523230,
@@ -98,7 +238,8 @@ func _ready():
 					},
 					7:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -109,23 +250,26 @@ func _ready():
 			7 : {
 				"name": "city_build_v6",
 				"type": "Blender",
+				"type_version": "default",
 				"priority": 50,
 				"creator": "Johannes",
 				"time_created": 1528621180,
-				"status": "1_rendering",
+				"status": "6_cancelled",
 				"progress": 28,
 				"range_start": 1,
 				"range_end": 80,
 				"note": "",
 				"errors": 0,
 				"pools": ["AE_Plugins", "third pool"],
-				"scene_directory" : "\\home\\johannes\\Downloads\\",
+				"scene_path" : "\\home\\johannes\\Downloads\\test.blend",
 				"output_directory" : "\\home\\johannes\\GodotTest\\",
 				"render_time" : 3645,
+				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
 						"status" : "2_queued",
-						"frames" : [20,21,22,23],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -133,7 +277,8 @@ func _ready():
 					},
 					2:{
 						"status" : "1_rendering",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 0,
@@ -141,7 +286,8 @@ func _ready():
 					},
 					3:{
 						"status" : "1_rendering",
-						"frames" : [28,29,30,31],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 0,
@@ -149,7 +295,8 @@ func _ready():
 					},
 					4:{
 						"status" : "1_rendering",
-						"frames" : [32],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 0,
@@ -157,7 +304,8 @@ func _ready():
 					},
 					5:{
 						"status" : "2_queued",
-						"frames" : [33,34,35,36],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -168,23 +316,26 @@ func _ready():
 			2: {
 				"name": "city_unbuild_v02",
 				"type": "Blender",
+				"type_version": "default",
 				"priority": 20,
 				"creator": "Chris",
 				"time_created": 1528613180,
-				"status": "2_queued",
+				"status": "6_cancelled",
 				"progress": 0,
 				"range_start": 1,
 				"range_end": 500,
 				"note": "",
 				"errors": 0,
 				"pools": ["third pool"],
-				"scene_directory" : "/home/johannes/Downloads/",
+				"scene_path" : "/home/johannes/Downloads/test.blend",
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 45,
+				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
 						"status" : "2_queued",
-						"frames" : [20,21,22,23],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -192,7 +343,8 @@ func _ready():
 					},
 					2:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -200,7 +352,8 @@ func _ready():
 					},
 					3:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -208,7 +361,8 @@ func _ready():
 					},
 					4:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -216,7 +370,8 @@ func _ready():
 					},
 					5:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -224,7 +379,8 @@ func _ready():
 					},
 					6:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -232,7 +388,8 @@ func _ready():
 					},
 					7:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -243,6 +400,7 @@ func _ready():
 			3: {
 				"name": "Champions_League_Final_Shot3",
 				"type": "After Effects",
+				"type_version": "default",
 				"priority": 20,
 				"creator": "Michael",
 				"time_created": 1528523180,
@@ -253,13 +411,15 @@ func _ready():
 				"note": "Rabarber",
 				"errors": 0,
 				"pools": ["another pool"],
-				"scene_directory" : "/home/johannes/Downloads/",
+				"scene_path" : "/home/johannes/Downloads/test.blend",
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 54445,
+				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
 						"status" : "2_queued",
-						"frames" : [20,21,22,23],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -267,7 +427,8 @@ func _ready():
 					},
 					2:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -275,7 +436,8 @@ func _ready():
 					},
 					3:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -283,7 +445,8 @@ func _ready():
 					},
 					4:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -291,7 +454,8 @@ func _ready():
 					},
 					5:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
@@ -299,7 +463,8 @@ func _ready():
 					},
 					6:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -307,7 +472,8 @@ func _ready():
 					},
 					7:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523380,
@@ -318,6 +484,7 @@ func _ready():
 			4: {
 				"name": "job 4",
 				"type": "Natron",
+				"type_version": "default",
 				"priority": 77,
 				"creator": "Max",
 				"time_created": 1528620180,
@@ -328,13 +495,15 @@ func _ready():
 				"note": "3 Fehler",
 				"errors": 0,
 				"pools": ["AE_Plugins"],
-				"scene_directory" : "/home/johannes/Downloads/",
+				"scene_path" : "/home/johannes/Downloads/test.blend",
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 2487,
+				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
 						"status" : "5_finished",
-						"frames" : [20,21,22,23],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523280,
@@ -342,7 +511,8 @@ func _ready():
 					},
 					2:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 4,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523275,
@@ -350,7 +520,8 @@ func _ready():
 					},
 					3:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 8,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523299,
@@ -358,7 +529,8 @@ func _ready():
 					},
 					4:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523268,
@@ -366,7 +538,8 @@ func _ready():
 					},
 					5:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 10,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523245,
@@ -374,7 +547,8 @@ func _ready():
 					},
 					6:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523222,
@@ -382,7 +556,8 @@ func _ready():
 					},
 					7:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 7,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523200,
@@ -390,7 +565,8 @@ func _ready():
 					},
 					8:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523190,
@@ -398,7 +574,8 @@ func _ready():
 					},
 					9:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523285,
@@ -406,7 +583,8 @@ func _ready():
 					},
 					10:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523230,
@@ -414,7 +592,8 @@ func _ready():
 					},
 					11:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 13,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523250,
@@ -422,7 +601,8 @@ func _ready():
 					},
 					12:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 13,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523270,
@@ -430,7 +610,8 @@ func _ready():
 					},
 					13:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 15,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523260,
@@ -438,7 +619,8 @@ func _ready():
 					},
 					14:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 16,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523320,
@@ -446,7 +628,8 @@ func _ready():
 					},
 					15:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 2,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523290,
@@ -454,7 +637,8 @@ func _ready():
 					},
 					16:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 2,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523255,
@@ -462,7 +646,8 @@ func _ready():
 					},
 					17:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523430,
@@ -470,7 +655,8 @@ func _ready():
 					},
 					18:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523190,
@@ -478,7 +664,8 @@ func _ready():
 					},
 					19:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523270,
@@ -486,7 +673,8 @@ func _ready():
 					},
 					20:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523275,
@@ -494,7 +682,8 @@ func _ready():
 					},
 					21:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523220,
@@ -505,6 +694,7 @@ func _ready():
 			5: {
 				"name": "job 5",
 				"type": "Nuke",
+				"type_version": "default",
 				"priority": 10,
 				"creator": "Nicolaj",
 				"time_created": 1528623110,
@@ -515,13 +705,15 @@ func _ready():
 				"note": "",
 				"errors": 0,
 				"pools": ["another pool"],
-				"scene_directory" : "/home/johannes/Downloads/",
+				"scene_path" : "/home/johannes/Downloads/test.blend",
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 3433578,
+				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
 						"status" : "2_queued",
-						"frames" : [20,21,22,23],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -529,7 +721,8 @@ func _ready():
 					},
 					2:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -537,7 +730,8 @@ func _ready():
 					},
 					3:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -545,7 +739,8 @@ func _ready():
 					},
 					4:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523380,
@@ -553,7 +748,8 @@ func _ready():
 					},
 					5:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523480,
@@ -561,7 +757,8 @@ func _ready():
 					},
 					6:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523620,
@@ -569,7 +766,8 @@ func _ready():
 					},
 					7:{
 						"status" : "5_finished",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : 1,
 						"time_started" : 1528523180,
 						"time_finished" : 1528523680,
@@ -580,6 +778,7 @@ func _ready():
 			6: {
 				"name": "job 6",
 				"type": "3DS Max",
+				"type_version": "default",
 				"priority": 10,
 				"creator": "Nicolaj",
 				"time_created": 1525611110,
@@ -590,13 +789,15 @@ func _ready():
 				"note": "",
 				"errors": 11,
 				"pools": ["AE_Plugins"],
-				"scene_directory" : "/home/johannes/Downloads/",
+				"scene_path" : "/home/johannes/Downloads/test.blend",
 				"output_directory" : "/home/johannes/GodotTest/",
 				"render_time" : 4578,
+				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
 						"status" : "2_queued",
-						"frames" : [20,21,22,23],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -604,7 +805,8 @@ func _ready():
 					},
 					2:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -612,7 +814,8 @@ func _ready():
 					},
 					3:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -620,7 +823,8 @@ func _ready():
 					},
 					4:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -628,7 +832,8 @@ func _ready():
 					},
 					5:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -636,7 +841,8 @@ func _ready():
 					},
 					6:{
 						"status" : "2_queued",
-						"frames" : [24,25,26,27],
+						"frame_start" : 20,
+						"frame_end" : 25,
 						"client" : -1,
 						"time_started" : 0,
 						"time_finished" : 0,
@@ -654,7 +860,7 @@ func _ready():
 				"username": "Johannes",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
-				"status": "2_available",
+				"status": "4_disabled",
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -696,7 +902,7 @@ func _ready():
 				"username": "Max",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
-				"status": "1_rendering",
+				"status": "4_disabled",
 				"current_job_id": 1,
 				"error_count": 0,
 				"platform": ["OSX","SnowLeopard"],
@@ -780,7 +986,7 @@ func _ready():
 				"username": "Patrick",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
-				"status": "2_available",
+				"status": "4_disabled",
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -822,7 +1028,7 @@ func _ready():
 				"username": "Marcel",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
-				"status": "2_available",
+				"status": "4_disabled",
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -843,7 +1049,7 @@ func _ready():
 				"username": "Andreas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
-				"status": "2_available",
+				"status": "4_disabled",
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
@@ -864,7 +1070,7 @@ func _ready():
 				"username": "Thomas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
-				"status": "1_rendering",
+				"status": "4_disabled",
 				"current_job_id": 7,
 				"error_count": 0,
 				"platform": ["OSX","Snow Leopard"],
@@ -885,7 +1091,7 @@ func _ready():
 				"username": "Dennis",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.87"],
-				"status": "2_available",
+				"status": "4_disabled",
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
@@ -927,7 +1133,7 @@ func _ready():
 				"username": "Horst",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
-				"status": "2_available",
+				"status": "4_disabled",
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -1043,6 +1249,7 @@ func job_selected(id_of_row):
 	JobInfoPanel.update_job_info_panel(id_of_row)
 	JobInfoPanel.visible = true
 	refresh_chunks_table(id_of_row)
+	current_job_id_for_chunks_table = id_of_row
 
 
 func job_selection_cleared():
@@ -1202,6 +1409,11 @@ func _input(event):
 		JobsTable.refresh()
 
 
+func update_all_visible_tables():
+	refresh_jobs_table()
+	refresh_chunks_table(current_job_id_for_chunks_table)
+	refresh_clients_table()
+
 
 func refresh_jobs_table():
 	
@@ -1355,27 +1567,24 @@ func refresh_jobs_table():
 			
 			var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job)
 			var percentage = int( float(chunk_counts[1]) / float(chunk_counts[0]) * 100.0 )
+			
+			# here we don't check if something changed or not, because it should also update when new chunks are started, even if the percentage is still the same
+			# change the cell values
+			var JobProgressBar = JobsTable.get_cell( row_position, progress_column ).get_child(0)
+			
+			if rr_data.jobs[job].status == "4_paused":
+				JobProgressBar.job_status = "paused"
+			elif rr_data.jobs[job].status == "6_cancelled":
+				JobProgressBar.job_status = "cancelled"
+			else:
+				JobProgressBar.job_status = "normal"
 				
-			# only change when value is different
-			if (row.sort_values[progress_column] != percentage):
-				
-				# get reference to the cell
-				var cell = JobsTable.get_cell( row_position, progress_column )
-				
-				# change the cell values
-				var JobProgressBar = cell.get_child(0)
-				
-				if rr_data.jobs[job].status == "4_paused":
-					JobProgressBar.job_status = "paused"
-				if rr_data.jobs[job].status == "6_cancelled":
-					JobProgressBar.job_status = "cancelled"
-				
-				JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
-				JobProgressBar.show_progress()
-				JobProgressBar.match_color_to_status()
-				
-				# update sort_value
-				JobsTable.set_cell_sort_value(row_position, progress_column, percentage)
+			JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
+			JobProgressBar.show_progress()
+			JobProgressBar.match_color_to_status()
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(row_position, progress_column, percentage)
 			
 			
 			
@@ -1599,9 +1808,10 @@ func refresh_jobs_table():
 			
 			if rr_data.jobs[job].status == "4_paused":
 				JobProgressBar.job_status = "paused"
-			if rr_data.jobs[job].status == "6_cancelled":
+			elif rr_data.jobs[job].status == "6_cancelled":
 				JobProgressBar.job_status = "cancelled"
-				
+			else:
+				JobProgressBar.job_status = "normal"
 			
 			JobsTable.set_cell_content(count, progress_column, JobProgressBar)
 			
@@ -1720,87 +1930,307 @@ func refresh_chunks_table(job_id):
 	var finished_column = 8
 	
 	
+	if RaptorRender.rr_data.jobs.has(job_id):
 	
-	
-	# get all chunks
-	var chunks_array = rr_data.jobs[job_id].chunks.keys()
-	
-	# remove unneded filled rows of the ChunksTable
-	if chunks_array.size() < ChunksTable.RowContainerFilled.SortableRows.size():
+		# get all chunks
+		var chunks_array = rr_data.jobs[job_id].chunks.keys()
 		
-		for remove_id in range(chunks_array.size() + 1, ChunksTable.RowContainerFilled.SortableRows.size() + 1):
+		# remove unneded filled rows of the ChunksTable
+		if chunks_array.size() < ChunksTable.RowContainerFilled.SortableRows.size():
 			
-			ChunksTable.remove_row( remove_id )
-	
-	
-	
-	# display number of chunks in the Tabname
-	#ChunksTable.get_parent().name = "Chunks (" + String ( chunks_array.size() ) + ")"
-	
-	
-	#### Fill Chunks Table ####
-	
-	var count = 1
-	
-	for chunk in chunks_array:
-
-		##############################################
-		### update modified cells in row if row exists
-		##############################################
-		
-		if ChunksTable.RowContainerFilled.id_position_dict.has(chunk):
-			
-			# get reference to the row
-			var row_position = ChunksTable.RowContainerFilled.id_position_dict[chunk]
-			var row = ChunksTable.get_row_by_position( row_position )
-			
-			# update all cells that have changed
-
-
-
-
-			### Number ###
-			
-			# only change when value is different
-			if (row.sort_values[number_column] != chunk):
-			
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, number_column )
+			for remove_id in range(chunks_array.size() + 1, ChunksTable.RowContainerFilled.SortableRows.size() + 1):
 				
-				# change the cell value
-				cell.get_child(0).text = chunk
+				ChunksTable.remove_row( remove_id )
+		
+		
+		
+		# display number of chunks in the Tabname
+		#ChunksTable.get_parent().name = "Chunks (" + String ( chunks_array.size() ) + ")"
+		
+		
+		#### Fill Chunks Table ####
+		
+		var count = 1
+		
+		for chunk in chunks_array:
+	
+			##############################################
+			### update modified cells in row if row exists
+			##############################################
+			
+			if ChunksTable.RowContainerFilled.id_position_dict.has(chunk):
+				
+				# get reference to the row
+				var row_position = ChunksTable.RowContainerFilled.id_position_dict[chunk]
+				var row = ChunksTable.get_row_by_position( row_position )
+				
+				# update all cells that have changed
+	
+	
+	
+	
+				### Number ###
+				
+				# only change when value is different
+				if (row.sort_values[number_column] != chunk):
+				
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, number_column )
+					
+					# change the cell value
+					cell.get_child(0).text = chunk
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, number_column, chunk)
+	
+	
+	
+	
+	
+				### Status Icon ###
+				
+				# only change when value is different
+				if (row.sort_values[status_column] != rr_data.jobs[job_id].chunks[chunk].status):
+					
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, status_column )
+					
+					var StatusIcon = cell.get_child(0)
+					
+					if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
+						StatusIcon.set_modulate(RRColorScheme.state_active)
+						if colorize_table_rows:
+							ChunksTable.set_row_color_by_string(row_position, "blue")
+							
+					elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
+						StatusIcon.set_modulate(RRColorScheme.state_queued)
+						if colorize_table_rows:
+							ChunksTable.set_row_color_by_string(row_position, "yellow")
+							
+					elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
+						StatusIcon.set_modulate(RRColorScheme.state_error)
+						if colorize_table_rows:
+							ChunksTable.set_row_color_by_string(row_position, "red")
+							
+					elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
+						StatusIcon.set_modulate(RRColorScheme.state_paused)
+							
+					elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
+						StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
+						if colorize_table_rows:
+							ChunksTable.set_row_color_by_string(row_position, "green")
+							
+					elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
+						StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
+						if colorize_table_rows:
+							ChunksTable.set_row_color_by_string(row_position, "black")
+							cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
+							
+					
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
+				
+	
+	
+	
+	
+				### Frames ###
+				
+				# only change when value is different
+				if (row.sort_values[frames_column] != rr_data.jobs[job_id].chunks[chunk].frame_start ):
+				
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, frames_column )
+					
+					var first_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frame_start
+					var last_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frame_end
+					
+					# change the cell value
+					if first_chunk_frame == last_chunk_frame:
+						cell.get_child(0).text = String(first_chunk_frame)
+					else:
+						cell.get_child(0).text = String(first_chunk_frame) + " - " + String(last_chunk_frame)
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, frames_column, first_chunk_frame)
+	
+	
+	
+	
+	
+				### Client ###
+				
+				if rr_data.jobs[job_id].chunks[chunk].client == -1:
+					
+					# only change when value is different
+					if (row.sort_values[client_column] != "-" ):
+					
+						# get reference to the cell
+						var cell = ChunksTable.get_cell( row_position, client_column )
+						
+						# change the cell value
+						cell.get_child(0).text = "-"
+						
+						# update sort_value
+						ChunksTable.set_cell_sort_value(row_position, client_column, "-")
+				
+				
+				else:
+					
+					# only change when value is different
+					if (row.sort_values[client_column] != rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name ):
+					
+						# get reference to the cell
+						var cell = ChunksTable.get_cell( row_position, client_column )
+						
+						# change the cell value
+						cell.get_child(0).text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
+						
+						# update sort_value
+						ChunksTable.set_cell_sort_value(row_position, client_column, rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
+		
+	
+	
+	
+				### Rendertime ###
+				
+				var chunk_rendertime = 0
+				
+				if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
+					chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
+					
+				elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
+					chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
+				
+				# only change when value is different
+				if (row.sort_values[rendertime_column] != chunk_rendertime ):
+				
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, rendertime_column )
+					
+					# change the cell value
+					if chunk_rendertime != 0:
+						cell.get_child(0).text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
+					else:
+						cell.get_child(0).text = "-"
+						
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, rendertime_column, chunk_rendertime)
+	
+	
+	
+	
+	
+				### Number of tries ###
+				
+				# only change when value is different
+				if (row.sort_values[tries_column] != rr_data.jobs[job_id].chunks[chunk].number_of_tries):
+					
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, tries_column )
+					
+					# change the cell value
+					cell.get_child(0).text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+	
+	
+	
+	
+				### Time Started ###
+			
+				# only change when value is different
+				if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_started):
+				
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, started_column )
+					
+					# change the cell value
+					var time_started = rr_data.jobs[job_id].chunks[chunk].time_started
+					
+					if time_started != 0:
+						cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
+					else:
+						cell.get_child(0).text = "-"
+						
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, started_column,  time_started)
+	
+	
+	
+	
+				### Time Finished ###
+				
+				# only change when value is different
+				if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_finished):
+				
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, finished_column )
+					
+					# change the cell value
+					var time_finished = rr_data.jobs[job_id].chunks[chunk].time_finished
+					
+					if time_finished != 0:
+						cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1)
+					else:
+						cell.get_child(0).text = "-"
+						
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, finished_column, time_finished)
+	
+	
+	
+				
+			##########################################################
+			### create the row if row with given id does not exist yet
+			##########################################################
+			
+			else:
+				
+				ChunksTable.create_row(chunk)
+	
+	
+	
+				### Number ###
+				
+				var LabelNumber = Label.new()
+				LabelNumber.text = String(chunk)
+				ChunksTable.set_cell_content(count, number_column, LabelNumber)
 				
 				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, number_column, chunk)
-
-
-
-
-
-			### Status Icon ###
-			
-			# only change when value is different
-			if (row.sort_values[status_column] != rr_data.jobs[job_id].chunks[chunk].status):
+				ChunksTable.set_cell_sort_value(count, number_column,  chunk)
+	
+	
 				
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, status_column )
+				### Status Icon ###
 				
-				var StatusIcon = cell.get_child(0)
+				var StatusIcon = TextureRect.new()
+				StatusIcon.set_expand(true)
+				StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
+				StatusIcon.set_v_size_flags(3) # fill + expand
+				StatusIcon.set_h_size_flags(3) # fill + expand
+				StatusIcon.rect_min_size.x = 54
+				
+				var icon = ImageTexture.new()
+				icon.load("res://GUI/icons/chunk_status/chunk_status_58x30.png")
+				StatusIcon.set_texture(icon)
 				
 				if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
 					StatusIcon.set_modulate(RRColorScheme.state_active)
 					if colorize_table_rows:
-						ChunksTable.set_row_color_by_string(row_position, "blue")
+						ChunksTable.set_row_color_by_string(count, "blue")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
 					StatusIcon.set_modulate(RRColorScheme.state_queued)
 					if colorize_table_rows:
-						ChunksTable.set_row_color_by_string(row_position, "yellow")
+						ChunksTable.set_row_color_by_string(count, "yellow")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
 					StatusIcon.set_modulate(RRColorScheme.state_error)
 					if colorize_table_rows:
-						ChunksTable.set_row_color_by_string(row_position, "red")
+						ChunksTable.set_row_color_by_string(count, "red")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
 					StatusIcon.set_modulate(RRColorScheme.state_paused)
@@ -1808,361 +2238,140 @@ func refresh_chunks_table(job_id):
 				elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
 					StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 					if colorize_table_rows:
-						ChunksTable.set_row_color_by_string(row_position, "green")
+						ChunksTable.set_row_color_by_string(count, "green")
 						
 				elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
 					StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
 					if colorize_table_rows:
-						ChunksTable.set_row_color_by_string(row_position, "black")
-						cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
+						ChunksTable.set_row_color_by_string(count, "black")
+						StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
 						
 				
+				ChunksTable.set_cell_content(count, status_column, StatusIcon)
 				
 				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
-			
-
-
-
-
-			### Frames ###
-			
-			# only change when value is different
-			if (row.sort_values[frames_column] != rr_data.jobs[job_id].chunks[chunk].frames[0] ):
-			
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, frames_column )
+				ChunksTable.set_cell_sort_value(count, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
 				
-				var first_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[0]
-				var last_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[ rr_data.jobs[job_id].chunks[chunk].frames.size() - 1]
 				
-				# change the cell value
-				if first_chunk_frame == last_chunk_frame:
-					cell.get_child(0).text = String(first_chunk_frame)
-				else:
-					cell.get_child(0).text = String(first_chunk_frame) + " - " + String(last_chunk_frame)
-				
-				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, frames_column, first_chunk_frame)
-
-
-
-
-
-			### Client ###
-			
-			if rr_data.jobs[job_id].chunks[chunk].client == -1:
-				
-				# only change when value is different
-				if (row.sort_values[client_column] != "-" ):
-				
-					# get reference to the cell
-					var cell = ChunksTable.get_cell( row_position, client_column )
-					
-					# change the cell value
-					cell.get_child(0).text = "-"
-					
-					# update sort_value
-					ChunksTable.set_cell_sort_value(row_position, client_column, "-")
-			
-			
-			else:
-				
-				# only change when value is different
-				if (row.sort_values[client_column] != rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name ):
-				
-					# get reference to the cell
-					var cell = ChunksTable.get_cell( row_position, client_column )
-					
-					# change the cell value
-					cell.get_child(0).text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
-					
-					# update sort_value
-					ChunksTable.set_cell_sort_value(row_position, client_column, rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
 	
-
-
-
-			### Rendertime ###
-			
-			var chunk_rendertime = 0
-			
-			if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
-				chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
+	
+	
+	
+				### Frames ###
 				
-			elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
-				chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
-			
-			# only change when value is different
-			if (row.sort_values[rendertime_column] != chunk_rendertime ):
-			
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, rendertime_column )
+				var LabelFrames = Label.new()
+				var first_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frame_start
+				var last_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frame_end
 				
-				# change the cell value
-				if chunk_rendertime != 0:
-					cell.get_child(0).text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
+				if first_chunk_frame == last_chunk_frame:
+					LabelFrames.text = String(first_chunk_frame)
 				else:
-					cell.get_child(0).text = "-"
+					LabelFrames.text = String(first_chunk_frame) + " - " + String(last_chunk_frame)
+				
+				ChunksTable.set_cell_content(count, frames_column, LabelFrames)
+				
+				# update sort_value
+				ChunksTable.set_cell_sort_value(count, frames_column,  first_chunk_frame)
+	
+	
+	
+	
+	
+				### Client ###
+	
+				var LabelClient = Label.new()
+				
+				if rr_data.jobs[job_id].chunks[chunk].client == -1:
+					LabelClient.text = "-"
+					ChunksTable.set_cell_content(count, client_column, LabelClient)
 					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(count, client_column,  "-")
+				else:
+					LabelClient.text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
+					ChunksTable.set_cell_content(count, client_column, LabelClient)
+				
+					# update sort_value
+					ChunksTable.set_cell_sort_value(count, client_column,  rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
+	
+	
+	
+				### Rendertime ###
+				
+				var LabelRendertime = Label.new()
+				var chunk_rendertime = 0
+				
+				if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
+					chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
+					LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
+					
+				elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
+					chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
+					LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
+				else:
+					LabelRendertime.text = "-"
+					
+				ChunksTable.set_cell_content(count, rendertime_column, LabelRendertime)
+				
 				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, rendertime_column, chunk_rendertime)
-
-
-
-
-
-			### Number of tries ###
-			
-			# only change when value is different
-			if (row.sort_values[tries_column] != rr_data.jobs[job_id].chunks[chunk].number_of_tries):
+				ChunksTable.set_cell_sort_value(count, rendertime_column,  chunk_rendertime)
+	
+	
+	
+	
+	
+				### Number of tries ###
 				
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, tries_column )
-				
-				# change the cell value
-				cell.get_child(0).text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+				var LabelNumberOfTries = Label.new()
+				LabelNumberOfTries.text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+				ChunksTable.set_cell_content(count, tries_column, LabelNumberOfTries)
 				
 				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
-
-
-
-
-			### Time Started ###
-		
-			# only change when value is different
-			if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_started):
-			
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, started_column )
+				ChunksTable.set_cell_sort_value(count, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
+	
+	
+	
+	
+				### Time Started ###
 				
-				# change the cell value
+				var LabelTimeStarted = Label.new()
+				
 				var time_started = rr_data.jobs[job_id].chunks[chunk].time_started
 				
 				if time_started != 0:
-					cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
+					LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1 )
 				else:
-					cell.get_child(0).text = "-"
-					
-				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, started_column,  time_started)
-
-
-
-
-			### Time Finished ###
-			
-			# only change when value is different
-			if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].time_finished):
-			
-				# get reference to the cell
-				var cell = ChunksTable.get_cell( row_position, finished_column )
+					LabelTimeStarted.text = "-"
+				ChunksTable.set_cell_content(count, started_column, LabelTimeStarted)
 				
-				# change the cell value
+				# update sort_value
+				ChunksTable.set_cell_sort_value(count, started_column, time_started)
+	
+	
+	
+	
+				### Time Finished ###
+				
+				var LabelTimeFinished = Label.new()
+				
 				var time_finished = rr_data.jobs[job_id].chunks[chunk].time_finished
 				
 				if time_finished != 0:
-					cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1)
+					LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1 )
 				else:
-					cell.get_child(0).text = "-"
-					
+					LabelTimeFinished.text = "-"
+				ChunksTable.set_cell_content(count, finished_column, LabelTimeFinished)
+				
 				# update sort_value
-				ChunksTable.set_cell_sort_value(row_position, finished_column, time_finished)
-
-
-
+				ChunksTable.set_cell_sort_value(count, finished_column, time_finished)
 			
-		##########################################################
-		### create the row if row with given id does not exist yet
-		##########################################################
+			
+			
+			count += 1
 		
-		else:
-			
-			ChunksTable.create_row(chunk)
+		ChunksTable.sort()
 
 
-
-			### Number ###
-			
-			var LabelNumber = Label.new()
-			LabelNumber.text = String(chunk)
-			ChunksTable.set_cell_content(count, number_column, LabelNumber)
-			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, number_column,  chunk)
-
-
-			
-			### Status Icon ###
-			
-			var StatusIcon = TextureRect.new()
-			StatusIcon.set_expand(true)
-			StatusIcon.set_stretch_mode(6) # 6 - keep aspect centered
-			StatusIcon.set_v_size_flags(3) # fill + expand
-			StatusIcon.set_h_size_flags(3) # fill + expand
-			StatusIcon.rect_min_size.x = 54
-			
-			var icon = ImageTexture.new()
-			icon.load("res://GUI/icons/chunk_status/chunk_status_58x30.png")
-			StatusIcon.set_texture(icon)
-			
-			if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
-				StatusIcon.set_modulate(RRColorScheme.state_active)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(count, "blue")
-					
-			elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
-				StatusIcon.set_modulate(RRColorScheme.state_queued)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(count, "yellow")
-					
-			elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
-				StatusIcon.set_modulate(RRColorScheme.state_error)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(count, "red")
-					
-			elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
-				StatusIcon.set_modulate(RRColorScheme.state_paused)
-					
-			elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
-				StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(count, "green")
-					
-			elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
-				StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(count, "black")
-					StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
-					
-			
-			ChunksTable.set_cell_content(count, status_column, StatusIcon)
-			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, status_column,  rr_data.jobs[job_id].chunks[chunk].status)
-			
-			
-
-
-
-
-			### Frames ###
-			
-			var LabelFrames = Label.new()
-			var first_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[0]
-			var last_chunk_frame = rr_data.jobs[job_id].chunks[chunk].frames[ rr_data.jobs[job_id].chunks[chunk].frames.size() - 1]
-			
-			if first_chunk_frame == last_chunk_frame:
-				LabelFrames.text = String(first_chunk_frame)
-			else:
-				LabelFrames.text = String(first_chunk_frame) + " - " + String(last_chunk_frame)
-			
-			ChunksTable.set_cell_content(count, frames_column, LabelFrames)
-			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, frames_column,  first_chunk_frame)
-
-
-
-
-
-			### Client ###
-
-			var LabelClient = Label.new()
-			
-			if rr_data.jobs[job_id].chunks[chunk].client == -1:
-				LabelClient.text = "-"
-				ChunksTable.set_cell_content(count, client_column, LabelClient)
-				
-				# update sort_value
-				ChunksTable.set_cell_sort_value(count, client_column,  "-")
-			else:
-				LabelClient.text = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name
-				ChunksTable.set_cell_content(count, client_column, LabelClient)
-			
-				# update sort_value
-				ChunksTable.set_cell_sort_value(count, client_column,  rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].client ].name)
-
-
-
-			### Rendertime ###
-			
-			var LabelRendertime = Label.new()
-			var chunk_rendertime = 0
-			
-			if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
-				chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
-				LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
-				
-			elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
-				chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
-				LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
-			else:
-				LabelRendertime.text = "-"
-				
-			ChunksTable.set_cell_content(count, rendertime_column, LabelRendertime)
-			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, rendertime_column,  chunk_rendertime)
-
-
-
-
-
-			### Number of tries ###
-			
-			var LabelNumberOfTries = Label.new()
-			LabelNumberOfTries.text = String(rr_data.jobs[job_id].chunks[chunk].number_of_tries)
-			ChunksTable.set_cell_content(count, tries_column, LabelNumberOfTries)
-			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, tries_column,  rr_data.jobs[job_id].chunks[chunk].number_of_tries)
-
-
-
-
-			### Time Started ###
-			
-			var LabelTimeStarted = Label.new()
-			
-			var time_started = rr_data.jobs[job_id].chunks[chunk].time_started
-			
-			if time_started != 0:
-				LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1 )
-			else:
-				LabelTimeStarted.text = "-"
-			ChunksTable.set_cell_content(count, started_column, LabelTimeStarted)
-			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, started_column, time_started)
-
-
-
-
-			### Time Finished ###
-			
-			var LabelTimeFinished = Label.new()
-			
-			var time_finished = rr_data.jobs[job_id].chunks[chunk].time_finished
-			
-			if time_finished != 0:
-				LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1 )
-			else:
-				LabelTimeFinished.text = "-"
-			ChunksTable.set_cell_content(count, finished_column, LabelTimeFinished)
-			
-			# update sort_value
-			ChunksTable.set_cell_sort_value(count, finished_column, time_finished)
-
-
-
-		
-		count += 1
-	
-	ChunksTable.sort()
-	
-	
 func refresh_clients_table():
 	
 	

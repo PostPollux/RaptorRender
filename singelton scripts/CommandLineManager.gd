@@ -32,6 +32,7 @@ var read_log_timer : Timer
 
 
 signal log_partly_read
+signal render_process_exited
 
 
 func _ready():
@@ -56,15 +57,12 @@ func _ready():
 	read_log_timer = Timer.new()
 	read_log_timer.name = "Read Log Timer"
 	read_log_timer.wait_time = 1
-	read_log_timer.connect("timeout",self,"_on_read_log_timer_timeout")
+	read_log_timer.connect("timeout",self,"start_read_log_file_thread")
 	var root_node : Node = get_tree().get_root().get_node("RaptorRenderMainScene")
 	if root_node != null:
 		root_node.add_child(read_log_timer)
 	
-
-
-func _on_read_log_timer_timeout():
-	start_read_log_file_thread()
+	RenderLogValidator.connect("critical_error_detected", self, "kill_current_render_process")
 
 
 func start_read_log_file_thread():
@@ -113,6 +111,8 @@ func validate_log_file(args):
 	
 	emit_signal("log_partly_read", lines_read)
 	
+	check_if_render_process_is_running()
+	
 	# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
 	call_deferred("join_read_log_file_thread")
 
@@ -128,19 +128,19 @@ func start_render_process (cmdline_instruction : String, log_file_name : String)
 	if currently_rendering:
 		kill_current_render_process()
 		
-	else:
-		var output : Array = []
-		var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_dir_str + log_file_name + ".txt 2>&1"]
-		
-		invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
-		
-		current_commandline_instructions = cmdline_instruction
-		
-		currently_rendering = true
-		
-		active_render_log_file_name = log_file_name
-		file_pointer_position = 0
-		read_log_timer.start()
+	
+	var output : Array = []
+	var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_dir_str + log_file_name + ".txt 2>&1"]
+	
+	invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
+	
+	current_commandline_instructions = cmdline_instruction
+	
+	currently_rendering = true
+	
+	active_render_log_file_name = log_file_name
+	file_pointer_position = 0
+	read_log_timer.start()
 
 
 
@@ -158,6 +158,7 @@ func check_if_render_process_is_running() -> bool:
 	else:
 		currently_rendering = false
 		read_log_timer.stop()
+		emit_signal("render_process_exited")
 		return false
 
 
@@ -184,4 +185,6 @@ func kill_current_render_process():
 		OS.kill(pid)
 	
 	currently_rendering = false
+	
+	emit_signal("render_process_exited")
 

@@ -129,7 +129,7 @@ func update_job_info_panel(job_id):
 	###################
 	
 	# Scene File
-	SceneFileLabel.text = "Scene File:   " + selected_job["scene_directory"]
+	SceneFileLabel.text = "Scene File:   " + selected_job["scene_path"]
 	
 	# Scene File
 	OutputFilesLabel.text = "Output Files:   " + selected_job["output_directory"]
@@ -147,7 +147,8 @@ func update_job_info_panel(job_id):
 
 
 func _on_OpenSceneFolderButton_pressed():
-	JobFunctions.open_folder( RaptorRender.rr_data.jobs[current_displayed_job_id].scene_directory )
+	var scene_path : String = RaptorRender.rr_data.jobs[current_displayed_job_id].scene_path.get_base_dir()
+	JobFunctions.open_folder( scene_path )
 
 
 func _on_OpenOutputFolderButton_pressed():

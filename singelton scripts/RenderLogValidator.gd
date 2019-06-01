@@ -17,6 +17,8 @@ signal frame_success_detected
 signal success_detected
 
 
+var job_type_settings_path : String
+
 
 # CRP: current render process
 var job_type_settings_CRP : ConfigFile
@@ -67,16 +69,18 @@ func _ready():
 	success_regex_HIGHLIGHT = RegEx.new()
 	
 	
-	load_job_type_settings_CRP()
-	load_job_type_settings_HIGHLIGHT()
-
-
-
-
-
-func load_job_type_settings_CRP():
+	job_type_settings_path = OS.get_user_data_dir() + "/JobTypeSettings/"
 	
-	job_type_settings_CRP.load("/home/johannes/git_projects/RaptorRender/JobTypes/Blender.cfg")
+	load_job_type_settings_CRP("Blender", "default")
+	load_job_type_settings_HIGHLIGHT("Blender", "default")
+
+
+
+
+
+func load_job_type_settings_CRP(job_type : String, job_type_version : String):
+	
+	job_type_settings_CRP.load( job_type_settings_path + "/local/" + job_type + "/" + job_type_version + ".cfg" )
 		
 	if job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log_pattern_type", 0) != 5:
 		possible_critical_error_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" ).split(";;",false)
@@ -105,9 +109,9 @@ func load_job_type_settings_CRP():
 
 
 
-func load_job_type_settings_HIGHLIGHT():
+func load_job_type_settings_HIGHLIGHT(job_type : String, job_type_version : String):
 	
-	job_type_settings_HIGHLIGHT.load("/home/johannes/git_projects/RaptorRender/JobTypes/Blender.cfg")
+	job_type_settings_HIGHLIGHT.load( job_type_settings_path + "/local/" + job_type + "/" + job_type_version + ".cfg" )
 	
 	if job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log_pattern_type", 0) != 5:
 		possible_critical_error_strings_HIGHLIGHT = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" ).split(";;",false)

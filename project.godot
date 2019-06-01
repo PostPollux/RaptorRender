@@ -59,11 +59,13 @@ config/icon="res://Main_Icons/RR_Icon_64_1.png"
 RRColorScheme="*res://singelton scripts/RRColorScheme.gd"
 RaptorRender="*res://singelton scripts/RaptorRender.gd"
 TimeFunctions="*res://singelton scripts/TimeFunctions.gd"
+Converters="*res://singelton scripts/Converters.gd"
 JobFunctions="*res://singelton scripts/JobFunctions.gd"
 GetSystemInformation="*res://singelton scripts/GetSystemInformation.gd"
-Converters="*res://singelton scripts/Converters.gd"
 CommandLineManager="*res://singelton scripts/CommandLineManager.gd"
 RenderLogValidator="*res://singelton scripts/RenderLogValidator.gd"
+JobExecutionManager="*res://singelton scripts/JobExecutionManager.gd"
+JobDistributionManager="*res://singelton scripts/JobDistributionManager.gd"
 
 [debug]
 

@@ -145,11 +145,14 @@ func _on_ContextMenu_index_pressed(index):
 					
 					# cancle active chunks
 					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "active":
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "queued"
+						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "1_rendering":
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "2_queued"
 							
 					# Set Status to paused
 					RaptorRender.rr_data.jobs[selected].status = "4_paused"
+					
+					# cancel render process
+					CommandLineManager.kill_current_render_process()
 				
 			RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
@@ -194,11 +197,14 @@ func _on_ContextMenu_index_pressed(index):
 							
 					# cancle active chunks
 					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "active":
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "queued"
+						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "1_rendering":
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "2_queued"
 					
 					# Set Status to cancelled
 					RaptorRender.rr_data.jobs[selected].status = "6_cancelled"
+					
+					# cancel render process
+					CommandLineManager.kill_current_render_process()
 				
 			RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
@@ -243,7 +249,7 @@ func _on_ContextMenu_index_pressed(index):
 				
 				# requeue all chunks
 				for chunk in job_to_resubmit.chunks.keys():
-					job_to_resubmit.chunks[chunk].status = "queued"
+					job_to_resubmit.chunks[chunk].status = "2_queued"
 				
 				# create a new job id
 				var max_id = 0
@@ -275,8 +281,8 @@ func _on_ContextMenu_index_pressed(index):
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
-				
-				JobFunctions.open_folder( RaptorRender.rr_data.jobs[selected].scene_directory )
+				var scene_path : String = RaptorRender.rr_data.jobs[selected].scene_path.get_base_dir()
+				JobFunctions.open_folder( scene_path )
 		
 		
 		
