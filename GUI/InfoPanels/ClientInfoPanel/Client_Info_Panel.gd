@@ -57,23 +57,23 @@ func update_client_info_panel(client_id : int):
 	var status = selected_client["status"]
 	
 	match status:
-		"1_rendering": StatusIconTexture.set_modulate(RRColorScheme.state_active)
-		"2_available": StatusIconTexture.set_modulate(RRColorScheme.state_finished_or_online)
-		"3_error":     StatusIconTexture.set_modulate(RRColorScheme.state_error)
-		"4_disabled":  StatusIconTexture.set_modulate(RRColorScheme.state_paused)
-		"5_offline":   StatusIconTexture.set_modulate(RRColorScheme.state_offline_or_cancelled)
+		RRStateScheme.client_rendering : StatusIconTexture.set_modulate(RRColorScheme.state_active)
+		RRStateScheme.client_available : StatusIconTexture.set_modulate(RRColorScheme.state_finished_or_online)
+		RRStateScheme.client_error :     StatusIconTexture.set_modulate(RRColorScheme.state_error)
+		RRStateScheme.client_disabled :  StatusIconTexture.set_modulate(RRColorScheme.state_paused)
+		RRStateScheme.client_offline :   StatusIconTexture.set_modulate(RRColorScheme.state_offline_or_cancelled)
 
 	
 	
 	
 	match status:
-		"1_rendering": StatusLabel.text = "Status:  Rendering"
-		"2_available": StatusLabel.text = "Status:  Available"
-		"3_error":     StatusLabel.text = "Status:  Error"
-		"4_disabled":  StatusLabel.text = "Status:  Disabled"
-		"5_offline":   StatusLabel.text = "Status:  Offline"
+		RRStateScheme.client_rendering : StatusLabel.text = "Status:  Rendering"
+		RRStateScheme.client_available : StatusLabel.text = "Status:  Available"
+		RRStateScheme.client_error :     StatusLabel.text = "Status:  Error"
+		RRStateScheme.client_disabled :  StatusLabel.text = "Status:  Disabled"
+		RRStateScheme.client_offline :   StatusLabel.text = "Status:  Offline"
 	
-	if status != "5_offline":	
+	if status != RRStateScheme.client_offline:
 		UptimeLabel.text = "Uptime:  " + TimeFunctions.time_elapsed_as_string(selected_client["time_connected"], OS.get_unix_time(), 2)
 	else:
 		UptimeLabel.text = "Last seen:  not implemented yet" 

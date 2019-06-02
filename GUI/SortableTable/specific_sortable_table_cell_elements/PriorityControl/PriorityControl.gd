@@ -20,7 +20,7 @@ func _ready():
 
 func disable_if_needed():
 	var status = RaptorRender.rr_data.jobs[job_id].status
-	if status == "5_finished" or status == "6_cancelled":
+	if status == RRStateScheme.job_finished or status == RRStateScheme.job_cancelled:
 		PlusButton.disabled = true
 		MinusButton.disabled = true
 

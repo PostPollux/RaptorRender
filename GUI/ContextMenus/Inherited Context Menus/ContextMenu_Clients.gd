@@ -52,16 +52,16 @@ func set_item_names():
 
 func enable_disable_items():
 	
-	self.set_item_disabled(0, true)  # Enable Client
-	self.set_item_disabled(1, true)  # Diable Client Deffered
-	self.set_item_disabled(2, true)  # Diable Client Immediately
-	self.set_item_disabled(4, true)  # Configure Client
-	self.set_item_disabled(6, true)  # Error Count
-	self.set_item_disabled(8, true)  # Wake on LAN
-	self.set_item_disabled(9, true)  # Shutdwon Computer
-	self.set_item_disabled(10, true)  # Reboot Computer
-	self.set_item_disabled(12, true)  # Execute Command
-	self.set_item_disabled(14, true)  # Remove Client
+	self.set_item_disabled(0, true)  # enable client
+	self.set_item_disabled(1, true)  # diable client deffered
+	self.set_item_disabled(2, true)  # diable client immediately
+	self.set_item_disabled(4, true)  # configure client
+	self.set_item_disabled(6, true)  # reset client error count
+	self.set_item_disabled(8, true)  # wake on LAN
+	self.set_item_disabled(9, true)  # shutdown computer
+	self.set_item_disabled(10, true)  # reboot computer
+	self.set_item_disabled(12, true)  # execute command
+	self.set_item_disabled(14, true)  # remove client
 	
 	
 	var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
@@ -70,42 +70,40 @@ func enable_disable_items():
 		
 		var status =  RaptorRender.rr_data.clients[selected].status
 		
-		# Enable Client		
-		if status == "4_disabled":
-			self.set_item_disabled(0, false)
+		if status == RRStateScheme.client_rendering:
+			self.set_item_disabled(1, false) # diable client deffered
+			self.set_item_disabled(2, false) # diable client immediately
+			self.set_item_disabled(4, false) # configure client
+			self.set_item_disabled(6, false) # reset client error count
+			self.set_item_disabled(12, false) # execute command
 		
-		# Disable Client	
-		if status == "1_rendering" or status == "2_available" or status == "3_error":
-			self.set_item_disabled(1, false)
-			self.set_item_disabled(2, false)
-			
-		# Configure Client	
-		if status != "5_offline":
-			self.set_item_disabled(4, false)
-			
-		# Error Count	
-		if status != "5_offline":
-			self.set_item_disabled(6, false)
+		if status == RRStateScheme.client_available:
+			self.set_item_disabled(2, false) # diable client immediately
+			self.set_item_disabled(4, false) # configure client
+			self.set_item_disabled(6, false) # reset client error count
+			self.set_item_disabled(9, false) # shutdown computer
+			self.set_item_disabled(10, false) # reboot computer
+			self.set_item_disabled(12, false) # execute command
 		
-		# Wake on LAN
-		if status == "5_offline":
-			self.set_item_disabled(8, false)
-			
-		# Shutdown Computer
-		if status == "4_disabled" or status == "2_available" or status == "3_error":
-			self.set_item_disabled(9, false)
+		if status == RRStateScheme.client_error:
+			self.set_item_disabled(1, false) # diable client deffered
+			self.set_item_disabled(2, false) # diable client immediately
+			self.set_item_disabled(6, false) # reset client error count
+			self.set_item_disabled(12, false) # execute command
 		
-		# Reboot Computer
-		if status == "4_disabled" or status == "2_available" or status == "3_error":
-			self.set_item_disabled(10, false)
-			
-		# Execute Command
-		if status != "5_offline":
-			self.set_item_disabled(12, false)
+		if status == RRStateScheme.client_disabled:
+			self.set_item_disabled(0, false) # enable client
+			self.set_item_disabled(4, false) # configure client
+			self.set_item_disabled(6, false) # reset client error count
+			self.set_item_disabled(9, false) # shutdown computer
+			self.set_item_disabled(10, false) # reboot computer
+			self.set_item_disabled(12, false) # execute command
 		
-		# Remove Client
-		if status == "5_offline":
-			self.set_item_disabled(14, false)
+		if status == RRStateScheme.client_offline:
+			self.set_item_disabled(4, false) # configure client
+			self.set_item_disabled(6, false) # reset client error count
+			self.set_item_disabled(8, false) # wake on LAN
+			self.set_item_disabled(14, false) # remove client
 
 
 
@@ -121,9 +119,9 @@ func _on_ContextMenu_index_pressed(index):
 			
 			for selected in selected_ids:
 				
-				if RaptorRender.rr_data.clients[selected].status == "4_disabled":
+				if RaptorRender.rr_data.clients[selected].status == RRStateScheme.client_disabled:
 					
-					RaptorRender.rr_data.clients[selected].status = "2_available"
+					RaptorRender.rr_data.clients[selected].status = RRStateScheme.client_available
 			
 			RaptorRender.ClientsTable.refresh()
 			
@@ -137,9 +135,9 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.clients[selected].status
 				
-				if status == "1_rendering" or status == "2_available" or status == "3_error":
+				if status == RRStateScheme.client_rendering or status == RRStateScheme.client_available or status == RRStateScheme.client_error:
 					
-					RaptorRender.rr_data.clients[selected].status = "4_disabled"
+					RaptorRender.rr_data.clients[selected].status = RRStateScheme.client_disabled
 				
 			RaptorRender.ClientsTable.refresh()
 			
@@ -153,9 +151,9 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.clients[selected].status
 				
-				if status == "1_rendering" or status == "2_available" or status == "3_error":
+				if status == RRStateScheme.client_rendering or status == RRStateScheme.client_available or status == RRStateScheme.client_error:
 					
-					RaptorRender.rr_data.clients[selected].status = "4_disabled"
+					RaptorRender.rr_data.clients[selected].status = RRStateScheme.client_disabled
 			
 			RaptorRender.ClientsTable.refresh()
 			
@@ -206,7 +204,7 @@ func _on_ContextMenu_index_pressed(index):
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
-				if RaptorRender.rr_data.clients[selected].status == "5_offline":
+				if RaptorRender.rr_data.clients[selected].status == RRStateScheme.client_offline:
 					amount_of_computer_tried_to_wake_up  += 1
 					var mac_addresses_of_selected = RaptorRender.rr_data.clients[selected].mac_addresses
 					for mac_address_of_selected in mac_addresses_of_selected:
@@ -214,7 +212,7 @@ func _on_ContextMenu_index_pressed(index):
 						mac_addresses.append(mac_address_of_selected)
 			
 			
-			# create an UDP Socket	
+			# create an UDP Socket
 			var socketUDP = PacketPeerUDP.new()
 			
 			var port = 9
@@ -317,7 +315,7 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.clients[selected].status
 				
-				if status == "5_offline":
+				if status == RRStateScheme.client_offline:
 					
 					# id reset for Client Info Panel of CPU and memory brs. Otherwise it would crash
 					RaptorRender.ClientInfoPanel.CPUUsageBar.client_id = ""

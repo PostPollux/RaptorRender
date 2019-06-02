@@ -64,11 +64,11 @@ func fill_chunk_info_box(chunk_number : int):
 	
 	var chunk_rendertime : int = 0
 	
-	if chunk_dict.status == "5_finished": 
+	if chunk_dict.status == RRStateScheme.chunk_finished: 
 		chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started
 		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
 		
-	elif chunk_dict.status == "1_rendering":
+	elif chunk_dict.status == RRStateScheme.chunk_rendering:
 		chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
 		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
 	

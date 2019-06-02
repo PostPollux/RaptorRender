@@ -27,7 +27,7 @@ var JobInfoPanel
 
 var rr_data = {}
 
-var current_job_id_for_chunks_table : int
+var current_job_id_for_job_info_panel : int
 
 var update_tables_timer : Timer 
 
@@ -1249,7 +1249,7 @@ func job_selected(id_of_row):
 	JobInfoPanel.update_job_info_panel(id_of_row)
 	JobInfoPanel.visible = true
 	refresh_chunks_table(id_of_row)
-	current_job_id_for_chunks_table = id_of_row
+	current_job_id_for_job_info_panel = id_of_row
 
 
 func job_selection_cleared():
@@ -1411,8 +1411,12 @@ func _input(event):
 
 func update_all_visible_tables():
 	refresh_jobs_table()
-	refresh_chunks_table(current_job_id_for_chunks_table)
 	refresh_clients_table()
+	
+	if JobInfoPanel.get_current_tab() == 0:
+		JobInfoPanel.update_job_info_panel(current_job_id_for_job_info_panel)
+	elif JobInfoPanel.get_current_tab() == 1:
+		refresh_chunks_table(current_job_id_for_job_info_panel)
 
 
 func refresh_jobs_table():
@@ -1471,30 +1475,30 @@ func refresh_jobs_table():
 				# change the cell value
 				var StatusIcon = cell.get_child(0)
 				
-				if rr_data.jobs[job].status == "1_rendering":
+				if rr_data.jobs[job].status == RRStateScheme.job_rendering:
 					StatusIcon.set_modulate(RRColorScheme.state_active)
 					if colorize_table_rows:
 						JobsTable.set_row_color_by_string(row_position, "blue")
 						
-				elif rr_data.jobs[job].status == "2_queued":
+				elif rr_data.jobs[job].status == RRStateScheme.job_queued:
 					StatusIcon.set_modulate(RRColorScheme.state_queued)
 					if colorize_table_rows:
 						JobsTable.set_row_color_by_string(row_position, "yellow")
 						
-				elif rr_data.jobs[job].status == "3_error":
+				elif rr_data.jobs[job].status == RRStateScheme.job_error:
 					StatusIcon.set_modulate(RRColorScheme.state_error)
 					if colorize_table_rows:
 						JobsTable.set_row_color_by_string(row_position, "red")
 						
-				elif rr_data.jobs[job].status == "4_paused":
+				elif rr_data.jobs[job].status == RRStateScheme.job_paused:
 					StatusIcon.set_modulate(RRColorScheme.state_paused)
 						
-				elif rr_data.jobs[job].status == "5_finished":
+				elif rr_data.jobs[job].status == RRStateScheme.job_finished:
 					StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 					if colorize_table_rows:
 						JobsTable.set_row_color_by_string(row_position, "green")
 						
-				elif rr_data.jobs[job].status == "6_cancelled":
+				elif rr_data.jobs[job].status == RRStateScheme.job_cancelled:
 					StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
 					if colorize_table_rows:
 						JobsTable.set_row_color_by_string(row_position, "black")
@@ -1524,18 +1528,19 @@ func refresh_jobs_table():
 			
 			### Priority ###
 			
-			# only change when value is different
-			if (row.sort_values[priority_column] != rr_data.jobs[job].priority):
-				
-				# get reference to the cell
-				var cell = JobsTable.get_cell( row_position, priority_column )
-				
-				# change the cell value
-				cell.get_child(0).disable_if_needed()
-				cell.get_child(0).LabelPriority.text = String( rr_data.jobs[job].priority )
-				
-				# update sort_value
-				JobsTable.set_cell_sort_value(row_position, priority_column,  rr_data.jobs[job].priority)
+			# always update because the buttons have to react to changes of the job state, too
+			
+			
+			# get reference to the cell
+			var priority_cell = JobsTable.get_cell( row_position, priority_column )
+			
+			# change the cell value
+			priority_cell.get_child(0).disable_if_needed()
+			priority_cell.get_child(0).LabelPriority.text = String( rr_data.jobs[job].priority )
+			
+			# update sort_value
+			JobsTable.set_cell_sort_value(row_position, priority_column,  rr_data.jobs[job].priority)
+			
 			
 			
 			
@@ -1544,7 +1549,7 @@ func refresh_jobs_table():
 			var active_clients = 0
 			
 			# calculate the numbers of active clients
-			if rr_data.jobs[job].status == "1_rendering" or rr_data.jobs[job].status == "4_paused":
+			if rr_data.jobs[job].status == RRStateScheme.job_rendering or rr_data.jobs[job].status == RRStateScheme.job_paused:
 				for client in rr_data.clients.keys():
 					if rr_data.clients[client].current_job_id == job:
 						active_clients += 1
@@ -1572,9 +1577,9 @@ func refresh_jobs_table():
 			# change the cell values
 			var JobProgressBar = JobsTable.get_cell( row_position, progress_column ).get_child(0)
 			
-			if rr_data.jobs[job].status == "4_paused":
+			if rr_data.jobs[job].status == RRStateScheme.job_paused:
 				JobProgressBar.job_status = "paused"
-			elif rr_data.jobs[job].status == "6_cancelled":
+			elif rr_data.jobs[job].status == RRStateScheme.job_cancelled:
 				JobProgressBar.job_status = "cancelled"
 			else:
 				JobProgressBar.job_status = "normal"
@@ -1718,30 +1723,30 @@ func refresh_jobs_table():
 			StatusIcon.set_texture(icon)
 			
 			
-			if rr_data.jobs[job].status == "1_rendering":
+			if rr_data.jobs[job].status == RRStateScheme.job_rendering:
 				StatusIcon.set_modulate(RRColorScheme.state_active)
 				if colorize_table_rows:
 					JobsTable.set_row_color_by_string(count, "blue")
 					
-			elif rr_data.jobs[job].status == "2_queued":
+			elif rr_data.jobs[job].status == RRStateScheme.job_queued:
 				StatusIcon.set_modulate(RRColorScheme.state_queued)
 				if colorize_table_rows:
 					JobsTable.set_row_color_by_string(count, "yellow")
 					
-			elif rr_data.jobs[job].status == "3_error":
+			elif rr_data.jobs[job].status == RRStateScheme.job_error:
 				StatusIcon.set_modulate(RRColorScheme.state_error)
 				if colorize_table_rows:
 					JobsTable.set_row_color_by_string(count, "red")
 					
-			elif rr_data.jobs[job].status == "4_paused":
+			elif rr_data.jobs[job].status == RRStateScheme.job_paused:
 				StatusIcon.set_modulate(RRColorScheme.state_paused)
 					
-			elif rr_data.jobs[job].status == "5_finished":
+			elif rr_data.jobs[job].status == RRStateScheme.job_finished:
 				StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 				if colorize_table_rows:
 					JobsTable.set_row_color_by_string(count, "green")
 					
-			elif rr_data.jobs[job].status == "6_cancelled":
+			elif rr_data.jobs[job].status == RRStateScheme.job_cancelled:
 				StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
 				if colorize_table_rows:
 					JobsTable.set_row_color_by_string(count, "black")
@@ -1806,9 +1811,9 @@ func refresh_jobs_table():
 			JobProgressBar.set_chunks(chunk_counts[0], chunk_counts[1], chunk_counts[2])
 			JobProgressBar.in_sortable_table = true
 			
-			if rr_data.jobs[job].status == "4_paused":
+			if rr_data.jobs[job].status == RRStateScheme.job_paused:
 				JobProgressBar.job_status = "paused"
-			elif rr_data.jobs[job].status == "6_cancelled":
+			elif rr_data.jobs[job].status == RRStateScheme.job_cancelled:
 				JobProgressBar.job_status = "cancelled"
 			else:
 				JobProgressBar.job_status = "normal"
@@ -1997,30 +2002,30 @@ func refresh_chunks_table(job_id):
 					
 					var StatusIcon = cell.get_child(0)
 					
-					if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
+					if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering:
 						StatusIcon.set_modulate(RRColorScheme.state_active)
 						if colorize_table_rows:
 							ChunksTable.set_row_color_by_string(row_position, "blue")
 							
-					elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
+					elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_queued:
 						StatusIcon.set_modulate(RRColorScheme.state_queued)
 						if colorize_table_rows:
 							ChunksTable.set_row_color_by_string(row_position, "yellow")
 							
-					elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
+					elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_error:
 						StatusIcon.set_modulate(RRColorScheme.state_error)
 						if colorize_table_rows:
 							ChunksTable.set_row_color_by_string(row_position, "red")
 							
-					elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
+					elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
 						StatusIcon.set_modulate(RRColorScheme.state_paused)
 							
-					elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
+					elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished:
 						StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 						if colorize_table_rows:
 							ChunksTable.set_row_color_by_string(row_position, "green")
 							
-					elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
+					elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_cancelled:
 						StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
 						if colorize_table_rows:
 							ChunksTable.set_row_color_by_string(row_position, "black")
@@ -2097,10 +2102,10 @@ func refresh_chunks_table(job_id):
 				
 				var chunk_rendertime = 0
 				
-				if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
+				if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished: 
 					chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
 					
-				elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
+				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering: 
 					chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
 				
 				# only change when value is different
@@ -2217,30 +2222,30 @@ func refresh_chunks_table(job_id):
 				icon.load("res://GUI/icons/chunk_status/chunk_status_58x30.png")
 				StatusIcon.set_texture(icon)
 				
-				if rr_data.jobs[job_id].chunks[chunk].status == "1_rendering":
+				if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering:
 					StatusIcon.set_modulate(RRColorScheme.state_active)
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(count, "blue")
 						
-				elif rr_data.jobs[job_id].chunks[chunk].status == "2_queued":
+				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_queued:
 					StatusIcon.set_modulate(RRColorScheme.state_queued)
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(count, "yellow")
 						
-				elif rr_data.jobs[job_id].chunks[chunk].status == "3_error":
+				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_error:
 					StatusIcon.set_modulate(RRColorScheme.state_error)
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(count, "red")
 						
-				elif rr_data.jobs[job_id].chunks[chunk].status == "4_paused":
+				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
 					StatusIcon.set_modulate(RRColorScheme.state_paused)
 						
-				elif rr_data.jobs[job_id].chunks[chunk].status == "5_finished":
+				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished:
 					StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(count, "green")
 						
-				elif rr_data.jobs[job_id].chunks[chunk].status == "6_cancelled":
+				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_cancelled:
 					StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
 					if colorize_table_rows:
 						ChunksTable.set_row_color_by_string(count, "black")
@@ -2301,11 +2306,11 @@ func refresh_chunks_table(job_id):
 				var LabelRendertime = Label.new()
 				var chunk_rendertime = 0
 				
-				if rr_data.jobs[job_id].chunks[chunk].status == "5_finished": 
+				if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished: 
 					chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].time_finished - rr_data.jobs[job_id].chunks[chunk].time_started
 					LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
 					
-				elif rr_data.jobs[job_id].chunks[chunk].status == "1_rendering": 
+				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering: 
 					chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].time_started
 					LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
 				else:
@@ -2425,23 +2430,23 @@ func refresh_clients_table():
 				
 				var StatusIcon = cell.get_child(0)
 				
-				if rr_data.clients[client].status == "1_rendering":
+				if rr_data.clients[client].status == RRStateScheme.client_rendering:
 					StatusIcon.set_modulate(RRColorScheme.state_active)
 					if colorize_table_rows:
 						ClientsTable.set_row_color_by_string(row_position, "blue")
 					
-				elif rr_data.clients[client].status == "2_available":
+				elif rr_data.clients[client].status == RRStateScheme.client_available:
 					StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 					if colorize_table_rows:
 						ClientsTable.set_row_color_by_string(row_position, "green")
 					
-				elif rr_data.clients[client].status == "3_error":
+				elif rr_data.clients[client].status == RRStateScheme.client_error:
 					StatusIcon.set_modulate(RRColorScheme.state_error)
 		
-				elif rr_data.clients[client].status == "4_disabled":
+				elif rr_data.clients[client].status == RRStateScheme.client_disabled:
 					StatusIcon.set_modulate(RRColorScheme.state_paused)
 		
-				elif rr_data.clients[client].status == "5_offline":
+				elif rr_data.clients[client].status == RRStateScheme.client_offline:
 					StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
 					if colorize_table_rows:
 						ClientsTable.set_row_color_by_string(row_position, "black")
@@ -2658,23 +2663,23 @@ func refresh_clients_table():
 			icon.load("res://GUI/icons/client_status/client_status_58x30.png")
 			StatusIcon.set_texture(icon)
 			
-			if rr_data.clients[client].status == "1_rendering":
+			if rr_data.clients[client].status == RRStateScheme.client_rendering:
 				StatusIcon.set_modulate(RRColorScheme.state_active)
 				if colorize_table_rows:
 					ClientsTable.set_row_color_by_string(count, "blue")
 				
-			elif rr_data.clients[client].status == "2_available":
+			elif rr_data.clients[client].status == RRStateScheme.client_available:
 				StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 				if colorize_table_rows:
 					ClientsTable.set_row_color_by_string(count, "green")
 				
-			elif rr_data.clients[client].status == "3_error":
+			elif rr_data.clients[client].status == RRStateScheme.client_error:
 				StatusIcon.set_modulate(RRColorScheme.state_error)
 	
-			elif rr_data.clients[client].status == "4_disabled":
+			elif rr_data.clients[client].status == RRStateScheme.client_disabled:
 				StatusIcon.set_modulate(RRColorScheme.state_paused)
 	
-			elif rr_data.clients[client].status == "5_offline":
+			elif rr_data.clients[client].status == RRStateScheme.client_offline:
 				StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
 				if colorize_table_rows:
 					ClientsTable.set_row_color_by_string(count, "black")

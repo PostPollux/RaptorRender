@@ -96,13 +96,13 @@ func draw_ChunkTimeGraph(job_id):
 		
 		var chunk_dict = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
 		
-		if chunk_dict.status == "5_finished": 
+		if chunk_dict.status == RRStateScheme.chunk_finished: 
 			chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started
 			finished = true
 			rendertimes_array.append(chunk_rendertime)
 			finished_chunk = true
 			
-		if chunk_dict.status == "1_rendering":
+		if chunk_dict.status == RRStateScheme.chunk_rendering:
 			chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
 			finished = false
 			rendertimes_array.append(chunk_rendertime)
@@ -131,10 +131,10 @@ func draw_ChunkTimeGraph(job_id):
 		
 		var chunk_rendertime = 0
 		
-		if chunk_dict.status == "5_finished": 
+		if chunk_dict.status == RRStateScheme.chunk_finished: 
 			chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started
 			
-		if chunk_dict.status == "1_rendering":
+		if chunk_dict.status == RRStateScheme.chunk_rendering:
 			chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
 		
 		var bar_height : float = 0

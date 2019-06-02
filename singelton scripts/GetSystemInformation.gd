@@ -96,7 +96,7 @@ func create_client_dict() -> Dictionary:
 		"username": username,
 		"mac_addresses": mac_addresses,
 		"ip_addresses": ip_addresses,
-		"status": "2_available",
+		"status": RRStateScheme.client_available,
 		"current_job_id": -1,
 		"error_count": 0,
 		"platform": platform_info,

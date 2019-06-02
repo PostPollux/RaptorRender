@@ -21,19 +21,19 @@ func _ready():
 func critical_error_detected():
 	
 	current_amount_of_critical_errors += 1
-	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = "2_queued"
+	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_queued
 
 
 func success_detected():
 	
 	if !chunk_success_detected and current_amount_of_critical_errors == 0:
-		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = "5_finished"
+		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_finished
 		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].time_finished = OS.get_unix_time()
 		
 		var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(current_processing_job)
 		
 		if chunk_counts[0] == chunk_counts[1]:
-			RaptorRender.rr_data.jobs[current_processing_job].status = "5_finished"
+			RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_finished
 			
 	chunk_success_detected = true
 

@@ -57,6 +57,7 @@ config/icon="res://Main_Icons/RR_Icon_64_1.png"
 [autoload]
 
 RRColorScheme="*res://singelton scripts/RRColorScheme.gd"
+RRStateScheme="*res://singelton scripts/RRStateScheme.gd"
 RaptorRender="*res://singelton scripts/RaptorRender.gd"
 TimeFunctions="*res://singelton scripts/TimeFunctions.gd"
 Converters="*res://singelton scripts/Converters.gd"

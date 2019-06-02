@@ -18,7 +18,7 @@ func _ready():
 	self.add_separator()
 	self.add_item("Remove Job", 14, 0)
 	
-	# trick to calculate the correct size of the popup, so it doesn't display outside of the windo when invoked
+	# trick to calculate the correct size of the popup, so it doesn't display outside of the window when invoked
 	self.visible = true
 	self.visible = false
 
@@ -53,16 +53,16 @@ func set_item_names():
 
 func enable_disable_items():
 	
-	self.set_item_disabled(0, true)  # Pause Job Deffered
-	self.set_item_disabled(1, true)  # Pause Job Immediately
-	self.set_item_disabled(2, true)  # Resume Job
-	self.set_item_disabled(4, true)  # Cancel Job Permanently
-	self.set_item_disabled(6, true)  # Configure Job
-	self.set_item_disabled(7, true)  # Reset Job Error count
-	self.set_item_disabled(9, true)  # Resubmit Job
-	self.set_item_disabled(11, true)  # Open Output Folder
-	self.set_item_disabled(12, true)  # Open Scene Folder
-	self.set_item_disabled(14, true)  # Remove Job
+	self.set_item_disabled(0, true)  # pause job deffered
+	self.set_item_disabled(1, true)  # pause job immediately
+	self.set_item_disabled(2, true)  # resume job
+	self.set_item_disabled(4, true)  # cancel job permanently
+	self.set_item_disabled(6, true)  # configure job
+	self.set_item_disabled(7, true)  # reset job error count
+	self.set_item_disabled(9, true)  # resubmit job paused
+	self.set_item_disabled(11, true)  # open output folder
+	self.set_item_disabled(12, true)  # open scene folder
+	self.set_item_disabled(14, true)  # remove job
 	
 	
 	var selected_ids = RaptorRender.JobsTable.get_selected_ids()
@@ -71,38 +71,39 @@ func enable_disable_items():
 		
 		var status =  RaptorRender.rr_data.jobs[selected].status
 		
-		# Pause Job	
-		if status == "1_rendering":
-			self.set_item_disabled(0, false)
-			self.set_item_disabled(1, false)
+		if status == RRStateScheme.job_rendering:
+			self.set_item_disabled(0, false) # pause job deffered
+			self.set_item_disabled(1, false) # pause job immediately
+			self.set_item_disabled(4, false) # cancel job permanently
+			self.set_item_disabled(7, false) # reset job error count
 		
-		# Resume Job
-		if status == "4_paused":
-			self.set_item_disabled(2, false)
-			
-		# Cancel Job Permanently
-		if status == "1_rendering" or status == "2_queued" or status == "3_error" or status == "4_paused":
-			self.set_item_disabled(4, false)
-			
-		# Configure Job
-		if status == "2_queued" or status == "3_error" or status == "4_paused":
-			self.set_item_disabled(6, false)
+		if status == RRStateScheme.job_queued:
+			self.set_item_disabled(1, false) # pause job immediately
+			self.set_item_disabled(4, false) # cancel job permanently
 		
-		# Reset Job Error count
-		if status == "6_cancelled":
-			self.set_item_disabled(7, false)
+		if status == RRStateScheme.job_error:
+			self.set_item_disabled(4, false) # cancel job permanently
+			self.set_item_disabled(7, false) # reset job error count
 			
-		# Resubmit Job
-		self.set_item_disabled(9, false)
 		
-		# Open Output Folder
-		self.set_item_disabled(11, false)
-			
-		# Open Scene Folder
-		self.set_item_disabled(12, false)
+		if status == RRStateScheme.job_paused:
+			self.set_item_disabled(2, false) # resume job
+			self.set_item_disabled(4, false) # cancel job permanently
+			self.set_item_disabled(6, false) # configure job
+			self.set_item_disabled(7, false) # reset job error count
 		
-		# Remove Job
-		self.set_item_disabled(14, false)
+		if status == RRStateScheme.job_finished:
+			self.set_item_disabled(7, false) # reset job error count
+		
+		if status == RRStateScheme.job_cancelled:
+			self.set_item_disabled(7, false) # reset job error count
+		
+		
+		# items that are always active
+		self.set_item_disabled(9, false) # resubmit job paused
+		self.set_item_disabled(11, false) # open output folder
+		self.set_item_disabled(12, false) # open scene folder
+		self.set_item_disabled(14, false) # remove job
 
 
 
@@ -119,9 +120,9 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[selected].status
 				
-				if status == "1_rendering" or status == "2_queued" or status == "3_error":
+				if status == RRStateScheme.job_rendering or status == RRStateScheme.job_queued or status == RRStateScheme.job_error:
 					
-					RaptorRender.rr_data.jobs[selected].status = "4_paused"
+					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_paused
 			
 			RaptorRender.JobsTable.refresh()
 			
@@ -135,21 +136,22 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[selected].status
 				
-				if status == "1_rendering" or status == "2_queued" or status == "3_error" or status == "4_paused":
+				if status == RRStateScheme.job_rendering or status == RRStateScheme.job_queued or status == RRStateScheme.job_error or status == RRStateScheme.job_paused:
 					
 					# remove Clients from Job
 					for client in RaptorRender.rr_data.clients.keys():
 						if RaptorRender.rr_data.clients[client].current_job_id == selected:
 							RaptorRender.rr_data.clients[client].current_job_id = -1
-							RaptorRender.rr_data.clients[client].status = "2_available"
+							RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
 					
 					# cancle active chunks
 					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "1_rendering":
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "2_queued"
+						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
+						if chunk_status == RRStateScheme.chunk_rendering or chunk_status == RRStateScheme.chunk_queued:
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_paused
 							
 					# Set Status to paused
-					RaptorRender.rr_data.jobs[selected].status = "4_paused"
+					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_paused
 					
 					# cancel render process
 					CommandLineManager.kill_current_render_process()
@@ -167,9 +169,14 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[selected].status
 				
-				if status == "4_paused":
+				if status == RRStateScheme.job_paused:
 					
-					RaptorRender.rr_data.jobs[selected].status = "2_queued"
+					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_queued
+					
+					# queue all paused chunks
+					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
+						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == RRStateScheme.chunk_paused:
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_queued
 			
 			RaptorRender.JobsTable.refresh()
 			
@@ -187,21 +194,22 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[selected].status
 				
-				if status == "1_rendering" or status == "2_queued" or status == "3_error" or status == "4_paused":
+				if status == RRStateScheme.job_rendering or status == RRStateScheme.job_queued or status == RRStateScheme.job_error or status == RRStateScheme.job_paused:
 					
 					# remove Clients from Job
 					for client in RaptorRender.rr_data.clients.keys():
 						if RaptorRender.rr_data.clients[client].current_job_id == selected:
 							RaptorRender.rr_data.clients[client].current_job_id = -1
-							RaptorRender.rr_data.clients[client].status = "2_available"
+							RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
 							
 					# cancle active chunks
 					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == "1_rendering":
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = "2_queued"
+						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
+						if chunk_status == RRStateScheme.chunk_rendering or chunk_status == RRStateScheme.chunk_queued:
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_cancelled
 					
 					# Set Status to cancelled
-					RaptorRender.rr_data.jobs[selected].status = "6_cancelled"
+					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_cancelled
 					
 					# cancel render process
 					CommandLineManager.kill_current_render_process()
@@ -245,11 +253,11 @@ func _on_ContextMenu_index_pressed(index):
 				var job_to_resubmit = str2var( var2str(RaptorRender.rr_data.jobs[selected]) ) # conversion is needed to copy the dict. Otherwise you only get a reference
 				
 				# set job status to paused
-				job_to_resubmit.status = "4_paused"
+				job_to_resubmit.status = RRStateScheme.job_paused
 				
 				# requeue all chunks
 				for chunk in job_to_resubmit.chunks.keys():
-					job_to_resubmit.chunks[chunk].status = "2_queued"
+					job_to_resubmit.chunks[chunk].status = RRStateScheme.chunk_queued
 				
 				# create a new job id
 				var max_id = 0
@@ -302,7 +310,7 @@ func _on_ContextMenu_index_pressed(index):
 				for client in RaptorRender.rr_data.clients.keys():
 					if RaptorRender.rr_data.clients[client].current_job_id == selected:
 						RaptorRender.rr_data.clients[client].current_job_id = -1
-						RaptorRender.rr_data.clients[client].status = "2_available"
+						RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
 					
 				# Remove the job from the database
 				RaptorRender.rr_data.jobs.erase(selected)

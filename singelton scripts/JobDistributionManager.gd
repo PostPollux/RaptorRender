@@ -30,7 +30,7 @@ func _ready():
 	
 
 func reactivate_client():
-	RaptorRender.rr_data.clients[GetSystemInformation.unique_client_id].status = "2_available"
+	RaptorRender.rr_data.clients[GetSystemInformation.unique_client_id].status = RRStateScheme.client_available
 	
 
 
@@ -42,7 +42,7 @@ func distribute_jobs():
 	jobs_active = []
 	for job in RaptorRender.rr_data.jobs.keys():
 		var job_status = RaptorRender.rr_data.jobs[job].status
-		if job_status == "1_rendering" or job_status == "2_queued":
+		if job_status == RRStateScheme.job_rendering or job_status == RRStateScheme.job_queued:
 			jobs_active.append(job)
 	
 	# Is there some work to do?
@@ -53,7 +53,7 @@ func distribute_jobs():
 		# update the clients_available array
 		clients_available = []
 		for client in RaptorRender.rr_data.clients.keys():
-			if RaptorRender.rr_data.clients[client].status == "2_available":
+			if RaptorRender.rr_data.clients[client].status == RRStateScheme.client_available:
 				clients_available.append(client)
 		
 		
@@ -73,19 +73,19 @@ func distribute_jobs():
 						
 						# assign a chunk
 						for chunk in RaptorRender.rr_data.jobs[job].chunks.keys():
-							if RaptorRender.rr_data.jobs[job].chunks[chunk].status == "2_queued":
+							if RaptorRender.rr_data.jobs[job].chunks[chunk].status == RRStateScheme.chunk_queued:
 								
 								# start this chunk on the client
 								JobExecutionManager.start_junk( job , chunk)
 								
-								RaptorRender.rr_data.jobs[job].status = "1_rendering"
+								RaptorRender.rr_data.jobs[job].status = RRStateScheme.job_rendering
 								
-								RaptorRender.rr_data.jobs[job].chunks[chunk].status = "1_rendering"
+								RaptorRender.rr_data.jobs[job].chunks[chunk].status = RRStateScheme.chunk_rendering
 								RaptorRender.rr_data.jobs[job].chunks[chunk].time_started = OS.get_unix_time()
 								RaptorRender.rr_data.jobs[job].chunks[chunk].client = client
 								RaptorRender.rr_data.jobs[job].chunks[chunk].number_of_tries += 1
 								
-								RaptorRender.rr_data.clients[client].status = "1_rendering"
+								RaptorRender.rr_data.clients[client].status = RRStateScheme.client_rendering
 								
 								break
 						
