@@ -6,6 +6,7 @@ var state_active : Color = Color ("009EBA")
 var state_queued : Color = Color ("FAD25C")
 var state_error : Color = Color ("E44642")
 var state_paused : Color = Color ("8D8D8D")
+var state_paused_deferred : Color = Color ("5DACBA")
 var state_offline_or_cancelled : Color = Color ("181818")
 
 # Chunk Time Graph

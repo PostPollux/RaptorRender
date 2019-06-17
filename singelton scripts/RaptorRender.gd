@@ -54,7 +54,7 @@ func _ready():
 				"priority": 50,
 				"creator": "Johannes",
 				"time_created": 1528623180,
-				"status": "2_queued",
+				"status": RRStateScheme.job_queued,
 				"progress": 0,
 				"range_start": 10,
 				"range_end": 25,
@@ -67,7 +67,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 10,
 						"frame_end" : 14,
 						"client" : -1,
@@ -76,7 +76,7 @@ func _ready():
 						"number_of_tries" : 0
 					},
 					2:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 15,
 						"frame_end" : 19,
 						"client" : -1,
@@ -85,7 +85,7 @@ func _ready():
 						"number_of_tries" : 0
 					},
 					3:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 24,
 						"client" : -1,
@@ -94,7 +94,7 @@ func _ready():
 						"number_of_tries" : 0
 					},
 					4:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 25,
 						"frame_end" : 25,
 						"client" : -1,
@@ -111,7 +111,7 @@ func _ready():
 				"priority": 60,
 				"creator": "Johannes",
 				"time_created": 1528623180,
-				"status": "2_queued",
+				"status": RRStateScheme.job_queued,
 				"progress": 0,
 				"range_start": 10,
 				"range_end": 25,
@@ -126,7 +126,7 @@ func _ready():
 				},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 10,
 						"frame_end" : 14,
 						"client" : -1,
@@ -135,7 +135,7 @@ func _ready():
 						"number_of_tries" : 0
 					},
 					2:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 15,
 						"frame_end" : 19,
 						"client" : -1,
@@ -144,7 +144,7 @@ func _ready():
 						"number_of_tries" : 0
 					},
 					3:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 24,
 						"client" : -1,
@@ -153,7 +153,7 @@ func _ready():
 						"number_of_tries" : 0
 					},
 					4:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 25,
 						"frame_end" : 25,
 						"client" : -1,
@@ -170,7 +170,7 @@ func _ready():
 				"priority": 50,
 				"creator": "Johannes",
 				"time_created": 1528623180,
-				"status": "6_cancelled",
+				"status": RRStateScheme.job_cancelled,
 				"progress": 28,
 				"range_start": 230,
 				"range_end": 780,
@@ -183,7 +183,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -192,7 +192,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					2:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -201,7 +201,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					3:{
-						"status" : "1_rendering",
+						"status" : RRStateScheme.chunk_rendering,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 2,
@@ -210,7 +210,7 @@ func _ready():
 						"number_of_tries" : 5
 					},
 					4:{
-						"status" : "1_rendering",
+						"status" : RRStateScheme.chunk_rendering,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 7,
@@ -219,7 +219,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					5:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -228,7 +228,7 @@ func _ready():
 						"number_of_tries" : 2
 					},
 					6:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 8,
@@ -237,7 +237,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					7:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -254,7 +254,7 @@ func _ready():
 				"priority": 50,
 				"creator": "Johannes",
 				"time_created": 1528621180,
-				"status": "6_cancelled",
+				"status": RRStateScheme.job_cancelled,
 				"progress": 28,
 				"range_start": 1,
 				"range_end": 80,
@@ -267,7 +267,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -276,7 +276,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					2:{
-						"status" : "1_rendering",
+						"status" : RRStateScheme.chunk_rendering,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -285,7 +285,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					3:{
-						"status" : "1_rendering",
+						"status" : RRStateScheme.chunk_rendering,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -294,7 +294,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					4:{
-						"status" : "1_rendering",
+						"status" : RRStateScheme.chunk_rendering,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -303,7 +303,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					5:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -320,7 +320,7 @@ func _ready():
 				"priority": 20,
 				"creator": "Chris",
 				"time_created": 1528613180,
-				"status": "6_cancelled",
+				"status": RRStateScheme.job_cancelled,
 				"progress": 0,
 				"range_start": 1,
 				"range_end": 500,
@@ -333,7 +333,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -342,7 +342,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					2:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -351,7 +351,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					3:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -360,7 +360,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					4:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -369,7 +369,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					5:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -378,7 +378,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					6:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -387,7 +387,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					7:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -404,7 +404,7 @@ func _ready():
 				"priority": 20,
 				"creator": "Michael",
 				"time_created": 1528523180,
-				"status": "4_paused",
+				"status": RRStateScheme.job_paused,
 				"progress": 34,
 				"range_start": 80,
 				"range_end": 115,
@@ -417,7 +417,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -426,7 +426,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					2:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -435,7 +435,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					3:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -444,7 +444,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					4:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -453,7 +453,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					5:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -462,7 +462,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					6:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -471,7 +471,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					7:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -488,7 +488,7 @@ func _ready():
 				"priority": 77,
 				"creator": "Max",
 				"time_created": 1528620180,
-				"status": "5_finished",
+				"status": RRStateScheme.job_finished,
 				"progress": 100,
 				"range_start": 120,
 				"range_end": 350,
@@ -501,7 +501,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -510,7 +510,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					2:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 4,
@@ -519,7 +519,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					3:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 8,
@@ -528,7 +528,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					4:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -537,7 +537,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					5:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 10,
@@ -546,7 +546,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					6:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -555,7 +555,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					7:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 7,
@@ -564,7 +564,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					8:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -573,7 +573,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					9:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -582,7 +582,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					10:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -591,7 +591,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					11:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 13,
@@ -600,7 +600,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					12:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 13,
@@ -609,7 +609,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					13:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 15,
@@ -618,7 +618,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					14:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 16,
@@ -627,7 +627,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					15:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 2,
@@ -636,7 +636,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					16:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 2,
@@ -645,7 +645,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					17:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -654,7 +654,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					18:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -663,7 +663,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					19:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -672,7 +672,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					20:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -681,7 +681,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					21:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -698,7 +698,7 @@ func _ready():
 				"priority": 10,
 				"creator": "Nicolaj",
 				"time_created": 1528623110,
-				"status": "6_cancelled",
+				"status": RRStateScheme.job_cancelled,
 				"progress": 57,
 				"range_start": 1600,
 				"range_end": 2800,
@@ -711,7 +711,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -720,7 +720,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					2:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -729,7 +729,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					3:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -738,7 +738,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					4:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -747,7 +747,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					5:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -756,7 +756,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					6:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -765,7 +765,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					7:{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : 1,
@@ -782,7 +782,7 @@ func _ready():
 				"priority": 10,
 				"creator": "Nicolaj",
 				"time_created": 1525611110,
-				"status": "3_error",
+				"status": RRStateScheme.job_error,
 				"progress": 0,
 				"range_start": 20,
 				"range_end": 50,
@@ -795,7 +795,7 @@ func _ready():
 				"SpecificJobSettings" : {},
 				"chunks": {
 					1:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -804,7 +804,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					2:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -813,7 +813,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					3:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -822,7 +822,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					4:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -831,7 +831,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					5:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -840,7 +840,7 @@ func _ready():
 						"number_of_tries" : 1
 					},
 					6:{
-						"status" : "2_queued",
+						"status" : RRStateScheme.chunk_queued,
 						"frame_start" : 20,
 						"frame_end" : 25,
 						"client" : -1,
@@ -860,7 +860,7 @@ func _ready():
 				"username": "Johannes",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -881,7 +881,7 @@ func _ready():
 				"username": "Michael",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","7"],
@@ -902,7 +902,7 @@ func _ready():
 				"username": "Max",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": 1,
 				"error_count": 0,
 				"platform": ["OSX","SnowLeopard"],
@@ -923,7 +923,7 @@ func _ready():
 				"username": "Chris",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.87"],
-				"status": "5_offline",
+				"status": RRStateScheme.client_offline,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
@@ -944,7 +944,7 @@ func _ready():
 				"username": "Angela",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.15"],
-				"status": "3_error",
+				"status": RRStateScheme.client_error,
 				"current_job_id": -1,
 				"error_count": 1,
 				"platform": ["Linux","4.14.48-2"],
@@ -965,7 +965,7 @@ func _ready():
 				"username": "Nicolaj",
 				"mac_addresses": ["10:7b:44:7a:fb:e2","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
-				"status": "5_offline",
+				"status": RRStateScheme.client_offline,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","XP"],
@@ -986,7 +986,7 @@ func _ready():
 				"username": "Patrick",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -1007,7 +1007,7 @@ func _ready():
 				"username": "Florian",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
@@ -1028,7 +1028,7 @@ func _ready():
 				"username": "Marcel",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -1049,7 +1049,7 @@ func _ready():
 				"username": "Andreas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
@@ -1070,7 +1070,7 @@ func _ready():
 				"username": "Thomas",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.156"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": 7,
 				"error_count": 0,
 				"platform": ["OSX","Snow Leopard"],
@@ -1091,7 +1091,7 @@ func _ready():
 				"username": "Dennis",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.87"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","10"],
@@ -1112,7 +1112,7 @@ func _ready():
 				"username": "Peter",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.15"],
-				"status": "3_error",
+				"status": RRStateScheme.client_error,
 				"current_job_id": -1,
 				"error_count": 5,
 				"platform": ["Linux","4.14.48-2"],
@@ -1133,7 +1133,7 @@ func _ready():
 				"username": "Horst",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
@@ -1154,7 +1154,7 @@ func _ready():
 				"username": "Daniel",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.22"],
-				"status": "4_disabled",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"error_count": 0,
 				"platform": ["Windows","7"],
@@ -1293,7 +1293,7 @@ func _input(event):
 				"priority": 99,
 				"creator": "new",
 				"time_created": 623180,
-				"status": "2_queued",
+				"status": RRStateScheme.job_queued,
 				"progress": 88,
 				"range_start": 280,
 				"range_end": 880,
@@ -1305,7 +1305,7 @@ func _input(event):
 				"render_time" : 345,
 				"chunks": {
 					"1":{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frames" : [20,21,22,23],
 						"client" : "id1",
 						"time_started" : 1528523180,
@@ -1313,7 +1313,7 @@ func _input(event):
 						"number_of_tries" : 1
 					},
 					"2":{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
@@ -1321,7 +1321,7 @@ func _input(event):
 						"number_of_tries" : 1
 					},
 					"3":{
-						"status" : "1_rendering",
+						"status" : RRStateScheme.chunk_rendering,
 						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
@@ -1329,7 +1329,7 @@ func _input(event):
 						"number_of_tries" : 1
 					},
 					"4":{
-						"status" : "1_rendering",
+						"status" : RRStateScheme.chunk_rendering,
 						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
@@ -1337,7 +1337,7 @@ func _input(event):
 						"number_of_tries" : 1
 					},
 					"5":{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
@@ -1345,7 +1345,7 @@ func _input(event):
 						"number_of_tries" : 1
 					},
 					"6":{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
@@ -1353,7 +1353,7 @@ func _input(event):
 						"number_of_tries" : 1
 					},
 					"7":{
-						"status" : "5_finished",
+						"status" : RRStateScheme.chunk_finished,
 						"frames" : [24,25,26,27],
 						"client" : "id1",
 						"time_started" : 1528523180,
@@ -1368,7 +1368,7 @@ func _input(event):
 				"username": "new user",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
-				"status": "1_rendering",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": 4,
 				"error_count": 12,
 				"platform": ["Linux","4.14.48-2"],
@@ -1389,7 +1389,7 @@ func _input(event):
 				"username": "Sun",
 				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
-				"status": "1_rendering",
+				"status": RRStateScheme.client_disabled,
 				"current_job_id": 4,
 				"error_count": 12,
 				"platform": ["Linux","4.14.48-2"],
@@ -1479,6 +1479,9 @@ func refresh_jobs_table():
 					StatusIcon.set_modulate(RRColorScheme.state_active)
 					if colorize_table_rows:
 						JobsTable.set_row_color_by_string(row_position, "blue")
+						
+				elif rr_data.jobs[job].status == RRStateScheme.job_rendering_paused_deferred:
+					StatusIcon.set_modulate(RRColorScheme.state_paused_deferred)
 						
 				elif rr_data.jobs[job].status == RRStateScheme.job_queued:
 					StatusIcon.set_modulate(RRColorScheme.state_queued)
@@ -1728,6 +1731,9 @@ func refresh_jobs_table():
 				if colorize_table_rows:
 					JobsTable.set_row_color_by_string(count, "blue")
 					
+			elif rr_data.jobs[job].status == RRStateScheme.job_rendering_paused_deferred:
+				StatusIcon.set_modulate(RRColorScheme.state_paused_deferred)
+				
 			elif rr_data.jobs[job].status == RRStateScheme.job_queued:
 				StatusIcon.set_modulate(RRColorScheme.state_queued)
 				if colorize_table_rows:

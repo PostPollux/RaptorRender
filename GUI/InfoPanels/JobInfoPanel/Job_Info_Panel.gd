@@ -61,6 +61,7 @@ func update_job_info_panel(job_id : int):
 		
 		match status:
 			RRStateScheme.job_rendering : StatusIconTexture.set_modulate(RRColorScheme.state_active)
+			RRStateScheme.job_rendering_paused_deferred : StatusIconTexture.set_modulate(RRColorScheme.state_paused_deferred)
 			RRStateScheme.job_queued :    StatusIconTexture.set_modulate(RRColorScheme.state_queued)
 			RRStateScheme.job_error :     StatusIconTexture.set_modulate(RRColorScheme.state_error)
 			RRStateScheme.job_paused :    StatusIconTexture.set_modulate(RRColorScheme.state_paused)
@@ -71,6 +72,7 @@ func update_job_info_panel(job_id : int):
 		# Status text
 		match status:
 			RRStateScheme.job_rendering : StatusLabel.text = "Status:  Rendering"
+			RRStateScheme.job_rendering_paused_deferred : StatusLabel.text = "Status:  Paused Deffered"
 			RRStateScheme.job_queued :    StatusLabel.text = "Status:  Queued"
 			RRStateScheme.job_error :     StatusLabel.text = "Status:  Error"
 			RRStateScheme.job_paused :    StatusLabel.text = "Status:  Paused"

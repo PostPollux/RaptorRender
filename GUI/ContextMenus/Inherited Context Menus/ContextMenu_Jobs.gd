@@ -122,7 +122,13 @@ func _on_ContextMenu_index_pressed(index):
 				
 				if status == RRStateScheme.job_rendering or status == RRStateScheme.job_queued or status == RRStateScheme.job_error:
 					
-					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_paused
+					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_rendering_paused_deferred
+					
+					# cancle active chunks
+					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
+						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
+						if chunk_status == RRStateScheme.chunk_queued:
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_paused
 			
 			RaptorRender.JobsTable.refresh()
 			
