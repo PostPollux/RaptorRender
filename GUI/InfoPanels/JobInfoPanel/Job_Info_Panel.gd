@@ -161,3 +161,11 @@ func _on_OpenSceneFolderButton_pressed():
 
 func _on_OpenOutputFolderButton_pressed():
 	JobFunctions.open_folder( RaptorRender.rr_data.jobs[current_displayed_job_id].output_directory )
+
+
+func _on_TabContainer_tab_selected(tab):
+	
+	# chunk list tab selected
+	if tab == 1:
+		RaptorRender.refresh_chunks_table( RaptorRender.current_job_id_for_job_info_panel )
+	

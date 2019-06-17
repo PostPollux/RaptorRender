@@ -340,5 +340,6 @@ margin_right = 695.0
 margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+[connection signal="tab_selected" from="TabContainer" to="." method="_on_TabContainer_tab_selected"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OpenOutputFolderButton" to="." method="_on_OpenOutputFolderButton_pressed"]
