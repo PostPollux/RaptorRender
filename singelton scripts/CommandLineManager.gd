@@ -11,7 +11,7 @@
 
 extends Node
 
-
+var platform : String # to decide which function to call depending on os
 
 var invoke_render_pid : int 
 
@@ -36,6 +36,9 @@ signal render_process_exited
 
 
 func _ready():
+	
+	# get current platform to call correct functions
+	platform  = OS.get_name()
 	
 	
 	log_data_dir_str = OS.get_user_data_dir() + "/logs/"
@@ -129,10 +132,27 @@ func start_render_process (cmdline_instruction : String, log_file_name : String)
 		kill_current_render_process()
 		
 	
-	var output : Array = []
-	var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_dir_str + log_file_name + ".txt 2>&1"]
+	match platform:
+		
+		# Linux
+		"X11" : 
+			
+			var output : Array = []
+			var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_dir_str + log_file_name + ".txt 2>&1"] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
+			
+			invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
+		
+		
+		# Windows
+		"Windows" :
+		
+			var output : Array = []
+			var arguments : Array = ['/C', cmdline_instruction + ' > ' + log_data_dir_str + log_file_name + '.txt 2>&1'] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file. Unfortunately under windows the errors will be printed at the end of the file and not in a chronological order together with the "stdout" stream.
+			
+			invoke_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
 	
-	invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
+	
+	
 	
 	current_commandline_instructions = cmdline_instruction
 	
