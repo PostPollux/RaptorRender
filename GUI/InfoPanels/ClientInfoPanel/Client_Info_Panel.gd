@@ -30,11 +30,11 @@ func _ready():
 func reset_to_first_tab():
 	ClientInfoTabContainer.current_tab = 0
 
-func set_tab(tab_number):
+func set_tab(tab_number : int ):
 	ClientInfoTabContainer.current_tab = tab_number
 
 
-func update_client_info_panel(client_id):
+func update_client_info_panel(client_id : int):
 	
 	
 	# set the id for the cpu usage bar so that it knows which value to get
@@ -56,28 +56,24 @@ func update_client_info_panel(client_id):
 	
 	var status = selected_client["status"]
 	
-	
-	var icon = ImageTexture.new()
-	
 	match status:
-		"1_rendering": icon.load("res://GUI/icons/client_status/200x100/client_status_rendering_200x100.png")
-		"2_available": icon.load("res://GUI/icons/client_status/200x100/client_status_online_200x100.png")
-		"3_error":     icon.load("res://GUI/icons/client_status/200x100/client_status_error_200x100.png")
-		"4_disabled":  icon.load("res://GUI/icons/client_status/200x100/client_status_disabled_200x100.png")
-		"5_offline":   icon.load("res://GUI/icons/client_status/200x100/client_status_offline_200x100.png")
-		
-	StatusIconTexture.set_texture(icon)
+		RRStateScheme.client_rendering : StatusIconTexture.set_modulate(RRColorScheme.state_active)
+		RRStateScheme.client_available : StatusIconTexture.set_modulate(RRColorScheme.state_finished_or_online)
+		RRStateScheme.client_error :     StatusIconTexture.set_modulate(RRColorScheme.state_error)
+		RRStateScheme.client_disabled :  StatusIconTexture.set_modulate(RRColorScheme.state_paused)
+		RRStateScheme.client_offline :   StatusIconTexture.set_modulate(RRColorScheme.state_offline_or_cancelled)
+
 	
 	
 	
 	match status:
-		"1_rendering": StatusLabel.text = "Status:  Rendering"
-		"2_available": StatusLabel.text = "Status:  Available"
-		"3_error":     StatusLabel.text = "Status:  Error"
-		"4_disabled":  StatusLabel.text = "Status:  Disabled"
-		"5_offline":   StatusLabel.text = "Status:  Offline"
+		RRStateScheme.client_rendering : StatusLabel.text = "Status:  Rendering"
+		RRStateScheme.client_available : StatusLabel.text = "Status:  Available"
+		RRStateScheme.client_error :     StatusLabel.text = "Status:  Error"
+		RRStateScheme.client_disabled :  StatusLabel.text = "Status:  Disabled"
+		RRStateScheme.client_offline :   StatusLabel.text = "Status:  Offline"
 	
-	if status != "5_offline":	
+	if status != RRStateScheme.client_offline:
 		UptimeLabel.text = "Uptime:  " + TimeFunctions.time_elapsed_as_string(selected_client["time_connected"], OS.get_unix_time(), 2)
 	else:
 		UptimeLabel.text = "Last seen:  not implemented yet" 
@@ -87,7 +83,7 @@ func update_client_info_panel(client_id):
 	#  CPU Section
 	###############
 	
-	var cpu_text = ""
+	var cpu_text : String = ""
 	
 	cpu_text += selected_client["cpu"][0] + "\n"
 	
@@ -117,7 +113,7 @@ func update_client_info_panel(client_id):
 	#  Memory Section
 	###################	
 	
-	var size_in_gb =  String( float(selected_client["memory"]) / 1024 / 1024 )
+	var size_in_gb : String =  String( float(selected_client["memory"]) / 1024 / 1024 )
 	RAMLabel.text = size_in_gb.left(size_in_gb.find(".")+ 3) + " GB"
 	
 	MemoryUsageBar.update_memory_usage_bar()
@@ -151,7 +147,7 @@ func update_client_info_panel(client_id):
 	#  Graphics Section
 	###################
 	
-	var graphics_text = ""
+	var graphics_text : String = ""
 	for i in range(0, selected_client["graphics"].size()):
 		graphics_text += selected_client["graphics"][i] + "\n"
 		
@@ -166,7 +162,7 @@ func update_client_info_panel(client_id):
 	##################
 	
 	if selected_client["ip_addresses"].size() > 1:
-		var text = "IP Addresses: \n"
+		var text : String = "IP Addresses: \n"
 		for i in range(0, selected_client["ip_addresses"].size()):
 			text += " " + selected_client["ip_addresses"][i].replace(".", " . ") + "\n"
 		if text.ends_with("\n"):
@@ -179,7 +175,7 @@ func update_client_info_panel(client_id):
 		
 		
 	if selected_client["mac_addresses"].size() > 1:
-		var text = "MAC Addresses: \n"
+		var text : String = "MAC Addresses: \n"
 		for i in range(0, selected_client["mac_addresses"].size()):
 			text += " " + selected_client["mac_addresses"][i].to_upper().replace(":", " : ") + "\n"
 		if text.ends_with("\n"):

@@ -6,21 +6,67 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=3
+config_version=4
+
+_global_script_classes=[ {
+"base": "Control",
+"class": "NotificationSystem",
+"language": "GDScript",
+"path": "res://GUI/NotificationSystem/NotificationSystem.gd"
+}, {
+"base": "ScrollContainer",
+"class": "SortableTable",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/SortableTable.gd"
+}, {
+"base": "Button",
+"class": "SortableTableCollumnButton",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/TopRow/ColumnButton.gd"
+}, {
+"base": "MarginContainer",
+"class": "SortableTableRow",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/SortableTableRow.gd"
+}, {
+"base": "VBoxContainer",
+"class": "SortableTableRowContainerFilled",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/RowContainerFilled.gd"
+}, {
+"base": "MarginContainer",
+"class": "SortableTableTopRow",
+"language": "GDScript",
+"path": "res://GUI/SortableTable/TopRow/TopRow.gd"
+} ]
+_global_script_class_icons={
+"NotificationSystem": "",
+"SortableTable": "",
+"SortableTableCollumnButton": "",
+"SortableTableRow": "",
+"SortableTableRowContainerFilled": "",
+"SortableTableTopRow": ""
+}
 
 [application]
 
 config/name="RaptorRender"
-run/main_scene="res://GUI/Interface.tscn"
+run/main_scene="res://RaptorRenderMainScene.tscn"
 config/icon="res://Main_Icons/RR_Icon_64_1.png"
 
 [autoload]
 
-RaptorRender="*res://RaptorRender.gd"
-TimeFunctions="*res://TimeFunctions.gd"
-JobFunctions="*res://JobFunctions.gd"
-GetSystemInformation="*res://GetSystemInformation.gd"
-Converters="*res://Converters.gd"
+RRColorScheme="*res://singelton scripts/RRColorScheme.gd"
+RRStateScheme="*res://singelton scripts/RRStateScheme.gd"
+RaptorRender="*res://singelton scripts/RaptorRender.gd"
+TimeFunctions="*res://singelton scripts/TimeFunctions.gd"
+Converters="*res://singelton scripts/Converters.gd"
+JobFunctions="*res://singelton scripts/JobFunctions.gd"
+GetSystemInformation="*res://singelton scripts/GetSystemInformation.gd"
+CommandLineManager="*res://singelton scripts/CommandLineManager.gd"
+RenderLogValidator="*res://singelton scripts/RenderLogValidator.gd"
+JobExecutionManager="*res://singelton scripts/JobExecutionManager.gd"
+JobDistributionManager="*res://singelton scripts/JobDistributionManager.gd"
 
 [debug]
 
@@ -32,21 +78,42 @@ window/size/width=1280
 
 [input]
 
-ui_left_mouse_button=[ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ui_left_mouse_button={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
-ui_right_mouse_button=[ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+}
+ui_right_mouse_button={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
-ui_mouse_wheel_up_or_down=[ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+}
+ui_mouse_wheel_up_or_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
  ]
-select_all=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+}
+select_all={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
  ]
-ui_middle_mouse_button=[ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
+}
+ui_middle_mouse_button={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
  ]
-ui_shift=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
+}
+ui_shift={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
  ]
-ui_ctrl=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"unicode":0,"echo":false,"script":null)
+}
+ui_ctrl={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"unicode":0,"echo":false,"script":null)
  ]
+}
 
 [memory]
 

@@ -14,13 +14,25 @@
 extends VBoxContainer
 
 
-var row_height
+var row_height : int = 30
 var amount_of_needed_rows_to_fill_up_screen
 
 var EmptyRows = []
 
+
+# row colors
+var row_color : Color = Color("3c3c3c")
+var row_color_selected : Color = Color("956248")
+var row_color_red : Color = Color("643f3b")
+var row_color_blue : Color = Color("3b5064")
+var row_color_green : Color = Color("3b5a3b")
+var row_color_yellow : Color = Color("585a3b")
+var row_color_black : Color = Color("1d1d1d")
+var even_odd_brightness_difference : float = 0.05
+var hover_brightness_boost : float = 0.1
+
+
 # references to other nodes of sortable table
-onready var SortableTable = $"../../../../.."
 onready var TopRow = $"../../../../TopRow"
 onready var RowContainerFilled = $"../../RowContainerFilled"
 
@@ -28,11 +40,23 @@ onready var RowContainerFilled = $"../../RowContainerFilled"
 var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
 
 
+signal selection_cleared
+
 
 
 func _ready():
-	
-	row_height = SortableTable.row_height
+	pass
+
+
+
+
+
+###################
+### manage the rows
+###################
+
+
+func create_initial_empty_rows():
 	
 	amount_of_needed_rows_to_fill_up_screen =  int( OS.get_screen_size()[1] / row_height )
 	
@@ -44,29 +68,38 @@ func _ready():
 	
 	update_positions_of_empty_rows()
 
-
-
-
-
-###################
-### manage the rows
-###################
-
+	
 
 # create an empty row
 func create_empty_row():
 	
 	if EmptyRows.size() < amount_of_needed_rows_to_fill_up_screen:
-		var SortableTableRow = SortableTableRowRes.instance()
+		var Row = SortableTableRowRes.instance()
 		
-		SortableTableRow.connect("row_clicked", self, "select_SortableRows")
-		SortableTableRow.connect("row_clicked_middle", self, "select_SortableRows_middle_mouse")
-		SortableTableRow.set_row_height(row_height)
-		SortableTableRow.column_count = TopRow.ColumnButtons.size()
-		SortableTableRow.create_cells()
+		# set color variables of SortableTableRow
+		Row.row_color = row_color
+		Row.row_color_selected = row_color_selected 
+		Row.row_color_red = row_color_red
+		Row.row_color_blue = row_color_blue
+		Row.row_color_green = row_color_green
+		Row.row_color_yellow = row_color_yellow
+		Row.row_color_black = row_color_black
+		Row.even_odd_brightness_difference = even_odd_brightness_difference
+		Row.hover_brightness_boost = hover_brightness_boost
+		Row.set_additional_colors()
 		
-		self.add_child(SortableTableRow)
-		EmptyRows.append(SortableTableRow)
+		# set variables.
+		Row.column_count = TopRow.ColumnButtons.size()
+		Row.set_row_height(row_height)
+		
+		# connect signals to enable selecting
+		Row.connect("row_clicked", self, "select_SortableRows")
+		Row.connect("row_clicked_middle", self, "select_SortableRows_middle_mouse")
+		
+		Row.create_cells()
+		
+		self.add_child(Row)
+		EmptyRows.append(Row)
 		
 		
 		# initialize column widths and highlight cell if needed
@@ -75,13 +108,13 @@ func create_empty_row():
 		for ColumnButton in TopRow.ColumnButtons:
 		
 			# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
-			SortableTableRow.set_cell_width(column, ColumnButton.rect_min_size.x)
+			Row.set_cell_width(column, ColumnButton.rect_min_size.x)
 			
 			# highlight the cell
 			if column == TopRow.sort_column_primary:
-				SortableTableRow.modulate_cell_color(column,Color("18ffffff"))
+				Row.modulate_cell_color(column,Color("18ffffff"))
 			else:
-				SortableTableRow.modulate_cell_color(column,Color("00ffffff"))
+				Row.modulate_cell_color(column,Color("00ffffff"))
 		
 			column += 1
 
@@ -127,19 +160,6 @@ func update_width_of_RowContainerEmpty():
 ##################
 
 
-func initialize_column_widths():
-	
-	var column = 1
-	
-	for ColumnButton in TopRow.ColumnButtons:
-		
-		# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
-		set_column_width(column, ColumnButton.rect_min_size.x)
-		
-		column += 1
-
-
-
 func set_column_width(column, width):
 	
 	for Row in EmptyRows:
@@ -149,13 +169,15 @@ func set_column_width(column, width):
 
 # function to highlight the primary sort column 
 func highlight_column(column):
-	if TopRow:
-		if column <= TopRow.ColumnButtons.size() and column > 0:
-			for i in range(1, TopRow.ColumnButtons.size() + 1) :
-				for Row in EmptyRows:
-					Row.modulate_cell_color(i,Color("00ffffff"))
-			for Row in EmptyRows:
-				Row.modulate_cell_color(column,Color("18ffffff"))
+	
+	# reset the color of each cell in each row
+	for Row in EmptyRows:
+		for i in range(1, Row.column_count + 1) :
+			Row.modulate_cell_color(i,Color("00ffffff"))
+	
+	# highlight the correct cell in each row
+	for Row in EmptyRows:
+		Row.modulate_cell_color(column,Color("18ffffff"))
 
 
 
@@ -192,8 +214,7 @@ func select_SortableRows(row_position):
 		for Row in SortableRows:
 			Row.set_selected(false)
 		RowContainerFilled.selected_row_ids.clear()
-		SortableTable.emit_selection_cleared_signal()
-		
+		emit_signal("selection_cleared")
 
 func select_SortableRows_middle_mouse(row_position):
 	
@@ -208,7 +229,6 @@ func select_SortableRows_middle_mouse(row_position):
 				if SortableRows[i-1].selected == true:
 					SortableRows[i-1].set_selected(false)
 					RowContainerFilled.selected_row_ids.erase(SortableRows[i-1].id)
-		
 
 
 

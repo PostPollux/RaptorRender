@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd" type="Script" id=1]
-[ext_resource path="res://GUI/icons/job_status/200x100/job_status_finished_200x100.png" type="Texture" id=2]
-[ext_resource path="res://GUI/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/icons/job_status/job_status_200x100.png" type="Texture" id=2]
+[ext_resource path="res://GUI/SortableTable/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/icons/link/15x15/link_default_15x15.png" type="Texture" id=4]
 [ext_resource path="res://GUI/icons/link/15x15/link_clicked_15x15.png" type="Texture" id=5]
 [ext_resource path="res://GUI/icons/link/15x15/link_hover_15x15.png" type="Texture" id=6]
@@ -11,865 +11,328 @@
 [ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFontData" id=1]
-
-hinting = 2
 font_path = "res://GUI/fonts/Caliban.ttf"
 
 [sub_resource type="DynamicFont" id=2]
-
 size = 20
-use_mipmaps = false
 use_filter = true
 font_data = SubResource( 1 )
-_sections_unfolded = [ "Font", "Settings" ]
 
-[node name="JobInfoPanel" type="MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="JobInfoPanel" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -569.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="TabContainer" type="TabContainer" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 8.0
+[node name="TabContainer" type="TabContainer" parent="."]
 margin_right = 711.0
 margin_bottom = 600.0
-rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
-tabs_visible = true
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="Details" type="Tabs" parent="TabContainer" index="0"]
-
+[node name="Details" type="Tabs" parent="TabContainer"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
-rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-tab_align = 1
-scrolling_enabled = true
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Details" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Details"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-scroll_horizontal_enabled = true
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 695.0
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer"]
+margin_right = 703.0
 margin_bottom = 564.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 675.0
+margin_right = 683.0
 margin_bottom = 544.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-alignment = 0
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="MainInfo" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 655.0
+[node name="MainInfo" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+margin_right = 663.0
 margin_bottom = 140.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
-alignment = 0
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 655.0
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo"]
+margin_right = 663.0
 margin_bottom = 140.0
 rect_min_size = Vector2( 0, 140 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-alignment = 0
-_sections_unfolded = [ "Rect", "Size Flags", "Theme" ]
 
-[node name="Icon" type="TextureRect" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Icon" type="TextureRect" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer"]
 margin_top = 20.0
 margin_right = 150.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 150, 100 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 4
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer"]
 margin_left = 154.0
-margin_right = 655.0
+margin_right = 663.0
 margin_bottom = 140.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
 custom_constants/margin_left = 20
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer"]
 margin_left = 20.0
 margin_top = 19.0
-margin_right = 501.0
+margin_right = 509.0
 margin_bottom = 121.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 4
-alignment = 0
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="NameLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 481.0
+[node name="NameLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer"]
+margin_right = 489.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = SubResource( 2 )
 text = "Custom Job 1"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "Size Flags", "custom_fonts" ]
 
-[node name="StatusLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="StatusLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 34.0
-margin_right = 481.0
+margin_right = 489.0
 margin_bottom = 48.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Status: Finished"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="TypeLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TypeLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 52.0
-margin_right = 481.0
+margin_right = 489.0
 margin_bottom = 66.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Type: Blender"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="CreatorLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="CreatorLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 70.0
-margin_right = 481.0
+margin_right = 489.0
 margin_bottom = 84.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Creator:  Johannes"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="TimeCreatedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TimeCreatedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 88.0
-margin_right = 481.0
+margin_right = 489.0
 margin_bottom = 102.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Created: 25.6.2018 11:45"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 144.0
-margin_right = 655.0
+margin_right = 663.0
 margin_bottom = 164.0
 rect_min_size = Vector2( 0, 20 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="progress" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer" index="2"]
-
+[node name="progress" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 168.0
-margin_right = 655.0
+margin_right = 663.0
 margin_bottom = 262.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
-_sections_unfolded = [ "Margin", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 655.0
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress"]
+margin_right = 663.0
 margin_bottom = 94.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 655.0
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer"]
+margin_right = 663.0
 margin_bottom = 94.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
 custom_constants/margin_left = 15
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer"]
 margin_left = 15.0
-margin_right = 655.0
+margin_right = 663.0
 margin_bottom = 94.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 4
-alignment = 0
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="Progress Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 640.0
+[node name="Progress Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer"]
+margin_right = 648.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.494118, 0.494118, 0.494118, 1 )
 text = "Progress"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags", "Visibility", "custom_colors" ]
 
-[node name="JobProgressBar" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer" index="1" instance=ExtResource( 3 )]
-
+[node name="JobProgressBar" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 18.0
 margin_right = 200.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 2
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="ActiveClientsLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ActiveClientsLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 640.0
+margin_right = 648.0
 margin_bottom = 58.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Active Clients: 5"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags", "Visibility" ]
 
-[node name="TimeRenderedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TimeRenderedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 62.0
-margin_right = 640.0
+margin_right = 648.0
 margin_bottom = 76.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Rendered Time: 4d 2h 34m"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="TimeRemainingLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TimeRemainingLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 80.0
-margin_right = 640.0
+margin_right = 648.0
 margin_bottom = 94.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Rendered Time: 4d 2h 34m"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="HSeparator2" type="HSeparator" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 266.0
-margin_right = 655.0
+margin_right = 663.0
 margin_bottom = 286.0
 rect_min_size = Vector2( 0, 20 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="files" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="files" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 290.0
-margin_right = 655.0
+margin_right = 663.0
 margin_bottom = 342.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
-_sections_unfolded = [ "Margin", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 655.0
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files"]
+margin_right = 663.0
 margin_bottom = 52.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 655.0
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer"]
+margin_right = 663.0
 margin_bottom = 52.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
 custom_constants/margin_left = 15
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer"]
 margin_left = 15.0
-margin_right = 655.0
+margin_right = 663.0
 margin_bottom = 52.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 4
-alignment = 0
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="Files Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 640.0
+[node name="Files Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer"]
+margin_right = 648.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.494118, 0.494118, 0.494118, 1 )
 text = "Files"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags", "Visibility", "custom_colors" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 18.0
-margin_right = 640.0
+margin_right = 648.0
 margin_bottom = 33.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_constants/separation = 5
-alignment = 0
-_sections_unfolded = [ "custom_constants" ]
 
-[node name="OpenSceneFolderButton" type="TextureButton" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="OpenSceneFolderButton" type="TextureButton" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 15.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 15, 15 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 4
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 6 )
-_sections_unfolded = [ "Rect", "Size Flags", "Textures" ]
 
-[node name="SceneFileLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="SceneFileLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 20.0
 margin_right = 90.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Source File"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags", "Visibility" ]
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 37.0
-margin_right = 640.0
+margin_right = 648.0
 margin_bottom = 52.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_constants/separation = 5
-alignment = 0
-_sections_unfolded = [ "custom_constants" ]
 
-[node name="OpenOutputFolderButton" type="TextureButton" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="OpenOutputFolderButton" type="TextureButton" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_right = 15.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 15, 15 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
 size_flags_vertical = 4
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 6 )
-_sections_unfolded = [ "Rect", "Size Flags", "Textures" ]
 
-[node name="OutputFilesLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="OutputFilesLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 20.0
 margin_right = 96.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Output files"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Size Flags", "Visibility" ]
 
-[node name="Chunk List" type="Tabs" parent="TabContainer" index="1"]
-
+[node name="Chunk List" type="Tabs" parent="TabContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
-rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-tab_align = 1
-scrolling_enabled = true
-_sections_unfolded = [ "Rect" ]
 
-[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Chunk List" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Chunk List"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 split_offset = -214
-collapsed = false
-dragger_visibility = 0
 
-[node name="Chunk_List_SortableTable" parent="TabContainer/Chunk List/VSplitContainer" index="0" instance=ExtResource( 7 )]
-
+[node name="Chunk_List_SortableTable" parent="TabContainer/Chunk List/VSplitContainer" instance=ExtResource( 7 )]
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 695.0
 margin_bottom = 338.0
 column_names = [ "", "Status", "Frames", "Client", "Rendertime", "Tries", "Start", "Finished" ]
-column_widths_initial = [ 40, 60, 100, 100, 100, 50, 160, 160 ]
+column_widths = [ 40, 60, 100, 100, 100, 50, 160, 160 ]
 table_id = "chunks"
 
-[node name="Panel" type="Panel" parent="TabContainer/Chunk List/VSplitContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Panel" type="Panel" parent="TabContainer/Chunk List/VSplitContainer"]
 margin_top = 350.0
 margin_right = 695.0
 margin_bottom = 564.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="Graphs" type="Tabs" parent="TabContainer" index="2"]
-
+[node name="Graphs" type="Tabs" parent="TabContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
-rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-tab_align = 1
-scrolling_enabled = true
-_sections_unfolded = [ "Rect" ]
 
-[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Graphs" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Graphs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 split_offset = 60
-collapsed = false
-dragger_visibility = 0
 
-[node name="ChunkTimeGraph" parent="TabContainer/Graphs/VSplitContainer" index="0" instance=ExtResource( 8 )]
-
+[node name="ChunkTimeGraph" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 8 )]
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 695.0
 margin_bottom = 336.0
 
-[node name="ClientPieChart" parent="TabContainer/Graphs/VSplitContainer" index="1" instance=ExtResource( 9 )]
-
+[node name="ClientPieChart" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 9 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 348.0
@@ -877,10 +340,6 @@ margin_right = 695.0
 margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-_sections_unfolded = [ "Margin", "Size Flags" ]
-
+[connection signal="tab_selected" from="TabContainer" to="." method="_on_TabContainer_tab_selected"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
-
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OpenOutputFolderButton" to="." method="_on_OpenOutputFolderButton_pressed"]
-
-

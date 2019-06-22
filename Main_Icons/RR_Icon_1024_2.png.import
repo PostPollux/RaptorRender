@@ -3,20 +3,21 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/RR_Icon_1024_2.png-470af4df5aac9f87a3e27838713455ff.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://Main_Icons/RR_Icon_1024_2.png"
-source_md5="b68d14a2ca63b8d3b1b694213c3e188a"
-
 dest_files=[ "res://.import/RR_Icon_1024_2.png-470af4df5aac9f87a3e27838713455ff.stex" ]
-dest_md5="34165024295bf6a2bef662bec72bb581"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

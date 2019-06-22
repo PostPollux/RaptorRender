@@ -1,24 +1,25 @@
 extends Button
 
+class_name SortableTableCollumnButton
 
-onready var NameLabel = $"MarginContainer/HBoxContainer/Label"
-onready var PrimaryDown = $"MarginContainer/HBoxContainer/MarginContainer/primary_down"
-onready var PrimaryUp = $"MarginContainer/HBoxContainer/MarginContainer/primary_up"
-onready var SecondaryDown = $"MarginContainer/HBoxContainer/MarginContainer/secondary_down"
-onready var SecondaryUp = $"MarginContainer/HBoxContainer/MarginContainer/secondary_up"
-onready var TopRow = $"../.."
 
-var column_button_name
-var id
+onready var NameLabel : Label = $"MarginContainer/HBoxContainer/Label"
+onready var PrimaryDown : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/primary_down"
+onready var PrimaryUp : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/primary_up"
+onready var SecondaryDown : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/secondary_down"
+onready var SecondaryUp : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/secondary_up"
 
-var primary_sort_column = false
-var secondary_sort_column = false
-var sort_column_primary_reversed = false
-var sort_column_secondary_reversed = false
-var primary_down_visible = false
-var primary_up_visible = false
-var secondary_down_visible = false
-var secondary_up_visible = false
+var column_button_name : String
+var id : int
+
+var primary_sort_column : bool = false
+var secondary_sort_column : bool = false
+var sort_column_primary_reversed : bool = false
+var sort_column_secondary_reversed : bool = false
+var primary_down_visible : bool = false
+var primary_up_visible : bool = false
+var secondary_down_visible : bool = false
+var secondary_up_visible : bool = false
 
 
 signal column_button_pressed
@@ -35,10 +36,8 @@ func _ready():
 
 
 
-func set_name(button_name):
+func set_name(button_name : String):
 	NameLabel.text = button_name
-
-
 
 func reset_button():
 	primary_sort_column = false

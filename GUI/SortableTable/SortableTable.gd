@@ -20,45 +20,47 @@
 
 extends ScrollContainer
 
+class_name SortableTable
 
 
 # column names and width arrays
-export (Array, String) var column_names
-export (Array, int) var column_widths_initial
+export (Array, String) var column_names = []
+export (Array, int) var column_widths = []
 
 # variables needed for sorting
-export (int) var sort_column_primary = 1
-export (int) var sort_column_secondary = 2
-var sort_column_primary_reversed = false
-var sort_column_secondary_reversed = false
+export (int) var sort_column_primary : int = 1
+export (int) var sort_column_secondary : int = 2
+var sort_column_primary_reversed : bool = false
+var sort_column_secondary_reversed : bool = false
 
 # row height
-export (int) var row_height = 30
+export (int) var row_height : int = 30
 
 # color variables
-export (Color) var row_color = Color("3c3c3c")
-export (Color) var row_color_selected = Color("956248")
-export (Color) var row_color_red = Color("643f3b")
-export (Color) var row_color_blue = Color("3b5064")
-export (Color) var row_color_green = Color("3b5a3b")
-export (Color) var row_color_yellow = Color("585a3b")
-export (Color) var row_color_black = Color("1d1d1d")
-export (float) var row_brightness_difference = 0.05
-export (float) var hover_brightness_boost = 0.1
+export (Color) var row_color : Color = Color("3c3c3c")
+export (Color) var row_color_selected : Color = Color("956248")
+export (Color) var row_color_red : Color = Color("643f3b")
+export (Color) var row_color_blue : Color = Color("3b5064")
+export (Color) var row_color_green : Color = Color("3b5a3b")
+export (Color) var row_color_yellow : Color = Color("585a3b")
+export (Color) var row_color_black : Color = Color("1d1d1d")
+export (float) var row_brightness_difference : float = 0.05
+export (float) var hover_brightness_boost : float = 0.1
 
 # id needed in the registring function of the RaptorRender autoload script
-export (String) var table_id = "custom id"
+export (String) var table_id : String = "custom id"
 
 # references to child nodes
-onready var RowScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
-onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled" 
+onready var TopRow : SortableTableTopRow = $"VBox_TopRow_Content/TopRow"
+onready var RowScrollContainer : ScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
+onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled"
 onready var RowContainerEmpty = $ "VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
-onready var AutoScrollTween = $"AutoScrollTween"
+onready var AutoScrollTween : Tween = $"AutoScrollTween"
 
 # variables needed for scrolling
-var previous_scroll_horizontal = 0
-var previous_scroll_vertical = 0
-var shift_ctrl_plus_scroll = false
+var previous_scroll_horizontal : int = 0
+var previous_scroll_vertical : int = 0
+var shift_ctrl_plus_scroll : bool = false
 
 # signals
 signal refresh_table_content
@@ -72,7 +74,26 @@ signal context_invoked
 func _ready():
 	
 	register_table()
-
+	
+	RowContainerFilled.row_height = row_height
+	
+	# set up top row
+	set_top_row()
+	
+	# set up empty rows
+	RowContainerEmpty.row_height = row_height
+	RowContainerEmpty.create_initial_empty_rows()
+	
+	
+	
+	
+	# connect signals
+	TopRow.connect("sort_invoked", self, "sort")
+	TopRow.connect("column_resized", self, "set_column_width")
+	TopRow.connect("column_highlighted", self, "highlight_column")
+	TopRow.connect("primary_sort_column_updated", self, "update_primary_sort_column")
+	TopRow.connect("secondary_sort_column_updated", self, "update_secondary_sort_column")
+	RowContainerEmpty.connect("selection_cleared", self, "emit_selection_cleared_signal")
 
 
 func _input(event):
@@ -80,12 +101,23 @@ func _input(event):
 	# save the position of the vertical scroll as soon as shift or control is pressed
 	if Input.is_action_just_pressed("ui_shift") or Input.is_action_just_pressed("ui_ctrl") :
 		previous_scroll_vertical = RowScrollContainer.scroll_vertical
-	
+
 
 
 ################
 ### manage table
 ################
+
+func set_top_row():
+	TopRow.column_names = column_names
+	TopRow.column_widths = column_widths 
+	TopRow.sort_column_primary = sort_column_primary
+	TopRow.sort_column_primary_reversed = sort_column_primary_reversed
+	TopRow.sort_column_secondary = sort_column_secondary
+	TopRow.sort_column_secondary_reversed = sort_column_secondary_reversed
+	
+	TopRow.generate_top_row()
+
 
 # register to RaptorRender script
 func register_table():
@@ -106,6 +138,28 @@ func sort():
 	RowContainerFilled.update_id_position_dict()
 	RowContainerFilled.update_positions_of_rows()
 
+
+func update_primary_sort_column(column : int, is_reversed : bool):
+	sort_column_primary = column
+	sort_column_primary_reversed = is_reversed
+
+
+func update_secondary_sort_column(column : int, is_reversed : bool):
+	sort_column_secondary = column
+	sort_column_secondary_reversed = is_reversed
+
+##################
+### handle columns
+##################
+
+func set_column_width(column : int, width : int):
+	RowContainerFilled.set_column_width( column, width)
+	RowContainerEmpty.set_column_width( column, width)
+
+
+func highlight_column(column : int):
+	RowContainerFilled.highlight_column(column)
+	RowContainerEmpty.highlight_column(column)
 
 
 

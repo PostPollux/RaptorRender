@@ -1,11 +1,11 @@
 extends TextureProgress
 
 
-var client_id = ""
-var MemoryUsageTween
-var last_shown_client
+var client_id : int = -1
+var MemoryUsageTween : Tween
+var last_shown_client : int
 
-var update_interval = 2
+var update_interval : float = 2
 
 func _ready():
 	
@@ -14,7 +14,7 @@ func _ready():
 	self.add_child(MemoryUsageTween)
 	
 	# create timer for self destruction
-	var timer = Timer.new()
+	var timer : Timer = Timer.new()
 	timer.wait_time = update_interval
 	timer.connect("timeout",self,"update_memory_usage_bar") 
 	self.add_child(timer)
@@ -23,7 +23,7 @@ func _ready():
 
 func update_memory_usage_bar():
 	
-	if client_id != "":
+	if client_id != -1:
 		
 		# smooth animate the value when we stay at this client
 		if last_shown_client == client_id:

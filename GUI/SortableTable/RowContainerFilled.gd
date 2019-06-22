@@ -9,46 +9,58 @@
 
 extends VBoxContainer
 
+class_name SortableTableRowContainerFilled
 
-var row_height
+
+var row_height : int = 30
 
 # Array to hold all current rows. It get's updated when sorting, so it always reflects the current order of rows
-var SortableRows = []
+var SortableRows : Array = []
 
 # Dictionary that maps row ids to the current position in the sorted table
-var id_position_dict = {} 
+var id_position_dict : Dictionary = {} 
 
 # Array for selections. It hold's the ids, not the rows themselves
-var selected_row_ids = []
+var selected_row_ids : Array = []
+
+
+# row colors
+var row_color : Color = Color("3c3c3c")
+var row_color_selected : Color = Color("956248")
+var row_color_red : Color = Color("643f3b")
+var row_color_blue : Color = Color("3b5064")
+var row_color_green : Color = Color("3b5a3b")
+var row_color_yellow : Color = Color("585a3b")
+var row_color_black : Color = Color("1d1d1d")
+var even_odd_brightness_difference : float = 0.05
+var hover_brightness_boost : float = 0.1
+
 
 # references to other nodes of sortable table
-onready var SortableTable = $"../../../.."
-onready var TopRow = $"../../../TopRow"
-onready var RowScrollContainer = $"../.."
+onready var SortableTable = $"../../../.." as SortableTable
+onready var TopRow = $"../../../TopRow" as SortableTableTopRow
+onready var RowScrollContainer = $"../.." as ScrollContainer
 onready var RowContainerEmpty = $"../ClipContainerForEmptyRows/RowContainerEmpty"
 
 # preload Resources
 var SortableTableRowRes = preload("res://GUI/SortableTable/SortableTableRow.tscn")
 
 # variables used for selection handling
-var row_pos_of_last_middle_mouse_click = 0
+var row_pos_of_last_middle_mouse_click : int  = 0
 
 
 
 
 func _ready():
-	
 	row_height = SortableTable.row_height
-	
-	for SortableRow in SortableRows:
-		SortableRow.set_row_height(row_height)
 
 
 
-func _process(delta):
+
+func _process(delta : float) -> void:
 	if Input.is_action_just_pressed("select_all"):
-		var mouse_pos = get_viewport().get_mouse_position()
-		var row_scroll_container_rect = RowScrollContainer.get_global_rect()
+		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+		var row_scroll_container_rect : Rect2 = RowScrollContainer.get_global_rect()
 		if row_scroll_container_rect.has_point(mouse_pos):
 			select_all()
 
@@ -78,20 +90,33 @@ func update_id_position_dict():
 
 # sets the "row_position" variable of each row, so that it knows which background color (even or odd) to show. 
 func update_positions_of_rows():
-	var count = 1
+	var count : int = 1
 	for Row in SortableRows:
 		Row.set_row_position(count)
 		count += 1
 
 
 # creating a row
-func initialize_row(id):
-	var Row = SortableTableRowRes.instance()
+func initialize_row(id) -> SortableTableRow:
+	
+	var Row : SortableTableRow = SortableTableRowRes.instance()
+	
+	# set color variables of SortableTableRow
+	Row.row_color = row_color
+	Row.row_color_selected = row_color_selected 
+	Row.row_color_red = row_color_red
+	Row.row_color_blue = row_color_blue
+	Row.row_color_green = row_color_green
+	Row.row_color_yellow = row_color_yellow
+	Row.row_color_black = row_color_black
+	Row.even_odd_brightness_difference = even_odd_brightness_difference
+	Row.hover_brightness_boost = hover_brightness_boost
+	Row.set_additional_colors()
 	
 	# set variables. (id, amount of cells , row height)
 	Row.id = id
 	Row.column_count = TopRow.ColumnButtons.size()
-	Row.row_height = SortableTable.row_height
+	Row.set_row_height(row_height)
 	
 	# connect signals to enable selecting and invoking a context menu
 	Row.connect("row_clicked", self, "select_SortableRows")
@@ -107,14 +132,15 @@ func initialize_row(id):
 	
 	# create the cells
 	Row.create_cells()
+	
 	if TopRow:
-		Row.modulate_cell_color(TopRow.sort_column_primary,Color("18ffffff"))
+		Row.modulate_cell_color(TopRow.sort_column_primary, Color("18ffffff"))
 		
-		var count = 1
+		var count : int = 1
 		for ColumnButton in TopRow.ColumnButtons:
 			
 			# apply the size of the ColumnButtons of the TopRow to the cells
-			Row.set_cell_width(count,ColumnButton.rect_min_size.x)
+			Row.set_cell_width(count, ColumnButton.rect_min_size.x)
 			count += 1
 	
 	# add the row to the tree and to the array 
@@ -156,12 +182,12 @@ func remove_row(id):
 ##############
 
 
-func set_row_color(row, color):
+func set_row_color(row : int, color : Color):
 	if row >= 1:
 		SortableRows[row - 1].set_row_color(color)
 
 
-func set_row_color_by_string(row, color_string):
+func set_row_color_by_string(row : int, color_string : String):
 	if row >= 1:
 		SortableRows[row - 1].set_row_color_by_string(color_string)
 
@@ -171,14 +197,16 @@ func reset_all_row_colors_to_default():
 		Row.set_row_color_by_string("default")
 
 
-func highlight_column(column):
-	if TopRow:
-		if column <= TopRow.ColumnButtons.size() and column > 0:
-			for i in range(1, TopRow.ColumnButtons.size() + 1) :
-				for Row in SortableRows:
-					Row.modulate_cell_color(i,Color("00ffffff"))
-			for Row in SortableRows:
-				Row.modulate_cell_color(column,Color("18ffffff"))
+func highlight_column(column : int):
+	
+	# reset the color of each cell in each row
+	for Row in SortableRows:
+		for i in range(1, Row.column_count + 1) :
+			Row.modulate_cell_color(i,Color("00ffffff"))
+	
+	# highlight the correct cell in each row
+	for Row in SortableRows:
+		Row.modulate_cell_color(column,Color("18ffffff"))
 
 
 
@@ -191,10 +219,10 @@ func highlight_column(column):
 
 func sort_rows():
 	
-	var primary = SortableTable.sort_column_primary
-	var secondary = SortableTable.sort_column_secondary
+	var primary : int = SortableTable.sort_column_primary
+	var secondary : int = SortableTable.sort_column_secondary
 	
-	var sort_array = []
+	var sort_array : Array = []
 	
 	# create the array to sort
 	for Row in SortableRows:
@@ -205,7 +233,7 @@ func sort_rows():
 	sort_array.sort_custom ( self, "raptor_render_custom_sort" )
 	
 	# update the table by moving the row nodes
-	var position = 0
+	var position : int = 0
 	
 	for row in sort_array:
 		self.move_child(row[0], position)
@@ -218,8 +246,8 @@ func raptor_render_custom_sort(a,b):
 	# a custom sort function must return true if the first argument (a) is less than the second (b)
 	# to ensure that the rows are not jumping when refreshing and both, primary and secondary values are the same, it also uses the id to sort
 	
-	var primary_reversed = SortableTable.sort_column_primary_reversed
-	var secondary_reversed = SortableTable.sort_column_secondary_reversed
+	var primary_reversed : bool = SortableTable.sort_column_primary_reversed
+	var secondary_reversed : bool = SortableTable.sort_column_secondary_reversed
 	
 	if !primary_reversed:
 		
@@ -256,13 +284,13 @@ func raptor_render_custom_sort(a,b):
 
 
 # first row and column is 1, not 0
-func set_cell_content(row, column, child):
+func set_cell_content(row : int, column : int, child : Node):
 	if row <= SortableRows.size():
 		SortableRows[row - 1].set_cell_content(column, child)
 
 
 # first row and column is 1, not 0
-func set_cell_sort_value(row, column, value):
+func set_cell_sort_value(row : int, column : int, value):
 	if row <= SortableRows.size():
 		SortableRows[row - 1].sort_values[column] = value
 
@@ -276,9 +304,9 @@ func set_cell_sort_value(row, column, value):
 #############
 
 
-func select_SortableRows(row_position):
+func select_SortableRows(row_position : int):
 	
-	var ClickedRow = SortableRows[row_position - 1]
+	var ClickedRow : SortableTableRow = SortableRows[row_position - 1]
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		if ClickedRow.selected == true:
@@ -290,8 +318,11 @@ func select_SortableRows(row_position):
 		
 		
 	elif Input.is_key_pressed(KEY_SHIFT):
+		
 		if selected_row_ids.size() > 0:
-			var previous_selected_row_position = 0
+			
+			var previous_selected_row_position : int = 0
+			
 			for Row in SortableRows:
 				if Row.id == selected_row_ids[selected_row_ids.size() - 1]:
 					previous_selected_row_position = Row.row_position
@@ -329,14 +360,15 @@ func select_SortableRows(row_position):
 
 
 
-func select_SortableRows_middle_mouse(row_position):
+func select_SortableRows_middle_mouse(row_position : int):
 	
-	var ClickedRow = SortableRows[row_position - 1]
+	var ClickedRow : SortableTableRow = SortableRows[row_position - 1]
 	
 	if row_pos_of_last_middle_mouse_click == 0:
 		row_pos_of_last_middle_mouse_click = ClickedRow.row_position
 		
 	if Input.is_key_pressed(KEY_SHIFT):
+		
 		if selected_row_ids.size() > 0:
 			
 			if row_position > row_pos_of_last_middle_mouse_click:
@@ -371,9 +403,9 @@ func select_SortableRows_middle_mouse(row_position):
 
 
 
-func drag_select_SortableRows(row_position):
+func drag_select_SortableRows(row_position : int):
 	
-	var DragedRow = SortableRows[row_position - 1]
+	var DragedRow : SortableTableRow = SortableRows[row_position - 1]
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		DragedRow.set_selected(false)
@@ -398,13 +430,12 @@ func drag_select_SortableRows(row_position):
 
 
 
-func drag_select_SortableRows_middle_mouse(row_position):
-	var DragedRow = SortableRows[row_position - 1]
+func drag_select_SortableRows_middle_mouse(row_position : int):
 	
-
+	var DragedRow : SortableTableRow  = SortableRows[row_position - 1]
+	
 	DragedRow.set_selected(false)
 	selected_row_ids.erase(DragedRow)
-
 	
 	if selected_row_ids.size() > 0:
 		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1])
@@ -467,19 +498,7 @@ func add_id_to_selection(id):
 ##################
 
 
-func resize_columns():
-	
-	var count = 1
-	
-	for ColumnButton in TopRow.ColumnButtons:
-		
-		# apply the size of the ColumnButtons of the TopRow to the columns of all the rows of the table
-		set_column_width(count, ColumnButton.rect_min_size.x)
-		count += 1
-
-
-
-func set_column_width(column, width):
+func set_column_width(column : int, width : int):
 	
 	for Row in SortableRows:
 		Row.set_cell_width(column,width)
@@ -496,7 +515,7 @@ func set_column_width(column, width):
 
 func open_context_menu(row_position):
 	
-	var ClickedRow = SortableRows[row_position - 1]
+	var ClickedRow : SortableTableRow = SortableRows[row_position - 1]
 	
 	# handle selection. If clicked row is not selected, deselect all but this one
 	if ClickedRow.selected == false:

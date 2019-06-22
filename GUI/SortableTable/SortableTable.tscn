@@ -6,35 +6,16 @@
 [ext_resource path="res://GUI/SortableTable/RowContainerFilled.gd" type="Script" id=4]
 [ext_resource path="res://GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=5]
 
-[node name="SortableTable" type="ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="SortableTable" type="ScrollContainer"]
 margin_left = 60.0
 margin_top = 54.0
 margin_right = 675.0
 margin_bottom = 309.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )
-scroll_horizontal_enabled = true
-scroll_horizontal = 0
 scroll_vertical_enabled = false
-scroll_vertical = 0
-scroll_deadzone = 0
 script = ExtResource( 2 )
-_sections_unfolded = [ "Grow Direction", "Margin", "Mouse", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
-column_names = null
-column_widths_initial = null
-sort_column_primary = 1
-sort_column_secondary = 2
-row_height = 30
 row_color = Color( 0.235294, 0.235294, 0.235294, 1 )
 row_color_selected = Color( 0.584314, 0.384314, 0.282353, 1 )
 row_color_red = Color( 0.392157, 0.247059, 0.231373, 1 )
@@ -42,195 +23,75 @@ row_color_blue = Color( 0.231373, 0.313726, 0.392157, 1 )
 row_color_green = Color( 0.231373, 0.352941, 0.231373, 1 )
 row_color_yellow = Color( 0.345098, 0.352941, 0.231373, 1 )
 row_color_black = Color( 0.113725, 0.113725, 0.113725, 1 )
-row_brightness_difference = 0.05
-hover_brightness_boost = 0.1
-table_id = "custom id"
 
-[node name="VBox_TopRow_Content" type="VBoxContainer" parent="." index="0"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VBox_TopRow_Content" type="VBoxContainer" parent="."]
 margin_right = 615.0
 margin_bottom = 255.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
-alignment = 0
-_sections_unfolded = [ "Rect", "Size Flags", "custom_constants" ]
 
-[node name="TopRow" type="MarginContainer" parent="VBox_TopRow_Content" index="0"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TopRow" type="MarginContainer" parent="VBox_TopRow_Content"]
 margin_right = 615.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
 script = ExtResource( 3 )
-_sections_unfolded = [ "Margin", "Mouse", "Rect", "Size Flags", "custom_constants" ]
 
-[node name="Panel" type="Panel" parent="VBox_TopRow_Content/TopRow" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Panel" type="Panel" parent="VBox_TopRow_Content/TopRow"]
 margin_right = 615.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-_sections_unfolded = [ "Margin", "Rect", "Size Flags" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBox_TopRow_Content/TopRow" index="1"]
-
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox_TopRow_Content/TopRow"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 615.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
-alignment = 0
-_sections_unfolded = [ "custom_constants" ]
 
-[node name="RowScrollContainer" type="ScrollContainer" parent="VBox_TopRow_Content" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RowScrollContainer" type="ScrollContainer" parent="VBox_TopRow_Content"]
 margin_top = 20.0
 margin_right = 615.0
 margin_bottom = 255.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Mouse", "Scroll", "Size Flags" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBox_TopRow_Content/RowScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VBoxContainer" type="VBoxContainer" parent="VBox_TopRow_Content/RowScrollContainer"]
 margin_right = 615.0
 margin_bottom = 235.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
-alignment = 0
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="RowContainerFilled" type="VBoxContainer" parent="VBox_TopRow_Content/RowScrollContainer/VBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RowContainerFilled" type="VBoxContainer" parent="VBox_TopRow_Content/RowScrollContainer/VBoxContainer"]
 margin_right = 615.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_constants/separation = 0
-alignment = 0
 script = ExtResource( 4 )
-_sections_unfolded = [ "Mouse", "custom_constants" ]
 
-[node name="ClipContainerForEmptyRows" type="Container" parent="VBox_TopRow_Content/RowScrollContainer/VBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ClipContainerForEmptyRows" type="Container" parent="VBox_TopRow_Content/RowScrollContainer/VBoxContainer"]
 margin_right = 615.0
 margin_bottom = 235.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-_sections_unfolded = [ "Mouse", "Rect", "Size Flags" ]
 
-[node name="RowContainerEmpty" type="VBoxContainer" parent="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RowContainerEmpty" type="VBoxContainer" parent="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows"]
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_constants/separation = 0
-alignment = 0
 script = ExtResource( 5 )
-_sections_unfolded = [ "Mouse", "custom_constants" ]
 
-[node name="AutoScrollTween" type="Tween" parent="." index="3"]
-
-repeat = false
-playback_process_mode = 1
-playback_speed = 1.0
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
-
+[node name="AutoScrollTween" type="Tween" parent="."]
 [connection signal="draw" from="." to="." method="_on_SortableTable_draw"]
-
 [connection signal="gui_input" from="." to="." method="_on_SortableTable_gui_input"]
-
 [connection signal="resized" from="VBox_TopRow_Content" to="VBox_TopRow_Content/TopRow" method="_on_VBox_TopRow_Content_resized"]
-
 [connection signal="resized" from="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows" to="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty" method="_on_ClipContainerForEmptyRows_resized"]
-
-

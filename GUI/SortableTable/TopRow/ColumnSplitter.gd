@@ -2,11 +2,7 @@ extends VSeparator
 
 signal just_clicked
 
-var splitter_id = 0
-
-func _ready():
-	pass
-
+var splitter_id : int = 0
 
 
 func _on_ColumnSplitter_gui_input(ev):

@@ -10,6 +10,7 @@
 
 extends Control
 
+class_name NotificationSystem
 
 
 # preload Resources
@@ -52,7 +53,7 @@ func move_all_notifications_down(height_of_new_notification):
 ### add new notifications
 #########################
 
-func add_info_notification(heading, message, self_destruction_time):
+func add_info_notification(heading : String, message : String, self_destruction_time : int):
 	
 	var InfoNotification = InfoNotificationRes.instance()
 	InfoNotification.heading = heading
@@ -64,7 +65,7 @@ func add_info_notification(heading, message, self_destruction_time):
 
 
 
-func add_error_notification(heading, message, self_destruction_time):
+func add_error_notification(heading : String, message : String, self_destruction_time : int):
 	
 	var ErrorNotification = ErrorNotificationRes.instance()
 	ErrorNotification.heading = heading
