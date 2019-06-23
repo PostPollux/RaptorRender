@@ -187,7 +187,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		7:  # Separator
-			pass	
+			pass
 			
 			
 			

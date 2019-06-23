@@ -2557,7 +2557,7 @@ func refresh_clients_table():
 				var job_id = rr_data.clients[client].current_job_id
 				cell.get_child(0).job_id = job_id
 				
-				if job_id == "":
+				if job_id == -1:
 					cell.get_child(0).CurrentJobLabel.text = ""
 				else:
 					cell.get_child(0).CurrentJobLabel.text = rr_data.jobs[job_id].name

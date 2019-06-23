@@ -11,7 +11,7 @@ func _ready():
 	jobs_active = []
 	clients_available = []
 	
-	CommandLineManager.connect("render_process_exited",self ,"reactivate_client")
+	CommandLineManager.connect("render_process_exited",self ,"reactivate_client") # TODO - this is just temporarily
 	
 	
 	# create timer to constantly distribute the work across the connected clients 
@@ -28,7 +28,7 @@ func _ready():
 	
 	
 	
-
+	# TODO - this is just temporarily
 func reactivate_client():
 	RaptorRender.rr_data.clients[GetSystemInformation.unique_client_id].status = RRStateScheme.client_available
 	
@@ -77,6 +77,10 @@ func distribute_jobs():
 								
 								# start this chunk on the client
 								JobExecutionManager.start_junk( job , chunk)
+								
+								# set current_job information for the client
+								RaptorRender.rr_data.clients[client].current_job_id = job
+								
 								
 								RaptorRender.rr_data.jobs[job].status = RRStateScheme.job_rendering
 								

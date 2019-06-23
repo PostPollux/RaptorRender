@@ -58,7 +58,7 @@ func _on_minus_pressed():
 func _on_plus_mouse_entered():
 	
 	# mark row as hovered, otherwise the row hover color would disappear, if the mouse is over the button
-	self.get_parent().get_parent().get_parent().get_parent().update_row_color_hover()
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
 	
 	# modulate button on hover
 	if !PlusButton.disabled:
@@ -69,7 +69,7 @@ func _on_plus_mouse_entered():
 func _on_plus_mouse_exited():
 	
 	# reset row hover color. It's needed, because otherwise if we fast pass the button with the mouse, the row would stay highlighted
-	self.get_parent().get_parent().get_parent().get_parent().update_row_color_reset()
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
 	
 	# reset button modulation
 	PlusButton.set_modulate(Color(1, 1, 1, 1))
@@ -79,7 +79,7 @@ func _on_plus_mouse_exited():
 func _on_minus_mouse_entered():
 	
 	# mark row as hovered, otherwise the row hover color would disappear, if the mouse is over the button
-	self.get_parent().get_parent().get_parent().get_parent().update_row_color_hover()
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
 	
 	# modulate button on hover
 	if!MinusButton.disabled:
@@ -89,7 +89,7 @@ func _on_minus_mouse_entered():
 
 # reset row hover color. It's needed, because otherwise if we fast pass the button with the mouse, the row would stay highlighted
 func _on_minus_mouse_exited():
-	self.get_parent().get_parent().get_parent().get_parent().update_row_color_reset()
+	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
 	
 	# reset button modulation
 	MinusButton.set_modulate(Color(1, 1, 1, 1))

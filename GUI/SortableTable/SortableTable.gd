@@ -132,7 +132,6 @@ func refresh():
 
 
 func sort():
-	
 	RowContainerFilled.sort_rows()
 	RowContainerFilled.update_sortable_rows_array()
 	RowContainerFilled.update_id_position_dict()

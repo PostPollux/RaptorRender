@@ -21,7 +21,10 @@ var sort_values : Array = [] # e.g. sort_values[5-1] holds the value that is use
 
 var even : bool = false
 var selected : bool = false
+var hovered : bool = false
 var row_height : int = 30
+
+
 
 # cell references
 var CellsClipContainerArray : Array  = [] # used to clip the cell content
@@ -65,7 +68,7 @@ signal drag_select_middle
 func _ready():
 	set_additional_colors()
 	update_row_even_or_odd()
-	update_row_color_reset()
+	update_row_color()
 
 
 
@@ -79,7 +82,7 @@ func _ready():
 func set_row_position(pos : int):
 	row_position = pos
 	update_row_even_or_odd()
-	update_row_color_reset()
+	update_row_color()
 
 
 
@@ -97,7 +100,7 @@ func set_selected (sel : bool):
 	if selected:
 		update_row_color_select()
 	else:
-		update_row_color_reset()
+		update_row_color()
 
 
 
@@ -254,22 +257,6 @@ func modulate_cell_color(column : int, color : Color):
 
 
 
-# highlight the row when hovering it
-func update_row_color_hover():
-	if selected:
-		if even:
-			RowBackgroundColorRect.color = row_color_selected_even.lightened(hover_brightness_boost * 2)
-		else:
-			RowBackgroundColorRect.color = row_color_selected_odd.lightened(hover_brightness_boost)
-	
-	else:
-		if even:
-			RowBackgroundColorRect.color = row_color_even.lightened(hover_brightness_boost * 1.5)
-		else:
-			RowBackgroundColorRect.color = row_color_odd.lightened(hover_brightness_boost)
-
-
-
 # highlight the row when it is selected
 func update_row_color_select():
 	if even:
@@ -280,19 +267,33 @@ func update_row_color_select():
 
 
 # reset row color to default
-func update_row_color_reset():
+func update_row_color():
 	if selected: 
-		if even:
-			RowBackgroundColorRect.color = row_color_selected_even
+	
+		if hovered:
+			
+			if even:
+				RowBackgroundColorRect.color = row_color_selected_even.lightened(hover_brightness_boost * 2)
+			else:
+				RowBackgroundColorRect.color = row_color_selected_odd.lightened(hover_brightness_boost)
 		else:
-			RowBackgroundColorRect.color = row_color_selected_odd
+			if even:
+				RowBackgroundColorRect.color = row_color_selected_even
+			else:
+				RowBackgroundColorRect.color = row_color_selected_odd
+			
 	else:
-		if even:
-			RowBackgroundColorRect.color = row_color_even
+		if hovered:
+			
+			if even:
+				RowBackgroundColorRect.color = row_color_even.lightened(hover_brightness_boost * 1.5)
+			else:
+				RowBackgroundColorRect.color = row_color_odd.lightened(hover_brightness_boost)
 		else:
-			RowBackgroundColorRect.color = row_color_odd
-
-
+			if even:
+				RowBackgroundColorRect.color = row_color_even
+			else:
+				RowBackgroundColorRect.color = row_color_odd
 
 
 
@@ -303,7 +304,8 @@ func update_row_color_reset():
 
 
 func _on_SortabelTableRow_mouse_entered():
-	update_row_color_hover()
+	hovered = true
+	update_row_color()
 	if Input.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("drag_select", row_position)
 	if Input.is_action_pressed("ui_middle_mouse_button"):
@@ -312,7 +314,8 @@ func _on_SortabelTableRow_mouse_entered():
 
 
 func _on_SortabelTableRow_mouse_exited():
-	update_row_color_reset()
+	hovered = false
+	update_row_color()
 
 
 
