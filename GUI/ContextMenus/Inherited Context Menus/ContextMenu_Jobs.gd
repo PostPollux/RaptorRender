@@ -21,33 +21,36 @@ func _ready():
 	# trick to calculate the correct size of the popup, so it doesn't display outside of the window when invoked
 	self.visible = true
 	self.visible = false
+	
+	set_item_names()
 
 
 
 func set_item_names():
 	
 	if RaptorRender.JobsTable.get_selected_ids().size() <= 1:
-		self.set_item_text(0, "Pause Job Deffered")
-		self.set_item_text(1, "Pause Job Immediately")
-		self.set_item_text(2, "Resume Job")
-		self.set_item_text(4, "Cancel Job Permanently")
-		self.set_item_text(6, "Configure Job")
-		self.set_item_text(7, "Reset Job Error count")
-		self.set_item_text(9, "Resubmit Job paused")
-		self.set_item_text(11, "Open Output Directory")
-		self.set_item_text(12, "Open Scene Directory")
-		self.set_item_text(14, "Remove Job")
+		#self.set_item_text(0, "Pause Job Deffered")
+		self.set_item_text(0, "JOB_CONTEXT_MENU_1") # Pause Job Deffered
+		self.set_item_text(1, "JOB_CONTEXT_MENU_2") # Pause Job Immediately
+		self.set_item_text(2, "JOB_CONTEXT_MENU_3") # Resume Job
+		self.set_item_text(4, "JOB_CONTEXT_MENU_4") # Cancel Job Permanently
+		self.set_item_text(6, "JOB_CONTEXT_MENU_5") # Configure Job
+		self.set_item_text(7, "JOB_CONTEXT_MENU_6") # Reset Job Error count
+		self.set_item_text(9, "JOB_CONTEXT_MENU_7") # Resubmit Job paused
+		self.set_item_text(11, "JOB_CONTEXT_MENU_8") # Open Output Directory
+		self.set_item_text(12, "JOB_CONTEXT_MENU_9") # Open Scene Directory
+		self.set_item_text(14, "JOB_CONTEXT_MENU_10") # Remove Job
 	else:
-		self.set_item_text(0, "Pause Jobs Deffered")
-		self.set_item_text(1, "Pause Jobs Immediately")
-		self.set_item_text(2, "Resume Jobs")
-		self.set_item_text(4, "Cancel Jobs Permanently")
-		self.set_item_text(6, "Configure Jobs")
-		self.set_item_text(7, "Reset Job Error Counts")
-		self.set_item_text(9, "Resubmit Jobs paused")
-		self.set_item_text(11, "Open Output Directories")
-		self.set_item_text(12, "Open Scene Directories")
-		self.set_item_text(14, "Remove Jobs")
+		self.set_item_text(0, "JOB_CONTEXT_MENU_11") # Pause Jobs Deffered
+		self.set_item_text(1, "JOB_CONTEXT_MENU_12") # Pause Jobs Immediately
+		self.set_item_text(2, "JOB_CONTEXT_MENU_13") # Resume Jobs
+		self.set_item_text(4, "JOB_CONTEXT_MENU_14") # Cancel Jobs Permanently
+		self.set_item_text(6, "JOB_CONTEXT_MENU_15") # Configure Jobs
+		self.set_item_text(7, "JOB_CONTEXT_MENU_16") # Reset Job Error Counts
+		self.set_item_text(9, "JOB_CONTEXT_MENU_17") # Resubmit Jobs paused
+		self.set_item_text(11, "JOB_CONTEXT_MENU_18") # Open Output Directories
+		self.set_item_text(12, "JOB_CONTEXT_MENU_19") # Open Scene Directories
+		self.set_item_text(14, "JOB_CONTEXT_MENU_20") # Remove Jobs
 
 
 
@@ -237,7 +240,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		6:  # Configure Job
-			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
+			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 		
 		
 		

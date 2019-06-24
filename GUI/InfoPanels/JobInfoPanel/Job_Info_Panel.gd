@@ -10,6 +10,9 @@ onready var TypeLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/V
 onready var CreatorLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/CreatorLabel"
 onready var TimeCreatedLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/TimeCreatedLabel"
 
+onready var ProgressHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/ProgressHeading"
+onready var FilesHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/FilesHeading"
+
 onready var JobProgressBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/JobProgressBar"
 onready var ActiveClientsLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/ActiveClientsLabel"
 onready var TimeRenderedLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/TimeRenderedLabel"
@@ -71,24 +74,24 @@ func update_job_info_panel(job_id : int):
 		
 		# Status text
 		match status:
-			RRStateScheme.job_rendering : StatusLabel.text = "Status:  Rendering"
-			RRStateScheme.job_rendering_paused_deferred : StatusLabel.text = "Status:  Paused Deffered"
-			RRStateScheme.job_queued :    StatusLabel.text = "Status:  Queued"
-			RRStateScheme.job_error :     StatusLabel.text = "Status:  Error"
-			RRStateScheme.job_paused :    StatusLabel.text = "Status:  Paused"
-			RRStateScheme.job_finished :  StatusLabel.text = "Status:  Finished"
-			RRStateScheme.job_cancelled : StatusLabel.text = "Status:  Cancelled"
+			RRStateScheme.job_rendering : StatusLabel.text = tr("JOB_DETAIL_2") + ":  " + tr("JOB_DETAIL_STATUS_1")
+			RRStateScheme.job_rendering_paused_deferred : StatusLabel.text = tr("JOB_DETAIL_2") + ":  " + tr("JOB_DETAIL_STATUS_2")
+			RRStateScheme.job_queued :    StatusLabel.text = tr("JOB_DETAIL_2") + ":  " + tr("JOB_DETAIL_STATUS_3")
+			RRStateScheme.job_error :     StatusLabel.text = tr("JOB_DETAIL_2") + ":  " + tr("JOB_DETAIL_STATUS_4")
+			RRStateScheme.job_paused :    StatusLabel.text = tr("JOB_DETAIL_2") + ":  " + tr("JOB_DETAIL_STATUS_5")
+			RRStateScheme.job_finished :  StatusLabel.text = tr("JOB_DETAIL_2") + ":  " + tr("JOB_DETAIL_STATUS_6")
+			RRStateScheme.job_cancelled : StatusLabel.text = tr("JOB_DETAIL_2") + ":  " + tr("JOB_DETAIL_STATUS_7")
 			
 			
 		
 		# type
-		TypeLabel.text = "Type:  " + selected_job["type"]
+		TypeLabel.text = tr("JOB_DETAIL_3") + ":  " + selected_job["type"]
 		
 		# creator
-		CreatorLabel.text = "Creator:  " + selected_job["creator"]
+		CreatorLabel.text = tr("JOB_DETAIL_4") + ":  " + selected_job["creator"]
 		
 		# time created
-		TimeCreatedLabel.text = "Created:  " + TimeFunctions.time_stamp_to_date_as_string( selected_job["time_created"], 2)
+		TimeCreatedLabel.text = tr("JOB_DETAIL_5") + ":  " + TimeFunctions.time_stamp_to_date_as_string( selected_job["time_created"], 2)
 		
 		
 		
@@ -97,6 +100,7 @@ func update_job_info_panel(job_id : int):
 		#  Progress Section
 		###################
 		
+		ProgressHeading.text = "JOB_DETAIL_6" # Progress
 		
 		var chunk_counts = JobFunctions.get_chunk_counts_TotalFinishedActive(job_id)
 		var progress = float(chunk_counts[1]) / float(chunk_counts[0])
@@ -119,16 +123,16 @@ func update_job_info_panel(job_id : int):
 		for client in RaptorRender.rr_data.clients.keys():
 			if RaptorRender.rr_data.clients[client].current_job_id == job_id:
 				active_clients += 1
-		ActiveClientsLabel.text = "Active Clients:  " + String( active_clients)
+		ActiveClientsLabel.text = tr("JOB_DETAIL_7") + ":  " + String( active_clients)
 		
 		# time rendered
-		TimeRenderedLabel.text = "Time rendered:  " + TimeFunctions.seconds_to_string( selected_job["render_time"], 2 )
+		TimeRenderedLabel.text = tr("JOB_DETAIL_8") + ":  " + TimeFunctions.seconds_to_string( selected_job["render_time"], 2 )
 		
 		# time remaining
 		if progress > 0:
-			TimeRemainingLabel.text = "Time remaining:  " + TimeFunctions.seconds_to_string( int( (selected_job["render_time"] * 1 / progress) - selected_job["render_time"]), 2 )
+			TimeRemainingLabel.text = tr("JOB_DETAIL_9") + ":  " + TimeFunctions.seconds_to_string( int( (selected_job["render_time"] * 1 / progress) - selected_job["render_time"]), 2 )
 		else:
-			TimeRemainingLabel.text = "Time remaining:  "
+			TimeRemainingLabel.text = tr("JOB_DETAIL_9") + ":  "
 			
 	
 	
@@ -136,11 +140,13 @@ func update_job_info_panel(job_id : int):
 		#  Files Section
 		###################
 		
-		# Scene File
-		SceneFileLabel.text = "Scene File:   " + selected_job["scene_path"]
+		FilesHeading.text = "JOB_DETAIL_10" # Files
 		
 		# Scene File
-		OutputFilesLabel.text = "Output Files:   " + selected_job["output_directory"]
+		SceneFileLabel.text = tr("JOB_DETAIL_11") + ":   " + selected_job["scene_path"]
+		
+		# Scene File
+		OutputFilesLabel.text = tr("JOB_DETAIL_12") + ":   " + selected_job["output_directory"]
 	
 		
 		

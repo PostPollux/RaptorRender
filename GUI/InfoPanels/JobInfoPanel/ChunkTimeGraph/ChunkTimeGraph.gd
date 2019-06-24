@@ -101,5 +101,5 @@ func _on_OptionsButton_pressed():
 
 func _on_AccumulateTriesCheckBox_toggled(button_pressed):
 	GraphOptions.visible = false
-	RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
+	RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 

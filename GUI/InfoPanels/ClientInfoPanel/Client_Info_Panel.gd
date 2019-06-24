@@ -7,6 +7,13 @@ onready var UserLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/V
 onready var StatusLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
 onready var UptimeLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
 
+onready var CPUHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPUHeading"
+onready var MemoryHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/MemoryHeading"
+onready var GraphicsHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsHeading"
+onready var HardDrivesHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/hard_drives_specs/HBoxContainer/MarginContainer/VBoxContainer/HardDrivesHeading"
+onready var NetworkHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/NetworkHeading"
+onready var SystemHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/SystemHeading"
+
 onready var CPULabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
 onready var RAMLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
 onready var GraphicsLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsLabel"
@@ -67,21 +74,23 @@ func update_client_info_panel(client_id : int):
 	
 	
 	match status:
-		RRStateScheme.client_rendering : StatusLabel.text = "Status:  Rendering"
-		RRStateScheme.client_available : StatusLabel.text = "Status:  Available"
-		RRStateScheme.client_error :     StatusLabel.text = "Status:  Error"
-		RRStateScheme.client_disabled :  StatusLabel.text = "Status:  Disabled"
-		RRStateScheme.client_offline :   StatusLabel.text = "Status:  Offline"
+		RRStateScheme.client_rendering : StatusLabel.text = tr("CLIENT_DETAIL_2") + ":  " + tr("CLIENT_DETAIL_STATUS_1")
+		RRStateScheme.client_available : StatusLabel.text = tr("CLIENT_DETAIL_2") + ":  " + tr("CLIENT_DETAIL_STATUS_2")
+		RRStateScheme.client_error :     StatusLabel.text = tr("CLIENT_DETAIL_2") + ":  " + tr("CLIENT_DETAIL_STATUS_3")
+		RRStateScheme.client_disabled :  StatusLabel.text = tr("CLIENT_DETAIL_2") + ":  " + tr("CLIENT_DETAIL_STATUS_4")
+		RRStateScheme.client_offline :   StatusLabel.text = tr("CLIENT_DETAIL_2") + ":  " + tr("CLIENT_DETAIL_STATUS_5")
 	
 	if status != RRStateScheme.client_offline:
-		UptimeLabel.text = "Uptime:  " + TimeFunctions.time_elapsed_as_string(selected_client["time_connected"], OS.get_unix_time(), 2)
+		UptimeLabel.text = tr("CLIENT_DETAIL_3") + ":  " + TimeFunctions.time_elapsed_as_string(selected_client["time_connected"], OS.get_unix_time(), 2)
 	else:
-		UptimeLabel.text = "Last seen:  not implemented yet" 
+		UptimeLabel.text = tr("CLIENT_DETAIL_4") + ":  not implemented yet" 
 	
 	
 	###############
 	#  CPU Section
 	###############
+	
+	CPUHeading.text = "CLIENT_DETAIL_5" # CPU
 	
 	var cpu_text : String = ""
 	
@@ -113,6 +122,8 @@ func update_client_info_panel(client_id : int):
 	#  Memory Section
 	###################	
 	
+	MemoryHeading.text = "CLIENT_DETAIL_6" # Memory
+	
 	var size_in_gb : String =  String( float(selected_client["memory"]) / 1024 / 1024 )
 	RAMLabel.text = size_in_gb.left(size_in_gb.find(".")+ 3) + " GB"
 	
@@ -123,6 +134,9 @@ func update_client_info_panel(client_id : int):
 	######################
 	#  Hard Drives Section
 	######################
+	
+	HardDrivesHeading.text = "CLIENT_DETAIL_7" # Hard Drives
+	
 	var old = HardDriveContainer.get_children()
 	
 	for o in old:
@@ -147,6 +161,8 @@ func update_client_info_panel(client_id : int):
 	#  Graphics Section
 	###################
 	
+	GraphicsHeading.text = "CLIENT_DETAIL_8" # Graphics
+	
 	var graphics_text : String = ""
 	for i in range(0, selected_client["graphics"].size()):
 		graphics_text += selected_client["graphics"][i] + "\n"
@@ -161,8 +177,10 @@ func update_client_info_panel(client_id : int):
 	# Network Section
 	##################
 	
+	NetworkHeading.text = "CLIENT_DETAIL_9" # Network
+	
 	if selected_client["ip_addresses"].size() > 1:
-		var text : String = "IP Addresses: \n"
+		var text : String = "IP " + tr("CLIENT_DETAIL_11") + ": \n"
 		for i in range(0, selected_client["ip_addresses"].size()):
 			text += " " + selected_client["ip_addresses"][i].replace(".", " . ") + "\n"
 		if text.ends_with("\n"):
@@ -175,7 +193,7 @@ func update_client_info_panel(client_id : int):
 		
 		
 	if selected_client["mac_addresses"].size() > 1:
-		var text : String = "MAC Addresses: \n"
+		var text : String = "MAC " + tr("CLIENT_DETAIL_11") + ": \n"
 		for i in range(0, selected_client["mac_addresses"].size()):
 			text += " " + selected_client["mac_addresses"][i].to_upper().replace(":", " : ") + "\n"
 		if text.ends_with("\n"):
@@ -190,6 +208,8 @@ func update_client_info_panel(client_id : int):
 	##################
 	# System Section
 	##################
+	
+	SystemHeading.text = "CLIENT_DETAIL_10" # System
 	
 	if selected_client["platform"].size() == 2:
 		PlatformLabel.text = selected_client["platform"][0] + "  " + selected_client["platform"][1]

@@ -33,7 +33,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -143,7 +142,6 @@ margin_bottom = 164.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="cpu_specs" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 168.0
 margin_right = 420.0
 margin_bottom = 212.0
@@ -169,7 +167,7 @@ margin_right = 420.0
 margin_bottom = 44.0
 size_flags_vertical = 4
 
-[node name="CPU Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="CPUHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 405.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
@@ -199,7 +197,6 @@ margin_bottom = 236.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="memory_specs" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 240.0
 margin_right = 420.0
 margin_bottom = 284.0
@@ -225,7 +222,7 @@ margin_right = 420.0
 margin_bottom = 44.0
 size_flags_vertical = 4
 
-[node name="Memory Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="MemoryHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 405.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
@@ -279,7 +276,7 @@ margin_left = 15.0
 margin_right = 420.0
 margin_bottom = 18.0
 
-[node name="Hard Drives Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/hard_drives_specs/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="HardDrivesHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/hard_drives_specs/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 405.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
@@ -324,7 +321,7 @@ margin_right = 420.0
 margin_bottom = 32.0
 size_flags_vertical = 4
 
-[node name="Graphics Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="GraphicsHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 405.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.5, 0.5, 0.5, 1 )
@@ -369,7 +366,7 @@ margin_right = 420.0
 margin_bottom = 50.0
 size_flags_vertical = 4
 
-[node name="Network Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="NetworkHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 405.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
@@ -394,7 +391,6 @@ margin_bottom = 492.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="system_specs" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 496.0
 margin_right = 420.0
 margin_bottom = 528.0
@@ -420,7 +416,7 @@ margin_right = 420.0
 margin_bottom = 32.0
 size_flags_vertical = 4
 
-[node name="System Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="SystemHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 405.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )

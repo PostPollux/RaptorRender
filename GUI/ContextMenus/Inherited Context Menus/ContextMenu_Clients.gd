@@ -21,32 +21,34 @@ func _ready():
 	# trick to calculate the correct size of the popup, so it doesn't display outside of the windo when invoked
 	self.visible = true
 	self.visible = false
+	
+	set_item_names()
 
 
 func set_item_names():
 	
 	if RaptorRender.ClientsTable.get_selected_ids().size() <= 1:
-		self.set_item_text(0, "Enable Client")
-		self.set_item_text(1, "Disable Client Deferred")
-		self.set_item_text(2, "Disable Client Immediately")
-		self.set_item_text(4, "Configure Client")
-		self.set_item_text(6, "Reset Client Error Count")
-		self.set_item_text(8, "Wake on LAN")
-		self.set_item_text(9, "Shutdown Computer")
-		self.set_item_text(10, "Reboot Computer")
-		self.set_item_text(12, "Execute command on client")
-		self.set_item_text(14, "Remove Client")
+		self.set_item_text(0, "CLIENT_CONTEXT_MENU_1") # Enable Client
+		self.set_item_text(1, "CLIENT_CONTEXT_MENU_2") # Disable Client Deferred
+		self.set_item_text(2, "CLIENT_CONTEXT_MENU_3") #Disable Client Immediately
+		self.set_item_text(4, "CLIENT_CONTEXT_MENU_4") # Configure Client
+		self.set_item_text(6, "CLIENT_CONTEXT_MENU_5") # Reset Client Error Count
+		self.set_item_text(8, "CLIENT_CONTEXT_MENU_6") # Wake on LAN
+		self.set_item_text(9, "CLIENT_CONTEXT_MENU_7") # Shutdown Computer
+		self.set_item_text(10, "CLIENT_CONTEXT_MENU_8") # Reboot Computer
+		self.set_item_text(12, "CLIENT_CONTEXT_MENU_9") # Execute command on client
+		self.set_item_text(14, "CLIENT_CONTEXT_MENU_10") # Remove Client
 	else:
-		self.set_item_text(0, "Enable Clients")
-		self.set_item_text(1, "Disable Clients Deferred")
-		self.set_item_text(2, "Disable Clients Immediately")
-		self.set_item_text(4, "Configure Clients")
-		self.set_item_text(6, "Reset Client Error Counts")
-		self.set_item_text(8, "Wake on LAN")
-		self.set_item_text(9, "Shutdown Computers")
-		self.set_item_text(10, "Reboot Computers")
-		self.set_item_text(12, "Execute command on clients")
-		self.set_item_text(14, "Remove Clients")
+		self.set_item_text(0, "CLIENT_CONTEXT_MENU_11") # Enable Clients
+		self.set_item_text(1, "CLIENT_CONTEXT_MENU_12") # Disable Clients Deferred
+		self.set_item_text(2, "CLIENT_CONTEXT_MENU_13") # Disable Clients Immediately
+		self.set_item_text(4, "CLIENT_CONTEXT_MENU_14") # Configure Clients
+		self.set_item_text(6, "CLIENT_CONTEXT_MENU_15") # Reset Client Error Counts
+		self.set_item_text(8, "CLIENT_CONTEXT_MENU_16") # Wake on LAN
+		self.set_item_text(9, "CLIENT_CONTEXT_MENU_17") # Shutdown Computers
+		self.set_item_text(10, "CLIENT_CONTEXT_MENU_18") # Reboot Computers
+		self.set_item_text(12, "CLIENT_CONTEXT_MENU_19") # Execute command on clients
+		self.set_item_text(14, "CLIENT_CONTEXT_MENU_20") # Remove Clients
 
 
 
@@ -165,7 +167,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 		
 		4:  # Configure Client	
-			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
+			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 			
 			
 			
@@ -259,13 +261,13 @@ func _on_ContextMenu_index_pressed(index):
 			socketUDP.close()
 			
 			if amount_of_computer_tried_to_wake_up > 1:
-				RaptorRender.NotificationSystem.add_info_notification("Info", String(amount_of_computer_tried_to_wake_up) + " machines should wake up soon, if they support WakeOnLan...", 9)
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(amount_of_computer_tried_to_wake_up) + " " +  tr("MSG_INFO_3"), 9) # x machines should wake up soon, if they supports WakeOnLan…
 			else:
-				RaptorRender.NotificationSystem.add_info_notification("Info", "Your machine should wake up soon, if it supports WakeOnLan...", 9)
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_2"), 9) # Your machine should wake up soon, if it supports WakeOnLan!
 			
 			
 		9:  # Shutdown Client
-			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
+			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 			
 #			# Linux
 #			var arguments = ["-P", "now", "Raptor Render shuts down your System!"]
@@ -279,7 +281,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 		10:  # Reboot Client
-			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
+			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 			
 #			# Linux 
 #			var arguments = ["-r", "now", "Raptor Render reboots your System!"]
@@ -297,7 +299,7 @@ func _on_ContextMenu_index_pressed(index):
 		
 		
 		12:  # Execute Command
-			RaptorRender.NotificationSystem.add_error_notification("Error", "Not implemented yet!", 5)
+			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 		
 		
 		

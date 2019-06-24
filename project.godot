@@ -115,6 +115,10 @@ ui_ctrl={
  ]
 }
 
+[locale]
+
+translations=PoolStringArray( "res://lang/translations.de.translation", "res://lang/translations.en.translation" )
+
 [memory]
 
 limits/multithreaded_server/rid_pool_prealloc=120

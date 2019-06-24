@@ -1,0 +1,125 @@
+id,en,de
+,,
+JOB_COLUMN_1,Status,Status
+JOB_COLUMN_2,Name,Name
+JOB_COLUMN_3,Priority,Priorität
+JOB_COLUMN_4,Clients,Clients
+JOB_COLUMN_5,Progress,Fortschritt
+JOB_COLUMN_6,Type,Typ
+JOB_COLUMN_7,Creator,Ersteller
+JOB_COLUMN_8,Time Created,Erstellungszeitpunkt
+JOB_COLUMN_9,Frames,Frames
+JOB_COLUMN_10,Errors,Fehlerzahl
+JOB_COLUMN_11,Pools,Pools
+JOB_COLUMN_12,Note,Notiz
+,,
+JOB_DETAIL_1,Details,Details
+JOB_DETAIL_2,Status,Status
+JOB_DETAIL_3,Type,Typ
+JOB_DETAIL_4,Creator,Ersteller
+JOB_DETAIL_5,Created,Erstellt
+JOB_DETAIL_6,Progress,Fortschritt
+JOB_DETAIL_7,Active Clients,Aktive Clients
+JOB_DETAIL_8,Time Rendered,Gerenderte Zeit
+JOB_DETAIL_9,Time Remaining,verbleibende Zeit
+JOB_DETAIL_10,Files,Dateien
+JOB_DETAIL_11,Scene File,Szenen Datei
+JOB_DETAIL_12,Output Files,Ausgabedateien
+,,
+JOB_DETAIL_STATUS_1,Rendering,In Arbeit
+JOB_DETAIL_STATUS_2,Paused Deffered,verzögert pausiert
+JOB_DETAIL_STATUS_3,Queued,Warte auf Clients
+JOB_DETAIL_STATUS_4,Error,Fehlerhaft
+JOB_DETAIL_STATUS_5,Paused,Pausiert
+JOB_DETAIL_STATUS_6,Finished,Fertiggestellt
+JOB_DETAIL_STATUS_7,Cancelled,Abgebrochen
+,,
+JOB_CONTEXT_MENU_1,Pause Job Deferred,Job verzögert abbrechen
+JOB_CONTEXT_MENU_2,Pause Job Immediately,Job sofort abbrechen
+JOB_CONTEXT_MENU_3,Resume Job,Job wiederaufnehmen
+JOB_CONTEXT_MENU_4,Cancle Job Permanently,Job dauerhaft abbrechen
+JOB_CONTEXT_MENU_5,Configure Job,Job bearbeiten
+JOB_CONTEXT_MENU_6,Reset Job Error Count,Job-Fehlerzahl zurücksetzen
+JOB_CONTEXT_MENU_7,Resubmit Job Paused,Job erneut einreichen (pausiert)
+JOB_CONTEXT_MENU_8,Open Output Directory,Ausgabeverzeichnis öffnen
+JOB_CONTEXT_MENU_9,Open Scene Directory,Szenenverzeichnis öffnen
+JOB_CONTEXT_MENU_10,Remove Job,Job löschen
+JOB_CONTEXT_MENU_11,Pause Jobs Deferred,Jobs verzögert abbrechen
+JOB_CONTEXT_MENU_12,Pause Jobs Immediately,Jobs sofort abbrechen
+JOB_CONTEXT_MENU_13,Resume Jobs,Jobs wiederaufnehmen
+JOB_CONTEXT_MENU_14,Cancle Jobs Permanently,Jobs dauerhaft abbrechen
+JOB_CONTEXT_MENU_15,Configure Jobs,Jobs bearbeiten
+JOB_CONTEXT_MENU_16,Reset Jobs Error Count,Job-Fehlerzahlen zurücksetzen
+JOB_CONTEXT_MENU_17,Resubmit Jobs Paused,Jobs erneut einreichen (pausiert)
+JOB_CONTEXT_MENU_18,Open Output Directories,Ausgabeverzeichnisse öffnen
+JOB_CONTEXT_MENU_19,Open Scene Directories,Szenenverzeichnisse öffnen
+JOB_CONTEXT_MENU_20,Remove Jobs,Jobs löschen
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+CLIENT_COLUMN_1,Status,Status
+CLIENT_COLUMN_2,Name,Name
+CLIENT_COLUMN_3,Username,Benutzer
+CLIENT_COLUMN_4,Platform,Betriebssystem
+CLIENT_COLUMN_5,CPU,CPU
+CLIENT_COLUMN_6,RAM,RAM
+CLIENT_COLUMN_7,Current Job,Aktueller Job
+CLIENT_COLUMN_8,Errors,Fehlerzahl
+CLIENT_COLUMN_9,Pools,Pools
+CLIENT_COLUMN_10,Note,Notiz
+CLIENT_COLUMN_11,Version,Version
+,,
+CLIENT_DETAIL_1,Details,Details
+CLIENT_DETAIL_2,Status,Status
+CLIENT_DETAIL_3,Uptime,Betriebszeit
+CLIENT_DETAIL_4,Last seen,zuletzt gesehen
+CLIENT_DETAIL_5,CPU,Prozessor
+CLIENT_DETAIL_6,Memory,Arbeitsspeicher
+CLIENT_DETAIL_7,Hard Drives,Festplatten
+CLIENT_DETAIL_8,Graphics,Grafikkarte
+CLIENT_DETAIL_9,Network,Netzwerk
+CLIENT_DETAIL_10,System,Betriebssystem
+CLIENT_DETAIL_11,Addresses,Adressen
+,,
+CLIENT_DETAIL_STATUS_1,Rendering,Arbeitet
+CLIENT_DETAIL_STATUS_2,Available,Verfügbar
+CLIENT_DETAIL_STATUS_3,Error,Fehlerhaft
+CLIENT_DETAIL_STATUS_4,Disabled,Deaktiviert
+CLIENT_DETAIL_STATUS_5,Offline,Nicht erreichbar
+,,
+CLIENT_CONTEXT_MENU_1,Enable Client,Client aktivieren
+CLIENT_CONTEXT_MENU_2,Disable Client Deferred,Client verzögert deaktivieren
+CLIENT_CONTEXT_MENU_3,Disable Client Immediately,Client sofort deaktivieren
+CLIENT_CONTEXT_MENU_4,Configure Client,Client konfigurieren
+CLIENT_CONTEXT_MENU_5,Reset Client Error Count,Client-Fehlerzahl zurücksetzen
+CLIENT_CONTEXT_MENU_6,Wake on LAN,Computer via LAN hochfahren
+CLIENT_CONTEXT_MENU_7,Shutdown Computer,Computer herunterfahren
+CLIENT_CONTEXT_MENU_8,Reboot Computer,Computer neustarten
+CLIENT_CONTEXT_MENU_9,Execute command on client,Befehl auf Client ausführen
+CLIENT_CONTEXT_MENU_10,Remove Client,Client löschen
+CLIENT_CONTEXT_MENU_11,Enable Clients,Clients aktivieren
+CLIENT_CONTEXT_MENU_12,Disable Clients Deferred,Clients verzögert deaktivieren
+CLIENT_CONTEXT_MENU_13,Disable Clients Immediately,Clients sofort deaktivieren
+CLIENT_CONTEXT_MENU_14,Configure Clients,Clients konfigurieren
+CLIENT_CONTEXT_MENU_15,Reset Client Error Counts,Client-Fehlerzahlen zurücksetzen
+CLIENT_CONTEXT_MENU_16,Wake on LAN,Computer via LAN hochfahren
+CLIENT_CONTEXT_MENU_17,Shutdown Computers,Computer herunterfahren
+CLIENT_CONTEXT_MENU_18,Reboot Computers,Computer neustarten
+CLIENT_CONTEXT_MENU_19,Execute command on clients,Befehl auf Clients ausführen
+CLIENT_CONTEXT_MENU_20,Remove Clients,Clients löschen
+,,
+,,
+,,
+,,
+MSG_ERROR_1,Error,Fehler
+MSG_ERROR_2,Not implemented yet!,Diese Funktion ist leider noch nicht implementiert!
+,,
+MSG_INFO_1,Info,Info
+MSG_INFO_2,"Your machine should wake up soon, if it supports WakeOnLan…","Ihr Computer sollte in kürze hochfahren, falls er WakeOnLan unterstützt…"
+MSG_INFO_3,"machines should wake up soon, if they support WakeOnLan…","Computer sollten in kürze hochfahren, falls sie WakeOnLan unterstützen…"

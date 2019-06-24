@@ -35,7 +35,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -47,7 +46,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Details"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -145,7 +143,6 @@ margin_bottom = 164.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="progress" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 168.0
 margin_right = 663.0
 margin_bottom = 262.0
@@ -171,7 +168,7 @@ margin_right = 663.0
 margin_bottom = 94.0
 size_flags_vertical = 4
 
-[node name="Progress Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="ProgressHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 648.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.494118, 0.494118, 0.494118, 1 )
@@ -234,7 +231,7 @@ margin_right = 663.0
 margin_bottom = 52.0
 size_flags_vertical = 4
 
-[node name="Files Heading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="FilesHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 648.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.494118, 0.494118, 0.494118, 1 )
