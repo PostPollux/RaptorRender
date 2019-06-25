@@ -125,7 +125,10 @@ CHUNK_COLUMN_6,Tries,Versuche
 CHUNK_COLUMN_7,Start,Start
 CHUNK_COLUMN_8,Finished,Ende
 ,,
-,,
+CHUNK_CONTEXT_MENU_1,Requeue Chunk,Chunk erneut berechnen
+CHUNK_CONTEXT_MENU_2,Mark Chunk as finished,Chunk als fertig markieren
+CHUNK_CONTEXT_MENU_3,Requeue Chunks,Chunks erneut berechenen
+CHUNK_CONTEXT_MENU_4,Mark Chunks as finished,Chunks als fertig markieren
 ,,
 ,,
 ,,

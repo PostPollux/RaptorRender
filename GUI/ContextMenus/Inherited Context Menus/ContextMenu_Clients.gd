@@ -54,6 +54,7 @@ func set_item_names():
 
 func enable_disable_items():
 	
+	# disable all
 	self.set_item_disabled(0, true)  # enable client
 	self.set_item_disabled(1, true)  # diable client deffered
 	self.set_item_disabled(2, true)  # diable client immediately
@@ -68,6 +69,7 @@ func enable_disable_items():
 	
 	var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 	
+	# now enable correct ones
 	for selected in selected_ids:
 		
 		var status =  RaptorRender.rr_data.clients[selected].status

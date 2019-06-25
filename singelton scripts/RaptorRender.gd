@@ -21,6 +21,7 @@ var ChunksTable : SortableTable
 
 var ContextMenu_Clients
 var ContextMenu_Jobs
+var ContextMenu_Chunks
 
 var ClientInfoPanel
 var JobInfoPanel
@@ -1238,6 +1239,7 @@ func register_table(SortableTableInstance : SortableTable):
 			
 		"chunks":
 			ChunksTable = SortableTableInstance
+			ChunksTable.connect("context_invoked", self, "chunks_context_menu_invoked")
 			
 			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
 			ChunksTable.column_names.clear()
@@ -1306,6 +1308,9 @@ func register_context_menu(ContextMenu):
 		"jobs":
 			ContextMenu_Jobs = ContextMenu
 			
+		"chunks":
+			ContextMenu_Chunks = ContextMenu
+			
 			
 			
 func client_selected(id_of_row : int):
@@ -1339,10 +1344,14 @@ func job_selection_cleared():
 
 func client_context_menu_invoked():
 	ContextMenu_Clients.show_at_mouse_position()
-	
+
 
 func jobs_context_menu_invoked():
 	ContextMenu_Jobs.show_at_mouse_position()
+
+
+func chunks_context_menu_invoked():
+	ContextMenu_Chunks.show_at_mouse_position()
 
 
 

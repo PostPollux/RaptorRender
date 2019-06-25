@@ -56,6 +56,7 @@ func set_item_names():
 
 func enable_disable_items():
 	
+	# disable all
 	self.set_item_disabled(0, true)  # pause job deffered
 	self.set_item_disabled(1, true)  # pause job immediately
 	self.set_item_disabled(2, true)  # resume job
@@ -70,6 +71,7 @@ func enable_disable_items():
 	
 	var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 	
+	# now enable correct ones
 	for selected in selected_ids:
 		
 		var status =  RaptorRender.rr_data.jobs[selected].status
