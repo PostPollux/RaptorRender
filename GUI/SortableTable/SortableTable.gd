@@ -24,8 +24,8 @@ class_name SortableTable
 
 
 # column names and width arrays
-export (Array, String) var column_names = []
-export (Array, int) var column_widths = []
+var column_names : Array = []
+var column_widths : Array = []
 
 # variables needed for sorting
 export (int) var sort_column_primary : int = 1

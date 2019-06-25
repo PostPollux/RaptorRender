@@ -54,8 +54,6 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
-column_names = [ "Status", "Name", "Priority", "Clients", "Progress", "Type", "Creator", "Time Created", "Frames", "Errors", "Pools", "Note" ]
-column_widths = [ 60, 220, 80, 70, 120, 100, 90, 165, 140, 70, 100, 150 ]
 table_id = "jobs"
 
 [node name="TabContainerClients" type="TabContainer" parent="Control/HSplitContainer/VSplitContainer"]
@@ -81,8 +79,6 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
-column_names = [ "Status", "Name", "Username", "Platform", "CPU", "RAM", "Current Job", "Errors", "Pools", "Note", "RR-Version" ]
-column_widths = [ 60, 100, 100, 100, 100, 60, 150, 60, 200, 150, 90 ]
 row_color_yellow = Color( 0.346293, 0.352941, 0.231373, 1 )
 row_color_black = Color( 0.117188, 0.117188, 0.117188, 1 )
 table_id = "clients"

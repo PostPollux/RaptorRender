@@ -35,6 +35,7 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -299,8 +300,6 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 695.0
 margin_bottom = 338.0
-column_names = [ "", "Status", "Frames", "Client", "Rendertime", "Tries", "Start", "Finished" ]
-column_widths = [ 40, 60, 100, 100, 100, 50, 160, 160 ]
 table_id = "chunks"
 
 [node name="Panel" type="Panel" parent="TabContainer/Chunk List/VSplitContainer"]

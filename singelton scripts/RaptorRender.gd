@@ -33,6 +33,7 @@ var update_tables_timer : Timer
 
 func _ready():
 	
+	TranslationServer.set_locale("de")
 	
 	# create timer to constantly distribute the work across the connected clients 
 	update_tables_timer = Timer.new()
@@ -1204,8 +1205,61 @@ func register_table(SortableTableInstance : SortableTable):
 			JobsTable.connect("selection_cleared", self, "job_selection_cleared")
 			JobsTable.connect("context_invoked", self, "jobs_context_menu_invoked")
 			
+			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
+			JobsTable.column_names.clear()
+			JobsTable.column_names.append("JOB_COLUMN_1") # Status
+			JobsTable.column_names.append("JOB_COLUMN_2") # Name
+			JobsTable.column_names.append("JOB_COLUMN_3") # Priority
+			JobsTable.column_names.append("JOB_COLUMN_4") # Clients
+			JobsTable.column_names.append("JOB_COLUMN_5") # Progress
+			JobsTable.column_names.append("JOB_COLUMN_6") # Type
+			JobsTable.column_names.append("JOB_COLUMN_7") # Creator
+			JobsTable.column_names.append("JOB_COLUMN_8") # Time Created
+			JobsTable.column_names.append("JOB_COLUMN_9") # Frame Range
+			JobsTable.column_names.append("JOB_COLUMN_10") # Errors
+			JobsTable.column_names.append("JOB_COLUMN_11") # Pools
+			JobsTable.column_names.append("JOB_COLUMN_12") # Note
+			
+			# Set column widths
+			JobsTable.column_widths.clear()
+			JobsTable.column_widths.append(60)
+			JobsTable.column_widths.append(220)
+			JobsTable.column_widths.append(80)
+			JobsTable.column_widths.append(70)
+			JobsTable.column_widths.append(120)
+			JobsTable.column_widths.append(100)
+			JobsTable.column_widths.append(90)
+			JobsTable.column_widths.append(165)
+			JobsTable.column_widths.append(140)
+			JobsTable.column_widths.append(70)
+			JobsTable.column_widths.append(100)
+			JobsTable.column_widths.append(150)
+			
+			
 		"chunks":
 			ChunksTable = SortableTableInstance
+			
+			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
+			ChunksTable.column_names.clear()
+			ChunksTable.column_names.append("CHUNK_COLUMN_1") # ID
+			ChunksTable.column_names.append("CHUNK_COLUMN_2") # Status
+			ChunksTable.column_names.append("CHUNK_COLUMN_3") # Frames
+			ChunksTable.column_names.append("CHUNK_COLUMN_4") # Client
+			ChunksTable.column_names.append("CHUNK_COLUMN_5") # Rendertime
+			ChunksTable.column_names.append("CHUNK_COLUMN_6") # Tries
+			ChunksTable.column_names.append("CHUNK_COLUMN_7") # Start
+			ChunksTable.column_names.append("CHUNK_COLUMN_8") # Finish
+			
+			# Set column widths
+			ChunksTable.column_widths.clear()
+			ChunksTable.column_widths.append(40)
+			ChunksTable.column_widths.append(60)
+			ChunksTable.column_widths.append(100)
+			ChunksTable.column_widths.append(100)
+			ChunksTable.column_widths.append(100)
+			ChunksTable.column_widths.append(50)
+			ChunksTable.column_widths.append(160)
+			ChunksTable.column_widths.append(160)
 		
 		"clients": 
 			ClientsTable = SortableTableInstance
@@ -1213,7 +1267,34 @@ func register_table(SortableTableInstance : SortableTable):
 			ClientsTable.connect("something_just_selected", self, "client_selected")
 			ClientsTable.connect("selection_cleared", self, "client_selection_cleared")
 			ClientsTable.connect("context_invoked", self, "client_context_menu_invoked")
-
+			
+			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
+			ClientsTable.column_names.clear()
+			ClientsTable.column_names.append("CLIENT_COLUMN_1") # Status
+			ClientsTable.column_names.append("CLIENT_COLUMN_2") # Name
+			ClientsTable.column_names.append("CLIENT_COLUMN_3") # Username
+			ClientsTable.column_names.append("CLIENT_COLUMN_4") # Platform
+			ClientsTable.column_names.append("CLIENT_COLUMN_5") # CPU
+			ClientsTable.column_names.append("CLIENT_COLUMN_6") # RAM
+			ClientsTable.column_names.append("CLIENT_COLUMN_7") # Current Job
+			ClientsTable.column_names.append("CLIENT_COLUMN_8") # Errors
+			ClientsTable.column_names.append("CLIENT_COLUMN_9") # Pools
+			ClientsTable.column_names.append("CLIENT_COLUMN_10") # Note
+			ClientsTable.column_names.append("CLIENT_COLUMN_11") # Version
+			
+			# Set column widths
+			ClientsTable.column_widths.clear()
+			ClientsTable.column_widths.append(60)
+			ClientsTable.column_widths.append(100)
+			ClientsTable.column_widths.append(100)
+			ClientsTable.column_widths.append(100)
+			ClientsTable.column_widths.append(100)
+			ClientsTable.column_widths.append(60)
+			ClientsTable.column_widths.append(150)
+			ClientsTable.column_widths.append(60)
+			ClientsTable.column_widths.append(200)
+			ClientsTable.column_widths.append(150)
+			ClientsTable.column_widths.append(90)
 
 
 func register_context_menu(ContextMenu):  
@@ -1268,9 +1349,11 @@ func jobs_context_menu_invoked():
 
 func _input(event):
 		
-	if Input.is_key_pressed(KEY_R):
-		JobsTable.refresh()
-		ClientsTable.refresh()
+	if Input.is_key_pressed(KEY_L):
+		if TranslationServer.get_locale() == "de":
+			TranslationServer.set_locale("en")
+		else:
+			TranslationServer.set_locale("de")
 		
 	if Input.is_key_pressed(KEY_C):
 		if colorize_table_rows:
@@ -1410,6 +1493,8 @@ func _input(event):
 
 
 func update_all_visible_tables():
+	#ClientsTable.refresh()
+	#JobsTable.refresh()
 	refresh_jobs_table()
 	refresh_clients_table()
 	
@@ -1423,18 +1508,18 @@ func refresh_jobs_table():
 	
 	
 	# define the columns of the jobs table ####
-	var status_column = 1
-	var name_column = 2
-	var priority_column = 3
-	var active_clients_column = 4
-	var progress_column = 5
-	var type_column = 6
-	var creator_column = 7
-	var time_created_column = 8
-	var frame_range_column = 9
-	var errors_column = 10
-	var pools_column = 11
-	var note_column = 12
+	var status_column = JobsTable.column_names.find("JOB_COLUMN_1", 0) + 1
+	var name_column = JobsTable.column_names.find("JOB_COLUMN_2", 0) + 1
+	var priority_column = JobsTable.column_names.find("JOB_COLUMN_3", 0) + 1
+	var active_clients_column = JobsTable.column_names.find("JOB_COLUMN_4", 0) + 1
+	var progress_column = JobsTable.column_names.find("JOB_COLUMN_5", 0) + 1
+	var type_column = JobsTable.column_names.find("JOB_COLUMN_6", 0) + 1
+	var creator_column = JobsTable.column_names.find("JOB_COLUMN_7", 0) + 1
+	var time_created_column = JobsTable.column_names.find("JOB_COLUMN_8", 0) + 1
+	var frame_range_column = JobsTable.column_names.find("JOB_COLUMN_9", 0) + 1
+	var errors_column = JobsTable.column_names.find("JOB_COLUMN_10", 0) + 1
+	var pools_column = JobsTable.column_names.find("JOB_COLUMN_11", 0) + 1
+	var note_column = JobsTable.column_names.find("JOB_COLUMN_12", 0) + 1
 	
 	
 	# get all jobs
@@ -1538,11 +1623,13 @@ func refresh_jobs_table():
 			var priority_cell = JobsTable.get_cell( row_position, priority_column )
 			
 			# change the cell value
-			priority_cell.get_child(0).disable_if_needed()
-			priority_cell.get_child(0).LabelPriority.text = String( rr_data.jobs[job].priority )
-			
-			# update sort_value
-			JobsTable.set_cell_sort_value(row_position, priority_column,  rr_data.jobs[job].priority)
+			var ChildNode : Node = priority_cell.get_child(0)
+			if ChildNode.is_class("JobProgressBar"):
+				priority_cell.get_child(0).disable_if_needed()
+				priority_cell.get_child(0).LabelPriority.text = String( rr_data.jobs[job].priority )
+				
+				# update sort_value
+				JobsTable.set_cell_sort_value(row_position, priority_column,  rr_data.jobs[job].priority)
 			
 			
 			
@@ -1931,14 +2018,14 @@ func refresh_chunks_table(job_id):
 	
 	
 	# define the columns of the jobs table ####
-	var number_column = 1
-	var status_column = 2
-	var frames_column = 3
-	var client_column = 4
-	var rendertime_column = 5
-	var tries_column = 6
-	var started_column = 7
-	var finished_column = 8
+	var number_column = ChunksTable.column_names.find("CHUNK_COLUMN_1", 0) + 1
+	var status_column = ChunksTable.column_names.find("CHUNK_COLUMN_2", 0) + 1
+	var frames_column = ChunksTable.column_names.find("CHUNK_COLUMN_3", 0) + 1
+	var client_column = ChunksTable.column_names.find("CHUNK_COLUMN_4", 0) + 1
+	var rendertime_column = ChunksTable.column_names.find("CHUNK_COLUMN_5", 0) + 1
+	var tries_column = ChunksTable.column_names.find("CHUNK_COLUMN_6", 0) + 1
+	var started_column = ChunksTable.column_names.find("CHUNK_COLUMN_7", 0) + 1
+	var finished_column = ChunksTable.column_names.find("CHUNK_COLUMN_8", 0) + 1
 	
 	
 	if RaptorRender.rr_data.jobs.has(job_id):
@@ -2386,18 +2473,19 @@ func refresh_chunks_table(job_id):
 func refresh_clients_table():
 	
 	
+	
 	# define the columns of the clients table ####
-	var status_column = 1
-	var name_column = 2
-	var username_column = 3
-	var platform_column = 4
-	var cpu_column = 5
-	var memory_column = 6
-	var current_job_column = 7
-	var error_count_column = 8
-	var pools_column = 9
-	var note_column = 10
-	var rr_version_column = 11
+	var status_column = ClientsTable.column_names.find("CLIENT_COLUMN_1", 0) + 1
+	var name_column = ClientsTable.column_names.find("CLIENT_COLUMN_2", 0) + 1
+	var username_column = ClientsTable.column_names.find("CLIENT_COLUMN_3", 0) + 1
+	var platform_column = ClientsTable.column_names.find("CLIENT_COLUMN_4", 0) + 1
+	var cpu_column = ClientsTable.column_names.find("CLIENT_COLUMN_5", 0) + 1
+	var memory_column = ClientsTable.column_names.find("CLIENT_COLUMN_6", 0) + 1
+	var current_job_column = ClientsTable.column_names.find("CLIENT_COLUMN_7", 0) + 1
+	var error_count_column = ClientsTable.column_names.find("CLIENT_COLUMN_8", 0) + 1
+	var pools_column = ClientsTable.column_names.find("CLIENT_COLUMN_9", 0) + 1
+	var note_column = ClientsTable.column_names.find("CLIENT_COLUMN_10", 0) + 1
+	var rr_version_column = ClientsTable.column_names.find("CLIENT_COLUMN_11", 0) + 1
 	
 	# get all clients
 	var clients_array = rr_data.clients.keys()
