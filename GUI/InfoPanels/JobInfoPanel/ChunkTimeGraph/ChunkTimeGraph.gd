@@ -53,10 +53,12 @@ func fill_chunk_info_box(chunk_number : int):
 	
 	
 	# chunk client
-	if  RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].client == -1:
-		ChunkClientLabel.text = "-" 
-	else:
-		ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].client ].name
+	var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].number_of_tries
+	if number_of_tries > 0:
+		if  RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].tries[number_of_tries].client == -1:
+			ChunkClientLabel.text = "-" 
+		else:
+			ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].tries[number_of_tries].client ].name
 	
 	
 	# chunk render time
@@ -65,11 +67,11 @@ func fill_chunk_info_box(chunk_number : int):
 	var chunk_rendertime : int = 0
 	
 	if chunk_dict.status == RRStateScheme.chunk_finished: 
-		chunk_rendertime =  chunk_dict.time_finished - chunk_dict.time_started
+		chunk_rendertime =  chunk_dict.tries[number_of_tries].time_finished - chunk_dict.tries[number_of_tries].time_started
 		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
 		
 	elif chunk_dict.status == RRStateScheme.chunk_rendering:
-		chunk_rendertime = OS.get_unix_time() - chunk_dict.time_started
+		chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started
 		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
 	
 	else:

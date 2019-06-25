@@ -50,10 +50,15 @@ func _draw():
 	var clients_and_junk_counts : Array = [] # final array that is supposed to hold arrays [0: client_id, 1: chunk_count ]
 	
 	
-	# unique clients
+	# unique clients ( -1 means no client assigned)
 	for chunk in range(1, chunk_count + 1):
-		if not unique_clients.has( RaptorRender.rr_data.jobs[job_id].chunks[chunk].client ):
-			unique_clients.append( RaptorRender.rr_data.jobs[job_id].chunks[chunk].client )
+		var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk].number_of_tries
+		if number_of_tries == 0:
+			if not unique_clients.has( -1 ):
+				unique_clients.append( -1)
+		else:
+			if not unique_clients.has( RaptorRender.rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].client ):
+				unique_clients.append( RaptorRender.rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].client )
 	
 	
 	# create the count dictionary
@@ -63,8 +68,11 @@ func _draw():
 	
 	# now count how often each client occures
 	for chunk in range(1, chunk_count + 1):
-		count_dictionary[ RaptorRender.rr_data.jobs[job_id].chunks[chunk].client ] += 1
-	
+		var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk].number_of_tries
+		if number_of_tries > 0:
+			count_dictionary[ RaptorRender.rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].client ] += 1
+		else:
+			count_dictionary[ -1 ] += 1
 	
 	# create clients_and_junk_counts array
 	for client in unique_clients:
@@ -84,7 +92,7 @@ func _draw():
 	# limit spacing size to half of smallest segment or shut of spacing if there is only one client
 	var spacing_between_segments_in_degrees : float = desired_spacing_between_segments_in_degrees
 	
-	if desired_spacing_between_segments_in_degrees > 0:
+	if desired_spacing_between_segments_in_degrees > 0 and clients_and_junk_counts.size() > 0:
 		var smallest_segement_in_degrees : float = 360 * ( float(clients_and_junk_counts[ clients_and_junk_counts.size() - 1][1]) / float(chunk_count) )
 		if float(desired_spacing_between_segments_in_degrees) > float(smallest_segement_in_degrees) / float(2) :
 			spacing_between_segments_in_degrees = float(smallest_segement_in_degrees) / float(2)

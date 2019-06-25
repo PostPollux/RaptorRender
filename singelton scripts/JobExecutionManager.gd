@@ -27,8 +27,9 @@ func critical_error_detected():
 func success_detected():
 	
 	if !chunk_success_detected and current_amount_of_critical_errors == 0:
+		var current_tries_count : int = RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries.keys().size()
 		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_finished
-		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].time_finished = OS.get_unix_time()
+		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries[current_tries_count].time_finished = OS.get_unix_time()
 		
 		var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(current_processing_job)
 		

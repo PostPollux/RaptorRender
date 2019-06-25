@@ -75,8 +75,10 @@ func _on_ContextMenu_index_pressed(index):
 
 				if status == RRStateScheme.chunk_rendering:
 					
+					var number_of_tries : int = RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].number_of_tries
+					
 					# cancel render process TODO (temporarily)
-					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].client:
+					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
 						CommandLineManager.kill_current_render_process()
 					
 					# change status
@@ -98,16 +100,17 @@ func _on_ContextMenu_index_pressed(index):
 				
 				var status =  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].status
 				
+				var number_of_tries : int = RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].number_of_tries
+					
 				if status == RRStateScheme.chunk_rendering:
 					
 					# cancel render process TODO (temporarily)
-					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].client:
+					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
 						CommandLineManager.kill_current_render_process()
 					
-					# change status
-					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].status = RRStateScheme.chunk_finished
 					
-				elif status == RRStateScheme.chunk_paused or status == RRStateScheme.chunk_queued or status == RRStateScheme.chunk_error:
+				if status == RRStateScheme.chunk_rendering or status == RRStateScheme.chunk_paused or status == RRStateScheme.chunk_queued or status == RRStateScheme.chunk_error:
+					
 					# change status
 					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].status = RRStateScheme.chunk_finished
 	
