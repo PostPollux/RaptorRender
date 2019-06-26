@@ -100,7 +100,10 @@ func draw_ChunkTimeGraph(job_id : int):
 		var number_of_tries : int = chunk_dict.number_of_tries
 		
 		if chunk_dict.status == RRStateScheme.chunk_finished: 
-			chunk_rendertime =  chunk_dict.tries[number_of_tries].time_finished - chunk_dict.tries[number_of_tries].time_started
+			if number_of_tries > 0:
+				chunk_rendertime =  chunk_dict.tries[number_of_tries].time_finished - chunk_dict.tries[number_of_tries].time_started
+			else:
+				chunk_rendertime = 1
 			finished = true
 			rendertimes.append(chunk_rendertime)
 			at_least_one_finished_chunk = true
@@ -137,7 +140,10 @@ func draw_ChunkTimeGraph(job_id : int):
 		var chunk_rendertime : int = 0
 		
 		if chunk_dict.status == RRStateScheme.chunk_finished: 
-			chunk_rendertime =  chunk_dict.tries[number_of_tries].time_finished - chunk_dict.tries[number_of_tries].time_started
+			if number_of_tries > 0:
+				chunk_rendertime =  chunk_dict.tries[number_of_tries].time_finished - chunk_dict.tries[number_of_tries].time_started
+			else:
+				chunk_rendertime = 1
 			
 		if chunk_dict.status == RRStateScheme.chunk_rendering:
 			chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started

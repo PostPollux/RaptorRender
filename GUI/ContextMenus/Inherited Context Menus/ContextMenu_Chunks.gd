@@ -108,6 +108,8 @@ func _on_ContextMenu_index_pressed(index):
 					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
 						CommandLineManager.kill_current_render_process()
 					
+					# set time_finished
+					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].time_finished = OS.get_unix_time()
 					
 				if status == RRStateScheme.chunk_rendering or status == RRStateScheme.chunk_paused or status == RRStateScheme.chunk_queued or status == RRStateScheme.chunk_error:
 					
