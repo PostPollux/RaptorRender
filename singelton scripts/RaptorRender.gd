@@ -24,12 +24,14 @@ var ContextMenu_Clients
 var ContextMenu_Jobs
 var ContextMenu_Chunks
 
-var ClientInfoPanel
-var JobInfoPanel
+var ClientInfoPanel : ClientInfoPanel
+var JobInfoPanel : JobInfoPanel
+var TryInfoPanel : TryInfoPanel
 
 var rr_data = {}
 
 var current_job_id_for_job_info_panel : int
+var current_chunk_id_for_job_info_panel : int
 
 var update_tables_timer : Timer 
 
@@ -773,6 +775,12 @@ func register_job_info_panel(InfoPanel):
 
 
 
+func register_try_info_panel(InfoPanel):  
+	
+	TryInfoPanel = InfoPanel
+
+
+
 func register_table(SortableTableInstance : SortableTable):  
 
 	var sortable_table_id : String = SortableTableInstance.table_id  
@@ -903,9 +911,9 @@ func register_context_menu(ContextMenu):
 			
 		"chunks":
 			ContextMenu_Chunks = ContextMenu
-			
-			
-			
+
+
+
 func client_selected(id_of_row : int):
 	JobsTable.clear_selection()
 	ChunksTable.clear_selection()
@@ -923,10 +931,12 @@ func client_selection_cleared():
 func job_selected(id_of_row : int):
 	ClientsTable.clear_selection()
 	ChunksTable.clear_selection()
+	TriesTable.clear_selection()
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
 	JobInfoPanel.update_job_info_panel(id_of_row)
 	JobInfoPanel.visible = true
+	TryInfoPanel.set_visibility(false)
 	refresh_chunks_table(id_of_row)
 	current_job_id_for_job_info_panel = id_of_row
 
@@ -935,6 +945,20 @@ func chunk_selected(id_of_row : int):
 	refresh_tries_table(current_job_id_for_job_info_panel, id_of_row)
 	TriesTable.clear_selection()
 	TriesTable.select_by_id(1)
+	
+	current_chunk_id_for_job_info_panel = id_of_row
+	
+	if rr_data.jobs[current_job_id_for_job_info_panel].chunks[current_chunk_id_for_job_info_panel].number_of_tries > 0:
+		try_selected(1)
+	else:
+		TryInfoPanel.set_visibility(false)
+	
+
+
+func try_selected(id_of_row : int):
+	TryInfoPanel.set_visibility(true)
+	TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, id_of_row)
+
 
 
 func job_selection_cleared():
@@ -976,128 +1000,7 @@ func _input(event):
 		rr_data.clients.erase("id8")
 		rr_data.clients.erase("id10")
 		ClientsTable.refresh()
-		
-	if Input.is_key_pressed(KEY_B):
-		rr_data.jobs["1"] = {
-				"name": "new name",
-				"type": "new program",
-				"priority": 99,
-				"creator": "new",
-				"time_created": 623180,
-				"status": RRStateScheme.job_queued,
-				"progress": 88,
-				"range_start": 280,
-				"range_end": 880,
-				"note": "eine andere Notiz",
-				"errors": 10,
-				"pools": ["neuer pool","neuer pool2"],
-				"scene_directory" : "/home/johannes/Downloads/",
-				"output_directory" : "/home/johannes/GodotTest/",
-				"render_time" : 345,
-				"chunks": {
-					"1":{
-						"status" : RRStateScheme.chunk_finished,
-						"frames" : [20,21,22,23],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					},
-					"2":{
-						"status" : RRStateScheme.chunk_finished,
-						"frames" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					},
-					"3":{
-						"status" : RRStateScheme.chunk_rendering,
-						"frames" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					},
-					"4":{
-						"status" : RRStateScheme.chunk_rendering,
-						"frames" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					},
-					"5":{
-						"status" : RRStateScheme.chunk_finished,
-						"frames" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					},
-					"6":{
-						"status" : RRStateScheme.chunk_finished,
-						"frames" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					},
-					"7":{
-						"status" : RRStateScheme.chunk_finished,
-						"frames" : [24,25,26,27],
-						"client" : "id1",
-						"time_started" : 1528523180,
-						"time_finished" : 1528583180,
-						"number_of_tries" : 1
-					}
-				}
-			}
 
-		rr_data.clients["id1"] =  {
-				"name": "new machine",
-				"username": "new user",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.45","192.133.1.45"],
-				"status": RRStateScheme.client_disabled,
-				"current_job_id": 4,
-				"error_count": 12,
-				"platform": ["Linux","4.14.48-2"],
-				"pools": ["new pool", "new pools"],
-				"rr_version": 1.6,
-				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8800 CPU @ 30.00GHz", 30, 2, 4, 8],
-				"cpu_usage": 5,
-				"memory": 329610232,
-				"memory_usage": 22,
-				"graphics": ["NVidia GTX 970"],
-				"software": ["Blender", "Natron", "Nuke"],
-				"note": "new note"
-			}
-			
-		rr_data.clients["77"] =  {
-				"name": "Double Sun Power!",
-				"username": "Sun",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.45","192.133.1.45"],
-				"status": RRStateScheme.client_disabled,
-				"current_job_id": 4,
-				"error_count": 12,
-				"platform": ["Linux","4.14.48-2"],
-				"pools": ["new pool", "new pools"],
-				"rr_version": 1.6,
-				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8800 CPU @ 30.00GHz", 30, 2, 4, 8],
-				"cpu_usage": 5,
-				"memory": 329610232,
-				"memory_usage": 22,
-				"graphics": ["NVidia GTX 970"],
-				"software": ["Blender", "Natron", "Nuke"],
-				"note": "new note"
-			}
-		
-		ClientsTable.refresh()
-		JobsTable.refresh()
 
 
 func update_all_visible_tables():
@@ -1788,6 +1691,15 @@ func refresh_chunks_table(job_id):
 						
 						# update sort_value
 						ChunksTable.set_cell_sort_value(row_position, client_column, client_name)
+				else:
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, client_column )
+					
+					# change the cell value
+					cell.get_child(0).text = ""
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, client_column, "")
 
 	
 	
@@ -1850,14 +1762,19 @@ func refresh_chunks_table(job_id):
 						
 						# change the cell value
 						var time_started = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
+						cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
 						
-						if time_started != 0:
-							cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
-						else:
-							cell.get_child(0).text = "-"
-							
 						# update sort_value
 						ChunksTable.set_cell_sort_value(row_position, started_column,  time_started)
+				else:
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, started_column )
+					
+					# change the cell value
+					cell.get_child(0).text = "-"
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, started_column,  0)
 	
 	
 	
@@ -1882,7 +1799,15 @@ func refresh_chunks_table(job_id):
 							
 						# update sort_value
 						ChunksTable.set_cell_sort_value(row_position, finished_column, time_finished)
-	
+				else:
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, finished_column )
+					
+					# change the cell value
+					cell.get_child(0).text = "-"
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, finished_column, 0)
 	
 	
 				

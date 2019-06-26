@@ -1,5 +1,7 @@
 extends MarginContainer
 
+class_name ClientInfoPanel
+
 onready var ClientInfoTabContainer = $"TabContainer"
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
 onready var NameLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/NameLabel"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/job_status/job_status_200x100.png" type="Texture" id=2]
@@ -7,8 +7,9 @@
 [ext_resource path="res://GUI/icons/link/15x15/link_clicked_15x15.png" type="Texture" id=5]
 [ext_resource path="res://GUI/icons/link/15x15/link_hover_15x15.png" type="Texture" id=6]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=7]
-[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=8]
-[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=10]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://GUI/fonts/Caliban.ttf"
@@ -325,8 +326,13 @@ table_id = "tries"
 
 [node name="Panel2" type="Panel" parent="TabContainer/Chunk List/VSplitContainer/Panel/HBoxContainer"]
 margin_left = 79.0
-margin_right = 79.0
+margin_right = 703.0
 margin_bottom = 276.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TryInfoPanel" parent="TabContainer/Chunk List/VSplitContainer/Panel/HBoxContainer/Panel2" instance=ExtResource( 8 )]
+margin_right = 0.0
 
 [node name="Graphs" type="Tabs" parent="TabContainer"]
 visible = false
@@ -343,13 +349,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 split_offset = 60
 
-[node name="ChunkTimeGraph" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 8 )]
+[node name="ChunkTimeGraph" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 9 )]
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 695.0
 margin_bottom = 336.0
 
-[node name="ClientPieChart" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 9 )]
+[node name="ClientPieChart" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 10 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 348.0

@@ -1,5 +1,7 @@
 extends MarginContainer
 
+class_name JobInfoPanel
+
 onready var JobInfoTabContainer = $"TabContainer"
 
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
