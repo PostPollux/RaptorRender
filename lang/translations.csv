@@ -130,6 +130,9 @@ CHUNK_CONTEXT_MENU_2,Mark Chunk as finished,Chunk als fertig markieren
 CHUNK_CONTEXT_MENU_3,Requeue Chunks,Chunks erneut berechenen
 CHUNK_CONTEXT_MENU_4,Mark Chunks as finished,Chunks als fertig markieren
 ,,
+TRY_COLUMN_1,Try,Versuch
+,,
+,,
 ,,
 ,,
 MSG_ERROR_1,Error,Fehler

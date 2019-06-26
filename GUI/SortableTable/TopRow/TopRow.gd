@@ -21,6 +21,7 @@ var column_names : Array = []
 var column_widths : Array = []
 
 # variables for dragging and resizing the columns
+var columns_resizable : bool = true
 var dragging_splitter : bool = false
 var dragging_splitter_id : int
 var mouse_position_x_before_dragging : int
@@ -104,7 +105,9 @@ func generate_top_row():
 		# splitter
 		var Splitter = ColumnSplitterRes.instance()
 		Splitter.splitter_id = count
-		Splitter.connect("just_clicked", self, "splitter_just_clicked")
+		Splitter.active = columns_resizable
+		if columns_resizable:
+			Splitter.connect("just_clicked", self, "splitter_just_clicked")
 		Splitters.append(Splitter)
 		$HBoxContainer.add_child(Splitter)
 		

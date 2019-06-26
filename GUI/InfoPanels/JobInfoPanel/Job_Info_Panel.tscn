@@ -36,6 +36,7 @@ tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
 editor/display_folded = true
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -281,7 +282,6 @@ margin_bottom = 14.0
 text = "Output files"
 
 [node name="Chunk List" type="Tabs" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -293,19 +293,40 @@ rect_clip_content = true
 [node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Chunk List"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-split_offset = -214
 
 [node name="Chunk_List_SortableTable" parent="TabContainer/Chunk List/VSplitContainer" instance=ExtResource( 7 )]
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 695.0
-margin_bottom = 338.0
+margin_right = 703.0
+margin_bottom = 276.0
 table_id = "chunks"
 
 [node name="Panel" type="Panel" parent="TabContainer/Chunk List/VSplitContainer"]
-margin_top = 350.0
-margin_right = 695.0
+margin_top = 288.0
+margin_right = 703.0
 margin_bottom = 564.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Chunk List/VSplitContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Tries_SortableTable" parent="TabContainer/Chunk List/VSplitContainer/Panel/HBoxContainer" instance=ExtResource( 7 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 75.0
+margin_bottom = 276.0
+rect_min_size = Vector2( 75, 0 )
+size_flags_horizontal = 1
+sort_column_secondary = 1
+columns_resizable = false
+table_id = "tries"
+
+[node name="Panel2" type="Panel" parent="TabContainer/Chunk List/VSplitContainer/Panel/HBoxContainer"]
+margin_left = 79.0
+margin_right = 79.0
+margin_bottom = 276.0
 
 [node name="Graphs" type="Tabs" parent="TabContainer"]
 visible = false

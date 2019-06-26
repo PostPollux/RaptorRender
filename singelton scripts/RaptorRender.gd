@@ -18,6 +18,7 @@ var NotificationSystem : NotificationSystem
 var JobsTable : SortableTable
 var ClientsTable : SortableTable
 var ChunksTable : SortableTable
+var TriesTable : SortableTable
 
 var ContextMenu_Clients
 var ContextMenu_Jobs
@@ -818,6 +819,7 @@ func register_table(SortableTableInstance : SortableTable):
 		"chunks":
 			ChunksTable = SortableTableInstance
 			ChunksTable.connect("context_invoked", self, "chunks_context_menu_invoked")
+			ChunksTable.connect("something_just_selected", self, "chunk_selected")
 			
 			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
 			ChunksTable.column_names.clear()
@@ -840,6 +842,19 @@ func register_table(SortableTableInstance : SortableTable):
 			ChunksTable.column_widths.append(50)
 			ChunksTable.column_widths.append(160)
 			ChunksTable.column_widths.append(160)
+			
+		"tries":
+			TriesTable = SortableTableInstance
+			TriesTable.connect("something_just_selected", self, "try_selected")
+			
+			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
+			TriesTable.column_names.clear()
+			TriesTable.column_names.append("TRY_COLUMN_1") # Try
+			
+			# Set column widths
+			TriesTable.column_widths.clear()
+			TriesTable.column_widths.append(71)
+
 		
 		"clients": 
 			ClientsTable = SortableTableInstance
@@ -905,7 +920,7 @@ func client_selection_cleared():
 
 
 
-func job_selected(id_of_row):
+func job_selected(id_of_row : int):
 	ClientsTable.clear_selection()
 	ChunksTable.clear_selection()
 	ClientInfoPanel.visible = false
@@ -914,6 +929,12 @@ func job_selected(id_of_row):
 	JobInfoPanel.visible = true
 	refresh_chunks_table(id_of_row)
 	current_job_id_for_job_info_panel = id_of_row
+
+
+func chunk_selected(id_of_row : int):
+	refresh_tries_table(current_job_id_for_job_info_panel, id_of_row)
+	TriesTable.clear_selection()
+	TriesTable.select_by_id(1)
 
 
 func job_selection_cleared():
@@ -2061,6 +2082,95 @@ func refresh_chunks_table(job_id):
 			count += 1
 		
 		ChunksTable.sort()
+
+
+
+func refresh_tries_table(job_id : int, chunk_id : int):
+	
+	
+	# define the columns of the jobs table ####
+	var try_column = TriesTable.column_names.find("TRY_COLUMN_1", 0) + 1
+	
+	
+	if rr_data.jobs.has(job_id):
+		if rr_data.jobs[job_id].chunks.has(chunk_id):
+			
+			# get all tries
+			var tries_array = rr_data.jobs[job_id].chunks[chunk_id].tries.keys()
+			
+			# remove unneded filled rows of TriesTable
+			if tries_array.size() < TriesTable.RowContainerFilled.SortableRows.size():
+				
+				for remove_id in range(tries_array.size() + 1, TriesTable.RowContainerFilled.SortableRows.size() + 1):
+					
+					TriesTable.remove_row( remove_id )
+			
+			
+			
+			#### Fill Chunks Table ####
+			
+			var count : int = 1
+			
+			for try in tries_array:
+				
+				
+				
+				##############################################
+				### update modified cells in row if row exists
+				##############################################
+				
+				if TriesTable.RowContainerFilled.id_position_dict.has(try):
+					
+					
+					
+					# get reference to the row
+					var row_position = TriesTable.RowContainerFilled.id_position_dict[try]
+					var row = TriesTable.get_row_by_position( row_position )
+					
+					# update all cells that have changed
+					
+					
+					### Try ###
+					
+					# only change when value is different
+					if (row.sort_values[try_column] != try):
+					
+						# get reference to the cell
+						var cell = TriesTable.get_cell( row_position, try_column )
+						
+						# change the cell value
+						cell.get_child(0).text = String(try)
+						
+						# update sort_value
+						TriesTable.set_cell_sort_value(row_position, try_column, try)
+					
+					
+					
+					
+					
+				##########################################################
+				### create the row if row with given id does not exist yet
+				##########################################################
+				
+				else:
+					
+					TriesTable.create_row(try)	
+					
+					
+					### Try ###
+					
+					var LabelTry = Label.new()
+					LabelTry.text = String(try)
+					TriesTable.set_cell_content(count, try_column, LabelTry)
+					
+					# update sort_value
+					TriesTable.set_cell_sort_value(count, try_column,  try)
+				
+				
+				count += 1
+			
+			TriesTable.sort()
+
 
 
 func refresh_clients_table():

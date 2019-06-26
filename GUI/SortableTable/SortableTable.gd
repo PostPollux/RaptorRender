@@ -33,6 +33,9 @@ export (int) var sort_column_secondary : int = 2
 var sort_column_primary_reversed : bool = false
 var sort_column_secondary_reversed : bool = false
 
+# some SortableTable settings
+export (bool) var columns_resizable : bool = true
+
 # row height
 export (int) var row_height : int = 30
 
@@ -115,6 +118,7 @@ func set_top_row():
 	TopRow.sort_column_primary_reversed = sort_column_primary_reversed
 	TopRow.sort_column_secondary = sort_column_secondary
 	TopRow.sort_column_secondary_reversed = sort_column_secondary_reversed
+	TopRow.columns_resizable = columns_resizable
 	
 	TopRow.generate_top_row()
 
