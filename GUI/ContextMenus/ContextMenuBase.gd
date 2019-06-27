@@ -1,5 +1,7 @@
 extends Control
 
+class_name RRContextMenuBase
+
 export (String) var context_menu_id
 onready var ContextMenu = $"ContextMenu"
 

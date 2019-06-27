@@ -142,11 +142,19 @@ TRY_DETAIL_6,Rendertime,Renderzeit
 TRY_LOG_1,Log,Log
 TRY_LOG_2,No log file found!,Keine Log-Datei gefunden!
 ,,
+LOG_CONTEXT_MENU_1,open log externally,Log mit externem Editor öffnen
+LOG_CONTEXT_MENU_2,open logs folder,Logverzeichnis öffnen
+,,
+,,
+,,
 ,,
 ,,
 MSG_ERROR_1,Error,Fehler
 MSG_ERROR_2,Not implemented yet!,Diese Funktion ist leider noch nicht implementiert!
+MSG_ERROR_3,Seems like directory does not exist!,Dieses Verzeichnis scheint nicht zu existieren!
+MSG_ERROR_4,Seems like file does not exist!,Dieses Datei scheint nicht zu existieren!
 ,,
 MSG_INFO_1,Info,Info
 MSG_INFO_2,"Your machine should wake up soon, if it supports WakeOnLan…","Ihr Computer sollte in kürze hochfahren, falls er WakeOnLan unterstützt…"
 MSG_INFO_3,"machines should wake up soon, if they support WakeOnLan…","Computer sollten in kürze hochfahren, falls sie WakeOnLan unterstützen…"
+MSG_INFO_4,Selection has been copied to clipboard!,Selektierter Text wurde in die Zwischenablage kopiert!

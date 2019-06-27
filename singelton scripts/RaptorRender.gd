@@ -20,9 +20,10 @@ var ClientsTable : SortableTable
 var ChunksTable : SortableTable
 var TriesTable : SortableTable
 
-var ContextMenu_Clients
-var ContextMenu_Jobs
-var ContextMenu_Chunks
+var ContextMenu_Clients : RRContextMenuBase
+var ContextMenu_Jobs : RRContextMenuBase
+var ContextMenu_Chunks : RRContextMenuBase
+var ContextMenu_Log : RRContextMenuBase
 
 var ClientInfoPanel : ClientInfoPanel
 var JobInfoPanel : JobInfoPanel
@@ -894,6 +895,9 @@ func register_context_menu(ContextMenu):
 			
 		"chunks":
 			ContextMenu_Chunks = ContextMenu
+		
+		"log":
+			ContextMenu_Log = ContextMenu
 
 
 
@@ -960,6 +964,8 @@ func jobs_context_menu_invoked():
 func chunks_context_menu_invoked():
 	ContextMenu_Chunks.show_at_mouse_position()
 
+func log_context_menu_invoked():
+	ContextMenu_Log.show_at_mouse_position()
 
 
 

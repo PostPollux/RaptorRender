@@ -40,7 +40,7 @@ func open_folder(path : String):
 				OS.execute("xdg-open", arguments, false, execute_output)
 				
 			else:
-				RaptorRender.NotificationSystem.add_error_notification("Error", "Seems like directory does not exist!", 7)
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_3"), 7) # Seems like directory does not exist!
 		
 		
 		# Windows
@@ -57,7 +57,7 @@ func open_folder(path : String):
 				OS.execute("explorer", arguments, false, execute_output)
 				
 			else:
-				RaptorRender.NotificationSystem.add_error_notification("Error", "Seems like directory does not exist!", 7)
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_3"), 7) # Seems like directory does not exist!
 		
 		
 		
@@ -75,4 +75,63 @@ func open_folder(path : String):
 				OS.execute("open", arguments, false, execute_output)
 				
 			else:
-				RaptorRender.NotificationSystem.add_error_notification("Error", "Seems like directory does not exist!", 7)
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_3"), 7) # Seems like directory does not exist!
+
+
+
+func open_file_externally(path : String):
+
+	var platform : String = OS.get_name()
+	
+	match platform:
+		
+		# Linux
+		"X11" :
+			
+			var corrected_path : String = path.replace("\\","/") # convert path to unix style
+			
+			var file : File = File.new()
+			
+			if file.file_exists( corrected_path ):
+				
+				var arguments : Array = [corrected_path]
+				var execute_output : Array =[]
+				OS.execute("xdg-open", arguments, false, execute_output)
+				
+			else:
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_4"), 7) # Seems like file does not exist!
+		
+		
+		# Windows
+		"Windows" :
+			
+			var corrected_path : String = path.replace("/","\\") # convert path windows style
+			
+			var file : File = File.new()
+			
+			if file.file_exists( corrected_path ):
+				
+				var arguments : Array = [corrected_path]
+				var execute_output : Array = []
+				OS.execute("explorer", arguments, false, execute_output)
+				
+			else:
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_4"), 7) # Seems like file does not exist!
+		
+		
+		
+		# Mac OS
+		"OSX" :
+			
+			var corrected_path : String = path.replace("\\","/") # convert path to unix style
+			
+			var file : File = File.new()
+			
+			if file.file_exists( corrected_path ):
+				
+				var arguments : Array = [corrected_path]
+				var execute_output : Array = []
+				OS.execute("open", arguments, false, execute_output)
+				
+			else:
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_4"), 7) # Seems like file does not exist!

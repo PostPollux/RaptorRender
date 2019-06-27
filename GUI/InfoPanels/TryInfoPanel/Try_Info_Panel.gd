@@ -13,7 +13,7 @@ onready var TimeStoppedLabel = $"TabContainer/Details/ScrollContainer/MarginCont
 onready var TimeNeededLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeNeededLabel"
 
 onready var LogVisibilityContainer = $"TabContainer/Log/MarginContainer"
-onready var LogRichTextLabel = $"TabContainer/Log/MarginContainer/Log_RichTextLabel"
+onready var LogRichTextLabel : RichTextLabel = $"TabContainer/Log/MarginContainer/Log_RichTextLabel"
 
 var currently_displayed_try_id : int = 0
 var currently_displayed_chunk_id :int = 0
@@ -117,3 +117,11 @@ func add_text_to_log(text : String):
 
 func no_log_file_found():
 	LogRichTextLabel.append_bbcode( tr("TRY_LOG_2"))
+
+
+func _on_Log_RichTextLabel_gui_input(event):
+	if event.is_action_pressed("ui_right_mouse_button"):
+		RaptorRender.log_context_menu_invoked()
+	if Input.is_key_pressed(KEY_CONTROL) and Input.is_key_pressed(KEY_C):
+		RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_4"), 5) # Selection has been copied to clipboard!
+	
