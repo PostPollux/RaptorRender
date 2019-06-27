@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "MarginContainer",
+"class": "ClientInfoPanel",
+"language": "GDScript",
+"path": "res://GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.gd"
+}, {
+"base": "MarginContainer",
+"class": "JobInfoPanel",
+"language": "GDScript",
+"path": "res://GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd"
+}, {
 "base": "Control",
 "class": "NotificationSystem",
 "language": "GDScript",
@@ -38,14 +48,22 @@ _global_script_classes=[ {
 "class": "SortableTableTopRow",
 "language": "GDScript",
 "path": "res://GUI/SortableTable/TopRow/TopRow.gd"
+}, {
+"base": "MarginContainer",
+"class": "TryInfoPanel",
+"language": "GDScript",
+"path": "res://GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.gd"
 } ]
 _global_script_class_icons={
+"ClientInfoPanel": "",
+"JobInfoPanel": "",
 "NotificationSystem": "",
 "SortableTable": "",
 "SortableTableCollumnButton": "",
 "SortableTableRow": "",
 "SortableTableRowContainerFilled": "",
-"SortableTableTopRow": ""
+"SortableTableTopRow": "",
+"TryInfoPanel": ""
 }
 
 [application]
@@ -67,6 +85,7 @@ CommandLineManager="*res://singelton scripts/CommandLineManager.gd"
 RenderLogValidator="*res://singelton scripts/RenderLogValidator.gd"
 JobExecutionManager="*res://singelton scripts/JobExecutionManager.gd"
 JobDistributionManager="*res://singelton scripts/JobDistributionManager.gd"
+ReadLogFileManager="*res://singelton scripts/ReadLogFileManager.gd"
 
 [debug]
 

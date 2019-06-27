@@ -199,7 +199,6 @@ func _ready():
 							1:{
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523280
 							}
 						}
@@ -214,7 +213,6 @@ func _ready():
 							1:{
 								"client" : 4,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523275
 							}
 						}
@@ -228,7 +226,6 @@ func _ready():
 							1:{
 								"client" : 8,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523299
 							}
 						}
@@ -242,7 +239,6 @@ func _ready():
 							1:{
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523268
 							}
 						}
@@ -256,7 +252,6 @@ func _ready():
 							1:{
 								"client" : 10,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523245
 							}
 						}
@@ -270,7 +265,6 @@ func _ready():
 							1:{
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523222
 							}
 						}
@@ -284,7 +278,6 @@ func _ready():
 							1:{
 								"client" : 7,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523200
 							}
 						}
@@ -298,7 +291,6 @@ func _ready():
 							1:{
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523190
 							}
 						}
@@ -312,7 +304,6 @@ func _ready():
 							1:{
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523285
 							}
 						}
@@ -326,7 +317,6 @@ func _ready():
 							1:{
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523230
 							}
 						}
@@ -340,7 +330,6 @@ func _ready():
 							1:{
 								"client" : 13,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523250
 							}
 						}
@@ -354,7 +343,6 @@ func _ready():
 							1:{
 								"client" : 13,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523270
 							}
 						}
@@ -368,7 +356,6 @@ func _ready():
 							1:{
 								"client" : 15,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523260
 							}
 						}
@@ -382,7 +369,6 @@ func _ready():
 							1:{
 								"client" : 16,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523320
 							}
 						}
@@ -396,7 +382,6 @@ func _ready():
 							1:{
 								"client" : 2,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523290
 							}
 						}
@@ -410,7 +395,6 @@ func _ready():
 							1:{
 								"client" : 2,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523255
 							}
 						}
@@ -424,7 +408,6 @@ func _ready():
 							1:{
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_cancelled" : 0,
 								"time_finished" : 1528523430
 							}
 						}
@@ -958,6 +941,7 @@ func chunk_selected(id_of_row : int):
 func try_selected(id_of_row : int):
 	TryInfoPanel.set_visibility(true)
 	TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, id_of_row)
+	TryInfoPanel.update_current_try_id(id_of_row)
 
 
 

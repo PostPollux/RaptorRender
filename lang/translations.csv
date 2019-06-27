@@ -132,11 +132,16 @@ CHUNK_CONTEXT_MENU_4,Mark Chunks as finished,Chunks als fertig markieren
 ,,
 TRY_COLUMN_1,Try,Versuch
 ,,
-TRY_DETAIL_1,Try,Versuch
-TRY_DETAIL_2,Client,Client
-TRY_DETAIL_3,Time Started,Startzeit
-TRY_DETAIL_4,Time Finished,Fertigstellung
-TRY_DETAIL_5,Rendertime,Renderzeit
+TRY_DETAIL_1,Details,Details
+TRY_DETAIL_2,Try,Versuch
+TRY_DETAIL_3,Client,Client
+TRY_DETAIL_4,Time Started,Startzeit
+TRY_DETAIL_5,Time Finished,Fertigstellung
+TRY_DETAIL_6,Rendertime,Renderzeit
+,,
+TRY_LOG_1,Log,Log
+TRY_LOG_2,No log file found!,Keine Log-Datei gefunden!
+,,
 ,,
 ,,
 MSG_ERROR_1,Error,Fehler

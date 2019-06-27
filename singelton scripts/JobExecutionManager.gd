@@ -56,7 +56,7 @@ func frame_success_detected():
 
 
 
-func start_junk(job_id : int, chunk_id : int):
+func start_junk(job_id : int, chunk_id : int, try_id : int):
 	
 	chunk_success_detected = false
 	current_amount_of_frame_successes = 0
@@ -105,7 +105,7 @@ func start_junk(job_id : int, chunk_id : int):
 			cmd_string = cmd_string.replace( "$(" + specific_setting + ")", specific_setting_value)
 	
 	# build a reasonable log file name
-	log_file_name = String(job_id) + "_chunk_" + String(chunk_id)
+	log_file_name = String(job_id) + "_chunk_" + String(chunk_id) + "_try_" + String(try_id)
 	
 	# load the correct job type settings file for the validation of the coming render process
 	RenderLogValidator.load_job_type_settings_CRP(job_type, job_type_version)

@@ -75,8 +75,18 @@ func distribute_jobs():
 						for chunk in RaptorRender.rr_data.jobs[job].chunks.keys():
 							if RaptorRender.rr_data.jobs[job].chunks[chunk].status == RRStateScheme.chunk_queued:
 								
+								# add a new try
+								var current_tries_count : int = RaptorRender.rr_data.jobs[job].chunks[chunk].number_of_tries
+								var new_try_data : Dictionary = {
+									"client" : client,
+									"time_started" : OS.get_unix_time(),
+									"time_finished" : 0
+									}
+								RaptorRender.rr_data.jobs[job].chunks[chunk].tries[current_tries_count + 1] = new_try_data
+								RaptorRender.rr_data.jobs[job].chunks[chunk].number_of_tries += 1
+								
 								# start this chunk on the client
-								JobExecutionManager.start_junk( job , chunk)
+								JobExecutionManager.start_junk( job , chunk, current_tries_count + 1)
 								
 								# set current_job information for the client
 								RaptorRender.rr_data.clients[client].current_job_id = job
@@ -85,20 +95,6 @@ func distribute_jobs():
 								RaptorRender.rr_data.jobs[job].status = RRStateScheme.job_rendering
 								
 								RaptorRender.rr_data.jobs[job].chunks[chunk].status = RRStateScheme.chunk_rendering
-								
-								# add a new try
-								var current_tries_count : int = RaptorRender.rr_data.jobs[job].chunks[chunk].number_of_tries
-								var new_try_data : Dictionary = {
-									"client" : client,
-									"time_started" : OS.get_unix_time(),
-									"time_cancelled" : 0,
-									"time_finished" : 0
-									}
-								RaptorRender.rr_data.jobs[job].chunks[chunk].tries[current_tries_count + 1] = new_try_data
-								
-								# update tries count
-								RaptorRender.rr_data.jobs[job].chunks[chunk].number_of_tries += 1
-								
 								
 								
 								RaptorRender.rr_data.clients[client].status = RRStateScheme.client_rendering
