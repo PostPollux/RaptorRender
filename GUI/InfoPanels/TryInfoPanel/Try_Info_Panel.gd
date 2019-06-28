@@ -93,6 +93,9 @@ func update_current_try_id(try_id : int):
 	# load log file when either chunk_id or try_id changed
 	if currently_displayed_chunk_id != RaptorRender.current_chunk_id_for_job_info_panel or currently_displayed_try_id != try_id:
 		
+		currently_displayed_try_id = try_id
+		currently_displayed_chunk_id = RaptorRender.current_chunk_id_for_job_info_panel
+	
 		if TryInfoTabContainer.current_tab == 1:
 			clear_log()
 			read_log_file()

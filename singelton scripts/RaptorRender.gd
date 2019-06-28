@@ -812,6 +812,7 @@ func register_table(SortableTableInstance : SortableTable):
 			ChunksTable = SortableTableInstance
 			ChunksTable.connect("context_invoked", self, "chunks_context_menu_invoked")
 			ChunksTable.connect("something_just_selected", self, "chunk_selected")
+			ChunksTable.connect("selection_cleared", self, "chunk_selection_cleared")
 			
 			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
 			ChunksTable.column_names.clear()
@@ -914,7 +915,6 @@ func client_selection_cleared():
 	ClientInfoPanel.visible = false
 
 
-
 func job_selected(id_of_row : int):
 	ClientsTable.clear_selection()
 	ChunksTable.clear_selection()
@@ -939,7 +939,11 @@ func chunk_selected(id_of_row : int):
 		try_selected(1)
 	else:
 		TryInfoPanel.set_visibility(false)
-	
+
+func chunk_selection_cleared():
+	current_chunk_id_for_job_info_panel = 0
+	refresh_tries_table(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel)
+	TryInfoPanel.set_visibility(false)
 
 
 func try_selected(id_of_row : int):
@@ -1003,6 +1007,7 @@ func update_all_visible_tables():
 		JobInfoPanel.update_job_info_panel(current_job_id_for_job_info_panel)
 	elif JobInfoPanel.get_current_tab() == 1:
 		refresh_chunks_table(current_job_id_for_job_info_panel)
+		refresh_tries_table(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel)
 
 
 func refresh_jobs_table():
@@ -2011,16 +2016,17 @@ func refresh_tries_table(job_id : int, chunk_id : int):
 		if rr_data.jobs[job_id].chunks.has(chunk_id):
 			
 			# get all tries
-			var tries_array = rr_data.jobs[job_id].chunks[chunk_id].tries.keys()
+			var number_of_tries = rr_data.jobs[job_id].chunks[chunk_id].number_of_tries
 			
 			# remove unneded filled rows of TriesTable
-			if tries_array.size() < TriesTable.RowContainerFilled.SortableRows.size():
+			if number_of_tries < TriesTable.RowContainerFilled.SortableRows.size():
 				
-				for remove_id in range(tries_array.size() + 1, TriesTable.RowContainerFilled.SortableRows.size() + 1):
+				for remove_id in range(number_of_tries + 1, TriesTable.RowContainerFilled.SortableRows.size() + 1):
 					
 					TriesTable.remove_row( remove_id )
 			
-			
+			# get all tries
+			var tries_array = rr_data.jobs[job_id].chunks[chunk_id].tries.keys()
 			
 			#### Fill Chunks Table ####
 			
@@ -2085,6 +2091,14 @@ func refresh_tries_table(job_id : int, chunk_id : int):
 				count += 1
 			
 			TriesTable.sort()
+		
+		else:
+			TriesTable.clear_selection()
+			
+			# remove all rows
+			if TriesTable.RowContainerFilled.SortableRows.size() > 0:
+				for remove_id in range(1, TriesTable.RowContainerFilled.SortableRows.size() + 1):
+						TriesTable.remove_row( remove_id )
 
 
 

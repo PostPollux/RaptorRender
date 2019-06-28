@@ -64,13 +64,14 @@ func read_log_file(job_id : int, chunk_id : int, try_id : int):
 	log_chunk_id = chunk_id
 	log_try_id = try_id
 	
-	# start timer to constantly look for updates when chunk status is "rendering" and we are looking at the last try
-	if RaptorRender.rr_data.jobs[log_job_id].chunks[log_chunk_id].status == RRStateScheme.chunk_rendering and log_try_id == RaptorRender.rr_data.jobs[log_job_id].chunks[log_chunk_id].number_of_tries:
-		read_log_timer.start()
-		
-	# otherwise just read it once
-	else:
-		start_read_log_file_thread()
+	if log_job_id != 0 and log_chunk_id != 0 and log_try_id != 0:
+		# start timer to constantly look for updates when chunk status is "rendering" and we are looking at the last try
+		if RaptorRender.rr_data.jobs[log_job_id].chunks[log_chunk_id].status == RRStateScheme.chunk_rendering and log_try_id == RaptorRender.rr_data.jobs[log_job_id].chunks[log_chunk_id].number_of_tries:
+			read_log_timer.start()
+			
+		# otherwise just read it once
+		else:
+			start_read_log_file_thread()
 
 
 func start_read_log_file_thread():
@@ -84,6 +85,8 @@ func start_read_log_file_thread():
 
 
 func read_and_colorize_log_file(args):
+	
+	
 	
 	# set RenderLogValidator to the corresponding software type to enable a correct log line colorization
 	var job_type : String = RaptorRender.rr_data.jobs[log_job_id].type
