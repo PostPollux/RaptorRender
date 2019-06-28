@@ -33,7 +33,6 @@ margin_right = 50.0
 margin_bottom = 20.0
 align = 1
 valign = 1
-
 [connection signal="gui_input" from="." to="." method="_on_ClientPieChart_gui_input"]
 [connection signal="mouse_exited" from="." to="." method="_on_ClientPieChart_mouse_exited"]
 [connection signal="segment_hovered" from="." to="." method="_on_ClientPieChart_segment_hovered"]

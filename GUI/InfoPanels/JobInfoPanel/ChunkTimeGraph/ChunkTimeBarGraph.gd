@@ -22,6 +22,8 @@ export (int) var spacing_bottom = 5
 
 export (Font) var font
 
+var accumulate_tries : bool = false
+
 # other variables
 var job_id : int = 0
 

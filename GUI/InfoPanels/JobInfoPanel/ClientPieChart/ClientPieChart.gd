@@ -238,10 +238,10 @@ func _on_ClientPieChart_segment_hovered(client_and_chunk_count : Array):
 	hovered_client_id = client_and_chunk_count[0]
 	
 	if client_and_chunk_count[0] == -1:
-		NameLabel.text = "not assigned"
+		NameLabel.text = tr("JOB_CLIENT_PIE_CHART_1") # not assigned
 	else:
 		NameLabel.text = RaptorRender.rr_data.clients[ client_and_chunk_count[0] ].name
-	ChunksLabel.text = "Chunks: " + String(client_and_chunk_count[1])
+	ChunksLabel.text = tr("JOB_CLIENT_PIE_CHART_2") + ": " + String(client_and_chunk_count[1])
 
 
 func _on_ClientPieChart_mouse_exited():

@@ -13,13 +13,19 @@ var job_id : int = -1
 var hovered_chunk : int
 
 # references to other nodes of ChunkTimeGraph
+onready var HeadingLabel : Label = $"VBoxContainer/HeaderContainer/HeadingLabel"
 onready var BarGraph = $"VBoxContainer/ChunkTimeBarGraph"
-onready var ChunkNameLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
-onready var ChunkClientLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
-onready var ChunkRendertimeLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
-onready var ChunkTriesLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesValueLabel"
+onready var ChunkNameLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameLabel"
+onready var ChunkClientLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientLabel"
+onready var ChunkRendertimeLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeLabel"
+onready var ChunkTriesLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesLabel"
+onready var ChunkNameValueLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameValueLabel"
+onready var ChunkClientValueLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer2/ChunkClientValueLabel"
+onready var ChunkRendertimeValueLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer3/ChunkRendertimeValueLabel"
+onready var ChunkTriesValueLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer4/ChunkTriesValueLabel"
 onready var ChunkInfoBox = $"VBoxContainer/ClipContainer/ChunkInfoBox"
 onready var GraphOptions = $"GraphOptions"
+onready var AccumulateTriesCheckBox : CheckBox = $"GraphOptions/MarginContainer/VBoxContainer/AccumulateTriesCheckBox"
 
 
 
@@ -27,6 +33,15 @@ onready var GraphOptions = $"GraphOptions"
 func _ready():
 	
 	GraphOptions.visible = false
+	
+	HeadingLabel.text = "JOB_CHUNK_TIME_GRAPH_1" # Chunk Time Graph
+	
+	ChunkNameLabel.text = "JOB_CHUNK_TIME_GRAPH_2" # Chunk
+	ChunkClientLabel.text = "JOB_CHUNK_TIME_GRAPH_3" # Client
+	ChunkRendertimeLabel.text = "JOB_CHUNK_TIME_GRAPH_4" # Time
+	ChunkTriesLabel.text = "JOB_CHUNK_TIME_GRAPH_5" # Tries
+	
+	AccumulateTriesCheckBox.text = "JOB_CHUNK_TIME_GRAPH_6" # Accumulate Tries
 	
 	# connect signals
 	BarGraph.connect("chunk_hovered", self, "fill_chunk_info_box")
@@ -47,19 +62,17 @@ func fill_chunk_info_box(chunk_number : int):
 	var last_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frame_end
 	
 	if first_chunk_frame == last_chunk_frame:
-		ChunkNameLabel.text = String (chunk_number) + "  (Frame: " + String(first_chunk_frame) + ")"
+		ChunkNameValueLabel.text = String (chunk_number) + "  (Frame: " + String(first_chunk_frame) + ")"
 	else:
-		ChunkNameLabel.text = String (chunk_number) + "  (" +  String(first_chunk_frame) + " - " + String(last_chunk_frame) + ")" 
+		ChunkNameValueLabel.text = String (chunk_number) + "  (" +  String(first_chunk_frame) + " - " + String(last_chunk_frame) + ")" 
 	
 	
 	# chunk client
 	var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].number_of_tries
 	if number_of_tries > 0:
-		if  RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].tries[number_of_tries].client == -1:
-			ChunkClientLabel.text = "-" 
-		else:
-			ChunkClientLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].tries[number_of_tries].client ].name
-	
+		ChunkClientValueLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].tries[number_of_tries].client ].name
+	else:
+		ChunkClientValueLabel.text = "-" 
 	
 	# chunk render time
 	var chunk_dict : Dictionary = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
@@ -71,28 +84,28 @@ func fill_chunk_info_box(chunk_number : int):
 			chunk_rendertime =  chunk_dict.tries[number_of_tries].time_stopped - chunk_dict.tries[number_of_tries].time_started
 		else:
 			chunk_rendertime = 1
-		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
+		ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
 		
 	elif chunk_dict.status == RRStateScheme.chunk_rendering:
 		chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started
-		ChunkRendertimeLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
+		ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
 	
 	else:
-		ChunkRendertimeLabel.text =  "-"
+		ChunkRendertimeValueLabel.text =  "-"
 	
 	
 	# chunk tries
 	
-	ChunkTriesLabel.text = String( RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].number_of_tries)
+	ChunkTriesValueLabel.text = String( RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].number_of_tries)
 
 
 
 # reset labels if mouse leaves the graph
 func _on_BarGraph_mouse_exited():
-	ChunkNameLabel.text = ""
-	ChunkClientLabel.text = "" 
-	ChunkRendertimeLabel.text =  ""
-	ChunkTriesLabel.text = ""
+	ChunkNameValueLabel.text = ""
+	ChunkClientValueLabel.text = "" 
+	ChunkRendertimeValueLabel.text =  ""
+	ChunkTriesValueLabel.text = ""
 
 
 
@@ -104,7 +117,8 @@ func _on_OptionsButton_pressed():
 		GraphOptions.visible = true
 
 
-func _on_AccumulateTriesCheckBox_toggled(button_pressed):
+func _on_AccumulateTriesCheckBox_toggled(toggle_value):
 	GraphOptions.visible = false
+	BarGraph.accumulate_tries = toggle_value
 	RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 
