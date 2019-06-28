@@ -102,16 +102,30 @@ func draw_ChunkTimeGraph(job_id : int):
 		var number_of_tries : int = chunk_dict.number_of_tries
 		
 		if chunk_dict.status == RRStateScheme.chunk_finished: 
+		
 			if number_of_tries > 0:
-				chunk_rendertime =  chunk_dict.tries[number_of_tries].time_stopped - chunk_dict.tries[number_of_tries].time_started
+				if accumulate_tries:
+					for try in range(1, number_of_tries + 1):
+						chunk_rendertime +=  chunk_dict.tries[try].time_stopped - chunk_dict.tries[try].time_started
+				else:
+					chunk_rendertime =  chunk_dict.tries[number_of_tries].time_stopped - chunk_dict.tries[number_of_tries].time_started
 			else:
 				chunk_rendertime = 1
+				
 			finished = true
 			rendertimes.append(chunk_rendertime)
 			at_least_one_finished_chunk = true
 			
 		if chunk_dict.status == RRStateScheme.chunk_rendering:
-			chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started
+			if accumulate_tries:
+				for try in range(1, number_of_tries + 1):
+					if chunk_dict.tries[try].status == RRStateScheme.try_rendering:
+						chunk_rendertime +=  OS.get_unix_time() - chunk_dict.tries[try].time_started
+					else:
+						chunk_rendertime +=  chunk_dict.tries[try].time_stopped - chunk_dict.tries[try].time_started
+			else:
+				chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started
+			
 			finished = false
 			rendertimes.append(chunk_rendertime)
 			at_least_one_rendering_chunk = true
@@ -143,13 +157,27 @@ func draw_ChunkTimeGraph(job_id : int):
 		
 		if chunk_dict.status == RRStateScheme.chunk_finished: 
 			if number_of_tries > 0:
-				chunk_rendertime =  chunk_dict.tries[number_of_tries].time_stopped - chunk_dict.tries[number_of_tries].time_started
+				if accumulate_tries:
+					for try in range(1, number_of_tries + 1):
+						chunk_rendertime +=  chunk_dict.tries[try].time_stopped - chunk_dict.tries[try].time_started
+				else:
+					chunk_rendertime =  chunk_dict.tries[number_of_tries].time_stopped - chunk_dict.tries[number_of_tries].time_started
 			else:
 				chunk_rendertime = 1
 			
+			
 		if chunk_dict.status == RRStateScheme.chunk_rendering:
-			chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started
-		
+			
+			if number_of_tries > 0:
+				if accumulate_tries:
+					for try in range(1, number_of_tries + 1):
+						if chunk_dict.tries[try].status == RRStateScheme.try_rendering:
+							chunk_rendertime +=  OS.get_unix_time() - chunk_dict.tries[try].time_started
+						else:
+							chunk_rendertime +=  chunk_dict.tries[try].time_stopped - chunk_dict.tries[try].time_started
+				else:
+					chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started
+				
 		var bar_height : float = 0
 		var color_interpolation_factor : float = 0
 		

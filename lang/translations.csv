@@ -63,10 +63,11 @@ JOB_CHUNK_TIME_GRAPH_3,Client:,Client:
 JOB_CHUNK_TIME_GRAPH_4,Time:,Zeit:
 JOB_CHUNK_TIME_GRAPH_5,Tries:,Versuche:
 JOB_CHUNK_TIME_GRAPH_6,Accumulate Tries,Versuche addieren
+JOB_CHUNK_TIME_GRAPH_7,accumulated,zusammengerechnet
+JOB_CHUNK_TIME_GRAPH_8,several,mehrere
 ,,
 JOB_CLIENT_PIE_CHART_1,not assigned,nicht zugeordnet
 JOB_CLIENT_PIE_CHART_2,Chunks,Chunks
-,,
 ,,
 ,,
 CLIENT_COLUMN_1,Status,Status

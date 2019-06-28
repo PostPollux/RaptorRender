@@ -210,11 +210,17 @@ func _ready():
 						"status" : RRStateScheme.chunk_finished,
 						"frame_start" : 20,
 						"frame_end" : 25,
-						"number_of_tries" : 1,
+						"number_of_tries" : 2,
 						"tries": {
 							1:{
 								"status" : RRStateScheme.try_finished,
 								"client" : 4,
+								"time_started" : 1528523180,
+								"time_stopped" : 1528523275
+							},
+							2:{
+								"status" : RRStateScheme.try_finished,
+								"client" : 13,
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523275
 							}
@@ -956,12 +962,14 @@ func chunk_selected(id_of_row : int):
 		try_selected(1)
 	else:
 		current_try_id_for_job_info_panel = 0
+		TryInfoPanel.currently_displayed_try_id = 0
 		TryInfoPanel.set_visibility(false)
 
 func chunk_selection_cleared():
 	current_chunk_id_for_job_info_panel = 0
 	current_try_id_for_job_info_panel = 0
 	refresh_tries_table(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel)
+	TryInfoPanel.currently_displayed_try_id = 0
 	TryInfoPanel.set_visibility(false)
 
 

@@ -56,10 +56,13 @@ func fill_chunk_info_box(chunk_number : int):
 	
 	hovered_chunk = chunk_number
 	
+	var chunk_dict : Dictionary = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
+	var number_of_tries : int = chunk_dict.number_of_tries
+	
 	# chunk name
 	
-	var first_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frame_start
-	var last_chunk_frame : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].frame_end
+	var first_chunk_frame : int = chunk_dict.frame_start
+	var last_chunk_frame : int = chunk_dict.frame_end
 	
 	if first_chunk_frame == last_chunk_frame:
 		ChunkNameValueLabel.text = String (chunk_number) + "  (Frame: " + String(first_chunk_frame) + ")"
@@ -68,27 +71,55 @@ func fill_chunk_info_box(chunk_number : int):
 	
 	
 	# chunk client
-	var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].number_of_tries
 	if number_of_tries > 0:
-		ChunkClientValueLabel.text = RaptorRender.rr_data.clients[ RaptorRender.rr_data.jobs[job_id].chunks[chunk_number].tries[number_of_tries].client ].name
+		if BarGraph.accumulate_tries:
+			
+			# initialize client with the name of the client of the first try
+			var client : String = RaptorRender.rr_data.clients[ chunk_dict.tries[1].client ].name
+			for try in range(1, number_of_tries + 1):
+				if RaptorRender.rr_data.clients[ chunk_dict.tries[try].client ].name != client:
+					client = tr("JOB_CHUNK_TIME_GRAPH_8")
+					
+			ChunkClientValueLabel.text = client
+			
+		else:
+			ChunkClientValueLabel.text = RaptorRender.rr_data.clients[ chunk_dict.tries[number_of_tries].client ].name
 	else:
 		ChunkClientValueLabel.text = "-" 
 	
-	# chunk render time
-	var chunk_dict : Dictionary = RaptorRender.rr_data.jobs[job_id].chunks[chunk_number]
 	
+	# chunk render time
 	var chunk_rendertime : int = 0
 	
 	if chunk_dict.status == RRStateScheme.chunk_finished: 
 		if number_of_tries > 0:
-			chunk_rendertime =  chunk_dict.tries[number_of_tries].time_stopped - chunk_dict.tries[number_of_tries].time_started
+			if BarGraph.accumulate_tries:
+				for try in range(1, number_of_tries + 1):
+					chunk_rendertime +=  chunk_dict.tries[try].time_stopped - chunk_dict.tries[try].time_started
+			else:
+				chunk_rendertime =  chunk_dict.tries[number_of_tries].time_stopped - chunk_dict.tries[number_of_tries].time_started
 		else:
 			chunk_rendertime = 1
-		ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
 		
+		if BarGraph.accumulate_tries and number_of_tries > 1:
+			ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3) + " (" + tr("JOB_CHUNK_TIME_GRAPH_7") + ")"
+		else:
+			ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
+			
 	elif chunk_dict.status == RRStateScheme.chunk_rendering:
-		chunk_rendertime = OS.get_unix_time() - chunk_dict.tries[number_of_tries].time_started
-		ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
+		
+		if number_of_tries > 0:
+			if BarGraph.accumulate_tries:
+				for try in range(1, number_of_tries + 1):
+					if chunk_dict.tries[try].status == RRStateScheme.try_rendering:
+						chunk_rendertime +=  OS.get_unix_time() - chunk_dict.tries[try].time_started
+					else:
+						chunk_rendertime +=  chunk_dict.tries[try].time_stopped - chunk_dict.tries[try].time_started
+		
+		if BarGraph.accumulate_tries and number_of_tries > 1:
+			ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3) + " (" + tr("JOB_CHUNK_TIME_GRAPH_7") + ")"
+		else:
+			ChunkRendertimeValueLabel.text = TimeFunctions.seconds_to_string(chunk_rendertime,3)
 	
 	else:
 		ChunkRendertimeValueLabel.text =  "-"
@@ -120,5 +151,4 @@ func _on_OptionsButton_pressed():
 func _on_AccumulateTriesCheckBox_toggled(toggle_value):
 	GraphOptions.visible = false
 	BarGraph.accumulate_tries = toggle_value
-	RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 
