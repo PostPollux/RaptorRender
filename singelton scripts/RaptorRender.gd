@@ -38,7 +38,6 @@ var update_tables_timer : Timer
 
 func _ready():
 	
-	
 	# create timer to constantly distribute the work across the connected clients 
 	update_tables_timer = Timer.new()
 	update_tables_timer.name = "Distribute Job Timer"
@@ -1449,7 +1448,7 @@ func refresh_jobs_table():
 			### Time Created ###
 			
 			var LabelTimeCreated = Label.new()
-			LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job].time_created, 2)
+			LabelTimeCreated.text = TimeFunctions.time_stamp_to_date_as_string( rr_data.jobs[job].time_created, 2, true)
 			JobsTable.set_cell_content(count, time_created_column, LabelTimeCreated)
 			
 			# update sort_value
@@ -1757,7 +1756,7 @@ func refresh_chunks_table(job_id):
 						
 						# change the cell value
 						var time_started = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
-						cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
+						cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
 						
 						# update sort_value
 						ChunksTable.set_cell_sort_value(row_position, started_column,  time_started)
@@ -1788,7 +1787,7 @@ func refresh_chunks_table(job_id):
 						var time_finished = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_finished
 						
 						if time_finished != 0:
-							cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1)
+							cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1, true)
 						else:
 							cell.get_child(0).text = "-"
 							
@@ -1967,7 +1966,7 @@ func refresh_chunks_table(job_id):
 				
 				if number_of_tries != 0:
 					time_started = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
-					LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1 )
+					LabelTimeStarted.text = TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
 				else:
 					LabelTimeStarted.text = "-"
 				ChunksTable.set_cell_content(count, started_column, LabelTimeStarted)
@@ -1987,7 +1986,7 @@ func refresh_chunks_table(job_id):
 				if number_of_tries != 0:
 					time_finished = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_finished
 					if time_finished != 0:
-						LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1 )
+						LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1, true )
 					else:
 						LabelTimeFinished.text = "-"
 				else:

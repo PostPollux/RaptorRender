@@ -93,7 +93,7 @@ func update_job_info_panel(job_id : int):
 		CreatorLabel.text = tr("JOB_DETAIL_4") + ":  " + selected_job["creator"]
 		
 		# time created
-		TimeCreatedLabel.text = tr("JOB_DETAIL_5") + ":  " + TimeFunctions.time_stamp_to_date_as_string( selected_job["time_created"], 2)
+		TimeCreatedLabel.text = tr("JOB_DETAIL_5") + ":  " + TimeFunctions.time_stamp_to_date_as_string( selected_job["time_created"], 2, true)
 		
 		
 		

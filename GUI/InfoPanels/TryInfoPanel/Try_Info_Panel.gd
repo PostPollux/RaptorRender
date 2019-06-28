@@ -70,10 +70,10 @@ func update_try_info_panel(job_id : int, chunk_id : int, try_id : int):
 	ClientLabel.text = tr("TRY_DETAIL_3") + ":   " + RaptorRender.rr_data.clients[client_id].name
 	
 	var time_started : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_started
-	TimeStartedLabel.text = tr("TRY_DETAIL_4") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
+	TimeStartedLabel.text = tr("TRY_DETAIL_4") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
 	
 	var time_stopped: int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_finished
-	TimeStoppedLabel.text = tr("TRY_DETAIL_5") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1)
+	TimeStoppedLabel.text = tr("TRY_DETAIL_5") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
 	
 	var time_needed : int = time_stopped - time_started
 	TimeNeededLabel.text = tr("TRY_DETAIL_6") + ":   " + TimeFunctions.seconds_to_string(time_needed, 3)

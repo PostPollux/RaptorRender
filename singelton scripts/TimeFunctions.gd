@@ -1,14 +1,17 @@
 extends Node
 
+var time_zone : Dictionary
+
+func _ready():
+	time_zone = OS.get_time_zone_info()
 
 
-func time_stamp_with_time_zone() -> int:
-	var time_zone : Dictionary = OS.get_time_zone_info()
-	var time_stamp : int = OS.get_unix_time() + time_zone.bias * 60
-	return time_stamp
 
-
-func time_stamp_to_date_as_string(unix_time_stamp : int, display_mode : int) -> String:
+func time_stamp_to_date_as_string(unix_time_stamp : int, display_mode : int, correct_by_timezone : bool) -> String:
+	
+	if correct_by_timezone:
+		unix_time_stamp = unix_time_stamp + (time_zone.bias * 60)
+	
 	var date : Dictionary = OS.get_datetime_from_unix_time( unix_time_stamp)
 	
 	var str_date : String = ""
