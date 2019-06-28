@@ -27,8 +27,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -59,7 +57,7 @@ custom_constants/margin_bottom = 20
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 683.0
-margin_bottom = 122.0
+margin_bottom = 140.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
 
@@ -70,31 +68,38 @@ rect_min_size = Vector2( 0, 30 )
 custom_fonts/font = SubResource( 2 )
 text = "Try 1"
 
-[node name="ClientLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 34.0
 margin_right = 663.0
 margin_bottom = 48.0
-text = "Client:   T-Rex_1"
+text = "Status:   Finished"
 
-[node name="TimeStartedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="ClientLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 52.0
 margin_right = 663.0
 margin_bottom = 66.0
-text = "Started:   25.6.2018 11:45"
+text = "Client:   T-Rex_1"
 
-[node name="TimeStoppedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="TimeStartedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 70.0
 margin_right = 663.0
 margin_bottom = 84.0
-text = "Finished:   25.6.2018 11:45"
+text = "Started:   25.6.2018 11:45"
 
-[node name="TimeNeededLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="TimeStoppedLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 88.0
 margin_right = 663.0
 margin_bottom = 102.0
+text = "Finished:   25.6.2018 11:45"
+
+[node name="TimeNeededLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+margin_top = 106.0
+margin_right = 663.0
+margin_bottom = 120.0
 text = "Rendertime:   25s"
 
 [node name="Log" type="Tabs" parent="TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0

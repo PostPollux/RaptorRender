@@ -19,6 +19,13 @@ var chunk_paused : String = "4_paused"
 var chunk_finished: String = "5_finished"
 var chunk_cancelled: String = "6_cancelled"
 
+# try states
+var try_rendering : String = "1_rendering"
+var try_error : String = "2_error"
+var try_finished: String = "3_finished"
+var try_cancelled: String = "4_cancelled"
+var try_marked_as_finished: String = "5_marked_as_finished"
+
 
 # client states
 var client_rendering : String = "1_rendering"

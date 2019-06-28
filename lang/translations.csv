@@ -134,16 +134,25 @@ TRY_COLUMN_1,Try,Versuch
 ,,
 TRY_DETAIL_1,Details,Details
 TRY_DETAIL_2,Try,Versuch
-TRY_DETAIL_3,Client,Client
-TRY_DETAIL_4,Time Started,Startzeit
-TRY_DETAIL_5,Time Finished,Fertigstellung
-TRY_DETAIL_6,Rendertime,Renderzeit
+TRY_DETAIL_3,Status,Status
+TRY_DETAIL_4,Client,Client
+TRY_DETAIL_5,Time Started,Startzeit
+TRY_DETAIL_6,Time Finished,Fertigstellung
+TRY_DETAIL_7,Rendertime,Renderzeit
+,,
+TRY_DETAIL_STATUS_1,Rendering,In Arbeit
+TRY_DETAIL_STATUS_2,Error,Fehler
+TRY_DETAIL_STATUS_3,Finished,Fertiggestellt
+TRY_DETAIL_STATUS_4,Cancelled,Abgebrochen
+TRY_DETAIL_STATUS_5,Marked as Finished,Als fertig markiert
 ,,
 TRY_LOG_1,Log,Log
 TRY_LOG_2,No log file found!,Keine Log-Datei gefunden!
 ,,
+,,
 LOG_CONTEXT_MENU_1,open log externally,Log mit externem Editor öffnen
 LOG_CONTEXT_MENU_2,open logs folder,Logverzeichnis öffnen
+,,
 ,,
 ,,
 ,,

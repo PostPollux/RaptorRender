@@ -33,6 +33,7 @@ var rr_data = {}
 
 var current_job_id_for_job_info_panel : int
 var current_chunk_id_for_job_info_panel : int
+var current_try_id_for_job_info_panel : int
 
 var update_tables_timer : Timer 
 
@@ -197,9 +198,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523280
+								"time_stopped" : 1528523280
 							}
 						}
 						
@@ -211,9 +213,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 4,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523275
+								"time_stopped" : 1528523275
 							}
 						}
 					},
@@ -224,9 +227,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 8,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523299
+								"time_stopped" : 1528523299
 							}
 						}
 					},
@@ -237,9 +241,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523268
+								"time_stopped" : 1528523268
 							}
 						}
 					},
@@ -250,9 +255,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 10,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523245
+								"time_stopped" : 1528523245
 							}
 						}
 					},
@@ -263,9 +269,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523222
+								"time_stopped" : 1528523222
 							}
 						}
 					},
@@ -276,9 +283,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 7,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523200
+								"time_stopped" : 1528523200
 							}
 						}
 					},
@@ -289,9 +297,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523190
+								"time_stopped" : 1528523190
 							}
 						}
 					},
@@ -302,9 +311,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523285
+								"time_stopped" : 1528523285
 							}
 						}
 					},
@@ -315,9 +325,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523230
+								"time_stopped" : 1528523230
 							}
 						}
 					},
@@ -328,9 +339,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 13,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523250
+								"time_stopped" : 1528523250
 							}
 						}
 					},
@@ -341,9 +353,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 13,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523270
+								"time_stopped" : 1528523270
 							}
 						}
 					},
@@ -354,9 +367,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 15,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523260
+								"time_stopped" : 1528523260
 							}
 						}
 					},
@@ -367,9 +381,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 16,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523320
+								"time_stopped" : 1528523320
 							}
 						}
 					},
@@ -380,9 +395,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 2,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523290
+								"time_stopped" : 1528523290
 							}
 						}
 					},
@@ -393,9 +409,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 2,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523255
+								"time_stopped" : 1528523255
 							}
 						}
 					},
@@ -406,9 +423,10 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
-								"time_finished" : 1528523430
+								"time_stopped" : 1528523430
 							}
 						}
 					}
@@ -937,15 +955,19 @@ func chunk_selected(id_of_row : int):
 	if rr_data.jobs[current_job_id_for_job_info_panel].chunks[current_chunk_id_for_job_info_panel].number_of_tries > 0:
 		try_selected(1)
 	else:
+		current_try_id_for_job_info_panel = 0
 		TryInfoPanel.set_visibility(false)
 
 func chunk_selection_cleared():
 	current_chunk_id_for_job_info_panel = 0
+	current_try_id_for_job_info_panel = 0
 	refresh_tries_table(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel)
 	TryInfoPanel.set_visibility(false)
 
 
 func try_selected(id_of_row : int):
+	current_try_id_for_job_info_panel = id_of_row
+	
 	TryInfoPanel.set_visibility(true)
 	TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, id_of_row)
 	TryInfoPanel.update_current_try_id(id_of_row)
@@ -1007,6 +1029,7 @@ func update_all_visible_tables():
 	elif JobInfoPanel.get_current_tab() == 1:
 		refresh_chunks_table(current_job_id_for_job_info_panel)
 		refresh_tries_table(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel)
+		TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, current_try_id_for_job_info_panel)
 
 
 func refresh_jobs_table():
@@ -1703,7 +1726,7 @@ func refresh_chunks_table(job_id):
 				
 				if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished: 
 					if number_of_tries > 0:
-						chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_finished - rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
+						chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_stopped - rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
 					
 				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering: 
 					chunk_rendertime = OS.get_unix_time() - rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
@@ -1778,21 +1801,21 @@ func refresh_chunks_table(job_id):
 				if number_of_tries != 0:
 					
 					# only change when value is different
-					if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_finished):
+					if (row.sort_values[finished_column] != rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_stopped):
 					
 						# get reference to the cell
 						var cell = ChunksTable.get_cell( row_position, finished_column )
 						
 						# change the cell value
-						var time_finished = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_finished
+						var time_stopped = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_stopped
 						
-						if time_finished != 0:
-							cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1, true)
+						if time_stopped != 0:
+							cell.get_child(0).text = TimeFunctions.time_stamp_to_date_as_string(time_stopped, 1, true)
 						else:
 							cell.get_child(0).text = "-"
 							
 						# update sort_value
-						ChunksTable.set_cell_sort_value(row_position, finished_column, time_finished)
+						ChunksTable.set_cell_sort_value(row_position, finished_column, time_stopped)
 				else:
 					# get reference to the cell
 					var cell = ChunksTable.get_cell( row_position, finished_column )
@@ -1928,7 +1951,7 @@ func refresh_chunks_table(job_id):
 				var chunk_rendertime = 0
 				
 				if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished: 
-					chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_finished - rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
+					chunk_rendertime = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_stopped - rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_started
 					LabelRendertime.text = TimeFunctions.seconds_to_string(chunk_rendertime, 3)
 					
 				elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering: 
@@ -1981,12 +2004,12 @@ func refresh_chunks_table(job_id):
 				
 				var LabelTimeFinished = Label.new()
 				
-				var time_finished : int = 0
+				var time_stopped : int = 0
 				
 				if number_of_tries != 0:
-					time_finished = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_finished
-					if time_finished != 0:
-						LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(time_finished, 1, true )
+					time_stopped = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_stopped
+					if time_stopped != 0:
+						LabelTimeFinished.text = TimeFunctions.time_stamp_to_date_as_string(time_stopped, 1, true )
 					else:
 						LabelTimeFinished.text = "-"
 				else:
@@ -1994,7 +2017,7 @@ func refresh_chunks_table(job_id):
 				ChunksTable.set_cell_content(count, finished_column, LabelTimeFinished)
 				
 				# update sort_value
-				ChunksTable.set_cell_sort_value(count, finished_column, time_finished)
+				ChunksTable.set_cell_sort_value(count, finished_column, time_stopped)
 			
 			
 			

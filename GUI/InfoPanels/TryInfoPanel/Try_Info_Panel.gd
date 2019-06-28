@@ -7,6 +7,7 @@ onready var TryInfoTabContainer = $"TabContainer"
 onready var DetailsVisibilityContainer = $"TabContainer/Details/ScrollContainer"
 
 onready var NameLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/NameLabel"
+onready var StatusLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/StatusLabel"
 onready var ClientLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/ClientLabel"
 onready var TimeStartedLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStartedLabel"
 onready var TimeStoppedLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStoppedLabel"
@@ -63,20 +64,33 @@ func _on_TabContainer_tab_selected(tab):
 
 func update_try_info_panel(job_id : int, chunk_id : int, try_id : int):
 	
+	if job_id != 0 and chunk_id != 0 and try_id != 0:
 	
-	NameLabel.text = tr("TRY_DETAIL_2") + " " + String(try_id)
-	
-	var client_id : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].client
-	ClientLabel.text = tr("TRY_DETAIL_3") + ":   " + RaptorRender.rr_data.clients[client_id].name
-	
-	var time_started : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_started
-	TimeStartedLabel.text = tr("TRY_DETAIL_4") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
-	
-	var time_stopped: int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_finished
-	TimeStoppedLabel.text = tr("TRY_DETAIL_5") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
-	
-	var time_needed : int = time_stopped - time_started
-	TimeNeededLabel.text = tr("TRY_DETAIL_6") + ":   " + TimeFunctions.seconds_to_string(time_needed, 3)
+		NameLabel.text = tr("TRY_DETAIL_2") + " " + String(try_id)
+		
+		var status : String = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].status
+		match status:
+			RRStateScheme.try_rendering : StatusLabel.text = tr("TRY_DETAIL_3") + ":   " + tr("TRY_DETAIL_STATUS_1")
+			RRStateScheme.try_error : StatusLabel.text = tr("TRY_DETAIL_3") + ":   " + tr("TRY_DETAIL_STATUS_2")
+			RRStateScheme.try_finished : StatusLabel.text = tr("TRY_DETAIL_3") + ":   " + tr("TRY_DETAIL_STATUS_3")
+			RRStateScheme.try_cancelled : StatusLabel.text = tr("TRY_DETAIL_3") + ":   " + tr("TRY_DETAIL_STATUS_4")
+			RRStateScheme.try_marked_as_finished : StatusLabel.text = tr("TRY_DETAIL_3") + ":   " + tr("TRY_DETAIL_STATUS_5")
+		
+		var client_id : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].client
+		ClientLabel.text = tr("TRY_DETAIL_4") + ":   " + RaptorRender.rr_data.clients[client_id].name
+		
+		var time_started : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_started
+		TimeStartedLabel.text = tr("TRY_DETAIL_5") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
+		
+		var time_stopped: int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_stopped
+		TimeStoppedLabel.text = tr("TRY_DETAIL_6") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_stopped, 1, true)
+		
+		# calculate time needed
+		if time_stopped == 0:
+			time_stopped = OS.get_unix_time()
+			
+		var time_needed : int = time_stopped - time_started
+		TimeNeededLabel.text = tr("TRY_DETAIL_7") + ":   " + TimeFunctions.seconds_to_string(time_needed, 3)
 
 
 

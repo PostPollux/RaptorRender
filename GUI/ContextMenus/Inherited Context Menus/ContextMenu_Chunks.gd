@@ -81,8 +81,12 @@ func _on_ContextMenu_index_pressed(index):
 					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
 						CommandLineManager.kill_current_render_process()
 					
-					# change status
+					# change chunk status
 					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].status = RRStateScheme.chunk_queued
+					
+					# change try status
+					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].status = RRStateScheme.try_cancelled
+					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].time_stopped = OS.get_unix_time()
 					
 				elif status == RRStateScheme.chunk_paused or status == RRStateScheme.chunk_finished or status == RRStateScheme.chunk_error:
 					# change status
@@ -108,8 +112,9 @@ func _on_ContextMenu_index_pressed(index):
 					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
 						CommandLineManager.kill_current_render_process()
 					
-					# set time_finished
-					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].time_finished = OS.get_unix_time()
+					# change try status
+					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].status = RRStateScheme.try_marked_as_finished
+					RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].time_stopped = OS.get_unix_time()
 					
 				if status == RRStateScheme.chunk_rendering or status == RRStateScheme.chunk_paused or status == RRStateScheme.chunk_queued or status == RRStateScheme.chunk_error:
 					
