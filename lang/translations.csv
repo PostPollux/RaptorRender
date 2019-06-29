@@ -100,6 +100,12 @@ CLIENT_DETAIL_STATUS_3,Error,Fehlerhaft
 CLIENT_DETAIL_STATUS_4,Disabled,Deaktiviert
 CLIENT_DETAIL_STATUS_5,Offline,Nicht erreichbar
 ,,
+CLIENT_LATEST_LOG_1,Latest Log,Neuester Log
+CLIENT_LATEST_LOG_2,Job,Job
+CLIENT_LATEST_LOG_3,Chunk,Chunk
+CLIENT_LATEST_LOG_4,Try,Versuch
+,,
+,,
 CLIENT_CONTEXT_MENU_1,Enable Client,Client aktivieren
 CLIENT_CONTEXT_MENU_2,Disable Client Deferred,Client verzögert deaktivieren
 CLIENT_CONTEXT_MENU_3,Disable Client Immediately,Client sofort deaktivieren

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://GUI/icons/client_status/client_status_200x100.png" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/textures/usage_status_progress_texture.tres" type="Texture" id=4]
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/cpu_usage.gd" type="Script" id=5]
 [ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/memory_usage.gd" type="Script" id=6]
-[ext_resource path="res://GUI/InfoPanels/ClientInfoPanel/current render log panel.gd" type="Script" id=7]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://GUI/fonts/Caliban.ttf"
@@ -33,7 +32,7 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -51,7 +50,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer"]
-margin_right = 460.0
+margin_right = 470.0
 margin_bottom = 568.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -63,7 +62,7 @@ custom_constants/margin_bottom = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 440.0
+margin_right = 450.0
 margin_bottom = 548.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -430,7 +429,6 @@ margin_bottom = 32.0
 text = "Windows 10"
 
 [node name="Current Render Log" type="Tabs" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -438,41 +436,162 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="current render log panel" type="MarginContainer" parent="TabContainer/Current Render Log"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Current Render Log"]
+anchor_right = 1.0
+margin_left = 22.0
+margin_bottom = 31.0
+custom_constants/separation = 10
+
+[node name="Job" type="MarginContainer" parent="TabContainer/Current Render Log/HBoxContainer"]
+margin_right = 86.0
+margin_bottom = 31.0
+
+[node name="JobButton" type="Button" parent="TabContainer/Current Render Log/HBoxContainer/Job"]
+margin_top = 3.0
+margin_right = 86.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Current Render Log/HBoxContainer/Job"]
+margin_right = 86.0
+margin_bottom = 31.0
+mouse_filter = 2
+custom_constants/separation = 2
+
+[node name="spacing" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Job/HBoxContainer"]
+margin_bottom = 31.0
+text = "
+"
+
+[node name="JobHeading" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Job/HBoxContainer"]
+margin_left = 2.0
+margin_top = 8.0
+margin_right = 25.0
+margin_bottom = 22.0
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+text = "Job:"
+
+[node name="JobValue" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Job/HBoxContainer"]
+margin_left = 27.0
+margin_top = 8.0
+margin_right = 84.0
+margin_bottom = 22.0
+text = "JobName"
+
+[node name="spacing2" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Job/HBoxContainer"]
+margin_left = 86.0
+margin_right = 86.0
+margin_bottom = 31.0
+text = "
+"
+
+[node name="Chunk" type="MarginContainer" parent="TabContainer/Current Render Log/HBoxContainer"]
+margin_left = 96.0
+margin_right = 153.0
+margin_bottom = 31.0
+
+[node name="ChunkButton" type="Button" parent="TabContainer/Current Render Log/HBoxContainer/Chunk"]
+margin_top = 3.0
+margin_right = 57.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Current Render Log/HBoxContainer/Chunk"]
+margin_right = 57.0
+margin_bottom = 31.0
+mouse_filter = 2
+custom_constants/separation = 2
+
+[node name="spacing" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Chunk/HBoxContainer"]
+margin_bottom = 31.0
+text = "
+"
+
+[node name="ChunkHeading" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Chunk/HBoxContainer"]
+margin_left = 2.0
+margin_top = 8.0
+margin_right = 45.0
+margin_bottom = 22.0
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+text = "Chunk:"
+
+[node name="ChunkValue" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Chunk/HBoxContainer"]
+margin_left = 47.0
+margin_top = 8.0
+margin_right = 55.0
+margin_bottom = 22.0
+text = "2"
+
+[node name="spacing2" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Chunk/HBoxContainer"]
+margin_left = 57.0
+margin_right = 57.0
+margin_bottom = 31.0
+text = "
+"
+
+[node name="Try" type="MarginContainer" parent="TabContainer/Current Render Log/HBoxContainer"]
+margin_left = 163.0
+margin_right = 200.0
+margin_bottom = 31.0
+
+[node name="TryButton" type="Button" parent="TabContainer/Current Render Log/HBoxContainer/Try"]
+margin_top = 3.0
+margin_right = 37.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Current Render Log/HBoxContainer/Try"]
+margin_right = 37.0
+margin_bottom = 31.0
+mouse_filter = 2
+custom_constants/separation = 2
+
+[node name="spacing" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Try/HBoxContainer"]
+margin_bottom = 31.0
+text = "
+"
+
+[node name="TryHeading" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Try/HBoxContainer"]
+margin_left = 2.0
+margin_top = 8.0
+margin_right = 25.0
+margin_bottom = 22.0
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+text = "Try:"
+
+[node name="TryValue" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Try/HBoxContainer"]
+margin_left = 27.0
+margin_top = 8.0
+margin_right = 35.0
+margin_bottom = 22.0
+text = "3"
+
+[node name="spacing2" type="Label" parent="TabContainer/Current Render Log/HBoxContainer/Try/HBoxContainer"]
+margin_left = 37.0
+margin_right = 37.0
+margin_bottom = 31.0
+text = "
+"
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Current Render Log"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -62.0
+margin_top = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 7 )
 
-[node name="LogText" type="RichTextLabel" parent="TabContainer/Current Render Log/current render log panel"]
+[node name="LogRichtTextLabel" type="RichTextLabel" parent="TabContainer/Current Render Log/MarginContainer"]
 margin_right = 470.0
-margin_bottom = 502.0
+margin_bottom = 524.0
 focus_mode = 2
 bbcode_enabled = true
 scroll_following = true
 selection_enabled = true
-
-[node name="StartButton" type="Button" parent="TabContainer/Current Render Log"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 13.2964
-margin_top = -42.6482
-margin_right = 145.296
-margin_bottom = -6.64819
-rect_pivot_offset = Vector2( 67.6371, 18.9391 )
-text = "start render"
-
-[node name="KillButton" type="Button" parent="TabContainer/Current Render Log"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 151.801
-margin_top = -43.2244
-margin_right = 283.801
-margin_bottom = -7.22437
-rect_pivot_offset = Vector2( 67.6371, 18.9391 )
-text = "kill"
-[connection signal="pressed" from="TabContainer/Current Render Log/StartButton" to="TabContainer/Current Render Log/current render log panel" method="_on_StartButton_pressed"]
-[connection signal="pressed" from="TabContainer/Current Render Log/StartButton" to="TabContainer/Current Render Log/current render log panel" method="_on_Button_pressed"]
-[connection signal="pressed" from="TabContainer/Current Render Log/KillButton" to="TabContainer/Current Render Log/current render log panel" method="_on_KillButton_pressed"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_TabContainer_tab_changed"]
+[connection signal="pressed" from="TabContainer/Current Render Log/HBoxContainer/Job/JobButton" to="." method="_on_JobButton_pressed"]
+[connection signal="pressed" from="TabContainer/Current Render Log/HBoxContainer/Chunk/ChunkButton" to="." method="_on_ChunkButton_pressed"]
+[connection signal="pressed" from="TabContainer/Current Render Log/HBoxContainer/Try/TryButton" to="." method="_on_TryButton_pressed"]
+[connection signal="gui_input" from="TabContainer/Current Render Log/MarginContainer/LogRichtTextLabel" to="." method="_on_LogRichtTextLabel_gui_input"]

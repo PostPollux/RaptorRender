@@ -98,6 +98,7 @@ func create_client_dict() -> Dictionary:
 		"ip_addresses": ip_addresses,
 		"status": RRStateScheme.client_available,
 		"current_job_id": -1,
+		"last_render_log": [0,0,0],
 		"error_count": 0,
 		"platform": platform_info,
 		"pools": ["AE_Plugins", "another pool", "third pool"],

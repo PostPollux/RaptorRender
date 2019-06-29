@@ -89,8 +89,9 @@ func distribute_jobs():
 								# start this chunk on the client
 								JobExecutionManager.start_junk( job , chunk, current_tries_count + 1)
 								
-								# set current_job information for the client
+								# set "current_job" and "last_render_log" information for the client
 								RaptorRender.rr_data.clients[client].current_job_id = job
+								RaptorRender.rr_data.clients[client].last_render_log = [job, chunk, current_tries_count + 1]
 								
 								
 								RaptorRender.rr_data.jobs[job].status = RRStateScheme.job_rendering

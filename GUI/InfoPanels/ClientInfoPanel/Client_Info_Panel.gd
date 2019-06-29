@@ -2,39 +2,69 @@ extends MarginContainer
 
 class_name ClientInfoPanel
 
+# references to nodes in details tab
 onready var ClientInfoTabContainer = $"TabContainer"
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
-onready var NameLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/NameLabel"
-onready var UserLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UserLabel"
-onready var StatusLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
-onready var UptimeLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
+onready var NameLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/NameLabel"
+onready var UserLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UserLabel"
+onready var StatusLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/StatusLabel"
+onready var UptimeLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/UptimeLabel"
 
-onready var CPUHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPUHeading"
-onready var MemoryHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/MemoryHeading"
-onready var GraphicsHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsHeading"
-onready var HardDrivesHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/hard_drives_specs/HBoxContainer/MarginContainer/VBoxContainer/HardDrivesHeading"
-onready var NetworkHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/NetworkHeading"
-onready var SystemHeading = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/SystemHeading"
+onready var CPUHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPUHeading"
+onready var MemoryHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/MemoryHeading"
+onready var GraphicsHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsHeading"
+onready var HardDrivesHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/hard_drives_specs/HBoxContainer/MarginContainer/VBoxContainer/HardDrivesHeading"
+onready var NetworkHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/NetworkHeading"
+onready var SystemHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/SystemHeading"
 
-onready var CPULabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
-onready var RAMLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
-onready var GraphicsLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsLabel"
-onready var PlatformLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/PlatformLabel"
-onready var IPLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
-onready var MACLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/MACLabel"
+onready var CPULabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/CPULabel"
+onready var RAMLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/RAMLabel"
+onready var GraphicsLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/graphics_specs/HBoxContainer/MarginContainer/VBoxContainer/GraphicsLabel"
+onready var PlatformLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/system_specs/HBoxContainer/MarginContainer/VBoxContainer/PlatformLabel"
+onready var IPLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/IPLabel"
+onready var MACLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/network_specs/HBoxContainer/MarginContainer/VBoxContainer/MACLabel"
 
 onready var CPUUsageBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/cpu_specs/HBoxContainer/MarginContainer/VBoxContainer/cpu_usage"
 onready var MemoryUsageBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/memory_specs/HBoxContainer/MarginContainer/VBoxContainer/memory_usage"
 
 onready var HardDriveContainer = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/hard_drives_specs/HBoxContainer/MarginContainer/VBoxContainer/HardDriveContainer"
 
+# references to nodes in current/last render log tab
+onready var JobButtonHeading : Label = $"TabContainer/Current Render Log/HBoxContainer/Job/HBoxContainer/JobHeading"
+onready var JobButtonValue : Label = $"TabContainer/Current Render Log/HBoxContainer/Job/HBoxContainer/JobValue"
+onready var ChunkButtonHeading : Label = $"TabContainer/Current Render Log/HBoxContainer/Chunk/HBoxContainer/ChunkHeading"
+onready var ChunkButtonValue : Label = $"TabContainer/Current Render Log/HBoxContainer/Chunk/HBoxContainer/ChunkValue"
+onready var TryButtonHeading : Label = $"TabContainer/Current Render Log/HBoxContainer/Try/HBoxContainer/TryHeading"
+onready var TryButtonValue : Label = $"TabContainer/Current Render Log/HBoxContainer/Try/HBoxContainer/TryValue"
+
+onready var JobButton : Button = $"TabContainer/Current Render Log/HBoxContainer/Job/JobButton"
+onready var ChunkButton : Button = $"TabContainer/Current Render Log/HBoxContainer/Chunk/ChunkButton"
+onready var TryButton : Button = $"TabContainer/Current Render Log/HBoxContainer/Try/TryButton"
+
+onready var LogRichTextLabel : RichTextLabel = $"TabContainer/Current Render Log/MarginContainer/LogRichtTextLabel"
+
 # preload Resources
 var HardDriveRes = preload("res://GUI/InfoPanels/ClientInfoPanel/hard_drive.tscn")
 
+var log_job_id : int
+var log_chunk_id : int
+var log_try_id : int 
+
+
+var currently_selected_client_id : int = 0
+var ctrl_plus_c_pressed : bool = false
 
 func _ready():
 	RaptorRender.register_client_info_panel(self)
+	ReadLogFileManager.connect("log_read_to_end_of_file", self, "add_text_to_log")
+	ReadLogFileManager.connect("no_log_file_found", self, "no_log_file_found")
 	
+	JobButtonHeading.text = "CLIENT_LATEST_LOG_2"
+	ChunkButtonHeading.text = "CLIENT_LATEST_LOG_3"
+	TryButtonHeading.text = "CLIENT_LATEST_LOG_4"
+	
+	# connect timeout signal of the "refresh_interface_timer" to check if there are more recent logs for the client
+	RaptorRender.refresh_interface_timer.connect("timeout", self, "check_if_newer_log_available")
 
 func reset_to_first_tab():
 	ClientInfoTabContainer.current_tab = 0
@@ -43,8 +73,13 @@ func set_tab(tab_number : int ):
 	ClientInfoTabContainer.current_tab = tab_number
 
 
+###########################
+# Functions for details tab
+###########################
+
 func update_client_info_panel(client_id : int):
 	
+	currently_selected_client_id = client_id
 	
 	# set the id for the cpu usage bar so that it knows which value to get
 	CPUUsageBar.client_id = client_id
@@ -71,7 +106,7 @@ func update_client_info_panel(client_id : int):
 		RRStateScheme.client_error :     StatusIconTexture.set_modulate(RRColorScheme.state_error)
 		RRStateScheme.client_disabled :  StatusIconTexture.set_modulate(RRColorScheme.state_paused)
 		RRStateScheme.client_offline :   StatusIconTexture.set_modulate(RRColorScheme.state_offline_or_cancelled)
-
+	
 	
 	
 	
@@ -217,4 +252,128 @@ func update_client_info_panel(client_id : int):
 		PlatformLabel.text = selected_client["platform"][0] + "  " + selected_client["platform"][1]
 	if selected_client["platform"].size() == 3:
 		PlatformLabel.text = selected_client["platform"][0] + "  " + selected_client["platform"][1] + "  " + selected_client["platform"][2]
+
+
+
+
+######################################
+# Functions for current render log tab
+######################################
+func update_log_buttons():
+	
+	if RaptorRender.rr_data.jobs.has(log_job_id):
+		JobButtonValue.text = RaptorRender.rr_data.jobs[log_job_id].name
+		ChunkButtonValue.text = String(log_chunk_id)
+		TryButtonValue.text = String(log_try_id)
+
+
+func clear_log():
+	LogRichTextLabel.clear()
+
+
+func read_log_file():
+	log_job_id = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[0]
+	log_chunk_id = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[1]
+	log_try_id = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[2]
+	
+	ReadLogFileManager.reset_file_pointer_position()
+	ReadLogFileManager.stop_read_log_timer()
+	ReadLogFileManager.read_log_file(log_job_id, log_chunk_id, log_try_id)
+
+
+func add_text_to_log(text : String):
+	LogRichTextLabel.append_bbcode( text )
+
+func no_log_file_found():
+	LogRichTextLabel.append_bbcode( tr("TRY_LOG_2"))
+
+func _on_LogRichtTextLabel_gui_input(event):
+	if event.is_action_pressed("ui_right_mouse_button"):
+		RaptorRender.log_context_menu_invoked()
+	if Input.is_key_pressed(KEY_CONTROL) and Input.is_key_pressed(KEY_C):
+		if not ctrl_plus_c_pressed:
+			ctrl_plus_c_pressed = true
+			RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_4"), 5) # Selection has been copied to clipboard!
+	else:
+		ctrl_plus_c_pressed = false
+
+
+func _on_TabContainer_tab_changed(tab):
+	if tab == 1:
+		clear_log()
+		read_log_file()
+		update_log_buttons()
+
+
+func check_if_newer_log_available():
+	
+	if currently_selected_client_id != 0:
+		var fetched_job_id : int = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[0]
+		var fetched_chunk_id : int = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[1]
+		var fetched_try_id : int = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[2]
+		
+		if fetched_job_id != log_job_id or fetched_chunk_id != log_chunk_id or fetched_try_id != log_try_id:
+			clear_log()
+			read_log_file()
+			update_log_buttons()
+
+
+func _on_JobButton_pressed():
+	# select job in jobs table, switch info panel to JobInfoPanel
+	RaptorRender.ClientsTable.clear_selection()
+	RaptorRender.current_job_id_for_job_info_panel = log_job_id
+	RaptorRender.JobsTable.select_by_id(log_job_id)
+	RaptorRender.JobInfoPanel.update_job_info_panel(log_job_id)
+	RaptorRender.JobsTable.scroll_to_row(log_job_id)
+	RaptorRender.ClientInfoPanel.visible = false
+	RaptorRender.JobInfoPanel.visible = true
+
+# chunk button pressed
+func _on_ChunkButton_pressed():
+	
+	# select job in jobs table, switch info panel to JobInfoPanel
+	RaptorRender.ClientsTable.clear_selection()
+	RaptorRender.current_job_id_for_job_info_panel = log_job_id
+	RaptorRender.JobsTable.select_by_id(log_job_id)
+	RaptorRender.JobInfoPanel.update_job_info_panel(log_job_id)
+	RaptorRender.JobsTable.scroll_to_row(log_job_id)
+	RaptorRender.ClientInfoPanel.visible = false
+	RaptorRender.JobInfoPanel.visible = true
+	
+	# select and autofocus correct chunk
+	RaptorRender.current_chunk_id_for_job_info_panel = log_chunk_id
+	RaptorRender.JobInfoPanel.set_tab(1)
+	RaptorRender.refresh_chunks_table(log_job_id)
+	RaptorRender.ChunksTable.clear_selection()
+	RaptorRender.ChunksTable.select_by_id(log_chunk_id)
+	RaptorRender.chunk_selected(log_chunk_id)
+	RaptorRender.ChunksTable.scroll_to_row(log_chunk_id)
+
+
+func _on_TryButton_pressed():
+	# select job in jobs table, switch info panel to JobInfoPanel
+	RaptorRender.ClientsTable.clear_selection()
+	RaptorRender.current_job_id_for_job_info_panel = log_job_id
+	RaptorRender.JobsTable.select_by_id(log_job_id)
+	RaptorRender.JobInfoPanel.update_job_info_panel(log_job_id)
+	RaptorRender.JobsTable.scroll_to_row(log_job_id)
+	RaptorRender.ClientInfoPanel.visible = false
+	RaptorRender.JobInfoPanel.visible = true
+	
+	# select and autofocus correct chunk
+	RaptorRender.current_chunk_id_for_job_info_panel = log_chunk_id
+	RaptorRender.JobInfoPanel.set_tab(1) # Chunks
+	RaptorRender.TryInfoPanel.set_tab(0) # Details
+	RaptorRender.refresh_chunks_table(log_job_id)
+	RaptorRender.ChunksTable.clear_selection()
+	RaptorRender.ChunksTable.select_by_id(log_chunk_id)
+	RaptorRender.chunk_selected(log_chunk_id)
+	RaptorRender.ChunksTable.scroll_to_row(log_chunk_id)
+	
+	# select and autofocus correct try
+	RaptorRender.TriesTable.clear_selection()
+	RaptorRender.TriesTable.select_by_id(log_try_id)
+	RaptorRender.try_selected(log_try_id)
+	RaptorRender.refresh_tries_table(log_job_id, log_chunk_id)
+	RaptorRender.TriesTable.scroll_to_row(log_try_id)
 	

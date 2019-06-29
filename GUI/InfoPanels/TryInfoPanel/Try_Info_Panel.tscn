@@ -119,5 +119,5 @@ focus_mode = 2
 bbcode_enabled = true
 scroll_following = true
 selection_enabled = true
-[connection signal="tab_selected" from="TabContainer" to="." method="_on_TabContainer_tab_selected"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_TabContainer_tab_changed"]
 [connection signal="gui_input" from="TabContainer/Log/MarginContainer/Log_RichTextLabel" to="." method="_on_Log_RichTextLabel_gui_input"]

@@ -19,8 +19,7 @@ onready var LogRichTextLabel : RichTextLabel = $"TabContainer/Log/MarginContaine
 var currently_displayed_try_id : int = 0
 var currently_displayed_chunk_id :int = 0
 
-var current_try_info_tab : int = 0
-
+var ctrl_plus_c_pressed: bool = false
 
 func _ready():
 	RaptorRender.register_try_info_panel(self)
@@ -47,15 +46,11 @@ func set_visibility(visibility : bool):
 	LogVisibilityContainer.visible = visibility
 
 
-func _on_TabContainer_tab_selected(tab):
-	
-	if tab == 1 and not tab == current_try_info_tab:
+func _on_TabContainer_tab_changed(tab):
+	if tab == 1:
 		clear_log()
 		read_log_file()
 		
-	current_try_info_tab = tab
-
-
 
 
 ############################
@@ -140,5 +135,11 @@ func _on_Log_RichTextLabel_gui_input(event):
 	if event.is_action_pressed("ui_right_mouse_button"):
 		RaptorRender.log_context_menu_invoked()
 	if Input.is_key_pressed(KEY_CONTROL) and Input.is_key_pressed(KEY_C):
-		RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_4"), 5) # Selection has been copied to clipboard!
-	
+		if not ctrl_plus_c_pressed:
+			ctrl_plus_c_pressed = true
+			RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_4"), 5) # Selection has been copied to clipboard!
+	else:
+		ctrl_plus_c_pressed = false
+
+
+

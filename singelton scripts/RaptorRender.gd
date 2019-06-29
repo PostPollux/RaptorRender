@@ -31,24 +31,24 @@ var TryInfoPanel : TryInfoPanel
 
 var rr_data = {}
 
-var current_job_id_for_job_info_panel : int
-var current_chunk_id_for_job_info_panel : int
-var current_try_id_for_job_info_panel : int
+var current_job_id_for_job_info_panel : int = 0
+var current_chunk_id_for_job_info_panel : int = 0
+var current_try_id_for_job_info_panel : int = 0
 
-var update_tables_timer : Timer 
+var refresh_interface_timer : Timer 
 
 func _ready():
 	
 	# create timer to constantly distribute the work across the connected clients 
-	update_tables_timer = Timer.new()
-	update_tables_timer.name = "Distribute Job Timer"
-	update_tables_timer.wait_time = 1
-	update_tables_timer.connect("timeout",self,"update_all_visible_tables")
+	refresh_interface_timer = Timer.new()
+	refresh_interface_timer.name = "Refresh Interface Timer"
+	refresh_interface_timer.wait_time = 1
+	refresh_interface_timer.connect("timeout",self,"update_all_visible_tables")
 	var root_node : Node = get_tree().get_root().get_node("RaptorRenderMainScene")
 	if root_node != null:
-		root_node.add_child(update_tables_timer)
+		root_node.add_child(refresh_interface_timer)
 	
-	update_tables_timer.start()
+	refresh_interface_timer.start()
 	
 	rr_data = {
 		"jobs": {
@@ -452,6 +452,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.45","192.133.1.45"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -473,6 +474,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.22"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Windows","7"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -494,6 +496,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.156"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["OSX","SnowLeopard"],
 				"pools": ["AE_Plugins"],
@@ -515,6 +518,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.87"],
 				"status": RRStateScheme.client_offline,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -536,6 +540,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.15"],
 				"status": RRStateScheme.client_error,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 1,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -557,6 +562,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.22"],
 				"status": RRStateScheme.client_offline,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Windows","XP"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -578,6 +584,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.45"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -599,6 +606,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.22"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": [],
@@ -620,6 +628,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.45"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins"],
@@ -641,6 +650,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.22"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": ["AE_Plugins", "8GB+ VRam"],
@@ -662,6 +672,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.156"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["OSX","Snow Leopard"],
 				"pools": ["AE_Plugins"],
@@ -683,6 +694,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.87"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Windows","10"],
 				"pools": ["AE_Plugins", "8GB+ VRam", "third pool"],
@@ -704,6 +716,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.15"],
 				"status": RRStateScheme.client_error,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 5,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["AE_Plugins", "8GB+ VRam"],
@@ -725,6 +738,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.45"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Linux","4.14.48-2"],
 				"pools": ["8GB+ VRam"],
@@ -746,6 +760,7 @@ func _ready():
 				"ip_addresses": ["192.168.1.22"],
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
+				"last_render_log": [0,0,0],
 				"error_count": 0,
 				"platform": ["Windows","7"],
 				"pools": ["AE_Plugins", "another pool", "third pool"],
@@ -862,6 +877,7 @@ func register_table(SortableTableInstance : SortableTable):
 		"tries":
 			TriesTable = SortableTableInstance
 			TriesTable.connect("something_just_selected", self, "try_selected")
+			TriesTable.connect("selection_cleared", self, "try_selection_cleared")
 			
 			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
 			TriesTable.column_names.clear()
@@ -942,6 +958,7 @@ func job_selected(id_of_row : int):
 	ClientsTable.clear_selection()
 	ChunksTable.clear_selection()
 	TriesTable.clear_selection()
+	current_try_id_for_job_info_panel = 0
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
 	JobInfoPanel.update_job_info_panel(id_of_row)
@@ -950,6 +967,9 @@ func job_selected(id_of_row : int):
 	refresh_chunks_table(id_of_row)
 	current_job_id_for_job_info_panel = id_of_row
 
+func job_selection_cleared():
+	JobInfoPanel.visible = false
+
 
 func chunk_selected(id_of_row : int):
 	refresh_tries_table(current_job_id_for_job_info_panel, id_of_row)
@@ -957,13 +977,13 @@ func chunk_selected(id_of_row : int):
 	TriesTable.select_by_id(1)
 	
 	current_chunk_id_for_job_info_panel = id_of_row
-	
-	if rr_data.jobs[current_job_id_for_job_info_panel].chunks[current_chunk_id_for_job_info_panel].number_of_tries > 0:
-		try_selected(1)
-	else:
-		current_try_id_for_job_info_panel = 0
-		TryInfoPanel.currently_displayed_try_id = 0
-		TryInfoPanel.set_visibility(false)
+	if rr_data.jobs.has(current_job_id_for_job_info_panel):
+		if rr_data.jobs[current_job_id_for_job_info_panel].chunks[current_chunk_id_for_job_info_panel].number_of_tries > 0:
+			try_selected(1)
+		else:
+			current_try_id_for_job_info_panel = 0
+			TryInfoPanel.currently_displayed_try_id = 0
+			TryInfoPanel.set_visibility(false)
 
 func chunk_selection_cleared():
 	current_chunk_id_for_job_info_panel = 0
@@ -980,10 +1000,11 @@ func try_selected(id_of_row : int):
 	TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, id_of_row)
 	TryInfoPanel.update_current_try_id(id_of_row)
 
+func try_selection_cleared():
+	current_try_id_for_job_info_panel = 0
+	TryInfoPanel.currently_displayed_try_id = 0
+	TryInfoPanel.set_visibility(false)
 
-
-func job_selection_cleared():
-	JobInfoPanel.visible = false
 
 
 func client_context_menu_invoked():
@@ -1003,7 +1024,7 @@ func log_context_menu_invoked():
 
 
 func _input(event):
-		
+	
 	if Input.is_key_pressed(KEY_L):
 		if TranslationServer.get_locale() == "de":
 			TranslationServer.set_locale("en")
@@ -1017,7 +1038,7 @@ func _input(event):
 			colorize_table_rows = true
 		JobsTable.refresh()
 		ClientsTable.refresh()
-			
+		
 	if Input.is_key_pressed(KEY_X):
 		rr_data.clients.erase("id4")
 		rr_data.clients.erase("id8")
