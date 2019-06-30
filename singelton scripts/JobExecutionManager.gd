@@ -4,6 +4,8 @@ var job_type_settings_path : String
 
 var current_processing_job : int
 var current_processing_chunk : int
+var current_processing_try : int
+
 var current_amount_of_frame_successes : int  = 0
 var current_amount_of_critical_errors : int = 0
 var chunk_success_detected : bool = false
@@ -21,6 +23,9 @@ func _ready():
 func critical_error_detected():
 	
 	current_amount_of_critical_errors += 1
+	RaptorRender.rr_data.jobs[current_processing_job].errors += 1
+	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries[current_processing_try].status = RRStateScheme.try_error
+	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries[current_processing_try].time_stopped = OS.get_unix_time()
 	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_queued
 	
 	var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(current_processing_job)
@@ -81,6 +86,7 @@ func start_junk(job_id : int, chunk_id : int, try_id : int):
 	
 	current_processing_job = job_id
 	current_processing_chunk = chunk_id
+	current_processing_try = try_id
 
 	var cmd_string : String = ""
 	var log_file_name : String = ""

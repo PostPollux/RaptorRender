@@ -272,9 +272,19 @@ func update_client_info_panel(client_id : int):
 func update_log_buttons():
 	
 	if RaptorRender.rr_data.jobs.has(log_job_id):
+		JobButton.disabled = false
+		ChunkButton.disabled = false
+		TryButton.disabled = false
 		JobButtonValue.text = RaptorRender.rr_data.jobs[log_job_id].name
 		ChunkButtonValue.text = String(log_chunk_id)
 		TryButtonValue.text = String(log_try_id)
+	else:
+		JobButton.disabled = true
+		ChunkButton.disabled = true
+		TryButton.disabled = true
+		JobButtonValue.text = "-"
+		ChunkButtonValue.text = "-"
+		TryButtonValue.text = "-"
 
 
 func clear_log():

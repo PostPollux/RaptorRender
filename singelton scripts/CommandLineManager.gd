@@ -30,8 +30,6 @@ var currently_rendering : bool = false
 
 var read_log_timer : Timer 
 
-
-signal log_partly_read
 signal render_process_exited
 
 
@@ -82,8 +80,6 @@ func validate_log_file(args):
 	
 	var active_render_log_file_path : String = OS.get_user_data_dir() + "/logs/" + active_render_log_file_name + ".txt"
 	
-	var lines_read : String = ""
-	
 	if active_render_log_file.file_exists(active_render_log_file_path):
 		
 		active_render_log_file.open(active_render_log_file_path, 1)
@@ -94,25 +90,16 @@ func validate_log_file(args):
 		while true:
 			var line : String = active_render_log_file.get_line()
 			
-			RenderLogValidator.validate_log_line(line)
+			var log_line_ok : bool = RenderLogValidator.validate_log_line(line)
 			
-			
-			line = RenderLogValidator.highlight_log_line(line)
-			
-			lines_read += line
-			
-			
+			if not log_line_ok:
+				kill_current_render_process()
+				break
 			
 			# break loop if end of file is reached
 			if active_render_log_file.eof_reached():
 				file_pointer_position = active_render_log_file.get_position()
 				break
-			
-			# add new line break if end of file is not reached yet
-			lines_read += "\n"
-		
-	
-	emit_signal("log_partly_read", lines_read)
 	
 	check_if_render_process_is_running()
 	

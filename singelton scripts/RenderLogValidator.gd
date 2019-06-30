@@ -394,8 +394,8 @@ func highlight_log_line(line : String) -> String:
 
 
 
-
-func validate_log_line(line : String):
+# this function will validate a logline and emit corresponding signals like errors or successes. The function will also return "false" if there was a critical error detected in that line.
+func validate_log_line(line : String) -> bool:
 	
 	##### critical error validation #####
 	
@@ -413,6 +413,7 @@ func validate_log_line(line : String):
 					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
+						return false
 		
 		# ends with
 		2: 
@@ -422,6 +423,7 @@ func validate_log_line(line : String):
 					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
+						return false	
 		
 		# contains
 		3:
@@ -431,6 +433,7 @@ func validate_log_line(line : String):
 					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
+						return false
 		
 		# exactly matches
 		4:
@@ -440,6 +443,7 @@ func validate_log_line(line : String):
 					if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 						emit_signal("critical_error_detected")
 						print ("critical error detected!")
+						return false
 		
 		# regex
 		5:
@@ -447,6 +451,7 @@ func validate_log_line(line : String):
 				if !check_critical_against_exclusion(line, critical_error_exclude_strings_CRP, critical_error_exclude_regex_CRP, job_type_settings_CRP):
 					emit_signal("critical_error_detected")
 					print ("critical error detected!")
+					return false
 	
 	
 	
@@ -543,6 +548,8 @@ func validate_log_line(line : String):
 				emit_signal("success_detected")
 				print ("success detected!")
 			
+	
+	return true
 
 
 
