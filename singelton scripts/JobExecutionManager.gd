@@ -22,6 +22,15 @@ func critical_error_detected():
 	
 	current_amount_of_critical_errors += 1
 	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_queued
+	
+	var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(current_processing_job)
+		
+	# change status only, if there are no active chunks left
+	if chunk_counts[2] == 0:
+		
+		# set job status to "queued" if no active chunks are left
+		RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_queued
+
 
 
 func success_detected():
@@ -36,10 +45,15 @@ func success_detected():
 		
 		var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(current_processing_job)
 		
-		# set job status to "finished" if all chunks are finished
-		if chunk_counts[0] == chunk_counts[1]:
-			RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_finished
-		
+		# change status only, if there are no active chunks left
+		if chunk_counts[2] == 0:
+			
+			# set job status to "finished" if all chunks are finished
+			if chunk_counts[0] == chunk_counts[1]:
+				RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_finished
+			else:
+				RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_queued
+				
 		# set job status to "paused" if all active chunks of a "paused deffered" job have finished
 		if RaptorRender.rr_data.jobs[current_processing_job].status == RRStateScheme.job_rendering_paused_deferred and chunk_counts[2] == 0:
 			RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_paused

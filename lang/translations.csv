@@ -55,6 +55,7 @@ JOB_CONTEXT_MENU_18,Open Output Directories,Ausgabeverzeichnisse öffnen
 JOB_CONTEXT_MENU_19,Open Scene Directories,Szenenverzeichnisse öffnen
 JOB_CONTEXT_MENU_20,Remove Jobs,Jobs löschen
 ,,
+JOB_CHUNKS_1,Chunk List,Chunk Liste
 JOB_GRAPHS_1,Graphs,Statistiken
 ,,
 JOB_CHUNK_TIME_GRAPH_1,Chunk Time Graph,Chunk Zeit Statistik
@@ -68,7 +69,6 @@ JOB_CHUNK_TIME_GRAPH_8,several,mehrere
 ,,
 JOB_CLIENT_PIE_CHART_1,not assigned,nicht zugeordnet
 JOB_CLIENT_PIE_CHART_2,Chunks,Chunks
-,,
 ,,
 CLIENT_COLUMN_1,Status,Status
 CLIENT_COLUMN_2,Name,Name

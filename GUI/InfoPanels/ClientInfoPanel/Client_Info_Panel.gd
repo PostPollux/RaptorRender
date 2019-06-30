@@ -3,7 +3,7 @@ extends MarginContainer
 class_name ClientInfoPanel
 
 # references to nodes in details tab
-onready var ClientInfoTabContainer = $"TabContainer"
+onready var ClientInfoTabContainer : TabContainer = $"TabContainer"
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
 onready var NameLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/NameLabel"
 onready var UserLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UserLabel"
@@ -63,11 +63,21 @@ func _ready():
 	ChunkButtonHeading.text = "CLIENT_LATEST_LOG_3"
 	TryButtonHeading.text = "CLIENT_LATEST_LOG_4"
 	
+	translate_tabs()
+	
+	
 	# connect timeout signal of the "refresh_interface_timer" to check if there are more recent logs for the client
 	RaptorRender.refresh_interface_timer.connect("timeout", self, "check_if_newer_log_available")
 
+
+func translate_tabs():
+	ClientInfoTabContainer.set_tab_title(0 , tr("CLIENT_DETAIL_1") ) # Details
+	ClientInfoTabContainer.set_tab_title(1 , tr("CLIENT_LATEST_LOG_1") ) # Latest Log
+
+
 func reset_to_first_tab():
 	ClientInfoTabContainer.current_tab = 0
+
 
 func set_tab(tab_number : int ):
 	ClientInfoTabContainer.current_tab = tab_number

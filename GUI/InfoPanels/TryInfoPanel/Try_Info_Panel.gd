@@ -2,16 +2,16 @@ extends MarginContainer
 
 class_name TryInfoPanel
 
-onready var TryInfoTabContainer = $"TabContainer"
+onready var TryInfoTabContainer : TabContainer = $"TabContainer"
 
 onready var DetailsVisibilityContainer = $"TabContainer/Details/ScrollContainer"
 
-onready var NameLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/NameLabel"
-onready var StatusLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/StatusLabel"
-onready var ClientLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/ClientLabel"
-onready var TimeStartedLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStartedLabel"
-onready var TimeStoppedLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStoppedLabel"
-onready var TimeNeededLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeNeededLabel"
+onready var NameLabel : Label= $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/NameLabel"
+onready var StatusLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/StatusLabel"
+onready var ClientLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/ClientLabel"
+onready var TimeStartedLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStartedLabel"
+onready var TimeStoppedLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStoppedLabel"
+onready var TimeNeededLabel : Label= $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeNeededLabel"
 
 onready var LogVisibilityContainer = $"TabContainer/Log/MarginContainer"
 onready var LogRichTextLabel : RichTextLabel = $"TabContainer/Log/MarginContainer/Log_RichTextLabel"
@@ -21,12 +21,18 @@ var currently_displayed_chunk_id :int = 0
 
 var ctrl_plus_c_pressed: bool = false
 
+
 func _ready():
 	RaptorRender.register_try_info_panel(self)
 	ReadLogFileManager.connect("log_read_to_end_of_file", self, "add_text_to_log")
 	ReadLogFileManager.connect("no_log_file_found", self, "no_log_file_found")
+	
+	translate_tabs()
 
 
+func translate_tabs():
+	TryInfoTabContainer.set_tab_title(0 , tr("TRY_DETAIL_1") ) # Details
+	TryInfoTabContainer.set_tab_title(1 , tr("TRY_LOG_1") ) # Log
 
 
 func reset_to_first_tab():
