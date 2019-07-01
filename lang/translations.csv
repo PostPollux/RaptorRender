@@ -175,8 +175,29 @@ MSG_ERROR_1,Error,Fehler
 MSG_ERROR_2,Not implemented yet!,Diese Funktion ist leider noch nicht implementiert!
 MSG_ERROR_3,Seems like directory does not exist!,Dieses Verzeichnis scheint nicht zu existieren!
 MSG_ERROR_4,Seems like file does not exist!,Dieses Datei scheint nicht zu existieren!
+MSG_ERROR_5,There is an error in your job type configuration file. The type of the following specific job setting has not been set:,Die Job Typ Konfigurationsdatei ist fehlerhaft. Der typ der folgenden jobspezifischen Einstellung fehlt:
+MSG_ERROR_6,There is an error in your job type configuration file. The type of the following key is invalid:,Die Job Typ Konfigurationsdatei ist fehlerhaft. Der typ des folgenden Schlüssels ist ungültig:
+,,
+,,
 ,,
 MSG_INFO_1,Info,Info
 MSG_INFO_2,"Your machine should wake up soon, if it supports WakeOnLan…","Ihr Computer sollte in kürze hochfahren, falls er WakeOnLan unterstützt…"
 MSG_INFO_3,"machines should wake up soon, if they support WakeOnLan…","Computer sollten in kürze hochfahren, falls sie WakeOnLan unterstützen…"
 MSG_INFO_4,Selection has been copied to clipboard!,Selektierter Text wurde in die Zwischenablage kopiert!
+,,
+,,
+POPUP_BUTTON_CANCEL,Cancel,Abbrechen
+POPUP_BUTTON_OK,Ok,Ok
+,,
+POPUP_SUBMIT_JOB_1,Submit Job,Job abschicken
+POPUP_SUBMIT_JOB_2,Job Type:,Job Typ:
+POPUP_SUBMIT_JOB_3,Type Version:,Version:
+POPUP_SUBMIT_JOB_4,Job Name:,Jobname: 
+POPUP_SUBMIT_JOB_5,Scene File:,Szenen Datei:
+POPUP_SUBMIT_JOB_6, ,Renderbereich:
+POPUP_SUBMIT_JOB_7,Chunk Size:,Paketgröße:
+POPUP_SUBMIT_JOB_8,Priority:,Priorität:
+POPUP_SUBMIT_JOB_9,Pools:,Pools:
+POPUP_SUBMIT_JOB_10,Note:,Notiz:
+POPUP_SUBMIT_JOB_11,Start Paused:,Pausiert starten:
+POPUP_SUBMIT_JOB_12,New Job,Neuer Job

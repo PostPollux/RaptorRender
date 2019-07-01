@@ -118,14 +118,15 @@ func start_junk(job_id : int, chunk_id : int, try_id : int):
 		
 		var specific_setting_value : String
 		
-		if RaptorRender.rr_data.jobs[job_id].SpecificJobSettings.has(specific_setting):
-			
-			specific_setting_value = String(RaptorRender.rr_data.jobs[job_id].SpecificJobSettings[specific_setting])
-			cmd_string = cmd_string.replace( "$(" + specific_setting + ")", specific_setting_value)
-	
-		else:
-			specific_setting_value = job_type_settings.get_value("SpecificJobSettings", specific_setting, "")
-			cmd_string = cmd_string.replace( "$(" + specific_setting + ")", specific_setting_value)
+		if not specific_setting.ends_with("_type") and not specific_setting.ends_with("_default"):
+			if RaptorRender.rr_data.jobs[job_id].SpecificJobSettings.has(specific_setting):
+				
+				specific_setting_value = String(RaptorRender.rr_data.jobs[job_id].SpecificJobSettings[specific_setting])
+				cmd_string = cmd_string.replace( "$(" + specific_setting + ")", specific_setting_value)
+		
+			else:
+				specific_setting_value = job_type_settings.get_value("SpecificJobSettings", specific_setting, "")
+				cmd_string = cmd_string.replace( "$(" + specific_setting + ")", specific_setting_value)
 	
 	# build a reasonable log file name
 	log_file_name = String(job_id) + "_chunk_" + String(chunk_id) + "_try_" + String(try_id)

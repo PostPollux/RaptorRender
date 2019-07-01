@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Control",
+"class": "AutoScalingPopup",
+"language": "GDScript",
+"path": "res://GUI/AutoScalingPopup/AutoScalingPopupBase.gd"
+}, {
 "base": "MarginContainer",
 "class": "ClientInfoPanel",
 "language": "GDScript",
@@ -60,6 +65,7 @@ _global_script_classes=[ {
 "path": "res://GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.gd"
 } ]
 _global_script_class_icons={
+"AutoScalingPopup": "",
 "ClientInfoPanel": "",
 "JobInfoPanel": "",
 "NotificationSystem": "",
@@ -92,6 +98,7 @@ RenderLogValidator="*res://singelton scripts/RenderLogValidator.gd"
 JobExecutionManager="*res://singelton scripts/JobExecutionManager.gd"
 JobDistributionManager="*res://singelton scripts/JobDistributionManager.gd"
 ReadLogFileManager="*res://singelton scripts/ReadLogFileManager.gd"
+HandyUtilities="*res://singelton scripts/HandyUtilities.gd"
 
 [debug]
 
@@ -152,4 +159,5 @@ limits/message_queue/max_size_kb=16384
 [rendering]
 
 limits/rendering/max_renderable_elements=120000
+environment/default_clear_color=Color( 0.301961, 0.301961, 0.301961, 1 )
 environment/default_environment="res://default_env.tres"

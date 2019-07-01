@@ -236,12 +236,12 @@ func set_additional_colors():
 func set_row_color_by_string(color_string):
 	
 	match color_string: 
-		"default": set_row_color(row_color)	
-		"red": set_row_color(row_color_red)	
-		"green": set_row_color(row_color_green)	
+		"default": set_row_color(row_color)
+		"red": set_row_color(row_color_red)
+		"green": set_row_color(row_color_green)
 		"blue": set_row_color(row_color_blue)
-		"yellow": set_row_color(row_color_yellow)	
-		"black": set_row_color(row_color_black)		
+		"yellow": set_row_color(row_color_yellow)
+		"black": set_row_color(row_color_black)
 
 
 

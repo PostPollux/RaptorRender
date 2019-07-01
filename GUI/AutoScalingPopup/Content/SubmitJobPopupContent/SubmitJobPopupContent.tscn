@@ -1,0 +1,282 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
+[ext_resource path="res://GUI/AutoScalingPopup/Content/SubmitJobPopupContent/SubmitJobPopupContent.gd" type="Script" id=2]
+[ext_resource path="res://GUI/Themes/button_on_dark_bg_styleboxflat.tres" type="StyleBox" id=3]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+custom_constants/separation = 0
+script = ExtResource( 2 )
+
+[node name="JobTypeContainer" type="MarginContainer" parent="."]
+margin_right = 1280.0
+margin_bottom = 50.0
+
+[node name="ColorRect" type="ColorRect" parent="JobTypeContainer"]
+margin_right = 1280.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="JobTypeContainer"]
+margin_right = 1280.0
+margin_bottom = 50.0
+size_flags_vertical = 5
+custom_constants/separation = 15
+
+[node name="spacing" type="Label" parent="JobTypeContainer/HBoxContainer"]
+margin_top = 14.0
+margin_right = 24.0
+margin_bottom = 36.0
+text = "    "
+
+[node name="JobTypeLabel" type="Label" parent="JobTypeContainer/HBoxContainer"]
+margin_left = 39.0
+margin_top = 14.0
+margin_right = 104.0
+margin_bottom = 36.0
+text = "Job Type:"
+
+[node name="JobTypeOptionButton" type="OptionButton" parent="JobTypeContainer/HBoxContainer"]
+margin_left = 119.0
+margin_top = 12.0
+margin_right = 244.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 125, 25 )
+size_flags_vertical = 4
+custom_styles/normal = ExtResource( 3 )
+
+[node name="spacing2" type="Label" parent="JobTypeContainer/HBoxContainer"]
+margin_left = 259.0
+margin_top = 14.0
+margin_right = 295.0
+margin_bottom = 36.0
+text = "       "
+
+[node name="JobVersionLabel" type="Label" parent="JobTypeContainer/HBoxContainer"]
+margin_left = 310.0
+margin_top = 14.0
+margin_right = 404.0
+margin_bottom = 36.0
+text = "Type Version:"
+
+[node name="JobTypeVersionButton" type="OptionButton" parent="JobTypeContainer/HBoxContainer"]
+margin_left = 419.0
+margin_top = 12.0
+margin_right = 544.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 125, 25 )
+size_flags_vertical = 4
+custom_styles/normal = ExtResource( 3 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 50.0
+margin_right = 1280.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+
+[node name="MinimumSizeContainer" type="MarginContainer" parent="ScrollContainer"]
+margin_right = 349.0
+margin_bottom = 295.0
+custom_constants/margin_right = 30
+custom_constants/margin_top = 15
+custom_constants/margin_left = 30
+custom_constants/margin_bottom = 15
+
+[node name="TypeMaskContent" type="VBoxContainer" parent="ScrollContainer/MinimumSizeContainer"]
+margin_left = 30.0
+margin_top = 15.0
+margin_right = 319.0
+margin_bottom = 280.0
+custom_constants/separation = 10
+
+[node name="BasicJobInfo" type="VBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent"]
+margin_right = 289.0
+margin_bottom = 241.0
+custom_constants/separation = 9
+
+[node name="JobName" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_right = 289.0
+margin_bottom = 22.0
+custom_constants/separation = 15
+
+[node name="JobNameLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/JobName"]
+margin_right = 73.0
+margin_bottom = 22.0
+text = "Job Name:"
+align = 2
+
+[node name="JobNameLineEdit" type="LineEdit" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/JobName"]
+margin_left = 88.0
+margin_right = 289.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+text = "New Job"
+caret_blink = true
+
+[node name="SceneFile" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_top = 31.0
+margin_right = 289.0
+margin_bottom = 53.0
+custom_constants/separation = 15
+
+[node name="SceneFileLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile"]
+margin_right = 77.0
+margin_bottom = 22.0
+text = "Scene File:"
+align = 2
+
+[node name="SceneFileLineEdit" type="LineEdit" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile"]
+margin_left = 92.0
+margin_right = 242.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="Button" type="Button" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile"]
+margin_left = 257.0
+margin_right = 289.0
+margin_bottom = 22.0
+text = " ... "
+
+[node name="RenderRange" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_top = 62.0
+margin_right = 289.0
+margin_bottom = 84.0
+custom_constants/separation = 15
+
+[node name="RenderRangeLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/RenderRange"]
+margin_right = 99.0
+margin_bottom = 22.0
+text = "Render Range:"
+align = 2
+
+[node name="RenderRangeLineEdit" type="LineEdit" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/RenderRange"]
+margin_left = 114.0
+margin_right = 289.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+text = "1-100"
+caret_blink = true
+
+[node name="ChunkSize" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_top = 93.0
+margin_right = 289.0
+margin_bottom = 115.0
+custom_constants/separation = 15
+
+[node name="ChunkSizeLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/ChunkSize"]
+margin_right = 81.0
+margin_bottom = 22.0
+text = "Chunk Size:"
+align = 2
+
+[node name="ChunkSizeSpinBox" type="SpinBox" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/ChunkSize"]
+margin_left = 96.0
+margin_right = 289.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+max_value = 100000.0
+value = 5.0
+rounded = true
+
+[node name="Priority" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_top = 124.0
+margin_right = 289.0
+margin_bottom = 146.0
+custom_constants/separation = 15
+
+[node name="PriorityLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority"]
+margin_right = 58.0
+margin_bottom = 22.0
+text = "Priority:"
+align = 2
+
+[node name="PriorityValueSpinBox" type="SpinBox" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority"]
+margin_left = 73.0
+margin_right = 149.0
+margin_bottom = 22.0
+value = 50.0
+rounded = true
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority"]
+margin_left = 164.0
+margin_top = 9.0
+margin_right = 289.0
+margin_bottom = 13.0
+rect_min_size = Vector2( 125, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="Pool" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_top = 155.0
+margin_right = 289.0
+margin_bottom = 177.0
+custom_constants/separation = 15
+
+[node name="PoolLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Pool"]
+margin_right = 47.0
+margin_bottom = 22.0
+text = "Pools:"
+align = 2
+
+[node name="PoolOptionButton" type="OptionButton" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Pool"]
+margin_left = 62.0
+margin_right = 88.0
+margin_bottom = 22.0
+
+[node name="Note" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_top = 186.0
+margin_right = 289.0
+margin_bottom = 208.0
+custom_constants/separation = 15
+
+[node name="NoteLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Note"]
+margin_right = 43.0
+margin_bottom = 22.0
+text = "Note:"
+align = 2
+
+[node name="NoteLineEdit" type="LineEdit" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Note"]
+margin_left = 58.0
+margin_right = 289.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+
+[node name="StartPaused" type="HBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo"]
+margin_top = 217.0
+margin_right = 289.0
+margin_bottom = 241.0
+custom_constants/separation = 15
+
+[node name="StartPausedLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/StartPaused"]
+margin_top = 1.0
+margin_right = 95.0
+margin_bottom = 23.0
+text = "Start paused::"
+align = 2
+
+[node name="StartPausedCheckBox" type="CheckBox" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/StartPaused"]
+margin_left = 110.0
+margin_right = 134.0
+margin_bottom = 24.0
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent"]
+margin_top = 251.0
+margin_right = 289.0
+margin_bottom = 255.0
+
+[node name="SpecificJobSettings" type="VBoxContainer" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent"]
+margin_top = 265.0
+margin_right = 289.0
+margin_bottom = 265.0
+custom_constants/separation = 9
+[connection signal="item_selected" from="JobTypeContainer/HBoxContainer/JobTypeOptionButton" to="." method="_on_JobTypeOptionButton_item_selected"]
+[connection signal="item_selected" from="JobTypeContainer/HBoxContainer/JobTypeVersionButton" to="." method="_on_JobTypeVersionButton_item_selected"]
+[connection signal="draw" from="ScrollContainer/MinimumSizeContainer" to="." method="_on_MinimumSizeContainer_draw"]
+[connection signal="value_changed" from="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority/PriorityValueSpinBox" to="." method="_on_PriorityValueSpinBox_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority/HSlider" to="." method="_on_HSlider_value_changed"]

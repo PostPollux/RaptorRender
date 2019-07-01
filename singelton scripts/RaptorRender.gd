@@ -11,6 +11,7 @@ var JobProgressBarRes = preload("res://GUI/SortableTable/specific_sortable_table
 var JobPriorityControlRes = preload("res://GUI/SortableTable/specific_sortable_table_cell_elements/PriorityControl/PriorityControl.tscn")
 var CurrentJobLinkRes = preload("res://GUI/SortableTable/specific_sortable_table_cell_elements/CurrentJobLink/CurrentJobLink.tscn")
 
+var SubmitJobPopupContentRes = preload("res://GUI/AutoScalingPopup/Content/SubmitJobPopupContent/SubmitJobPopupContent.tscn")
 
 
 var NotificationSystem : NotificationSystem
@@ -24,6 +25,8 @@ var ContextMenu_Clients : RRContextMenuBase
 var ContextMenu_Jobs : RRContextMenuBase
 var ContextMenu_Chunks : RRContextMenuBase
 var ContextMenu_Log : RRContextMenuBase
+
+var SubmitJobPopup : AutoScalingPopup
 
 var ClientInfoPanel : ClientInfoPanel
 var JobInfoPanel : JobInfoPanel
@@ -941,6 +944,17 @@ func register_context_menu(ContextMenu):
 		
 		"log":
 			ContextMenu_Log = ContextMenu
+			
+
+func register_popup(popup):  
+	
+	match popup.popup_id: 
+		"submit_job":
+			SubmitJobPopup = popup
+			
+			var SubmitJopPopupContent = SubmitJobPopupContentRes.instance()
+			SubmitJobPopup.set_content(SubmitJopPopupContent )
+
 
 
 
@@ -1028,6 +1042,12 @@ func log_context_menu_invoked():
 
 func _input(event):
 	
+	if Input.is_key_pressed(KEY_S):
+		if SubmitJobPopup.visible == false:
+			SubmitJobPopup.show_popup()
+		else:
+			SubmitJobPopup.hide_popup()
+			
 	if Input.is_key_pressed(KEY_L):
 		if TranslationServer.get_locale() == "de":
 			TranslationServer.set_locale("en")

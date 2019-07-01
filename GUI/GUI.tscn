@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
@@ -8,14 +8,15 @@
 [ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Jobs.tscn" type="PackedScene" id=6]
 [ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Chunks.tscn" type="PackedScene" id=7]
 [ext_resource path="res://GUI/ContextMenus/Inherited Context Menus/ContextMenu_Log.tscn" type="PackedScene" id=8]
-[ext_resource path="res://GUI/NotificationSystem/NotificationSystem.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GUI/AutoScalingPopup/AutoScalingPopupBase.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GUI/NotificationSystem/NotificationSystem.tscn" type="PackedScene" id=10]
 
 [node name="GUI" type="Node"]
 
 [node name="BackgroundColor" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.148438, 0.148438, 0.148438, 1 )
+color = Color( 0.14902, 0.14902, 0.14902, 1 )
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
@@ -117,4 +118,13 @@ context_menu_id = "chunks"
 
 [node name="ContextMenuBase" parent="Control" instance=ExtResource( 8 )]
 
-[node name="NotificationSystem" parent="." instance=ExtResource( 9 )]
+[node name="SubmitJobPopup" parent="Control" instance=ExtResource( 9 )]
+popup_id = "submit_job"
+title = "POPUP_SUBMIT_JOB_1"
+ok_button_string = "POPUP_SUBMIT_JOB_1"
+margin_left_percent = 25.0
+margin_right_percent = 25.0
+margin_top_percent = 10.0
+margin_bottom_percent = 10.0
+
+[node name="NotificationSystem" parent="." instance=ExtResource( 10 )]

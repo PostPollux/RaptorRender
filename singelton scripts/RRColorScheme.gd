@@ -1,4 +1,20 @@
+#///////////////#
+# RRColorScheme #
+#///////////////#
+
+# This script holds all important interface colors.
+# As most other scripts get their colors from here, this is the place where you want to change colors.
+
+
 extends Node
+
+# Background colors for interface elements (eg. shades of grey)
+var bg_0 : Color = Color("262626") #  | dark
+var bg_1 : Color = Color("313131") #  |
+var bg_2 : Color = Color("4d4d4d") #  V brighter
+
+# transparent background for popups to darken the rest
+var popup_black_transparent : Color = Color("cc000000")
 
 # state colors
 var state_finished_or_online : Color = Color("77B223")

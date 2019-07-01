@@ -1,6 +1,13 @@
+#///////////////#
+# RRStateScheme #
+#///////////////#
+
+# This script holds all the various states a job, chunk, try or client can have.
+# the numbers in front of each string are important for sorting based on state.
+
+
 extends Node
 
-# the numbers in front of each string are important for sorting based on state
 
 # job states
 var job_rendering : String = "1_rendering"
@@ -25,7 +32,6 @@ var try_error : String = "2_error"
 var try_finished: String = "3_finished"
 var try_cancelled: String = "4_cancelled"
 var try_marked_as_finished: String = "5_marked_as_finished"
-
 
 # client states
 var client_rendering : String = "1_rendering"

@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://GUI/Themes/grey.tres" type="Theme" id=1]
+[ext_resource path="res://GUI/AutoScalingPopup/AutoScalingPopupBase.gd" type="Script" id=2]
+[ext_resource path="res://GUI/AutoScalingPopup/AutoScalingPopupContent.gd" type="Script" id=3]
+[ext_resource path="res://GUI/Themes/button_on_dark_bg_styleboxflat.tres" type="StyleBox" id=4]
+
+[node name="AutoScalingPopup" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="TransparentBackground" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.862745 )
+
+[node name="MainBGPanel" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 88.0
+margin_top = 47.0
+margin_right = -79.0
+margin_bottom = -68.0
+color = Color( 0.301961, 0.301961, 0.301961, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainBGPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 0
+
+[node name="Header" type="MarginContainer" parent="MainBGPanel/VBoxContainer"]
+margin_right = 1113.0
+margin_bottom = 40.0
+
+[node name="HeaderColorRect" type="ColorRect" parent="MainBGPanel/VBoxContainer/Header"]
+margin_right = 1113.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+color = Color( 0.14902, 0.14902, 0.14902, 1 )
+
+[node name="HeadingLabel" type="Label" parent="MainBGPanel/VBoxContainer/Header/HeaderColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -5.0
+rect_min_size = Vector2( 0, 30 )
+text = "Submit Job"
+align = 1
+valign = 1
+
+[node name="Content" type="MarginContainer" parent="MainBGPanel/VBoxContainer"]
+margin_top = 40.0
+margin_right = 1113.0
+margin_bottom = 445.0
+size_flags_vertical = 3
+script = ExtResource( 3 )
+
+[node name="PopupButtons" type="MarginContainer" parent="MainBGPanel/VBoxContainer"]
+margin_top = 445.0
+margin_right = 1113.0
+margin_bottom = 485.0
+
+[node name="ColorRect" type="ColorRect" parent="MainBGPanel/VBoxContainer/PopupButtons"]
+margin_right = 1113.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+color = Color( 0.14902, 0.14902, 0.14902, 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="MainBGPanel/VBoxContainer/PopupButtons/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer"]
+margin_left = 431.0
+margin_top = 7.0
+margin_right = 681.0
+margin_bottom = 32.0
+custom_constants/separation = 100
+
+[node name="CancelButton" type="Button" parent="MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer"]
+margin_right = 75.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 75, 25 )
+custom_styles/normal = ExtResource( 4 )
+text = "Cancel"
+
+[node name="OkButton" type="Button" parent="MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer"]
+margin_left = 175.0
+margin_right = 250.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 75, 25 )
+custom_styles/normal = ExtResource( 4 )
+text = "Ok"
+[connection signal="gui_input" from="TransparentBackground" to="." method="_on_TransparentBackground_gui_input"]
+[connection signal="pressed" from="MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer/CancelButton" to="." method="_on_CancelButton_pressed"]
+[connection signal="pressed" from="MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer/OkButton" to="." method="_on_OkButton_pressed"]
