@@ -44,6 +44,7 @@ var job_type_settings_path : String
 func _ready():
 	
 	get_parent().connect("popup_shown", self, "initialize_on_show")
+	get_parent().connect("ok_pressed", self, "validate_input_mask")
 	
 	job_type_settings_path = OS.get_user_data_dir() + "/JobTypeSettings/local/"
 	
@@ -73,7 +74,7 @@ func initialize_on_show():
 	# reset values to default values
 	JobNameLineEdit.text = tr("POPUP_SUBMIT_JOB_12") # New Job
 	SceneFileLineEdit.text = ""
-	RenderRangeLabel.text = "1-100"
+	RenderRangeLineEdit.text = "1-100"
 	ChunkSizeSpinBox.value = 5
 	PrioritySlider.value = 50
 	PrioritySpinBox.value = 50
@@ -262,6 +263,56 @@ func load_type_mask():
 
 
 
+func validate_input_mask():
+	
+	# check if file exists
+	var FileCheck : File = File.new()
+	if not FileCheck.file_exists(SceneFileLineEdit.text):
+		RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_7"), 10) # TScene file does not exist!
+		return
+	
+	
+	# validate range input
+	var RangeRegex : RegEx = RegEx.new()
+	RangeRegex.compile("[0-9;\\-]+") # select all numbers, hyphens and semicolons
+	var RegexResult : RegExMatch = RangeRegex.search(RenderRangeLineEdit.text)
+	
+	# check for correct characters
+	if RegexResult != null:
+		if RegexResult.get_string().length() != RenderRangeLineEdit.text.length():
+			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_8"), 10) # Range input can only have numbers, dashes and semicolons!
+			return
+	else:
+		RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_8"), 10) # Range input can only have numbers, dashes and semicolons!
+		return
+	
+	# auto correct some stuff
+	RenderRangeLineEdit.text.replace(";;",";")
+	if RenderRangeLineEdit.text.begins_with(";") or RenderRangeLineEdit.text.begins_with("-"):
+		RenderRangeLineEdit.text = RenderRangeLineEdit.text.right(1)
+	if RenderRangeLineEdit.text.ends_with(";") or RenderRangeLineEdit.text.ends_with("-"):
+		RenderRangeLineEdit.text = RenderRangeLineEdit.text.left(RenderRangeLineEdit.text.length() - 1)	
+	
+	# check if there are more than one hypen in a render range
+	if RenderRangeLineEdit.text.find("-") != -1:
+		var render_ranges : Array = RenderRangeLineEdit.text.split(";")
+		for render_range in render_ranges:
+			var hyphen_split : Array = render_range.split("-")
+			if hyphen_split.size() > 2:
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_9"), 10) # A range can only have one dash! It should look something like:  1-45;80-120
+				return
+			if int(hyphen_split[0]) > int(hyphen_split[1]):
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_10"), 10) # The first number of a render range have to be smaller than the second one!
+				return
+	
+	create_new_job()
+
+
+func create_new_job():
+	print("job created")
+	
+	
+	
 
 func _on_JobTypeOptionButton_item_selected(ID):
 	fill_type_version_option_button( job_type_settings_path + JobTypeOptionButton.get_item_text(ID) )

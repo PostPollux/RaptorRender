@@ -177,6 +177,12 @@ MSG_ERROR_3,Seems like directory does not exist!,Dieses Verzeichnis scheint nich
 MSG_ERROR_4,Seems like file does not exist!,Dieses Datei scheint nicht zu existieren!
 MSG_ERROR_5,There is an error in your job type configuration file. The type of the following specific job setting has not been set:,Die Job Typ Konfigurationsdatei ist fehlerhaft. Der typ der folgenden jobspezifischen Einstellung fehlt:
 MSG_ERROR_6,There is an error in your job type configuration file. The type of the following key is invalid:,Die Job Typ Konfigurationsdatei ist fehlerhaft. Der typ des folgenden Schlüssels ist ungültig:
+MSG_ERROR_7,Scene file does not exist!,Die angegebene Szenendatei existiert nicht!
+MSG_ERROR_8,"Range input can only have numbers, dashes and semicolons!","Das Renderbereich-Feld darf nur Zahlen, sowie Bindestriche und Strichpunkte enthalten!"
+MSG_ERROR_9,A range can only have one dash! It should look something like:  1-45;80-120,Ein Renderbereich kann nur einen Bindestrich haben! Es könnte zum Beispiel so aussehen: 1-45;80-120
+MSG_ERROR_10,The first number of a render range have to be smaller than the second one!,Die erste Zahl eines Renderbereichs muss kleiner sein als die zweite!
+,,
+,,
 ,,
 ,,
 ,,
@@ -194,7 +200,7 @@ POPUP_SUBMIT_JOB_2,Job Type:,Job Typ:
 POPUP_SUBMIT_JOB_3,Type Version:,Version:
 POPUP_SUBMIT_JOB_4,Job Name:,Jobname: 
 POPUP_SUBMIT_JOB_5,Scene File:,Szenen Datei:
-POPUP_SUBMIT_JOB_6, ,Renderbereich:
+POPUP_SUBMIT_JOB_6,Render Range:,Renderbereich:
 POPUP_SUBMIT_JOB_7,Chunk Size:,Paketgröße:
 POPUP_SUBMIT_JOB_8,Priority:,Priorität:
 POPUP_SUBMIT_JOB_9,Pools:,Pools:

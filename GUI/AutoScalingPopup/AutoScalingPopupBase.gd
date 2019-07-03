@@ -103,5 +103,4 @@ func _on_CancelButton_pressed():
 
 func _on_OkButton_pressed():
 	emit_signal("ok_pressed")
-	hide_popup()
 	
