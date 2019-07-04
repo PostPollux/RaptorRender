@@ -26,16 +26,19 @@ onready var JobNameLineEdit : LineEdit = $"ScrollContainer/MinimumSizeContainer/
 onready var SceneFileLineEdit : LineEdit = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile/SceneFileLineEdit"
 onready var RenderRangeLineEdit : LineEdit = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/RenderRange/RenderRangeLineEdit"
 onready var ChunkSizeSpinBox : SpinBox = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/ChunkSize/ChunkSizeSpinBox"
-onready var PrioritySlider : HSlider = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority/HSlider"
+onready var PrioritySlider : HSlider = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority/PriorityHSlider"
 onready var PrioritySpinBox : SpinBox = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority/PriorityValueSpinBox"
 onready var NoteLineEdit : LineEdit = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Note/NoteLineEdit"
 onready var StartPausedCheckBox : CheckBox = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/StartPaused/StartPausedCheckBox"
 
+onready var SelectSceneFileDialog : FileDialog = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile/SelectSceneButton/SelectSceneFileDialog"
 
 
 
 var type_mask_content_label_min_size : float = 0
 var job_type_settings_path : String
+
+var last_selected_path : String = ""
 
 
 
@@ -157,7 +160,28 @@ func load_type_mask():
 	var job_type_config : ConfigFile = ConfigFile.new()
 	job_type_config.load( job_type_settings_path + job_type + "/" + job_type_version + ".cfg" )
 	
-	# Create an array to hold all MaskElements (which are HBoxContainers). Tr should not be added to that array.
+	# set filters for the file dialog
+	SelectSceneFileDialog.clear_filters()
+	
+	var file_extensions : Array = job_type_config.get_section_keys( "FileExtensions" ) 
+	var filters : PoolStringArray= []
+	for extension in file_extensions:
+		if not extension.ends_with("_description"):
+			var extension_str : String = job_type_config.get_value("FileExtensions", extension, "")
+			var extension_description : String = job_type_config.get_value("FileExtensions", extension + "_description", "")
+			
+			if not extension_str.begins_with("."):
+				extension_str = "." + extension_str
+				
+			if extension_description != "":
+				filters.append("*" + extension_str + " ; " + extension_description)
+			else:
+				filters.append("*" + extension_str + " ; " + extension_str)
+		
+	SelectSceneFileDialog.set_filters(filters)
+	
+	
+	# Create an array to hold all MaskElements (which are HBoxContainers).
 	var MaskLabels : Array = []
 	
 	# fill MaskLabels array
@@ -309,7 +333,33 @@ func validate_input_mask():
 
 
 func create_new_job():
-	print("job created")
+	
+	var new_job : Dictionary = {
+				"name": JobNameLineEdit.text,
+				"type": JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id()).to_lower(),
+				"type_version": TypeVersionOptionButton.get_item_text(TypeVersionOptionButton.get_selected_id()).to_lower(),
+				"priority": PrioritySpinBox.value,
+				"priority_boost": true,
+				"creator": "Johannes",
+				"time_created": OS.get_unix_time(),
+				"status": RRStateScheme.job_paused if StartPausedCheckBox.pressed else RRStateScheme.job_queued,
+				"progress": 0,
+				"note": NoteLineEdit.text,
+				"errors": 0,
+				"pools": [],
+				"scene_path" : SceneFileLineEdit.text,
+				"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+				"render_time" : 0,
+				"SpecificJobSettings" : {},
+				"chunks": {
+					
+				}
+			}
+	
+	# create chunks for the job
+	
+	get_parent().hide_popup()
+	
 	
 	
 	
@@ -327,10 +377,23 @@ func _on_MinimumSizeContainer_draw():
 
 
 
-
-func _on_HSlider_value_changed(value):
+func _on_PriorityHSlider_value_changed(value):
 	PrioritySpinBox.value = value
-
 
 func _on_PriorityValueSpinBox_value_changed(value):
 	PrioritySlider.value = value
+
+
+
+func _on_SelectSceneFileDialog_confirmed():
+	SceneFileLineEdit.text = SelectSceneFileDialog.current_path
+	last_selected_path = SelectSceneFileDialog.current_path
+
+
+func _on_SelectSceneButton_pressed():
+	SelectSceneFileDialog.current_path = last_selected_path
+	SelectSceneFileDialog.popup_centered_ratio(0.75)
+	
+
+
+
