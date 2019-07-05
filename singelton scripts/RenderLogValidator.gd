@@ -80,7 +80,15 @@ func _ready():
 
 func load_job_type_settings_CRP(job_type : String, job_type_version : String):
 	
-	job_type_settings_CRP.load( job_type_settings_path + "/local/" + job_type + "/" + job_type_version + ".cfg" )
+	var settings_file_path : String =  job_type_settings_path + "/local/" + job_type + "/" + job_type_version + ".cfg"
+	var file_check : File = File.new()
+	
+	if not file_check.file_exists(settings_file_path):
+		var error_msg : String = tr("MSG_ERROR_11") + "\n" + job_type + "/" + job_type_version
+		RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_msg, 10) # The first number of a render range have to be smaller than the second one!
+		return
+		
+	job_type_settings_CRP.load(settings_file_path )
 		
 	if job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log_pattern_type", 0) != 5:
 		possible_critical_error_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "critical_error_log", "").replace("''","\"" ).split(";;",false)

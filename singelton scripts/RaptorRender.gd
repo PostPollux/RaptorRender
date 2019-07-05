@@ -63,10 +63,10 @@ func _ready():
 				"priority_boost": true,
 				"creator": "Johannes",
 				"time_created": 1528623180,
+				"frame_range": "10-25",
+				"frames_total": 16,
 				"status": RRStateScheme.job_queued,
 				"progress": 0,
-				"range_start": 10,
-				"range_end": 25,
 				"note": "blender test",
 				"errors": 0,
 				"pools": [],
@@ -123,10 +123,10 @@ func _ready():
 				"priority_boost": true,
 				"creator": "Johannes",
 				"time_created": 1528623180,
+				"frame_range": "10-25",
+				"frames_total": 16,
 				"status": RRStateScheme.job_queued,
 				"progress": 0,
-				"range_start": 10,
-				"range_end": 25,
 				"note": "blender test",
 				"errors": 0,
 				"pools": [],
@@ -185,10 +185,10 @@ func _ready():
 				"priority_boost": false,
 				"creator": "Max",
 				"time_created": 1528620180,
+				"frame_range": "10-110",
+				"frames_total": 100,
 				"status": RRStateScheme.job_finished,
 				"progress": 100,
-				"range_start": 120,
-				"range_end": 350,
 				"note": "3 Fehler",
 				"errors": 0,
 				"pools": ["AE_Plugins"],
@@ -952,8 +952,9 @@ func register_popup(popup):
 		"submit_job":
 			SubmitJobPopup = popup
 			
-			var SubmitJopPopupContent = SubmitJobPopupContentRes.instance()
-			SubmitJobPopup.set_content(SubmitJopPopupContent )
+			var SubmitJobPopupContent = SubmitJobPopupContentRes.instance()
+			SubmitJobPopupContent.connect("job_successfully_created", SubmitJobPopup, "hide_popup")
+			SubmitJobPopup.set_content(SubmitJobPopupContent )
 
 
 
@@ -1294,17 +1295,17 @@ func refresh_jobs_table():
 			### Frame Range ###
 			
 			# only change when value is different
-			if (row.sort_values[frame_range_column] != rr_data.jobs[job].range_end - rr_data.jobs[job].range_start):
+			if (row.sort_values[frame_range_column] != String(rr_data.jobs[job].frames_total) + "  (" + rr_data.jobs[job].frame_range + ")" ):
 				
 				# get reference to the cell
 				var cell = JobsTable.get_cell( row_position, frame_range_column )
 				
 				# change the cell value
-				var frames_total = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
-				cell.get_child(0).text = String(frames_total) + "  (" + String(rr_data.jobs[job].range_start) + " - " + String(rr_data.jobs[job].range_end) + ")"
+				var new_string : String = String(rr_data.jobs[job].frames_total) + "  (" + rr_data.jobs[job].frame_range + ")"
+				cell.get_child(0).text = new_string
 				
 				# update sort_value
-				JobsTable.set_cell_sort_value(row_position, frame_range_column,  frames_total)
+				JobsTable.set_cell_sort_value(row_position, frame_range_column,  new_string)
 			
 			
 			
@@ -1534,12 +1535,11 @@ func refresh_jobs_table():
 			### Frame Range ###
 			
 			var LabelFrameRange = Label.new()
-			var frames_total = rr_data.jobs[job].range_end - rr_data.jobs[job].range_start
-			LabelFrameRange.text = String(frames_total) + "  (" + String(rr_data.jobs[job].range_start) + " - " + String(rr_data.jobs[job].range_end) + ")"
+			LabelFrameRange.text = String(rr_data.jobs[job].frames_total) + "  (" + rr_data.jobs[job].frame_range + ")"
 			JobsTable.set_cell_content(count, frame_range_column, LabelFrameRange)
 			
 			# update sort_value
-			JobsTable.set_cell_sort_value(count, frame_range_column, frames_total)
+			JobsTable.set_cell_sort_value(count, frame_range_column, LabelFrameRange.text)
 			
 			
 			

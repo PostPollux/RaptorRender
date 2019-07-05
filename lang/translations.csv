@@ -179,9 +179,9 @@ MSG_ERROR_5,There is an error in your job type configuration file. The type of t
 MSG_ERROR_6,There is an error in your job type configuration file. The type of the following key is invalid:,Die Job Typ Konfigurationsdatei ist fehlerhaft. Der typ des folgenden Schlüssels ist ungültig:
 MSG_ERROR_7,Scene file does not exist!,Die angegebene Szenendatei existiert nicht!
 MSG_ERROR_8,"Range input can only have numbers, dashes and semicolons!","Das Renderbereich-Feld darf nur Zahlen, sowie Bindestriche und Strichpunkte enthalten!"
-MSG_ERROR_9,A range can only have one dash! It should look something like:  1-45;80-120,Ein Renderbereich kann nur einen Bindestrich haben! Es könnte zum Beispiel so aussehen: 1-45;80-120
+MSG_ERROR_9,A range can only have one dash!,Ein Renderbereich kann nur einen Bindestrich haben!
 MSG_ERROR_10,The first number of a render range have to be smaller than the second one!,Die erste Zahl eines Renderbereichs muss kleiner sein als die zweite!
-,,
+MSG_ERROR_11,The following job type configuration file could not be loaded:,Folgende Job Typen Konfigurationsdatei konnte nicht geladen werden:
 ,,
 ,,
 ,,

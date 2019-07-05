@@ -40,6 +40,7 @@ var job_type_settings_path : String
 
 var last_selected_path : String = ""
 
+signal job_successfully_created
 
 
 
@@ -295,6 +296,9 @@ func validate_input_mask():
 		RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_7"), 10) # TScene file does not exist!
 		return
 	
+	# auto correct some stuff
+	RenderRangeLineEdit.text = RenderRangeLineEdit.text.replace(" ","")
+	RenderRangeLineEdit.text = RenderRangeLineEdit.text.replace(",",";")
 	
 	# validate range input
 	var RangeRegex : RegEx = RegEx.new()
@@ -311,7 +315,7 @@ func validate_input_mask():
 		return
 	
 	# auto correct some stuff
-	RenderRangeLineEdit.text.replace(";;",";")
+	RenderRangeLineEdit.text = RenderRangeLineEdit.text.replace(";;",";")
 	if RenderRangeLineEdit.text.begins_with(";") or RenderRangeLineEdit.text.begins_with("-"):
 		RenderRangeLineEdit.text = RenderRangeLineEdit.text.right(1)
 	if RenderRangeLineEdit.text.ends_with(";") or RenderRangeLineEdit.text.ends_with("-"):
@@ -325,9 +329,10 @@ func validate_input_mask():
 			if hyphen_split.size() > 2:
 				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_9"), 10) # A range can only have one dash! It should look something like:  1-45;80-120
 				return
-			if int(hyphen_split[0]) > int(hyphen_split[1]):
-				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_10"), 10) # The first number of a render range have to be smaller than the second one!
-				return
+			if hyphen_split.size() == 2:
+				if int(hyphen_split[0]) > int(hyphen_split[1]):
+					RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_10"), 10) # The first number of a render range have to be smaller than the second one!
+					return
 	
 	create_new_job()
 
@@ -335,30 +340,101 @@ func validate_input_mask():
 func create_new_job():
 	
 	var new_job : Dictionary = {
-				"name": JobNameLineEdit.text,
-				"type": JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id()).to_lower(),
-				"type_version": TypeVersionOptionButton.get_item_text(TypeVersionOptionButton.get_selected_id()).to_lower(),
-				"priority": PrioritySpinBox.value,
-				"priority_boost": true,
-				"creator": "Johannes",
-				"time_created": OS.get_unix_time(),
-				"status": RRStateScheme.job_paused if StartPausedCheckBox.pressed else RRStateScheme.job_queued,
-				"progress": 0,
-				"note": NoteLineEdit.text,
-				"errors": 0,
-				"pools": [],
-				"scene_path" : SceneFileLineEdit.text,
-				"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
-				"render_time" : 0,
-				"SpecificJobSettings" : {},
-				"chunks": {
-					
-				}
-			}
+								"name": JobNameLineEdit.text,
+								"type": JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id()),
+								"type_version": TypeVersionOptionButton.get_item_text(TypeVersionOptionButton.get_selected_id()),
+								"priority": PrioritySpinBox.value,
+								"priority_boost": true,
+								"creator": GetSystemInformation.username,
+								"time_created": OS.get_unix_time(),
+								"frame_range": RenderRangeLineEdit.text.replace(";", "; "),
+								"frames_total": 0,
+								"status": RRStateScheme.job_paused if StartPausedCheckBox.pressed else RRStateScheme.job_queued,
+								"progress": 0,
+								"note": NoteLineEdit.text,
+								"errors": 0,
+								"pools": [],
+								"scene_path" : SceneFileLineEdit.text,
+								"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+								"render_time" : 0,
+								"SpecificJobSettings" : {},
+								"chunks": {
+									
+								}
+							}
 	
 	# create chunks for the job
+	var render_ranges : Array = RenderRangeLineEdit.text.split(";")
 	
-	get_parent().hide_popup()
+	var chunk_count : int = 1
+	var frames_total : int = 0
+	
+	for render_range in render_ranges:
+		
+		var chunk : Dictionary = {}
+		
+		var hyphen_split : Array = render_range.split("-")
+		
+		# frame range
+		if hyphen_split.size() > 1:
+			var frames_amount : int = int(hyphen_split[1]) - int(hyphen_split[0])
+			var chunks_needed : int = ceil( float(frames_amount)/float(ChunkSizeSpinBox.value) )
+			
+			for c in range (0 , chunks_needed ):
+				var frame_start : int = int(hyphen_split[0]) + c * ChunkSizeSpinBox.value
+				var frame_end : int = int(hyphen_split[0]) + c * ChunkSizeSpinBox.value + ChunkSizeSpinBox.value
+				
+				chunk = {
+						"status" : RRStateScheme.chunk_paused if StartPausedCheckBox.pressed else RRStateScheme.chunk_queued,
+						"frame_start" : frame_start,
+						"frame_end" : frame_end if frame_end < int(hyphen_split[1]) else int(hyphen_split[1]),
+						"number_of_tries" : 0,
+						"tries": {
+							}
+						}
+						
+				# add chunk to new job
+				new_job.chunks[chunk_count] = chunk#str2var( var2str(chunk) )
+				
+				chunk_count += 1
+			
+			frames_total += frames_amount + 1
+			
+			
+		# single frame
+		else:
+			chunk = {
+					"status" : RRStateScheme.chunk_paused if StartPausedCheckBox.pressed else RRStateScheme.chunk_queued,
+					"frame_start" : int(render_range),
+					"frame_end" : int(render_range),
+					"number_of_tries" : 0,
+					"tries": {
+						}
+					}
+			
+			# add chunk to new job
+			new_job.chunks[chunk_count] = chunk#str2var( var2str(chunk) )
+			frames_total += 1
+			chunk_count += 1
+	
+	
+	# update total frame count
+	new_job.frames_total = frames_total
+	
+	# add job to rr_data
+	var job_id : int = 0
+	
+	var current_ids : Array = RaptorRender.rr_data.jobs.keys()
+	
+	for id in current_ids:
+		if id > job_id:
+			job_id = id
+	
+	job_id += 1
+	
+	RaptorRender.rr_data.jobs[job_id] = new_job
+	
+	emit_signal("job_successfully_created")
 	
 	
 	
