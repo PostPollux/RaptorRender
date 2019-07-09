@@ -12,7 +12,6 @@ custom_constants/separation = 0
 script = ExtResource( 2 )
 
 [node name="JobTypeContainer" type="MarginContainer" parent="."]
-editor/display_folded = true
 margin_right = 1280.0
 margin_bottom = 50.0
 
@@ -39,6 +38,7 @@ margin_left = 39.0
 margin_top = 14.0
 margin_right = 104.0
 margin_bottom = 36.0
+mouse_filter = 0
 text = "Job Type:"
 
 [node name="JobTypeOptionButton" type="OptionButton" parent="JobTypeContainer/HBoxContainer"]
@@ -62,6 +62,7 @@ margin_left = 310.0
 margin_top = 14.0
 margin_right = 404.0
 margin_bottom = 36.0
+mouse_filter = 0
 text = "Type Version:"
 
 [node name="JobTypeVersionButton" type="OptionButton" parent="JobTypeContainer/HBoxContainer"]
@@ -107,6 +108,7 @@ custom_constants/separation = 15
 [node name="JobNameLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/JobName"]
 margin_right = 73.0
 margin_bottom = 22.0
+mouse_filter = 0
 text = "Job Name:"
 align = 2
 
@@ -127,6 +129,7 @@ custom_constants/separation = 15
 [node name="SceneFileLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile"]
 margin_right = 77.0
 margin_bottom = 22.0
+mouse_filter = 0
 text = "Scene File:"
 align = 2
 
@@ -146,7 +149,7 @@ text = " ... "
 [node name="SelectSceneFileDialog" type="FileDialog" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile/SelectSceneButton"]
 margin_right = 285.0
 margin_bottom = 140.0
-window_title = "Select Scene"
+window_title = "Open a File"
 resizable = true
 mode = 0
 access = 2
@@ -164,6 +167,7 @@ custom_constants/separation = 15
 [node name="RenderRangeLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/RenderRange"]
 margin_right = 99.0
 margin_bottom = 22.0
+mouse_filter = 0
 text = "Render Range:"
 align = 2
 
@@ -179,11 +183,13 @@ caret_blink = true
 margin_top = 93.0
 margin_right = 289.0
 margin_bottom = 115.0
+mouse_filter = 0
 custom_constants/separation = 15
 
 [node name="ChunkSizeLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/ChunkSize"]
 margin_right = 81.0
 margin_bottom = 22.0
+mouse_filter = 0
 text = "Chunk Size:"
 align = 2
 
@@ -205,6 +211,7 @@ custom_constants/separation = 15
 [node name="PriorityLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority"]
 margin_right = 58.0
 margin_bottom = 22.0
+mouse_filter = 0
 text = "Priority:"
 align = 2
 
@@ -234,6 +241,7 @@ custom_constants/separation = 15
 [node name="PoolLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Pool"]
 margin_right = 47.0
 margin_bottom = 22.0
+mouse_filter = 0
 text = "Pools:"
 align = 2
 
@@ -251,6 +259,7 @@ custom_constants/separation = 15
 [node name="NoteLabel" type="Label" parent="ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Note"]
 margin_right = 43.0
 margin_bottom = 22.0
+mouse_filter = 0
 text = "Note:"
 align = 2
 
@@ -270,6 +279,7 @@ custom_constants/separation = 15
 margin_top = 1.0
 margin_right = 95.0
 margin_bottom = 23.0
+mouse_filter = 0
 text = "Start paused::"
 align = 2
 

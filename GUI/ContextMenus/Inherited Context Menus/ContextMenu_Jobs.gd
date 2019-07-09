@@ -162,11 +162,22 @@ func _on_ContextMenu_index_pressed(index):
 					# cancle active chunks
 					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
 						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
-						if chunk_status == RRStateScheme.chunk_rendering or chunk_status == RRStateScheme.chunk_queued:
+						var number_of_tries : int = RaptorRender.rr_data.jobs[selected].chunks[chunk].number_of_tries
+						
+						if chunk_status == RRStateScheme.chunk_rendering: 
 							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_paused
 							
-					# Set Status to paused
+							# change try status
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].status = RRStateScheme.try_cancelled
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].time_stopped = OS.get_unix_time()
+						
+						if chunk_status == RRStateScheme.chunk_queued:
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_paused
+							
+					# Set Job Status to paused
 					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_paused
+					
+					
 					
 				
 			RaptorRender.JobsTable.refresh()
@@ -223,7 +234,16 @@ func _on_ContextMenu_index_pressed(index):
 					# cancle active chunks
 					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
 						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
-						if chunk_status == RRStateScheme.chunk_rendering or chunk_status == RRStateScheme.chunk_queued:
+						var number_of_tries : int = RaptorRender.rr_data.jobs[selected].chunks[chunk].number_of_tries
+						
+						if chunk_status == RRStateScheme.chunk_rendering: 
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_cancelled
+							
+							# change try status
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].status = RRStateScheme.try_cancelled
+							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].time_stopped = OS.get_unix_time()
+						
+						if chunk_status == RRStateScheme.chunk_queued:
 							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_cancelled
 					
 					# Set Status to cancelled

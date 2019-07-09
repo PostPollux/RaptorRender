@@ -71,6 +71,15 @@ func initialize_on_show():
 	NoteLabel.text = "POPUP_SUBMIT_JOB_10" # Note:
 	StartPausedLabel.text = "POPUP_SUBMIT_JOB_11" # Start Paused:
 	
+	# set tooltips
+	RenderRangeLabel.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_1"
+	RenderRangeLineEdit.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_1"
+	ChunkSizeLabel.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_2"
+	ChunkSizeSpinBox.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_2"
+	PriorityLabel.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_3"
+	PrioritySlider.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_3"
+	PrioritySpinBox.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_3"
+	
 	# fill job type option buttons
 	fill_job_type_option_button(job_type_settings_path)
 	fill_type_version_option_button( job_type_settings_path + JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id()) )

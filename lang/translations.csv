@@ -207,3 +207,27 @@ POPUP_SUBMIT_JOB_9,Pools:,Pools:
 POPUP_SUBMIT_JOB_10,Note:,Notiz:
 POPUP_SUBMIT_JOB_11,Start Paused:,Pausiert starten:
 POPUP_SUBMIT_JOB_12,New Job,Neuer Job
+,,
+POPUP_SUBMIT_JOB_TOOLTIP_1,"To define your render range use numbers, hyphens, semicolons or commas.
+Valid examples: 
+1-5“;“ 10“;“ 15-20
+1-3, 6, 7","Renderbereiche werden mit Zahlen, Bindestrichen, Strichpunkten oder Kommas definiert.
+Gültige Beispiele: 
+1-5“;“ 10“;“ 15-20
+1-3, 6, 7"
+POPUP_SUBMIT_JOB_TOOLTIP_2,"Number of consecutive frames a client will render.
+
+For long rendertimes it makes sense to keep this number low or even at 1. 
+Otherwise you will loose a lot of time if you cancel a half finished chunk of 10 frames.
+
+Whereas for short rendertimes per frame it‘s better to use higher values.
+This will prevent loading the programm and the scene for each and every frame.","Anzahl der aufeinanderfolgenden Bilder, die ein Client am Stück rendert.
+
+Bei sehr langen Renderzeiten ist es sinnvoll, die Zahl klein zu halten oder sogar 1 zu verwenden. 
+Ansonsten geht viel Zeit verloren, wenn ein halb fertiger Chunk mit z.b. 10 Frames abgebrochen wird.
+
+Bei kurzen Renderzeiten pro Bild macht es hingegen Sinn, eine Höhere Zahl zu verwenden,
+da dann nicht für jedes Bild das Programm und die Szene erneut geladen werden müssen."
+POPUP_SUBMIT_JOB_TOOLTIP_3,Jobs with higher priority will be rendered first,Jobs mit einer höheren Priorität werden zuerst gerendert
+POPUP_SUBMIT_JOB_TOOLTIP_4,,
+POPUP_SUBMIT_JOB_TOOLTIP_5,,

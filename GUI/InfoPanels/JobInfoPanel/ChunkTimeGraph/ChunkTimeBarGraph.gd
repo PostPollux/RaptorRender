@@ -277,6 +277,13 @@ func _on_BarGraph_gui_input(ev):
 		RaptorRender.ChunksTable.clear_selection()
 		RaptorRender.ChunksTable.select_by_id(chunk)
 		RaptorRender.ChunksTable.scroll_to_row(chunk)
-	
+		RaptorRender.chunk_selected(chunk)
+		
+		# select first try
+		if RaptorRender.rr_data.jobs[job_id].chunks[chunk].number_of_tries > 0:
+			RaptorRender.TriesTable.clear_selection()
+			RaptorRender.TriesTable.select_by_id(1)
+			RaptorRender.try_selected(1)
+
 
 

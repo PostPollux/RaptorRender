@@ -976,6 +976,8 @@ func job_selected(id_of_row : int):
 	ClientsTable.clear_selection()
 	ChunksTable.clear_selection()
 	TriesTable.clear_selection()
+	current_job_id_for_job_info_panel = id_of_row
+	current_chunk_id_for_job_info_panel = 0
 	current_try_id_for_job_info_panel = 0
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
@@ -983,7 +985,8 @@ func job_selected(id_of_row : int):
 	JobInfoPanel.visible = true
 	TryInfoPanel.set_visibility(false)
 	refresh_chunks_table(id_of_row)
-	current_job_id_for_job_info_panel = id_of_row
+	refresh_tries_table(id_of_row, 0)
+	
 
 func job_selection_cleared():
 	JobInfoPanel.visible = false
