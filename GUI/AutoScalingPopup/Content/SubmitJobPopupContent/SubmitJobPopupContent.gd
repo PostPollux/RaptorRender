@@ -42,6 +42,8 @@ var last_selected_path : String = ""
 
 signal job_successfully_created
 
+### preloads ####
+var HBoxContainerSep15Res = preload("res://GUI/AutoScalingPopup/Content/HBoxContainerSep15.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -213,12 +215,16 @@ func load_type_mask():
 	var specific_job_type_settings : Array = job_type_config.get_section_keys( "SpecificJobSettings" ) 
 	
 	for specific_setting in specific_job_type_settings:
-		if not specific_setting.ends_with("_type") and not specific_setting.ends_with("_default"):
+		if not specific_setting.ends_with("_type") and not specific_setting.ends_with("_default") and not specific_setting.ends_with("_tooltip"):
+			
+			# load additional specific setting information
+			var value_type = job_type_config.get_value("SpecificJobSettings", specific_setting + "_type", "not_set").to_lower()
+			var default_value = job_type_config.get_value("SpecificJobSettings", specific_setting + "_default", "not_set")
+			var tooltip = job_type_config.get_value("SpecificJobSettings", specific_setting + "_tooltip", "")
 			
 			# create HBoxContainer
-			var SpecificHBoxContainer : HBoxContainer = HBoxContainer.new()
-			SpecificHBoxContainer.name =specific_setting
-			#SpecificHBoxContainer.separation = 15
+			var SpecificHBoxContainer : HBoxContainer = HBoxContainerSep15Res.instance()
+			SpecificHBoxContainer.name = specific_setting
 			SpecificJobSettings.add_child(SpecificHBoxContainer)
 			
 			# Create Label
@@ -226,11 +232,12 @@ func load_type_mask():
 			SpecificLabel.name = specific_setting + "Label"
 			SpecificLabel.text = specific_setting.replace("_"," ") + ":"
 			SpecificLabel.align = Label.ALIGN_RIGHT
+			SpecificLabel.mouse_filter = MOUSE_FILTER_STOP
+			if tooltip != "":
+				SpecificLabel.hint_tooltip = String(tooltip)
 			SpecificHBoxContainer.add_child(SpecificLabel)
 			
 			# Create Value Edit Element
-			var default_value = job_type_config.get_value("SpecificJobSettings", specific_setting + "_default", "not_set")
-			var value_type = job_type_config.get_value("SpecificJobSettings", specific_setting + "_type", "not_set").to_lower()
 			
 			if value_type == "not_set":
 				# send error message
@@ -245,6 +252,8 @@ func load_type_mask():
 				SpecificSpinBox.rounded = true
 				if default_value != "not_set":
 					SpecificSpinBox.value = int(default_value)
+				if tooltip != "":
+					SpecificSpinBox.hint_tooltip = String(tooltip)
 				SpecificHBoxContainer.add_child(SpecificSpinBox)
 				
 			elif value_type == "float":
@@ -254,6 +263,8 @@ func load_type_mask():
 				SpecificSpinBox.rounded = false
 				if default_value != "not_set":
 					SpecificSpinBox.value = float(default_value)
+				if tooltip != "":
+					SpecificSpinBox.hint_tooltip = String(tooltip)
 				SpecificHBoxContainer.add_child(SpecificSpinBox)
 				
 			elif value_type == "string":
@@ -262,6 +273,8 @@ func load_type_mask():
 				SpecificLineEdit.size_flags_horizontal = SIZE_EXPAND_FILL
 				if default_value != "not_set":
 					SpecificLineEdit.text = default_value
+				if tooltip != "":
+					SpecificLineEdit.hint_tooltip = String(tooltip)
 				SpecificHBoxContainer.add_child(SpecificLineEdit)
 				
 			elif value_type == "bool":
@@ -280,7 +293,10 @@ func load_type_mask():
 							SpecificCheckBox.pressed = false
 						else:
 							SpecificCheckBox.pressed = true
-						
+				
+				if tooltip != "":
+					SpecificCheckBox.hint_tooltip = String(tooltip)
+					
 				SpecificHBoxContainer.add_child(SpecificCheckBox )
 				
 			else:
