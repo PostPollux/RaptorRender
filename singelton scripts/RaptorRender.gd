@@ -81,8 +81,9 @@ func _ready():
 						"frame_end" : 14,
 						"number_of_tries" : 0,
 						"tries": {
-							
-						}
+						
+						},
+						"errors": 0
 					},
 					2:{
 						"status" : RRStateScheme.chunk_queued,
@@ -91,7 +92,8 @@ func _ready():
 						"number_of_tries" : 0,
 						"tries": {
 						
-						}
+						},
+						"errors": 0
 					},
 					3:{
 						"status" : RRStateScheme.chunk_queued,
@@ -99,9 +101,9 @@ func _ready():
 						"frame_end" : 24,
 						"number_of_tries" : 0,
 						"tries": {
-							
-						}
-
+						
+						},
+						"errors": 0
 					},
 					4:{
 						"status" : RRStateScheme.chunk_queued,
@@ -109,9 +111,9 @@ func _ready():
 						"frame_end" : 25,
 						"number_of_tries" : 0,
 						"tries": {
-							
-						}
-
+						
+						},
+						"errors": 0
 					}
 				}
 			},
@@ -144,7 +146,8 @@ func _ready():
 						"number_of_tries" : 0,
 						"tries": {
 						
-						}
+						},
+						"errors": 0
 					},
 					2:{
 						"status" : RRStateScheme.chunk_queued,
@@ -153,7 +156,8 @@ func _ready():
 						"number_of_tries" : 0,
 						"tries": {
 						
-						}
+						},
+						"errors": 0
 					},
 					3:{
 						"status" : RRStateScheme.chunk_queued,
@@ -162,7 +166,8 @@ func _ready():
 						"number_of_tries" : 0,
 						"tries": {
 						
-						}
+						},
+						"errors": 0
 					},
 					4:{
 						"status" : RRStateScheme.chunk_queued,
@@ -171,7 +176,8 @@ func _ready():
 						"number_of_tries" : 0,
 						"tries": {
 						
-						}
+						},
+						"errors": 0
 					}
 				}
 			},
@@ -209,8 +215,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523280
 							}
-						}
-						
+						},
+						"errors": 0
 					},
 					2:{
 						"status" : RRStateScheme.chunk_finished,
@@ -230,7 +236,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523275
 							}
-						}
+						},
+						"errors": 0
 					},
 					3:{
 						"status" : RRStateScheme.chunk_finished,
@@ -244,7 +251,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523299
 							}
-						}
+						},
+						"errors": 0
 					},
 					4:{
 						"status" : RRStateScheme.chunk_finished,
@@ -258,7 +266,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523268
 							}
-						}
+						},
+						"errors": 0
 					},
 					5:{
 						"status" : RRStateScheme.chunk_finished,
@@ -272,7 +281,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523245
 							}
-						}
+						},
+						"errors": 0
 					},
 					6:{
 						"status" : RRStateScheme.chunk_finished,
@@ -286,7 +296,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523222
 							}
-						}
+						},
+						"errors": 0
 					},
 					7:{
 						"status" : RRStateScheme.chunk_finished,
@@ -300,7 +311,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523200
 							}
-						}
+						},
+						"errors": 0
 					},
 					8:{
 						"status" : RRStateScheme.chunk_finished,
@@ -314,7 +326,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523190
 							}
-						}
+						},
+						"errors": 0
 					},
 					9:{
 						"status" : RRStateScheme.chunk_finished,
@@ -328,7 +341,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523285
 							}
-						}
+						},
+						"errors": 0
 					},
 					10:{
 						"status" : RRStateScheme.chunk_finished,
@@ -342,7 +356,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523230
 							}
-						}
+						},
+						"errors": 0
 					},
 					11:{
 						"status" : RRStateScheme.chunk_finished,
@@ -356,7 +371,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523250
 							}
-						}
+						},
+						"errors": 0
 					},
 					12:{
 						"status" : RRStateScheme.chunk_finished,
@@ -370,7 +386,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523270
 							}
-						}
+						},
+						"errors": 0
 					},
 					13:{
 						"status" : RRStateScheme.chunk_finished,
@@ -384,7 +401,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523260
 							}
-						}
+						},
+						"errors": 0
 					},
 					14:{
 						"status" : RRStateScheme.chunk_finished,
@@ -398,7 +416,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523320
 							}
-						}
+						},
+						"errors": 0
 					},
 					15:{
 						"status" : RRStateScheme.chunk_finished,
@@ -412,7 +431,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523290
 							}
-						}
+						},
+						"errors": 0
 					},
 					16:{
 						"status" : RRStateScheme.chunk_finished,
@@ -426,7 +446,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523255
 							}
-						}
+						},
+						"errors": 0
 					},
 					17:{
 						"status" : RRStateScheme.chunk_finished,
@@ -440,7 +461,8 @@ func _ready():
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523430
 							}
-						}
+						},
+						"errors": 0
 					}
 					
 				}
@@ -866,8 +888,9 @@ func register_table(SortableTableInstance : SortableTable):
 			ChunksTable.column_names.append("CHUNK_COLUMN_4") # Client
 			ChunksTable.column_names.append("CHUNK_COLUMN_5") # Rendertime
 			ChunksTable.column_names.append("CHUNK_COLUMN_6") # Tries
-			ChunksTable.column_names.append("CHUNK_COLUMN_7") # Start
-			ChunksTable.column_names.append("CHUNK_COLUMN_8") # Finish
+			ChunksTable.column_names.append("CHUNK_COLUMN_7") # Errors
+			ChunksTable.column_names.append("CHUNK_COLUMN_8") # Start
+			ChunksTable.column_names.append("CHUNK_COLUMN_9") # Finish
 			
 			# Set column widths
 			ChunksTable.column_widths.clear()
@@ -876,7 +899,8 @@ func register_table(SortableTableInstance : SortableTable):
 			ChunksTable.column_widths.append(100)
 			ChunksTable.column_widths.append(100)
 			ChunksTable.column_widths.append(100)
-			ChunksTable.column_widths.append(50)
+			ChunksTable.column_widths.append(60)
+			ChunksTable.column_widths.append(60)
 			ChunksTable.column_widths.append(160)
 			ChunksTable.column_widths.append(160)
 			
@@ -1269,17 +1293,21 @@ func refresh_jobs_table():
 			
 			### Type ###
 			
+			var type_value : String = rr_data.jobs[job].type
+			if rr_data.jobs[job].type_version != "default":
+				type_value = type_value + " (" + rr_data.jobs[job].type_version + ")"
+			
 			# only change when value is different
-			if (row.sort_values[type_column] != rr_data.jobs[job].type.to_lower()):
+			if (row.sort_values[type_column] != type_value.to_lower()):
 				
 				# get reference to the cell
 				var cell = JobsTable.get_cell( row_position, type_column )
 				
 				# change the cell value
-				cell.get_child(0).text = rr_data.jobs[job].type
+				cell.get_child(0).text = type_value
 				
 				# update sort_value
-				JobsTable.set_cell_sort_value(row_position, type_column,  rr_data.jobs[job].type.to_lower())
+				JobsTable.set_cell_sort_value(row_position, type_column,  type_value.to_lower())
 			
 			
 			
@@ -1506,10 +1534,12 @@ func refresh_jobs_table():
 			
 			var LabelType = Label.new()
 			LabelType.text = rr_data.jobs[job].type
+			if rr_data.jobs[job].type_version != "default":
+				LabelType.text = LabelType.text + " (" + rr_data.jobs[job].type_version + ")"
 			JobsTable.set_cell_content(count, type_column, LabelType)
 			
 			# update sort_value
-			JobsTable.set_cell_sort_value(count, type_column,  rr_data.jobs[job].type.to_lower())
+			JobsTable.set_cell_sort_value(count, type_column,  LabelType.text.to_lower())
 			
 			
 			
@@ -1607,8 +1637,9 @@ func refresh_chunks_table(job_id):
 	var client_column = ChunksTable.column_names.find("CHUNK_COLUMN_4", 0) + 1
 	var rendertime_column = ChunksTable.column_names.find("CHUNK_COLUMN_5", 0) + 1
 	var tries_column = ChunksTable.column_names.find("CHUNK_COLUMN_6", 0) + 1
-	var started_column = ChunksTable.column_names.find("CHUNK_COLUMN_7", 0) + 1
-	var finished_column = ChunksTable.column_names.find("CHUNK_COLUMN_8", 0) + 1
+	var errors_column = ChunksTable.column_names.find("CHUNK_COLUMN_7", 0) + 1
+	var started_column = ChunksTable.column_names.find("CHUNK_COLUMN_8", 0) + 1
+	var finished_column = ChunksTable.column_names.find("CHUNK_COLUMN_9", 0) + 1
 	
 	
 	if RaptorRender.rr_data.jobs.has(job_id):
@@ -1818,6 +1849,23 @@ func refresh_chunks_table(job_id):
 					
 					# update sort_value
 					ChunksTable.set_cell_sort_value(row_position, tries_column,  number_of_tries)
+	
+	
+	
+	
+				### Number of Errors ###
+				
+				# only change when value is different
+				if (row.sort_values[errors_column] != rr_data.jobs[job_id].chunks[chunk].errors):
+					
+					# get reference to the cell
+					var cell = ChunksTable.get_cell( row_position, errors_column )
+					
+					# change the cell value
+					cell.get_child(0).text = String(rr_data.jobs[job_id].chunks[chunk].errors)
+					
+					# update sort_value
+					ChunksTable.set_cell_sort_value(row_position, errors_column,  rr_data.jobs[job_id].chunks[chunk].errors)
 	
 	
 	
@@ -2032,6 +2080,18 @@ func refresh_chunks_table(job_id):
 				
 				# update sort_value
 				ChunksTable.set_cell_sort_value(count, tries_column,  number_of_tries)
+	
+	
+	
+	
+				### Number of Errors ###
+				
+				var LabelNumberOfErrors = Label.new()
+				LabelNumberOfErrors.text = String(rr_data.jobs[job_id].chunks[chunk].errors)
+				ChunksTable.set_cell_content(count, errors_column, LabelNumberOfErrors)
+				
+				# update sort_value
+				ChunksTable.set_cell_sort_value(count, errors_column,  rr_data.jobs[job_id].chunks[chunk].errors)
 	
 	
 	

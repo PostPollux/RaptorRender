@@ -317,8 +317,11 @@ func _on_ContextMenu_index_pressed(index):
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
-				
-				JobFunctions.open_folder( RaptorRender.rr_data.jobs[selected].output_directory )
+				var output_path : String = RaptorRender.rr_data.jobs[selected].output_directory
+				if output_path == "":
+					RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_12"), 7) # The output path is unknown for this job!
+				else:
+					JobFunctions.open_folder( output_path )
 		
 		
 		

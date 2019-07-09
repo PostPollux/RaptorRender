@@ -97,7 +97,7 @@ func update_job_info_panel(job_id : int):
 			
 		
 		# type
-		TypeLabel.text = tr("JOB_DETAIL_3") + ":  " + selected_job["type"]
+		TypeLabel.text = tr("JOB_DETAIL_3") + ":  " + selected_job["type"] + " / " + selected_job["type_version"]
 		
 		# creator
 		CreatorLabel.text = tr("JOB_DETAIL_4") + ":  " + selected_job["creator"]

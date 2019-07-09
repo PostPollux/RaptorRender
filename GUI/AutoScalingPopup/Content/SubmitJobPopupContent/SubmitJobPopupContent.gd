@@ -380,7 +380,7 @@ func create_new_job():
 								"errors": 0,
 								"pools": [],
 								"scene_path" : SceneFileLineEdit.text,
-								"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+								"output_directory" : "",
 								"render_time" : 0,
 								"SpecificJobSettings" : {},
 								"chunks": {
@@ -415,7 +415,8 @@ func create_new_job():
 						"frame_end" : frame_end if frame_end < int(hyphen_split[1]) else int(hyphen_split[1]),
 						"number_of_tries" : 0,
 						"tries": {
-							}
+							},
+						"errors": 0
 						}
 						
 				# add chunk to new job
@@ -434,7 +435,8 @@ func create_new_job():
 					"frame_end" : int(render_range),
 					"number_of_tries" : 0,
 					"tries": {
-						}
+						},
+					"errors": 0
 					}
 			
 			# add chunk to new job
