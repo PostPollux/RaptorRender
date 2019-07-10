@@ -52,13 +52,14 @@ func _ready():
 	get_parent().connect("popup_shown", self, "initialize_on_show")
 	get_parent().connect("ok_pressed", self, "validate_input_mask")
 	
-	job_type_settings_path = OS.get_user_data_dir() + "/JobTypeSettings/local/"
-	
 	initialize_on_show()
 
 
 
 func initialize_on_show():
+	
+	# load path to job type settings
+	job_type_settings_path = RRPaths.job_types_default_path
 	
 	# set labels
 	JobTypeLabel.text = "POPUP_SUBMIT_JOB_2" # Job Type:
@@ -364,14 +365,20 @@ func validate_input_mask():
 
 func create_new_job():
 	
+	# Generate unique ID. To generate a new unique id we just hash the job name + it's creation time
+	var time_created : int = OS.get_unix_time()
+	var job_string_to_hash : String = JobNameLineEdit.text + String(time_created)
+	var job_id : int = job_string_to_hash.hash()
+	
 	var new_job : Dictionary = {
+								"id": job_id,
 								"name": JobNameLineEdit.text,
 								"type": JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id()),
 								"type_version": TypeVersionOptionButton.get_item_text(TypeVersionOptionButton.get_selected_id()),
 								"priority": PrioritySpinBox.value,
 								"priority_boost": true,
 								"creator": GetSystemInformation.username,
-								"time_created": OS.get_unix_time(),
+								"time_created": time_created,
 								"frame_range": RenderRangeLineEdit.text.replace(";", "; "),
 								"frames_total": 0,
 								"status": RRStateScheme.job_paused if StartPausedCheckBox.pressed else RRStateScheme.job_queued,
@@ -449,16 +456,6 @@ func create_new_job():
 	new_job.frames_total = frames_total
 	
 	# add job to rr_data
-	var job_id : int = 0
-	
-	var current_ids : Array = RaptorRender.rr_data.jobs.keys()
-	
-	for id in current_ids:
-		if id > job_id:
-			job_id = id
-	
-	job_id += 1
-	
 	RaptorRender.rr_data.jobs[job_id] = new_job
 	
 	emit_signal("job_successfully_created")

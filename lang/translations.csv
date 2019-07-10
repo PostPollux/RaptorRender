@@ -25,6 +25,8 @@ JOB_DETAIL_9,Time Remaining,verbleibende Zeit
 JOB_DETAIL_10,Files,Dateien
 JOB_DETAIL_11,Scene File,Szene
 JOB_DETAIL_12,Output Files,Ausgabedateien
+JOB_DETAIL_13,Log Files,Log Dateien
+,,
 ,,
 JOB_DETAIL_STATUS_1,Rendering,In Arbeit
 JOB_DETAIL_STATUS_2,Paused Deffered,verzögert pausiert

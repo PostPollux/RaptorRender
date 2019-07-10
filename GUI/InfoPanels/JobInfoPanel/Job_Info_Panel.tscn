@@ -36,8 +36,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -211,7 +209,7 @@ rect_min_size = Vector2( 0, 20 )
 [node name="files" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_top = 290.0
 margin_right = 663.0
-margin_bottom = 342.0
+margin_bottom = 361.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
@@ -220,18 +218,18 @@ custom_constants/margin_bottom = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files"]
 margin_right = 663.0
-margin_bottom = 52.0
+margin_bottom = 71.0
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer"]
 margin_right = 663.0
-margin_bottom = 52.0
+margin_bottom = 71.0
 size_flags_horizontal = 3
 custom_constants/margin_left = 15
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer"]
 margin_left = 15.0
 margin_right = 663.0
-margin_bottom = 52.0
+margin_bottom = 71.0
 size_flags_vertical = 4
 
 [node name="FilesHeading" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer"]
@@ -282,7 +280,29 @@ margin_right = 96.0
 margin_bottom = 14.0
 text = "Output files"
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer"]
+margin_top = 56.0
+margin_right = 648.0
+margin_bottom = 71.0
+custom_constants/separation = 5
+
+[node name="OpenLogsFolderButton" type="TextureButton" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+margin_right = 15.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 15, 15 )
+size_flags_vertical = 4
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+
+[node name="LogFilesLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+margin_left = 20.0
+margin_right = 76.0
+margin_bottom = 14.0
+text = "Log Files"
+
 [node name="Chunk List" type="Tabs" parent="TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -366,3 +386,4 @@ size_flags_vertical = 3
 [connection signal="tab_selected" from="TabContainer" to="." method="_on_TabContainer_tab_selected"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OpenOutputFolderButton" to="." method="_on_OpenOutputFolderButton_pressed"]
+[connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/OpenLogsFolderButton" to="." method="_on_OpenLogsFolderButton_pressed"]

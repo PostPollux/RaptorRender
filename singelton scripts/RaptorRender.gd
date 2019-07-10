@@ -56,6 +56,7 @@ func _ready():
 	rr_data = {
 		"jobs": {
 			100: {
+				"id": 100,
 				"name": "renderfarmtest",
 				"type": "Blender",
 				"type_version": "default",
@@ -118,6 +119,7 @@ func _ready():
 				}
 			},
 			101: {
+				"id": 101,
 				"name": "natron test",
 				"type": "Natron",
 				"type_version": "default",
@@ -184,6 +186,7 @@ func _ready():
 			
 			
 			4: {
+				"id": 4,
 				"name": "job 4",
 				"type": "Natron",
 				"type_version": "default",

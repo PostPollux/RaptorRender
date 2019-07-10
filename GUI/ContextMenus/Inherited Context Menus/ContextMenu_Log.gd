@@ -34,18 +34,17 @@ func enable_disable_items():
 
 func _on_ContextMenu_index_pressed(index):
 	
-	var filename : String = String(RaptorRender.current_job_id_for_job_info_panel) + "_chunk_" + String(RaptorRender.current_chunk_id_for_job_info_panel) + "_try_" + String(RaptorRender.TryInfoPanel.currently_displayed_try_id) + ".txt"
-	var filepath : String = OS.get_user_data_dir() + "/logs/" + filename
+	var filename : String = "chunk_" + String(RaptorRender.current_chunk_id_for_job_info_panel) + "_try_" + String(RaptorRender.TryInfoPanel.currently_displayed_try_id) + ".txt"
+	var log_directory: String = RRPaths.get_job_log_path( RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].id )
 	
 	match index:
 		
 		0:  # open log externally
-			print (filepath)
-			JobFunctions.open_file_externally(filepath)
+			JobFunctions.open_file_externally(log_directory + filename)
 			
 			
 		1:  # open logs folder
-			JobFunctions.open_folder( OS.get_user_data_dir() + "/logs/" )
+			JobFunctions.open_folder( log_directory )
 
 
 

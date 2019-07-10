@@ -130,11 +130,11 @@ func start_junk(job_id : int, chunk_id : int, try_id : int):
 				cmd_string = cmd_string.replace( "$(" + specific_setting + ")", specific_setting_value)
 	
 	# build a reasonable log file name
-	log_file_name = String(job_id) + "_chunk_" + String(chunk_id) + "_try_" + String(try_id)
+	log_file_name = "chunk_" + String(chunk_id) + "_try_" + String(try_id)
 	
 	# load the correct job type settings file for the validation of the coming render process
 	RenderLogValidator.load_job_type_settings_CRP(job_type, job_type_version)
 	
 	# now invoke the render process with the freshly created commandline string
-	CommandLineManager.start_render_process( cmd_string, log_file_name)
+	CommandLineManager.start_render_process( RaptorRender.rr_data.jobs[job_id].id, cmd_string, log_file_name)
 	

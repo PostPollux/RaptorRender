@@ -22,6 +22,7 @@ onready var TimeRemainingLabel : Label = $"TabContainer/Details/ScrollContainer/
 
 onready var SceneFileLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SceneFileLabel"
 onready var OutputFilesLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OutputFilesLabel"
+onready var LogFilesLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/LogFilesLabel"
 
 onready var ChunkTimeGraph = $"TabContainer/Graphs/VSplitContainer/ChunkTimeGraph"
 onready var ClientPieChart = $"TabContainer/Graphs/VSplitContainer/ClientPieChart"
@@ -157,9 +158,11 @@ func update_job_info_panel(job_id : int):
 		# Scene File
 		SceneFileLabel.text = tr("JOB_DETAIL_11") + ":   " + selected_job["scene_path"]
 		
-		# Scene File
+		# Output Files
 		OutputFilesLabel.text = tr("JOB_DETAIL_12") + ":   " + selected_job["output_directory"]
-	
+		
+		# Log Files
+		LogFilesLabel.text = tr("JOB_DETAIL_13") + ":   " + RRPaths.get_job_log_path( selected_job["id"] )
 		
 		
 		
@@ -180,6 +183,9 @@ func _on_OpenSceneFolderButton_pressed():
 func _on_OpenOutputFolderButton_pressed():
 	JobFunctions.open_folder( RaptorRender.rr_data.jobs[current_displayed_job_id].output_directory )
 
+func _on_OpenLogsFolderButton_pressed():
+	JobFunctions.open_folder( RRPaths.get_job_log_path( RaptorRender.rr_data.jobs[current_displayed_job_id].id ) )
+	
 
 func _on_TabContainer_tab_selected(tab):
 	
@@ -187,3 +193,6 @@ func _on_TabContainer_tab_selected(tab):
 	if tab == 1:
 		RaptorRender.refresh_chunks_table( RaptorRender.current_job_id_for_job_info_panel )
 	
+
+
+

@@ -95,8 +95,8 @@ func read_and_colorize_log_file(args):
 	RenderLogValidator.load_job_type_settings_HIGHLIGHT(job_type, job_type_version)
 	
 	# generate correct file path
-	var filename : String = String(log_job_id) + "_chunk_" + String(log_chunk_id) + "_try_" + String(log_try_id) + ".txt"
-	var filepath : String = OS.get_user_data_dir() + "/logs/" + filename
+	var filename : String = "chunk_" + String(log_chunk_id) + "_try_" + String(log_try_id) + ".txt"
+	var filepath : String = RRPaths.get_job_log_path(RaptorRender.rr_data.jobs[log_job_id].id) + filename
 	
 	var lines_read : String = ""
 	

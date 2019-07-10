@@ -13,7 +13,9 @@ extends Node
 
 var platform : String # to decide which function to call depending on os
 
-var invoke_render_pid : int 
+var invoke_render_pid : int = 999999999 # start value is just a big unrealistic number. Otherwise it would be 0 by default which is the main process which is a bit dangerous...
+
+var log_data_path : String
 
 var active_render_log_file : File
 var current_commandline_instructions : String
@@ -23,8 +25,6 @@ var file_pointer_position : int = 0
 var read_log_file_thread : Thread
 
 var active_render_log_file_name : String
-
-var log_data_dir_str : String
 
 var currently_rendering : bool = false
 
@@ -38,16 +38,6 @@ func _ready():
 	# get current platform to call correct functions
 	platform  = OS.get_name()
 	
-	
-	log_data_dir_str = OS.get_user_data_dir() + "/logs/"
-	
-	
-	# create logs directory if it doesn't exist yet
-	var log_data_dir : Directory = Directory.new()
-	
-	if !log_data_dir.dir_exists(log_data_dir_str):
-		log_data_dir.make_dir(log_data_dir_str)
-		
 	# create the thread this script is using
 	read_log_file_thread = Thread.new()
 	
@@ -78,7 +68,7 @@ func start_read_log_file_thread():
 
 func validate_log_file(args):
 	
-	var active_render_log_file_path : String = OS.get_user_data_dir() + "/logs/" + active_render_log_file_name + ".txt"
+	var active_render_log_file_path : String = log_data_path + active_render_log_file_name + ".txt"
 	
 	if active_render_log_file.file_exists(active_render_log_file_path):
 		
@@ -113,10 +103,23 @@ func join_read_log_file_thread():
 
 
 
-func start_render_process (cmdline_instruction : String, log_file_name : String):
+func start_render_process (unique_job_id : int, cmdline_instruction : String, log_file_name : String):
 	
 	if currently_rendering:
 		kill_current_render_process()
+		
+	
+	# create directories if they don't exist yet
+	# set log directory
+	var dir : Directory = Directory.new()
+	log_data_path = RRPaths.get_job_log_path(unique_job_id)
+	var thumbnails_path : String = RRPaths.get_job_thumbnail_path(unique_job_id)
+	
+	if !dir.dir_exists(log_data_path):
+		dir.make_dir_recursive(log_data_path)
+	
+	if !dir.dir_exists(thumbnails_path):
+		dir.make_dir_recursive(thumbnails_path)
 		
 	
 	match platform:
@@ -125,16 +128,15 @@ func start_render_process (cmdline_instruction : String, log_file_name : String)
 		"X11" : 
 			
 			var output : Array = []
-			var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_dir_str + log_file_name + ".txt 2>&1"] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
+			var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_path + log_file_name + ".txt 2>&1"] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
 			
 			invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
-		
 		
 		# Windows
 		"Windows" :
 		
 			var output : Array = []
-			var arguments : Array = ['/C', cmdline_instruction + ' > ' + log_data_dir_str + log_file_name + '.txt 2>&1'] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file. Unfortunately under windows the errors will be printed at the end of the file and not in a chronological order together with the "stdout" stream.
+			var arguments : Array = ['/C', cmdline_instruction + ' > ' + log_data_path + log_file_name + '.txt 2>&1'] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file. Unfortunately under windows the errors will be printed at the end of the file and not in a chronological order together with the "stdout" stream.
 			
 			invoke_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
 	
