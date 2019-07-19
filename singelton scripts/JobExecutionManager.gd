@@ -18,7 +18,12 @@ func _ready():
 	RenderLogValidator.connect("success_detected", self, "success_detected")
 	RenderLogValidator.connect("frame_success_detected", self, "frame_success_detected")
 	RenderLogValidator.connect("critical_error_detected", self, "critical_error_detected")
-	CommandLineManager.connect("render_process_exited_without_software_start", self, "critical_error_detected")
+	CommandLineManager.connect("render_process_exited_without_software_start", self, "render_process_exited_without_software_start")
+
+func render_process_exited_without_software_start():
+	# this check makes sense, because if it misses the "software_start_successful" string for any reason while it actually started, it would throw an error after finishing the chunk correctly 
+	if current_amount_of_frame_successes == 0:
+		critical_error_detected()
 
 
 func critical_error_detected():

@@ -62,11 +62,13 @@ func _ready():
 	job_type_settings_CRP = ConfigFile.new()
 	job_type_settings_HIGHLIGHT = ConfigFile.new()
 	
+	software_start_success_regex_CRP = RegEx.new()
 	critical_error_regex_CRP = RegEx.new()
 	critical_error_exclude_regex_CRP = RegEx.new()
 	frame_success_regex_CRP = RegEx.new()
 	success_regex_CRP = RegEx.new()
 	
+	software_start_success_regex_HIGHLIGHT = RegEx.new()
 	critical_error_regex_HIGHLIGHT = RegEx.new()
 	critical_error_exclude_regex_HIGHLIGHT = RegEx.new()
 	error_regex_HIGHLIGHT = RegEx.new()
