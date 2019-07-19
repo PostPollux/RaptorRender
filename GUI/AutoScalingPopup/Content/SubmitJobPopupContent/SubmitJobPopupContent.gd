@@ -310,7 +310,7 @@ func load_type_mask():
 			MaskLabels.append(SpecificLabel)
 	
 	# make all Labels the same size
-	HandyUtilities.set_min_size_to_longest(MaskLabels, true, false)
+	RRFunctions.set_min_size_to_longest(MaskLabels, true, false)
 
 
 
@@ -367,8 +367,8 @@ func create_new_job():
 	
 	# Generate unique ID. To generate a new unique id we just hash the job name + it's creation time
 	var time_created : int = OS.get_unix_time()
-	var job_string_to_hash : String = JobNameLineEdit.text + String(time_created)
-	var job_id : int = job_string_to_hash.hash()
+	
+	var job_id : int = RRFunctions.generate_job_id(time_created, JobNameLineEdit.text)
 	
 	var new_job : Dictionary = {
 								"id": job_id,

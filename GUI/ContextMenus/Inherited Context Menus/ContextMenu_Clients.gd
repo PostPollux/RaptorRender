@@ -235,7 +235,7 @@ func _on_ContextMenu_index_pressed(index):
 						msg = msg + mac
 					
 					# convert it to PoolByteArray
-					var pac = Converters.hex_string_to_PoolByteArray(msg)
+					var pac = RRFunctions.hex_string_to_PoolByteArray(msg)
 					
 					# send all packages twice, because udp packages could get lost
 					for i in range(0, 2):

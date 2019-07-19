@@ -292,16 +292,28 @@ func _on_ContextMenu_index_pressed(index):
 				# set job status to paused
 				job_to_resubmit.status = RRStateScheme.job_paused
 				
+				# reset job errors
+				job_to_resubmit.errors = 0
+				
+				# reset render time
+				job_to_resubmit.render_time = 0
+				
+				# set time created time
+				job_to_resubmit.time_created = OS.get_unix_time()
+				
 				# requeue all chunks
 				for chunk in job_to_resubmit.chunks.keys():
 					job_to_resubmit.chunks[chunk].status = RRStateScheme.chunk_queued
+					
+					# delete all chunk tries and errors
+					job_to_resubmit.chunks[chunk].errors = 0
+					job_to_resubmit.chunks[chunk].number_of_tries = 0
+					job_to_resubmit.chunks[chunk].tries.clear()
+					
 				
 				# create a new job id
-				var max_id = 0
-				for job in RaptorRender.rr_data.jobs.keys():
-					max_id = max(max_id, int(job))
-				
-				RaptorRender.rr_data.jobs[max_id + 1 ] = job_to_resubmit
+				var job_id : int = RRFunctions.generate_job_id(job_to_resubmit.time_created, job_to_resubmit.name)
+				RaptorRender.rr_data.jobs[job_id] = job_to_resubmit
 				
 				
 			RaptorRender.JobsTable.refresh()

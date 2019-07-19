@@ -207,33 +207,33 @@ func highlight_log_line(line : String) -> String:
 				for string in software_start_success_strings_HIGHLIGHT:
 					
 					if line.begins_with( string ):
-						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (successful software start detected)[/color]"
+						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (software start detected)[/color]"
 			
 			# ends with
 			2: 
 				for string in software_start_success_strings_HIGHLIGHT:
 					
 					if line.ends_with( string ):
-						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (successful software start detected)[/color]"
+						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (software start detected)[/color]"
 			
 			# contains
 			3:
 				for string in software_start_success_strings_HIGHLIGHT:
 					
 					if line.find( string ) > -1:
-						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (successful software start detected)[/color]"
+						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (software start detected)[/color]"
 			
 			# exactly matches
 			4:
 				for string in software_start_success_strings_HIGHLIGHT:
 					
 					if line == string:
-						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (successful software start detected)[/color]"
+						return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (software start detected)[/color]"
 			
 			# regex
 			5:
 				if software_start_success_regex_HIGHLIGHT.search(line):
-					return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (successful software start detected)[/color]"
+					return "[color=#" + RRColorScheme.log_software_start_success + "]" + line + " (software start detected)[/color]"
 	
 	
 	
