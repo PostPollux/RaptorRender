@@ -32,6 +32,7 @@ var chunk_time_graph_not_started : Color = Color ("8D8D8D")
 
 
 # log colors
+var log_software_start_success :  String = "009EBA"
 var log_success :  String = "77B223"
 var log_warning : String = "FAD25C"
 var log_error : String = "DF8731"

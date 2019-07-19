@@ -12,6 +12,7 @@ func _ready():
 	clients_available = []
 	
 	CommandLineManager.connect("render_process_exited",self ,"reactivate_client") # TODO - this is just temporarily
+	CommandLineManager.connect("render_process_exited_without_software_start",self ,"reactivate_client") # TODO - this is just temporarily
 	
 	
 	# create timer to constantly distribute the work across the connected clients 

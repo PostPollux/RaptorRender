@@ -8,8 +8,13 @@
 # - abort rendering by killing the process
 
 
-
 extends Node
+
+
+signal render_process_exited
+signal render_process_exited_without_software_start
+
+
 
 var platform : String # to decide which function to call depending on os
 
@@ -30,7 +35,7 @@ var currently_rendering : bool = false
 
 var read_log_timer : Timer 
 
-signal render_process_exited
+
 
 
 func _ready():
@@ -107,7 +112,6 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, lo
 	
 	if currently_rendering:
 		kill_current_render_process()
-		
 	
 	# create directories if they don't exist yet
 	# set log directory
@@ -120,7 +124,10 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, lo
 	
 	if !dir.dir_exists(thumbnails_path):
 		dir.make_dir_recursive(thumbnails_path)
-		
+	
+	
+	
+	var log_file_name_full : String =  log_data_path + log_file_name + ".txt"
 	
 	match platform:
 		
@@ -128,7 +135,7 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, lo
 		"X11" : 
 			
 			var output : Array = []
-			var arguments : Array = ["-c", cmdline_instruction + " > " + log_data_path + log_file_name + ".txt 2>&1"] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
+			var arguments : Array = ["-c", cmdline_instruction + " > " + log_file_name_full + " 2>&1"] # 2>&1  redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
 			
 			invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
 		
@@ -136,7 +143,7 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, lo
 		"Windows" :
 		
 			var output : Array = []
-			var arguments : Array = ['/C', cmdline_instruction + ' > ' + log_data_path + log_file_name + '.txt 2>&1'] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file. Unfortunately under windows the errors will be printed at the end of the file and not in a chronological order together with the "stdout" stream.
+			var arguments : Array = ['/C', cmdline_instruction + ' > ' + log_file_name_full + ' 2>&1'] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file. Unfortunately under windows the errors will be printed at the end of the file and not in a chronological order together with the "stdout" stream.
 			
 			invoke_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
 	
@@ -167,7 +174,10 @@ func check_if_render_process_is_running() -> bool:
 	else:
 		currently_rendering = false
 		read_log_timer.stop()
-		emit_signal("render_process_exited")
+		if RenderLogValidator.CRP_software_start_success_detected:
+			emit_signal("render_process_exited")
+		else:
+			emit_signal("render_process_exited_without_software_start")
 		return false
 
 
