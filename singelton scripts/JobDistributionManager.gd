@@ -100,7 +100,7 @@ func distribute_jobs():
 								RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries += 1
 								
 								# start this chunk on the client
-								JobExecutionManager.start_junk( job[0] , chunk, current_tries_count + 1)
+								JobExecutionManager.start_chunk( job[0] , chunk, current_tries_count + 1)
 								
 								# eliminate priority boost, as now at least one chunk is rendering
 								RaptorRender.rr_data.jobs[job[0]].priority_boost = false

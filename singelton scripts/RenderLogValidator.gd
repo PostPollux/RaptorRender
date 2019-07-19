@@ -15,6 +15,7 @@ signal software_start_success_detected
 signal error_detected
 signal critical_error_detected
 signal frame_success_detected
+signal frame_name_detected(type, extracted_string)
 signal success_detected
 
 
@@ -31,6 +32,7 @@ var software_start_success_regex_CRP : RegEx
 var critical_error_regex_CRP : RegEx
 var critical_error_exclude_regex_CRP : RegEx
 var frame_success_regex_CRP : RegEx
+var frame_name_detect_regex_CRP : RegEx
 var success_regex_CRP : RegEx
 
 
@@ -66,6 +68,7 @@ func _ready():
 	critical_error_regex_CRP = RegEx.new()
 	critical_error_exclude_regex_CRP = RegEx.new()
 	frame_success_regex_CRP = RegEx.new()
+	frame_name_detect_regex_CRP = RegEx.new()
 	success_regex_CRP = RegEx.new()
 	
 	software_start_success_regex_HIGHLIGHT = RegEx.new()
@@ -120,6 +123,9 @@ func load_job_type_settings_CRP(job_type : String, job_type_version : String):
 	else:
 		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "frame_success_log", "").replace("''","\"" )
 		frame_success_regex_CRP.compile( regex_str )
+	
+	var frame_detect_regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "frame_name_detect_pattern", "").replace("''","\"" )
+	frame_name_detect_regex_CRP.compile( frame_detect_regex_str )
 	
 	if job_type_settings_CRP.get_value("RenderLogValidation", "success_log_pattern_type", 0) != 5:
 		success_strings_CRP = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").replace("''","\"" ).split(";;",false)
@@ -478,6 +484,7 @@ func highlight_log_line(line : String) -> String:
 # this function will validate a logline and emit corresponding signals like errors or successes. The function will also return "false" if there was a critical error detected in that line.
 func validate_log_line(line : String) -> bool:
 	
+	var frame_success_detected : bool = false
 	
 	##### software_start_success validation #####
 	if not CRP_software_start_success_detected:
@@ -601,6 +608,7 @@ func validate_log_line(line : String) -> bool:
 			for string in frame_success_strings_CRP:
 				
 				if line.begins_with( string ):
+					frame_success_detected = true
 					emit_signal("frame_success_detected")
 					print ("frame success detected!")
 		
@@ -609,6 +617,7 @@ func validate_log_line(line : String) -> bool:
 			for string in frame_success_strings_CRP:
 				
 				if line.ends_with( string ):
+					frame_success_detected = true
 					emit_signal("frame_success_detected")
 					print ("frame success detected!")
 		
@@ -617,6 +626,7 @@ func validate_log_line(line : String) -> bool:
 			for string in frame_success_strings_CRP:
 				
 				if line.find( string ) > -1:
+					frame_success_detected = true
 					emit_signal("frame_success_detected")
 					print ("frame success detected!")
 		
@@ -625,15 +635,24 @@ func validate_log_line(line : String) -> bool:
 			for string in frame_success_strings_CRP:
 				
 				if line == string:
+					frame_success_detected = true
 					emit_signal("frame_success_detected")
 					print ("frame success detected!")
 		
 		# regex
 		5:
 			if frame_success_regex_CRP.search(line):
+				frame_success_detected = true
 				emit_signal("frame_success_detected")
 				print ("frame_success detected!")
 	
+	
+	if frame_success_detected:
+		var frame_name_detect_type : int = job_type_settings_CRP.get_value("RenderLogValidation", "frame_name_detect_option", 0)
+		if frame_name_detect_type != 0:
+			var frame_name_match : RegExMatch = frame_name_detect_regex_CRP.search(line)
+			emit_signal("frame_name_detected", frame_name_detect_type, frame_name_match.get_string(0))
+			print ("Frame name detected: " + frame_name_match.get_string(0))
 	
 	
 	##### success validation #####

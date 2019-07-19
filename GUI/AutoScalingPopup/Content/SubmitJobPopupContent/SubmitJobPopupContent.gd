@@ -388,6 +388,7 @@ func create_new_job():
 								"pools": [],
 								"scene_path" : SceneFileLineEdit.text,
 								"output_directory" : "",
+								"output_filename_pattern" : "",
 								"render_time" : 0,
 								"SpecificJobSettings" : {},
 								"chunks": {

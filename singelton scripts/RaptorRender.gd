@@ -42,6 +42,8 @@ var refresh_interface_timer : Timer
 
 func _ready():
 	
+	
+	
 	# create timer to constantly distribute the work across the connected clients 
 	refresh_interface_timer = Timer.new()
 	refresh_interface_timer.name = "Refresh Interface Timer"
@@ -73,6 +75,7 @@ func _ready():
 				"pools": [],
 				"scene_path" : "/home/johannes/Schreibtisch/renderfarmtest.blend",
 				"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+				"output_filename_pattern" : "####.png",
 				"render_time" : 0,
 				"SpecificJobSettings" : {},
 				"chunks": {
@@ -136,6 +139,7 @@ func _ready():
 				"pools": [],
 				"scene_path" : "/home/johannes/Schreibtisch/natron_renderfarm_test.ntp",
 				"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+				"output_filename_pattern" : "natron_test_###.png",
 				"render_time" : 0,
 				"SpecificJobSettings" : {
 					"writer_name" : "Write1"
@@ -203,6 +207,7 @@ func _ready():
 				"pools": ["AE_Plugins"],
 				"scene_path" : "/home/johannes/Downloads/test.blend",
 				"output_directory" : "/home/johannes/GodotTest/",
+				"output_filename_pattern" : "####.png",
 				"render_time" : 2487,
 				"SpecificJobSettings" : {},
 				"chunks": {

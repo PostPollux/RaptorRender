@@ -18,6 +18,7 @@ func _ready():
 	RenderLogValidator.connect("success_detected", self, "success_detected")
 	RenderLogValidator.connect("frame_success_detected", self, "frame_success_detected")
 	RenderLogValidator.connect("critical_error_detected", self, "critical_error_detected")
+	RenderLogValidator.connect("frame_name_detected", self, "frame_name_detected")
 	CommandLineManager.connect("render_process_exited_without_software_start", self, "render_process_exited_without_software_start")
 
 func render_process_exited_without_software_start():
@@ -79,42 +80,74 @@ func frame_success_detected():
 	var amount_of_chunk_frames : int = RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].frame_end - RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].frame_start + 1
 	
 	
-	# Create a thumbnail image
-	
-	var output_directory : String = RaptorRender.rr_data.jobs[current_processing_job].output_directory
-	var output_filename_pattern : String = RaptorRender.rr_data.jobs[current_processing_job].output_filename_pattern
-	
-	if output_directory != "" and output_filename_pattern != "":
-		
-		var currently_finished_frame_number : int = RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].frame_start + current_amount_of_frame_successes - 1
-		
-		var final_file_name : String = RRFunctions.replace_frame_number_placeholders_with_number(output_filename_pattern, currently_finished_frame_number)
-		
-		
-		var image : Image = Image.new()
-		# load works fine with:
-		# - .jpg
-		# - .png (8 bit and 16 bit and transparency)
-		# - .tga (also with transparency
-		# - .exr ( in some configuration it looks off)
-		
-		if image.load(output_directory + final_file_name) == 0:
-			var max_thumbnail_size : Vector2 = Vector2(150,100)
-			var scaled_down_size : Vector2 = RRFunctions.calculate_size_for_specific_box(image.get_size(), max_thumbnail_size)
-			
-			image.resize(scaled_down_size.x, scaled_down_size.y,Image.INTERPOLATE_CUBIC)
-			image.save_png( RRPaths.get_job_thumbnail_path( RaptorRender.rr_data.jobs[current_processing_job].id ) + final_file_name)
-	
-	
 	# Send success signal if amount of frame success signals have reached the amount of frames in the chunk. This is helpful, because some software doesn't have an output that indicates the completion of the job.
 	if current_amount_of_frame_successes == amount_of_chunk_frames:
 		success_detected()
 
 
+func frame_name_detected( type : int, extracted_string : String):
+	
+	# Thumbnail creation works fine with:
+	# - .jpg
+	# - .png (8 bit and 16 bit and transparency)
+	# - .tga (also with transparency
+	# - .exr ( in some configuration it looks off)
+	
+	
+	var output_directory : String = RaptorRender.rr_data.jobs[current_processing_job].output_directory
+	var output_filename_pattern : String = RaptorRender.rr_data.jobs[current_processing_job].output_filename_pattern
+	
+	var final_file_name : String = ""
+	var final_full_path : String = ""
+	
+	# Create a thumbnail image
+	var image : Image = Image.new()
+	
+	match type:
+		
+		# type 1: the extracted string is the whole filename with path. E.g:  /home/test/render_0010.png
+		1 :
+			extracted_string = extracted_string.replace("\\","/") # convert path to unix style
+			final_file_name = extracted_string.right( extracted_string.find_last("/") + 1 )
+			final_full_path = extracted_string
+			
+			# set output directory and output filename pattern if they are not set already
+			if RaptorRender.rr_data.jobs[current_processing_job].output_directory == "":
+				RaptorRender.rr_data.jobs[current_processing_job].output_directory = extracted_string.left( extracted_string.find_last("/") + 1 )
+			
+			if RaptorRender.rr_data.jobs[current_processing_job].output_filename_pattern == "":
+				RaptorRender.rr_data.jobs[current_processing_job].output_filename_pattern = RRFunctions.replace_number_with_frame_number_placeholders(final_file_name)
+			
+			
+		# type 2: the extracted string is only the frame number without padding. E.g. "12" while the filename is: /home/test/render_012.png
+		2 :
+			if output_directory != "" and output_filename_pattern != "":
+			
+				var currently_finished_frame_number : int = int(extracted_string)
+				final_file_name  =  RRFunctions.replace_frame_number_placeholders_with_number(output_filename_pattern, currently_finished_frame_number)
+				final_full_path = output_directory + final_file_name
+	
+	
+	var file_test : File = File.new()
+	
+	if file_test.file_exists(final_full_path):
+		
+		if image.load(final_full_path) == 0:
+			
+			var max_thumbnail_size : Vector2 = Vector2(150,100)
+			var scaled_down_size : Vector2 = RRFunctions.calculate_size_for_specific_box(image.get_size(), max_thumbnail_size)
+			
+			image.resize(scaled_down_size.x, scaled_down_size.y,Image.INTERPOLATE_CUBIC)
+			var save_path : String = RRPaths.get_job_thumbnail_path( RaptorRender.rr_data.jobs[current_processing_job].id ) + "thn_" + final_file_name
+			
+			image.save_png( save_path )
 
 
 
-func start_junk(job_id : int, chunk_id : int, try_id : int):
+
+
+
+func start_chunk(job_id : int, chunk_id : int, try_id : int):
 	
 	chunk_success_detected = false
 	current_amount_of_frame_successes = 0

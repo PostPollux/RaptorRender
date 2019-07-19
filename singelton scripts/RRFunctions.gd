@@ -158,7 +158,7 @@ func convert_int_to_padded_number_string(number : int, number_of_digits : int) -
 # returns the number of padding a file sequence is supposed to have by counting the number of hashtag signs at the end of a file name pattern.
 func get_padding_from_string_with_hashtags(input_str : String) -> int:
 	
-	var hashtags : String = input_str.right( input_str.find("#", 0) - 1 ) # cut off the left part of the first hashtag sign
+	var hashtags : String = input_str.right( input_str.find("#", 0) ) # cut off the left part of the first hashtag sign
 	hashtags = hashtags.left( hashtags.find_last("#") + 1 ) # cut off the right part of the last hashtag sign
 	
 	# make sure that only tha last hashtag signs are left. So that a filename like "example#3_new_####.png" returns 4 and not 11.
@@ -184,6 +184,29 @@ func replace_frame_number_placeholders_with_number(filename_pattern : String, fr
 		placeholder += "#"
 			
 	return filename_pattern.replace(placeholder, padded_frame_number)
+
+
+#  converts a string like "test_0049.png" to "test_####.png"
+func replace_number_with_frame_number_placeholders(filename : String) -> String:
+	
+	var pattern : RegEx = RegEx.new()
+	pattern.compile("\\d+") # select all connected digits
+	
+	var matches : Array = pattern.search_all( filename )
+	
+	if matches.size() > 0:
+		var last_match : RegExMatch = matches[ matches.size() - 1] # get last match
+		var padded_framenumber : String = last_match.get_string(0)
+		
+		var placeholders : String = ""
+		for i in range (0, padded_framenumber.length()):
+			placeholders += "#"
+		
+		return filename.replace( padded_framenumber, placeholders )
+	
+	return filename
+
+
 
 
 func generate_job_id(time_created : int, job_name : String) -> int:
