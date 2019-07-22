@@ -1,7 +1,5 @@
 extends Node
 
-var job_type_settings_path : String
-
 var current_processing_job : int
 var current_processing_chunk : int
 var current_processing_try : int
@@ -13,7 +11,6 @@ var chunk_success_detected : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	job_type_settings_path = OS.get_user_data_dir() + "/JobTypeSettings/"
 	
 	RenderLogValidator.connect("success_detected", self, "success_detected")
 	RenderLogValidator.connect("frame_success_detected", self, "frame_success_detected")
@@ -166,7 +163,8 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int):
 	var job_type : String = RaptorRender.rr_data.jobs[job_id].type
 	var job_type_version : String = RaptorRender.rr_data.jobs[job_id].type_version
 	
-	job_type_settings.load( job_type_settings_path + "/local/" + job_type + "/" + job_type_version + ".cfg")
+	var settings_file_path : String =  RRPaths.job_types_default_path + job_type + "/" + job_type_version + ".cfg"
+	job_type_settings.load( settings_file_path )
 	
 	
 	# load the standard commandline defined in the .cfg file
@@ -187,7 +185,7 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int):
 		
 		var specific_setting_value : String
 		
-		if not specific_setting.ends_with("_type") and not specific_setting.ends_with("_default"):
+		if not specific_setting.ends_with("_type") and not specific_setting.ends_with("_default") and not specific_setting.ends_with("_tooltip"):
 			if RaptorRender.rr_data.jobs[job_id].SpecificJobSettings.has(specific_setting):
 				
 				specific_setting_value = String(RaptorRender.rr_data.jobs[job_id].SpecificJobSettings[specific_setting])
