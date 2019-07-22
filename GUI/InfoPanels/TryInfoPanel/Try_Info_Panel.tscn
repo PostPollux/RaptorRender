@@ -57,9 +57,9 @@ custom_constants/margin_bottom = 20
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 683.0
-margin_bottom = 140.0
+margin_bottom = 544.0
 size_flags_horizontal = 3
-size_flags_vertical = 2
+size_flags_vertical = 3
 
 [node name="NameLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
 margin_right = 663.0
@@ -98,6 +98,25 @@ margin_right = 663.0
 margin_bottom = 120.0
 text = "Rendertime:   25s"
 
+[node name="EmptyLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+margin_top = 124.0
+margin_right = 663.0
+margin_bottom = 138.0
+
+[node name="CommandLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+margin_top = 142.0
+margin_right = 663.0
+margin_bottom = 156.0
+text = "Command:"
+
+[node name="CommandRichTextLabel" type="RichTextLabel" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
+margin_top = 160.0
+margin_right = 663.0
+margin_bottom = 220.0
+rect_min_size = Vector2( 0, 60 )
+focus_mode = 2
+selection_enabled = true
+
 [node name="Log" type="Tabs" parent="TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -120,4 +139,5 @@ bbcode_enabled = true
 scroll_following = true
 selection_enabled = true
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_TabContainer_tab_changed"]
+[connection signal="gui_input" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/CommandRichTextLabel" to="." method="_on_CommandRichTextLabel_gui_input"]
 [connection signal="gui_input" from="TabContainer/Log/MarginContainer/Log_RichTextLabel" to="." method="_on_Log_RichTextLabel_gui_input"]

@@ -155,6 +155,9 @@ TRY_DETAIL_4,Client,Client
 TRY_DETAIL_5,Time Started,Startzeit
 TRY_DETAIL_6,Time Finished,Fertigstellung
 TRY_DETAIL_7,Rendertime,Renderzeit
+TRY_DETAIL_8,Command,Befehl
+,,
+TRY_DETAIL_TOOLTIP_1,The exact command that has been used by the corresponding client to run the job in the background via th terminal.,"Der exakte Befehl, der im Hintergrund vom entsprechenden Client per Kommandozeile ausgeführt wird."
 ,,
 TRY_DETAIL_STATUS_1,Rendering,In Arbeit
 TRY_DETAIL_STATUS_2,Error,Fehler
@@ -168,9 +171,6 @@ TRY_LOG_2,No log file found!,Keine Log-Datei gefunden!
 ,,
 LOG_CONTEXT_MENU_1,open log externally,Log mit externem Editor öffnen
 LOG_CONTEXT_MENU_2,open logs folder,Logverzeichnis öffnen
-,,
-,,
-,,
 ,,
 ,,
 ,,

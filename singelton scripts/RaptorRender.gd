@@ -218,6 +218,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
@@ -233,12 +234,14 @@ func _ready():
 						"number_of_tries" : 2,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 4,
 								"time_started" : 1528523180,
 								"time_stopped" : 1528523275
 							},
 							2:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 13,
 								"time_started" : 1528523180,
@@ -254,6 +257,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 8,
 								"time_started" : 1528523180,
@@ -269,6 +273,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
@@ -284,6 +289,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 10,
 								"time_started" : 1528523180,
@@ -299,6 +305,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
@@ -314,6 +321,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 7,
 								"time_started" : 1528523180,
@@ -329,6 +337,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
@@ -344,6 +353,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
@@ -359,6 +369,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,
@@ -374,6 +385,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 13,
 								"time_started" : 1528523180,
@@ -389,6 +401,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 13,
 								"time_started" : 1528523180,
@@ -404,6 +417,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 15,
 								"time_started" : 1528523180,
@@ -419,6 +433,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 16,
 								"time_started" : 1528523180,
@@ -434,6 +449,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 2,
 								"time_started" : 1528523180,
@@ -449,6 +465,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 2,
 								"time_started" : 1528523180,
@@ -464,6 +481,7 @@ func _ready():
 						"number_of_tries" : 1,
 						"tries": {
 							1:{
+								"cmd" : "",
 								"status" : RRStateScheme.try_finished,
 								"client" : 1,
 								"time_started" : 1528523180,

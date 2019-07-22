@@ -91,6 +91,7 @@ func distribute_jobs():
 								# add a new try
 								var current_tries_count : int = RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries
 								var new_try_data : Dictionary = {
+									"cmd" : "",
 									"status" : RRStateScheme.try_rendering,
 									"client" : client,
 									"time_started" : OS.get_unix_time(),

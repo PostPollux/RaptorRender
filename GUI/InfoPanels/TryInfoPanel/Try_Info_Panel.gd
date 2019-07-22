@@ -11,7 +11,9 @@ onready var StatusLabel : Label = $"TabContainer/Details/ScrollContainer/MarginC
 onready var ClientLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/ClientLabel"
 onready var TimeStartedLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStartedLabel"
 onready var TimeStoppedLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeStoppedLabel"
-onready var TimeNeededLabel : Label= $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeNeededLabel"
+onready var TimeNeededLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/TimeNeededLabel"
+onready var CommandLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/CommandLabel"
+onready var CommandRichTextLabel : RichTextLabel = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/CommandRichTextLabel"
 
 onready var LogVisibilityContainer = $"TabContainer/Log/MarginContainer"
 onready var LogRichTextLabel : RichTextLabel = $"TabContainer/Log/MarginContainer/Log_RichTextLabel"
@@ -92,8 +94,14 @@ func update_try_info_panel(job_id : int, chunk_id : int, try_id : int):
 			
 		var time_needed : int = time_stopped - time_started
 		TimeNeededLabel.text = tr("TRY_DETAIL_7") + ":   " + TimeFunctions.seconds_to_string(time_needed, 3)
-
-
+		
+		CommandLabel.text = tr("TRY_DETAIL_8") + ":   "
+		
+		CommandRichTextLabel.hint_tooltip = tr("TRY_DETAIL_TOOLTIP_1")
+		
+		# only update CommandRichTextLabel if the text changes. Otherwise we would constantly loose our selection
+		if CommandRichTextLabel.text != RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].cmd:
+			CommandRichTextLabel.text =  RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].cmd
 
 ########################
 #  Functions for Log Tab
@@ -149,3 +157,10 @@ func _on_Log_RichTextLabel_gui_input(event):
 
 
 
+func _on_CommandRichTextLabel_gui_input(event):
+	if Input.is_key_pressed(KEY_CONTROL) and Input.is_key_pressed(KEY_C):
+		if not ctrl_plus_c_pressed:
+			ctrl_plus_c_pressed = true
+			RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_4"), 5) # Selection has been copied to clipboard!
+	else:
+		ctrl_plus_c_pressed = false
