@@ -140,4 +140,5 @@ scroll_following = true
 selection_enabled = true
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_TabContainer_tab_changed"]
 [connection signal="gui_input" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/CommandRichTextLabel" to="." method="_on_CommandRichTextLabel_gui_input"]
+[connection signal="resized" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/CommandRichTextLabel" to="." method="_on_CommandRichTextLabel_resized"]
 [connection signal="gui_input" from="TabContainer/Log/MarginContainer/Log_RichTextLabel" to="." method="_on_Log_RichTextLabel_gui_input"]

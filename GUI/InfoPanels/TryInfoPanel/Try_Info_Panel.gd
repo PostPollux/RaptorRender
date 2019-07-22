@@ -132,6 +132,9 @@ func read_log_file():
 	var selected_chunk : int = RaptorRender.current_chunk_id_for_job_info_panel
 	var selected_try : int = currently_displayed_try_id
 	
+	if selected_job != 0 and selected_chunk != 0 and selected_try != 0:
+		LogRichTextLabel.append_bbcode( tr("TRY_DETAIL_8") + ":\n" + RaptorRender.rr_data.jobs[selected_job].chunks[selected_chunk].tries[selected_try].cmd + "\n\n\n")
+	
 	ReadLogFileManager.reset_file_pointer_position()
 	ReadLogFileManager.stop_read_log_timer()
 	ReadLogFileManager.read_log_file(selected_job, selected_chunk, selected_try)
@@ -142,6 +145,7 @@ func add_text_to_log(text : String):
 	
 
 func no_log_file_found():
+	LogRichTextLabel.clear()
 	LogRichTextLabel.append_bbcode( tr("TRY_LOG_2"))
 
 
@@ -164,3 +168,7 @@ func _on_CommandRichTextLabel_gui_input(event):
 			RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_4"), 5) # Selection has been copied to clipboard!
 	else:
 		ctrl_plus_c_pressed = false
+
+
+func _on_CommandRichTextLabel_resized():
+	CommandRichTextLabel.rect_min_size.y = CommandRichTextLabel.get_content_height()
