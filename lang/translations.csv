@@ -178,14 +178,23 @@ MSG_ERROR_1,Error,Fehler
 MSG_ERROR_2,Not implemented yet!,Diese Funktion ist leider noch nicht implementiert!
 MSG_ERROR_3,Seems like directory does not exist!,Dieses Verzeichnis scheint nicht zu existieren!
 MSG_ERROR_4,Seems like file does not exist!,Dieses Datei scheint nicht zu existieren!
-MSG_ERROR_5,There is an error in your job type configuration file. The type of the following specific job setting has not been set:,Die Job Typ Konfigurationsdatei ist fehlerhaft. Der typ der folgenden jobspezifischen Einstellung fehlt:
-MSG_ERROR_6,There is an error in your job type configuration file. The type of the following key is invalid:,Die Job Typ Konfigurationsdatei ist fehlerhaft. Der typ des folgenden Schlüssels ist ungültig:
+MSG_ERROR_5,There is an error in your job type configuration file. The type of the following specific job setting is unsupported or has not been set:,Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Der Typ der folgenden jobspezifischen Einstellung ist unbekannt oder fehlt:
+MSG_ERROR_6,,
 MSG_ERROR_7,Scene file does not exist!,Die angegebene Szenendatei existiert nicht!
 MSG_ERROR_8,"Range input can only have numbers, dashes and semicolons!","Das Renderbereich-Feld darf nur Zahlen, sowie Bindestriche und Strichpunkte enthalten!"
 MSG_ERROR_9,A range can only have one dash!,Ein Renderbereich kann nur einen Bindestrich haben!
 MSG_ERROR_10,The first number of a render range have to be smaller than the second one!,Die erste Zahl eines Renderbereichs muss kleiner sein als die zweite!
 MSG_ERROR_11,The following job type configuration file could not be loaded:,Folgende Job Typen Konfigurationsdatei konnte nicht geladen werden:
 MSG_ERROR_12,The output path is unknown for this job!,Das Ausgabeverzeichnis für diesen Job ist nicht bekannt!
+MSG_ERROR_13,"The following specific job setting is defined in your job type configuration file, but it is not present in your job you are trying to run:","Die folgende spezifische Einstellung ist in der Job-Type-Konfigurationsdatei definiert. Sie ist aber nicht in dem Job, der ausgeführt werden soll, vorhanden:"
+MSG_ERROR_14,A __cmd_value definition is missing in your job. It‘s mandatory that you define this for each specific setting. Missing:,Eine __cmd_value Definition fehlt im auszuführenden Job. Diese muss aber für jede spezifische Einstellung definiert werden. Es fehlt:
+MSG_ERROR_15,"Each __cmd_value string has to be splittable into 3 parts. Make sure prefix, value and substitute are correctly devided by „;;“. Problematic definition:","Jeder __cmd_value String muss in 3 Teile unterteilbar sein. Stelle sicher, dass prefix, value und substitute korrekt durch „;;“ unterteilt sind. Problematische Definition:"
+MSG_ERROR_16,There is an error in your job type configuration file. The following setting has to be a string containing two values separated by „;;“:,"Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Die folgende Einstellung muss ein String sein, der zwei Werte enthält, die durch „;;“ getrennt sind:"
+MSG_ERROR_17,There is an error in your job type configuration file. The following setting has to be a string containing three values separated by „;;“:,"Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Die folgende Einstellung muss ein String sein, der drei Werte enthält, die durch „;;“ getrennt sind:"
+,,
+,,
+,,
+,,
 ,,
 ,,
 ,,

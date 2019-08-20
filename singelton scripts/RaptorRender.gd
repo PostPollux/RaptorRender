@@ -142,7 +142,8 @@ func _ready():
 				"output_filename_pattern" : "natron_test_###.png",
 				"render_time" : 0,
 				"SpecificJobSettings" : {
-					"writer_name" : "Write1"
+					"writer_name" : "true",
+					"writer_name__cmd_value" : "-w;;Write1;;"
 				},
 				"chunks": {
 					1:{
@@ -187,7 +188,77 @@ func _ready():
 					}
 				}
 			},
-			
+			102: {
+				"id": 102,
+				"name": "Nuke test",
+				"type": "Nuke",
+				"type_version": "default",
+				"priority": 60,
+				"priority_boost": true,
+				"creator": "Johannes",
+				"time_created": 1528623180,
+				"frame_range": "10-25",
+				"frames_total": 16,
+				"status": RRStateScheme.job_paused,
+				"progress": 0,
+				"note": "Nuke test",
+				"errors": 0,
+				"pools": [],
+				"scene_path" : "/home/johannes/Schreibtisch/Nuke_renderfarmtest.nknc",
+				"output_directory" : "/home/johannes/Schreibtisch/renderfarmtest/",
+				"output_filename_pattern" : "nuke_test_####.png",
+				"render_time" : 0,
+				"SpecificJobSettings" : {
+					"non_commercial" : "true",
+					"non_commercial__cmd_value" : ";;--nc;;",
+					"interactive_licence" : "false",
+					"interactive_licence__cmd_value" : ";;i;;",
+					"specific_writer" : "false",
+					"specific_writer__cmd_value" : "X;;Writer1;;x"
+				},
+				"chunks": {
+					1:{
+						"status" : RRStateScheme.chunk_queued,
+						"frame_start" : 10,
+						"frame_end" : 14,
+						"number_of_tries" : 0,
+						"tries": {
+						
+						},
+						"errors": 0
+					},
+					2:{
+						"status" : RRStateScheme.chunk_queued,
+						"frame_start" : 15,
+						"frame_end" : 19,
+						"number_of_tries" : 0,
+						"tries": {
+						
+						},
+						"errors": 0
+					},
+					3:{
+						"status" : RRStateScheme.chunk_queued,
+						"frame_start" : 20,
+						"frame_end" : 24,
+						"number_of_tries" : 0,
+						"tries": {
+						
+						},
+						"errors": 0
+					},
+					4:{
+						"status" : RRStateScheme.chunk_queued,
+						"frame_start" : 25,
+						"frame_end" : 25,
+						"number_of_tries" : 0,
+						"tries": {
+						
+						},
+						"errors": 0
+					}
+				}
+			},
 			
 			4: {
 				"id": 4,

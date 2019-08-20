@@ -40,10 +40,14 @@ var job_type_settings_path : String
 
 var last_selected_path : String = ""
 
+var specific_input_fields : Dictionary
+
+
 signal job_successfully_created
 
 ### preloads ####
 var HBoxContainerSep15Res = preload("res://GUI/AutoScalingPopup/Content/HBoxContainerSep15.tscn")
+var ActivateCheckBoxRes = preload("res://GUI/AutoScalingPopup/Content/SubmitJobSettingActivateCheckBox.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -51,6 +55,8 @@ func _ready():
 	
 	get_parent().connect("popup_shown", self, "initialize_on_show")
 	get_parent().connect("ok_pressed", self, "validate_input_mask")
+	
+	specific_input_fields = {}
 	
 	initialize_on_show()
 
@@ -102,7 +108,7 @@ func initialize_on_show():
 
 
 
-# is supposed to get the path where the job type configuration folders lie. For each folder it will add an item to the option button.
+# Function is supposed to get the path where the job type configuration folders lie. For each folder it will add an item to the option button.
 func fill_job_type_option_button(path : String):
 	
 	JobTypeOptionButton.clear()
@@ -130,7 +136,7 @@ func fill_job_type_option_button(path : String):
 
 
 
-# is supposed to get the path where the type version configuration files lie. For each .cfg file it will add an item to the option button.
+# Function is supposed to get the path where the type version configuration files lie. For each .cfg file it will add an item to the option button.
 func fill_type_version_option_button(path : String):
 	
 	TypeVersionOptionButton.clear()
@@ -212,16 +218,40 @@ func load_type_mask():
 	for child in SpecificJobSettings.get_children():
 		SpecificJobSettings.remove_child(child)
 	
+	# clear specific_input_fields dictionary
+	specific_input_fields.clear()
+	
 	# create all the specific job settings
 	var specific_job_type_settings : Array = job_type_config.get_section_keys( "SpecificJobSettings" ) 
 	
 	for specific_setting in specific_job_type_settings:
-		if not specific_setting.ends_with("_type") and not specific_setting.ends_with("_default") and not specific_setting.ends_with("_tooltip"):
+		if specific_setting.find("__") == -1:
 			
 			# load additional specific setting information
-			var value_type = job_type_config.get_value("SpecificJobSettings", specific_setting + "_type", "not_set").to_lower()
-			var default_value = job_type_config.get_value("SpecificJobSettings", specific_setting + "_default", "not_set")
-			var tooltip = job_type_config.get_value("SpecificJobSettings", specific_setting + "_tooltip", "")
+			var display_text : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__display_text", "")
+			var tooltip : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__tooltip", "")
+			var type : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__type", "")
+			var activatable : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__activatable", "").to_lower()
+			var cmd_value : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__cmd_value", "")
+			
+			# split array ones
+			var type_array : Array = type.split(";;", true)
+			var activatable_array : Array = activatable.split(";;", true)
+			var cmd_value_array : Array = cmd_value.split(";;", true)
+			
+			# check arrays if they have the correct length. Return and show error, if that is not the case.
+			if type_array.size() != 2:
+				var error_message : String = tr("MSG_ERROR_16") + "\n\n" + specific_setting + "__type"
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The following setting has to be a string containing two values separated by „;;“:
+				return
+			if activatable_array.size() != 2:
+				var error_message : String = tr("MSG_ERROR_16") + "\n\n" + specific_setting + "__activatable"
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The following setting has to be a string containing two values separated by „;;“:
+				return
+			if cmd_value_array.size() != 3:
+				var error_message : String = tr("MSG_ERROR_17") + "\n\n" + specific_setting + "__cmd_value"
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The following setting has to be a string containing three values separated by „;;“:
+				return
 			
 			# create HBoxContainer
 			var SpecificHBoxContainer : HBoxContainer = HBoxContainerSep15Res.instance()
@@ -231,79 +261,106 @@ func load_type_mask():
 			# Create Label
 			var SpecificLabel : Label = Label.new()
 			SpecificLabel.name = specific_setting + "Label"
-			SpecificLabel.text = specific_setting.replace("_"," ") + ":"
+			SpecificLabel.text = display_text + ":"
 			SpecificLabel.align = Label.ALIGN_RIGHT
 			SpecificLabel.mouse_filter = MOUSE_FILTER_STOP
 			if tooltip != "":
-				SpecificLabel.hint_tooltip = String(tooltip)
+				SpecificLabel.hint_tooltip = tooltip
 			SpecificHBoxContainer.add_child(SpecificLabel)
+			
+			# Create checkbox for activating or deactivating the setting if it is an activatable setting
+			if activatable_array[0] == "true":
+				# create HBoxContainer
+				var ActivateCheckBox : CheckBox = ActivateCheckBoxRes.instance()
+				ActivateCheckBox.name = specific_setting + "ActivateCheckBox"
+				specific_input_fields[specific_setting + "ActivateCheckBox"] = ActivateCheckBox
+				ActivateCheckBox.connect("toggled", ActivateCheckBox, "set_editable_state_of_input")
+				if activatable_array[1] == "true":
+					ActivateCheckBox.pressed = true
+				else:
+					ActivateCheckBox.pressed = false
+					
+				SpecificHBoxContainer.add_child(ActivateCheckBox)
+				
+			
 			
 			# Create Value Edit Element
 			
-			if value_type == "not_set":
-				# send error message
-				var error_message : String = tr("MSG_ERROR_5") + "\n" + specific_setting
+			# send error message if specific setting type is unsupported or not set
+			var type_lower : String = type_array[0].to_lower()
+			if type_lower != "string" and type_lower != "int" and type_lower != "float" and type_lower != "bool":
+				var error_message : String = tr("MSG_ERROR_5") + "\n\n" + specific_setting
 				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The type of the following specific job setting has not been set:
+				return
 				
-				
-			elif value_type == "int":
+			elif type_lower == "int":
 				var SpecificSpinBox : SpinBox = SpinBox.new()
 				SpecificSpinBox.name = specific_setting + "SpinBox"
+				specific_input_fields[specific_setting + "SpinBox"] = SpecificSpinBox
 				SpecificSpinBox.size_flags_horizontal = SIZE_EXPAND_FILL
 				SpecificSpinBox.rounded = true
-				if default_value != "not_set":
-					SpecificSpinBox.value = int(default_value)
+				if type_array[1] != "":
+					SpecificSpinBox.value = int(type_array[1])
 				if tooltip != "":
 					SpecificSpinBox.hint_tooltip = String(tooltip)
+				if activatable_array[0] == "true":
+					if activatable_array[1] == "true":
+						SpecificSpinBox.editable = true
+					else:
+						SpecificSpinBox.editable = false
+						
 				SpecificHBoxContainer.add_child(SpecificSpinBox)
 				
-			elif value_type == "float":
+			elif type_lower == "float":
 				var SpecificSpinBox : SpinBox = SpinBox.new()
 				SpecificSpinBox.name = specific_setting + "SpinBox"
+				specific_input_fields[specific_setting + "SpinBox"] = SpecificSpinBox
 				SpecificSpinBox.size_flags_horizontal = SIZE_EXPAND_FILL
 				SpecificSpinBox.rounded = false
-				if default_value != "not_set":
-					SpecificSpinBox.value = float(default_value)
+				if type_array[1] != "":
+					SpecificSpinBox.value = float(type_array[1])
 				if tooltip != "":
 					SpecificSpinBox.hint_tooltip = String(tooltip)
+				if activatable_array[0] == "true":
+					if activatable_array[1] == "true":
+						SpecificSpinBox.editable = true
+					else:
+						SpecificSpinBox.editable = false
+						
 				SpecificHBoxContainer.add_child(SpecificSpinBox)
 				
-			elif value_type == "string":
+			elif type_lower == "string":
 				var SpecificLineEdit : LineEdit = LineEdit.new()
 				SpecificLineEdit.name = specific_setting + "LineEdit"
+				specific_input_fields[specific_setting + "LineEdit"] = SpecificLineEdit
 				SpecificLineEdit.size_flags_horizontal = SIZE_EXPAND_FILL
-				if default_value != "not_set":
-					SpecificLineEdit.text = default_value
+				if type_array[1] != "":
+					SpecificLineEdit.text = type_array[1]
 				if tooltip != "":
 					SpecificLineEdit.hint_tooltip = String(tooltip)
+				if activatable_array[0] == "true":
+					if activatable_array[1] == "true":
+						SpecificLineEdit.editable = true
+					else:
+						SpecificLineEdit.editable = false
+						
 				SpecificHBoxContainer.add_child(SpecificLineEdit)
 				
-			elif value_type == "bool":
+			elif type_lower == "bool":
 				var SpecificCheckBox : CheckBox = CheckBox.new()
 				SpecificCheckBox.name = specific_setting + "CheckBox"
+				specific_input_fields[specific_setting + "CheckBox"] = SpecificCheckBox
 				
-				if default_value != "not_set":
-					if typeof(default_value) == TYPE_STRING:
-						if default_value.to_lower() == "true" or default_value.to_lower() == "1":
-							SpecificCheckBox.pressed = true
-						elif default_value.to_lower() == "false" or default_value.to_lower() == "0":
-							SpecificCheckBox.pressed = false
+				if type_array[1] != "":
+					if type_array[1].to_lower() == "true" or type_array[1].to_lower() == "1":
+						SpecificCheckBox.pressed = true
+					elif type_array[1].to_lower() == "false" or type_array[1].to_lower() == "0":
+						SpecificCheckBox.pressed = false
 							
-					if typeof(default_value) == TYPE_INT:
-						if default_value == 0:
-							SpecificCheckBox.pressed = false
-						else:
-							SpecificCheckBox.pressed = true
-				
 				if tooltip != "":
 					SpecificCheckBox.hint_tooltip = String(tooltip)
 					
 				SpecificHBoxContainer.add_child(SpecificCheckBox )
-				
-			else:
-				# send error message
-				var error_message : String = tr("MSG_ERROR_6") + "\n" + specific_setting + "_type"
-				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The type of the following key is invalid:
 				
 			
 			# add Label to Labels
@@ -370,6 +427,98 @@ func create_new_job():
 	
 	var job_id : int = RRFunctions.generate_job_id(time_created, JobNameLineEdit.text)
 	
+	# create specific settings dictionary
+	var specific_settings_dict : Dictionary = {}
+	
+	# load job type config file
+	var job_type : String = JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id())
+	var job_type_version : String = TypeVersionOptionButton.get_item_text(TypeVersionOptionButton.get_selected_id())
+	var job_type_config : ConfigFile = ConfigFile.new()
+	job_type_config.load( job_type_settings_path + job_type + "/" + job_type_version + ".cfg" )
+	
+	var specific_job_type_settings : Array = job_type_config.get_section_keys( "SpecificJobSettings" ) 
+	
+	for specific_setting in specific_job_type_settings:
+		if specific_setting.find("__") == -1:
+			
+			# load additional specific setting information
+			var type : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__type", "")
+			var activatable : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__activatable", "").to_lower()
+			var cmd_value : String = job_type_config.get_value("SpecificJobSettings", specific_setting + "__cmd_value", "")
+			
+			# split array ones
+			var type_array : Array = type.split(";;", true)
+			var activatable_array : Array = activatable.split(";;", true)
+			var cmd_value_array : Array = cmd_value.split(";;", true)
+			
+			# check arrays if they have the correct length. Return and show error, if that is not the case.
+			if type_array.size() != 2:
+				var error_message : String = tr("MSG_ERROR_16") + "\n\n" + specific_setting + "__type"
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The following setting has to be a string containing two values separated by „;;“:
+				return
+			if activatable_array.size() != 2:
+				var error_message : String = tr("MSG_ERROR_16") + "\n\n" + specific_setting + "__activatable"
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The following setting has to be a string containing two values separated by „;;“:
+				return
+			if cmd_value_array.size() != 3:
+				var error_message : String = tr("MSG_ERROR_17") + "\n\n" + specific_setting + "__cmd_value"
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The following setting has to be a string containing three values separated by „;;“:
+				return
+			
+			
+			# send error message if specific setting type is unsupported or not set
+			var type_lower : String = type_array[0].to_lower()
+			if type_lower != "string" and type_lower != "int" and type_lower != "float" and type_lower != "bool":
+				var error_message : String = tr("MSG_ERROR_5") + "\n\n" + specific_setting
+				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10) # There is an error in your job type configuration file. The type of the following specific job setting has not been set:
+				return
+				
+			elif type_lower == "int":
+				
+				# set if the specific setting is true or false and add to dict
+				if activatable_array[0].to_lower() == "false":
+					specific_settings_dict[specific_setting] = true
+				else:
+					specific_settings_dict[specific_setting] = specific_input_fields[specific_setting + "ActivateCheckBox"].pressed
+				
+				# set __cmd_value and add it to dict
+				specific_settings_dict[specific_setting + "__cmd_value"] = cmd_value_array[0] + ";;" + String( specific_input_fields[specific_setting + "SpinBox"].value ) + ";;" + cmd_value_array[2]
+				
+				
+			elif type_lower == "float":
+				
+				# set if the specific setting is true or false and add to dict
+				if activatable_array[0].to_lower() == "false":
+					specific_settings_dict[specific_setting] = true
+				else:
+					specific_settings_dict[specific_setting] = specific_input_fields[specific_setting + "ActivateCheckBox"].pressed
+				
+				# set __cmd_value and add it to dict
+				specific_settings_dict[specific_setting + "__cmd_value"] = cmd_value_array[0] + ";;" + String( specific_input_fields[specific_setting + "SpinBox"].value ) + ";;" + cmd_value_array[2]
+				
+			elif type_lower == "string":
+				
+				# set if the specific setting is true or false and add to dict
+				if activatable_array[0].to_lower() == "false":
+					specific_settings_dict[specific_setting] = true
+				else:
+					specific_settings_dict[specific_setting] = specific_input_fields[specific_setting + "ActivateCheckBox"].pressed
+				
+				# set __cmd_value and add it to dict
+				specific_settings_dict[specific_setting + "__cmd_value"] = cmd_value_array[0] + ";;" + specific_input_fields[specific_setting + "LineEdit"].text + ";;" + cmd_value_array[2]
+				
+				
+			elif type_lower == "bool":
+				
+				# set if the specific setting is true or false and add to dict
+				
+				specific_settings_dict[specific_setting] = specific_input_fields[specific_setting + "CheckBox"].pressed
+				
+				# set __cmd_value and add it to dict
+				specific_settings_dict[specific_setting + "__cmd_value"] = cmd_value
+			
+			
+	
 	var new_job : Dictionary = {
 								"id": job_id,
 								"name": JobNameLineEdit.text,
@@ -390,7 +539,7 @@ func create_new_job():
 								"output_directory" : "",
 								"output_filename_pattern" : "",
 								"render_time" : 0,
-								"SpecificJobSettings" : {},
+								"SpecificJobSettings" : specific_settings_dict,
 								"chunks": {
 									
 								}
@@ -428,7 +577,7 @@ func create_new_job():
 						}
 						
 				# add chunk to new job
-				new_job.chunks[chunk_count] = chunk#str2var( var2str(chunk) )
+				new_job.chunks[chunk_count] = chunk #str2var( var2str(chunk) )
 				
 				chunk_count += 1
 			
@@ -494,7 +643,3 @@ func _on_SelectSceneFileDialog_confirmed():
 func _on_SelectSceneButton_pressed():
 	SelectSceneFileDialog.current_path = last_selected_path
 	SelectSceneFileDialog.popup_centered_ratio(0.75)
-	
-
-
-
