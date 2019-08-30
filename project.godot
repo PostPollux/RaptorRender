@@ -12,57 +12,57 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "AutoScalingPopup",
 "language": "GDScript",
-"path": "res://GUI/AutoScalingPopup/AutoScalingPopupBase.gd"
+"path": "res://RaptorRender/GUI/AutoScalingPopup/AutoScalingPopupBase.gd"
 }, {
 "base": "MarginContainer",
 "class": "ClientInfoPanel",
 "language": "GDScript",
-"path": "res://GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.gd"
+"path": "res://RaptorRender/GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.gd"
 }, {
 "base": "MarginContainer",
 "class": "JobInfoPanel",
 "language": "GDScript",
-"path": "res://GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd"
+"path": "res://RaptorRender/GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd"
 }, {
 "base": "Control",
 "class": "NotificationSystem",
 "language": "GDScript",
-"path": "res://GUI/NotificationSystem/NotificationSystem.gd"
+"path": "res://RaptorRender/GUI/NotificationSystem/NotificationSystem.gd"
 }, {
 "base": "Control",
 "class": "RRContextMenuBase",
 "language": "GDScript",
-"path": "res://GUI/ContextMenus/ContextMenuBase.gd"
+"path": "res://RaptorRender/GUI/ContextMenus/ContextMenuBase.gd"
 }, {
 "base": "ScrollContainer",
 "class": "SortableTable",
 "language": "GDScript",
-"path": "res://GUI/SortableTable/SortableTable.gd"
+"path": "res://RaptorRender/GUI/SortableTable/SortableTable.gd"
 }, {
 "base": "Button",
 "class": "SortableTableCollumnButton",
 "language": "GDScript",
-"path": "res://GUI/SortableTable/TopRow/ColumnButton.gd"
+"path": "res://RaptorRender/GUI/SortableTable/TopRow/ColumnButton.gd"
 }, {
 "base": "MarginContainer",
 "class": "SortableTableRow",
 "language": "GDScript",
-"path": "res://GUI/SortableTable/SortableTableRow.gd"
+"path": "res://RaptorRender/GUI/SortableTable/SortableTableRow.gd"
 }, {
 "base": "VBoxContainer",
 "class": "SortableTableRowContainerFilled",
 "language": "GDScript",
-"path": "res://GUI/SortableTable/RowContainerFilled.gd"
+"path": "res://RaptorRender/GUI/SortableTable/RowContainerFilled.gd"
 }, {
 "base": "MarginContainer",
 "class": "SortableTableTopRow",
 "language": "GDScript",
-"path": "res://GUI/SortableTable/TopRow/TopRow.gd"
+"path": "res://RaptorRender/GUI/SortableTable/TopRow/TopRow.gd"
 }, {
 "base": "MarginContainer",
 "class": "TryInfoPanel",
 "language": "GDScript",
-"path": "res://GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.gd"
+"path": "res://RaptorRender/GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.gd"
 } ]
 _global_script_class_icons={
 "AutoScalingPopup": "",
@@ -81,24 +81,25 @@ _global_script_class_icons={
 [application]
 
 config/name="RaptorRender"
-run/main_scene="res://RaptorRenderMainScene.tscn"
-config/icon="res://Main_Icons/RR_Icon_64_1.png"
+run/main_scene="res://RaptorRender/RaptorRenderMainScene.tscn"
+config/icon="res://RaptorRender/Main_Icons/RR_Icon_64_1.png"
 
 [autoload]
 
-RRColorScheme="*res://singelton scripts/RRColorScheme.gd"
-RRStateScheme="*res://singelton scripts/RRStateScheme.gd"
-RRPaths="*res://singelton scripts/RRPaths.gd"
-TimeFunctions="*res://singelton scripts/TimeFunctions.gd"
-RRFunctions="*res://singelton scripts/RRFunctions.gd"
-RaptorRender="*res://singelton scripts/RaptorRender.gd"
-GetSystemInformation="*res://singelton scripts/GetSystemInformation.gd"
-JobFunctions="*res://singelton scripts/JobFunctions.gd"
-CommandLineManager="*res://singelton scripts/CommandLineManager.gd"
-RenderLogValidator="*res://singelton scripts/RenderLogValidator.gd"
-JobExecutionManager="*res://singelton scripts/JobExecutionManager.gd"
-JobDistributionManager="*res://singelton scripts/JobDistributionManager.gd"
+RRColorScheme="*res://RaptorRender/singelton scripts/RRColorScheme.gd"
+RRStateScheme="*res://RaptorRender/singelton scripts/RRStateScheme.gd"
+RRPaths="*res://RaptorRender/singelton scripts/RRPaths.gd"
+TimeFunctions="*res://RaptorRender/singelton scripts/TimeFunctions.gd"
+RRFunctions="*res://RaptorRender/singelton scripts/RRFunctions.gd"
+RaptorRender="*res://RaptorRender/singelton scripts/RaptorRender.gd"
+GetSystemInformation="*res://RaptorRender/singelton scripts/GetSystemInformation.gd"
+JobFunctions="*res://RaptorRender/singelton scripts/JobFunctions.gd"
+CommandLineManager="*res://RaptorRender/singelton scripts/CommandLineManager.gd"
+RenderLogValidator="*res://RaptorRender/singelton scripts/RenderLogValidator.gd"
+JobExecutionManager="*res://RaptorRender/singelton scripts/JobExecutionManager.gd"
+JobDistributionManager="*res://RaptorRender/singelton scripts/JobDistributionManager.gd"
 ReadLogFileManager="*res://singelton scripts/ReadLogFileManager.gd"
+ReadLogFileManager="*res://RaptorRender/singelton scripts/ReadLogFileManager.gd"
 
 [debug]
 
@@ -149,7 +150,7 @@ ui_ctrl={
 
 [locale]
 
-translations=PoolStringArray( "res://lang/translations.de.translation", "res://lang/translations.en.translation" )
+translations=PoolStringArray( "res://RaptorRender/lang/translations.de.translation", "res://RaptorRender/lang/translations.en.translation" )
 
 [memory]
 
@@ -160,4 +161,4 @@ limits/message_queue/max_size_kb=16384
 
 limits/rendering/max_renderable_elements=120000
 environment/default_clear_color=Color( 0.301961, 0.301961, 0.301961, 1 )
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://RaptorRender/default_env.tres"

@@ -1,0 +1,243 @@
+id,en,de
+,,
+JOB_COLUMN_1,Status,Status
+JOB_COLUMN_2,Name,Name
+JOB_COLUMN_3,Priority,Priorität
+JOB_COLUMN_4,Clients,Clients
+JOB_COLUMN_5,Progress,Fortschritt
+JOB_COLUMN_6,Type,Typ
+JOB_COLUMN_7,Creator,Ersteller
+JOB_COLUMN_8,Time Created,Erstellungszeitpunkt
+JOB_COLUMN_9,Frames,Frames
+JOB_COLUMN_10,Errors,Fehler
+JOB_COLUMN_11,Pools,Pools
+JOB_COLUMN_12,Note,Notiz
+,,
+JOB_DETAIL_1,Details,Details
+JOB_DETAIL_2,Status,Status
+JOB_DETAIL_3,Type,Typ
+JOB_DETAIL_4,Creator,Ersteller
+JOB_DETAIL_5,Created,Erstellt
+JOB_DETAIL_6,Progress,Fortschritt
+JOB_DETAIL_7,Active Clients,Aktive Clients
+JOB_DETAIL_8,Time Rendered,Gerenderte Zeit
+JOB_DETAIL_9,Time Remaining,verbleibende Zeit
+JOB_DETAIL_10,Files,Dateien
+JOB_DETAIL_11,Scene File,Szene
+JOB_DETAIL_12,Output Files,Ausgabedateien
+JOB_DETAIL_13,Log Files,Log Dateien
+,,
+,,
+JOB_DETAIL_STATUS_1,Rendering,In Arbeit
+JOB_DETAIL_STATUS_2,Paused Deffered,verzögert pausiert
+JOB_DETAIL_STATUS_3,Queued,Warte auf Clients
+JOB_DETAIL_STATUS_4,Error,Fehlerhaft
+JOB_DETAIL_STATUS_5,Paused,Pausiert
+JOB_DETAIL_STATUS_6,Finished,Fertiggestellt
+JOB_DETAIL_STATUS_7,Cancelled,Abgebrochen
+,,
+JOB_CONTEXT_MENU_1,Pause Job Deferred,Job verzögert pausieren
+JOB_CONTEXT_MENU_2,Pause Job Immediately,Job sofort pausieren
+JOB_CONTEXT_MENU_3,Resume Job,Job wiederaufnehmen
+JOB_CONTEXT_MENU_4,Cancle Job Permanently,Job dauerhaft abbrechen
+JOB_CONTEXT_MENU_5,Configure Job,Job bearbeiten
+JOB_CONTEXT_MENU_6,Reset Job Error Count,Job-Fehlerzahl zurücksetzen
+JOB_CONTEXT_MENU_7,Resubmit Job Paused,Job erneut einreichen (pausiert)
+JOB_CONTEXT_MENU_8,Open Output Directory,Ausgabeverzeichnis öffnen
+JOB_CONTEXT_MENU_9,Open Scene Directory,Szenenverzeichnis öffnen
+JOB_CONTEXT_MENU_10,Remove Job,Job löschen
+JOB_CONTEXT_MENU_11,Pause Jobs Deferred,Jobs verzögert abbrechen
+JOB_CONTEXT_MENU_12,Pause Jobs Immediately,Jobs sofort abbrechen
+JOB_CONTEXT_MENU_13,Resume Jobs,Jobs wiederaufnehmen
+JOB_CONTEXT_MENU_14,Cancle Jobs Permanently,Jobs dauerhaft abbrechen
+JOB_CONTEXT_MENU_15,Configure Jobs,Jobs bearbeiten
+JOB_CONTEXT_MENU_16,Reset Jobs Error Count,Job-Fehlerzahlen zurücksetzen
+JOB_CONTEXT_MENU_17,Resubmit Jobs Paused,Jobs erneut einreichen (pausiert)
+JOB_CONTEXT_MENU_18,Open Output Directories,Ausgabeverzeichnisse öffnen
+JOB_CONTEXT_MENU_19,Open Scene Directories,Szenenverzeichnisse öffnen
+JOB_CONTEXT_MENU_20,Remove Jobs,Jobs löschen
+,,
+JOB_CHUNKS_1,Chunk List,Chunk Liste
+JOB_GRAPHS_1,Graphs,Statistiken
+,,
+JOB_CHUNK_TIME_GRAPH_1,Chunk Time Graph,Chunk Zeit Statistik
+JOB_CHUNK_TIME_GRAPH_2,Chunk:,Chunk:
+JOB_CHUNK_TIME_GRAPH_3,Client:,Client:
+JOB_CHUNK_TIME_GRAPH_4,Time:,Zeit:
+JOB_CHUNK_TIME_GRAPH_5,Tries:,Versuche:
+JOB_CHUNK_TIME_GRAPH_6,Accumulate Tries,Versuche addieren
+JOB_CHUNK_TIME_GRAPH_7,accumulated,zusammengerechnet
+JOB_CHUNK_TIME_GRAPH_8,several,mehrere
+,,
+JOB_CLIENT_PIE_CHART_1,not assigned,nicht zugeordnet
+JOB_CLIENT_PIE_CHART_2,Chunks,Chunks
+,,
+CLIENT_COLUMN_1,Status,Status
+CLIENT_COLUMN_2,Name,Name
+CLIENT_COLUMN_3,Username,Benutzer
+CLIENT_COLUMN_4,Platform,Betriebssystem
+CLIENT_COLUMN_5,CPU,CPU
+CLIENT_COLUMN_6,RAM,RAM
+CLIENT_COLUMN_7,Current Job,Aktueller Job
+CLIENT_COLUMN_8,Errors,Fehler
+CLIENT_COLUMN_9,Pools,Pools
+CLIENT_COLUMN_10,Note,Notiz
+CLIENT_COLUMN_11,Version,Version
+,,
+CLIENT_DETAIL_1,Details,Details
+CLIENT_DETAIL_2,Status,Status
+CLIENT_DETAIL_3,Uptime,Betriebszeit
+CLIENT_DETAIL_4,Last seen,zuletzt gesehen
+CLIENT_DETAIL_5,CPU,Prozessor
+CLIENT_DETAIL_6,Memory,Arbeitsspeicher
+CLIENT_DETAIL_7,Hard Drives,Festplatten
+CLIENT_DETAIL_8,Graphics,Grafikkarte
+CLIENT_DETAIL_9,Network,Netzwerk
+CLIENT_DETAIL_10,System,Betriebssystem
+CLIENT_DETAIL_11,Addresses,Adressen
+,,
+CLIENT_DETAIL_STATUS_1,Rendering,Arbeitet
+CLIENT_DETAIL_STATUS_2,Available,Verfügbar
+CLIENT_DETAIL_STATUS_3,Error,Fehlerhaft
+CLIENT_DETAIL_STATUS_4,Disabled,Deaktiviert
+CLIENT_DETAIL_STATUS_5,Offline,Nicht erreichbar
+,,
+CLIENT_LATEST_LOG_1,Latest Log,Neuester Log
+CLIENT_LATEST_LOG_2,Job,Job
+CLIENT_LATEST_LOG_3,Chunk,Chunk
+CLIENT_LATEST_LOG_4,Try,Versuch
+,,
+,,
+CLIENT_CONTEXT_MENU_1,Enable Client,Client aktivieren
+CLIENT_CONTEXT_MENU_2,Disable Client Deferred,Client verzögert deaktivieren
+CLIENT_CONTEXT_MENU_3,Disable Client Immediately,Client sofort deaktivieren
+CLIENT_CONTEXT_MENU_4,Configure Client,Client konfigurieren
+CLIENT_CONTEXT_MENU_5,Reset Client Error Count,Client-Fehlerzahl zurücksetzen
+CLIENT_CONTEXT_MENU_6,Wake on LAN,Computer via LAN hochfahren
+CLIENT_CONTEXT_MENU_7,Shutdown Computer,Computer herunterfahren
+CLIENT_CONTEXT_MENU_8,Reboot Computer,Computer neustarten
+CLIENT_CONTEXT_MENU_9,Execute command on client,Befehl auf Client ausführen
+CLIENT_CONTEXT_MENU_10,Remove Client,Client löschen
+CLIENT_CONTEXT_MENU_11,Enable Clients,Clients aktivieren
+CLIENT_CONTEXT_MENU_12,Disable Clients Deferred,Clients verzögert deaktivieren
+CLIENT_CONTEXT_MENU_13,Disable Clients Immediately,Clients sofort deaktivieren
+CLIENT_CONTEXT_MENU_14,Configure Clients,Clients konfigurieren
+CLIENT_CONTEXT_MENU_15,Reset Client Error Counts,Client-Fehlerzahlen zurücksetzen
+CLIENT_CONTEXT_MENU_16,Wake on LAN,Computer via LAN hochfahren
+CLIENT_CONTEXT_MENU_17,Shutdown Computers,Computer herunterfahren
+CLIENT_CONTEXT_MENU_18,Reboot Computers,Computer neustarten
+CLIENT_CONTEXT_MENU_19,Execute command on clients,Befehl auf Clients ausführen
+CLIENT_CONTEXT_MENU_20,Remove Clients,Clients löschen
+,,
+,,
+,,
+CHUNK_COLUMN_1,ID,ID
+CHUNK_COLUMN_2,Status,Status
+CHUNK_COLUMN_3,Frames,Frames
+CHUNK_COLUMN_4,Client,Client
+CHUNK_COLUMN_5,Rendertime,Renderzeit
+CHUNK_COLUMN_6,Tries,Versuche
+CHUNK_COLUMN_7,Errors,Fehler
+CHUNK_COLUMN_8,Start,Start
+CHUNK_COLUMN_9,Finished,Ende
+,,
+CHUNK_CONTEXT_MENU_1,Requeue Chunk,Chunk erneut berechnen
+CHUNK_CONTEXT_MENU_2,Mark Chunk as finished,Chunk als fertig markieren
+CHUNK_CONTEXT_MENU_3,Requeue Chunks,Chunks erneut berechenen
+CHUNK_CONTEXT_MENU_4,Mark Chunks as finished,Chunks als fertig markieren
+,,
+TRY_COLUMN_1,Try,Versuch
+,,
+TRY_DETAIL_1,Details,Details
+TRY_DETAIL_2,Try,Versuch
+TRY_DETAIL_3,Status,Status
+TRY_DETAIL_4,Client,Client
+TRY_DETAIL_5,Time Started,Startzeit
+TRY_DETAIL_6,Time Finished,Fertigstellung
+TRY_DETAIL_7,Rendertime,Renderzeit
+TRY_DETAIL_8,Command,Befehl
+,,
+TRY_DETAIL_TOOLTIP_1,The exact command that has been used by the corresponding client to run the job in the background via th terminal.,"Der exakte Befehl, der im Hintergrund vom entsprechenden Client per Kommandozeile ausgeführt wird."
+,,
+TRY_DETAIL_STATUS_1,Rendering,In Arbeit
+TRY_DETAIL_STATUS_2,Error,Fehler
+TRY_DETAIL_STATUS_3,Finished,Fertiggestellt
+TRY_DETAIL_STATUS_4,Cancelled,Abgebrochen
+TRY_DETAIL_STATUS_5,Marked as Finished,Als fertig markiert
+,,
+TRY_LOG_1,Log,Log
+TRY_LOG_2,No log file found!,Keine Log-Datei gefunden!
+,,
+,,
+LOG_CONTEXT_MENU_1,open log externally,Log mit externem Editor öffnen
+LOG_CONTEXT_MENU_2,open logs folder,Logverzeichnis öffnen
+,,
+,,
+,,
+MSG_ERROR_1,Error,Fehler
+MSG_ERROR_2,Not implemented yet!,Diese Funktion ist leider noch nicht implementiert!
+MSG_ERROR_3,Seems like directory does not exist!,Dieses Verzeichnis scheint nicht zu existieren!
+MSG_ERROR_4,Seems like file does not exist!,Dieses Datei scheint nicht zu existieren!
+MSG_ERROR_5,There is an error in your job type configuration file. The type of the following specific job setting is unsupported or has not been set:,Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Der Typ der folgenden jobspezifischen Einstellung ist unbekannt oder fehlt:
+MSG_ERROR_6,,
+MSG_ERROR_7,Scene file does not exist!,Die angegebene Szenendatei existiert nicht!
+MSG_ERROR_8,"Range input can only have numbers, dashes and semicolons!","Das Renderbereich-Feld darf nur Zahlen, sowie Bindestriche und Strichpunkte enthalten!"
+MSG_ERROR_9,A range can only have one dash!,Ein Renderbereich kann nur einen Bindestrich haben!
+MSG_ERROR_10,The first number of a render range have to be smaller than the second one!,Die erste Zahl eines Renderbereichs muss kleiner sein als die zweite!
+MSG_ERROR_11,The following job type configuration file could not be loaded:,Folgende Job Typen Konfigurationsdatei konnte nicht geladen werden:
+MSG_ERROR_12,The output path is unknown for this job!,Das Ausgabeverzeichnis für diesen Job ist nicht bekannt!
+MSG_ERROR_13,"The following specific job setting is defined in your job type configuration file, but it is not present in your job you are trying to run:","Die folgende spezifische Einstellung ist in der Job-Type-Konfigurationsdatei definiert. Sie ist aber nicht in dem Job, der ausgeführt werden soll, vorhanden:"
+MSG_ERROR_14,A __cmd_value definition is missing in your job. It‘s mandatory that you define this for each specific setting. Missing:,Eine __cmd_value Definition fehlt im auszuführenden Job. Diese muss aber für jede spezifische Einstellung definiert werden. Es fehlt:
+MSG_ERROR_15,"Each __cmd_value string has to be splittable into 3 parts. Make sure prefix, value and substitute are correctly devided by „;;“. Problematic definition:","Jeder __cmd_value String muss in 3 Teile unterteilbar sein. Stelle sicher, dass prefix, value und substitute korrekt durch „;;“ unterteilt sind. Problematische Definition:"
+MSG_ERROR_16,There is an error in your job type configuration file. The following setting has to be a string containing two values separated by „;;“:,"Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Die folgende Einstellung muss ein String sein, der zwei Werte enthält, die durch „;;“ getrennt sind:"
+MSG_ERROR_17,There is an error in your job type configuration file. The following setting has to be a string containing three values separated by „;;“:,"Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Die folgende Einstellung muss ein String sein, der drei Werte enthält, die durch „;;“ getrennt sind:"
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+MSG_INFO_1,Info,Info
+MSG_INFO_2,"Your machine should wake up soon, if it supports WakeOnLan…","Ihr Computer sollte in kürze hochfahren, falls er WakeOnLan unterstützt…"
+MSG_INFO_3,"machines should wake up soon, if they support WakeOnLan…","Computer sollten in kürze hochfahren, falls sie WakeOnLan unterstützen…"
+MSG_INFO_4,Selection has been copied to clipboard!,Selektierter Text wurde in die Zwischenablage kopiert!
+,,
+,,
+POPUP_BUTTON_CANCEL,Cancel,Abbrechen
+POPUP_BUTTON_OK,Ok,Ok
+,,
+POPUP_SUBMIT_JOB_1,Submit Job,Job abschicken
+POPUP_SUBMIT_JOB_2,Job Type:,Job Typ:
+POPUP_SUBMIT_JOB_3,Type Version:,Version:
+POPUP_SUBMIT_JOB_4,Job Name:,Jobname: 
+POPUP_SUBMIT_JOB_5,Scene File:,Szenen Datei:
+POPUP_SUBMIT_JOB_6,Render Range:,Renderbereich:
+POPUP_SUBMIT_JOB_7,Chunk Size:,Paketgröße:
+POPUP_SUBMIT_JOB_8,Priority:,Priorität:
+POPUP_SUBMIT_JOB_9,Pools:,Pools:
+POPUP_SUBMIT_JOB_10,Note:,Notiz:
+POPUP_SUBMIT_JOB_11,Start Paused:,Pausiert starten:
+POPUP_SUBMIT_JOB_12,New Job,Neuer Job
+,,
+POPUP_SUBMIT_JOB_TOOLTIP_1,"To define your render range use numbers, hyphens, semicolons or commas.
+Valid examples: 
+1-5“;“ 10“;“ 15-20
+1-3, 6, 7","Renderbereiche werden mit Zahlen, Bindestrichen, Strichpunkten oder Kommas definiert.
+Gültige Beispiele: 
+1-5“;“ 10“;“ 15-20
+1-3, 6, 7"
+POPUP_SUBMIT_JOB_TOOLTIP_2,"Number of consecutive frames a client will render.
+
+For long rendertimes it makes sense to keep this number low or even at 1. 
+Otherwise you will loose a lot of time if you cancel a half finished chunk of 10 frames.
+
+Whereas for short rendertimes per frame it‘s better to use higher values.
+This will prevent loading the programm and the scene for each and every frame.","Anzahl der aufeinanderfolgenden Bilder, die ein Client am Stück rendert.
+
+Bei sehr langen Renderzeiten ist es sinnvoll, die Zahl klein zu halten oder sogar 1 zu verwenden. 
+Ansonsten geht viel Zeit verloren, wenn ein halb fertiger Chunk mit z.b. 10 Frames abgebrochen wird.
+
+Bei kurzen Renderzeiten pro Bild macht es hingegen Sinn, eine Höhere Zahl zu verwenden,
+da dann nicht für jedes Bild das Programm und die Szene erneut geladen werden müssen."
+POPUP_SUBMIT_JOB_TOOLTIP_3,Jobs with higher priority will be rendered first,Jobs mit einer höheren Priorität werden zuerst gerendert

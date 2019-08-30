@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.gd" type="Script" id=1]
+
+
+[node name="ClientPieChart" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+most_chunks_rendered_color = Color( 0.317647, 0.568627, 0.815686, 1 )
+least_chunks_rendered_color = Color( 0.741176, 0.388235, 0.552941, 1 )
+chunks_not_assigned_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+
+[node name="NameLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -20.0
+margin_right = 50.0
+margin_bottom = -6.0
+align = 1
+valign = 1
+
+[node name="ChunksLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = 6.0
+margin_right = 50.0
+margin_bottom = 20.0
+align = 1
+valign = 1
+[connection signal="gui_input" from="." to="." method="_on_ClientPieChart_gui_input"]
+[connection signal="mouse_exited" from="." to="." method="_on_ClientPieChart_mouse_exited"]
+[connection signal="segment_hovered" from="." to="." method="_on_ClientPieChart_segment_hovered"]

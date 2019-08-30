@@ -1,0 +1,143 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://RaptorRender/GUI/NotificationSystem/NotificationBoxes/BasicNotificationBox.gd" type="Script" id=1]
+[ext_resource path="res://RaptorRender/GUI/NotificationSystem/images/NotificationBoxBackground.png" type="Texture" id=2]
+[ext_resource path="res://RaptorRender/GUI/NotificationSystem/images/dinosaur-2806045_1280.png" type="Texture" id=3]
+[ext_resource path="res://RaptorRender/GUI/fonts/Caliban.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://RaptorRender/GUI/NotificationSystem/images/ProgressBar.png" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+use_filter = true
+extra_spacing_bottom = 4
+font_data = ExtResource( 4 )
+
+[node name="BasicNotificationBox" type="Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -24.0
+margin_top = 50.0
+margin_bottom = 74.0
+mouse_filter = 2
+script = ExtResource( 1 )
+
+[node name="BasicNotificationContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -316.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+
+[node name="Background" type="NinePatchRect" parent="BasicNotificationContainer"]
+modulate = Color( 0.695313, 0.221236, 0.254569, 1 )
+margin_right = 343.0
+margin_bottom = 59.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="Control" type="Control" parent="BasicNotificationContainer"]
+margin_right = 343.0
+margin_bottom = 59.0
+mouse_filter = 2
+
+[node name="DecorativeImage" type="TextureRect" parent="BasicNotificationContainer/Control"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -119.0
+margin_top = -86.0
+margin_right = 9.0
+margin_bottom = -1.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="BasicNotificationContainer"]
+margin_right = 343.0
+margin_bottom = 59.0
+mouse_filter = 2
+custom_constants/margin_right = 110
+custom_constants/margin_top = 10
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BasicNotificationContainer/MarginContainer"]
+margin_left = 15.0
+margin_top = 10.0
+margin_right = 233.0
+margin_bottom = 49.0
+mouse_filter = 2
+custom_constants/separation = 0
+
+[node name="Heading" type="Label" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
+margin_right = 218.0
+margin_bottom = 17.0
+size_flags_vertical = 5
+custom_fonts/font = SubResource( 1 )
+text = "Heading"
+valign = 1
+uppercase = true
+
+[node name="Text" type="Label" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
+margin_top = 17.0
+margin_right = 218.0
+margin_bottom = 31.0
+text = "Some error message"
+valign = 1
+autowrap = true
+
+[node name="CenterContainerButtons" type="CenterContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
+editor/display_folded = true
+margin_top = 31.0
+margin_right = 218.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 0, 6 )
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerButtons"]
+margin_left = 109.0
+margin_top = 3.0
+margin_right = 109.0
+margin_bottom = 3.0
+
+[node name="CenterContainerProgress" type="CenterContainer" parent="BasicNotificationContainer/MarginContainer/VBoxContainer"]
+margin_top = 37.0
+margin_right = 218.0
+margin_bottom = 39.0
+mouse_filter = 2
+
+[node name="ProgressTexture" type="TextureRect" parent="BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerProgress"]
+margin_left = 34.0
+margin_right = 184.0
+margin_bottom = 2.0
+rect_min_size = Vector2( 150, 2 )
+mouse_filter = 2
+size_flags_horizontal = 3
+texture = ExtResource( 5 )
+expand = true
+
+[node name="TweenAnimateIn" type="Tween" parent="."]
+
+[node name="TweenAnimateOut" type="Tween" parent="."]
+
+[node name="TweenMoveVertical" type="Tween" parent="."]
+[connection signal="gui_input" from="BasicNotificationContainer" to="." method="_on_BasicNotificationContainer_gui_input"]
+[connection signal="mouse_entered" from="BasicNotificationContainer" to="." method="_on_BasicNotificationContainer_mouse_entered"]
+[connection signal="mouse_exited" from="BasicNotificationContainer" to="." method="_on_BasicNotificationContainer_mouse_exited"]
+[connection signal="tween_completed" from="TweenAnimateIn" to="." method="_on_TweenAnimateIn_tween_completed"]
+[connection signal="tween_completed" from="TweenAnimateOut" to="." method="_on_TweenAnimateOut_tween_completed"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://RaptorRender/GUI/Themes/grey.tres" type="Theme" id=1]
+[ext_resource path="res://RaptorRender/GUI/ContextMenus/ContextMenuBase.gd" type="Script" id=2]
+
+
+[node name="ContextMenuBase" type="Control"]
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="ContextMenu" type="PopupMenu" parent="."]
+margin_right = 20.0
+margin_bottom = 20.0
+
