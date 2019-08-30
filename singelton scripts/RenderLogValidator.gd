@@ -651,8 +651,10 @@ func validate_log_line(line : String) -> bool:
 		var frame_name_detect_type : int = job_type_settings_CRP.get_value("RenderLogValidation", "frame_name_detect_option", 0)
 		if frame_name_detect_type != 0:
 			var frame_name_match : RegExMatch = frame_name_detect_regex_CRP.search(line)
-			emit_signal("frame_name_detected", frame_name_detect_type, frame_name_match.get_string(0))
-			print ("Frame name detected: " + frame_name_match.get_string(0))
+			
+			if frame_name_match != null: # this check is very important. If RegExMatch is null, any code trying to do something with it would cancle the current render for some reason
+				emit_signal("frame_name_detected", frame_name_detect_type, frame_name_match.get_string(0))
+				print ("Frame name detected: " + frame_name_match.get_string(0))
 	
 	
 	##### success validation #####
