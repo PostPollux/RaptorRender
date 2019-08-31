@@ -1518,7 +1518,7 @@ func refresh_jobs_table():
 			StatusIcon.rect_min_size.x = 54
 			
 			var icon = ImageTexture.new()
-			icon.load("res://RaptorRender/GUI/icons/job_status/job_status_58x30.png")
+			icon = load("res://RaptorRender/GUI/icons/job_status/job_status_58x30.png")
 			StatusIcon.set_texture(icon)
 			
 			
@@ -2059,7 +2059,7 @@ func refresh_chunks_table(job_id):
 				StatusIcon.rect_min_size.x = 54
 				
 				var icon = ImageTexture.new()
-				icon.load("res://RaptorRender/GUI/icons/chunk_status/chunk_status_58x30.png")
+				icon = load("res://RaptorRender/GUI/icons/chunk_status/chunk_status_58x30.png")
 				StatusIcon.set_texture(icon)
 				
 				if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering:
@@ -2620,7 +2620,7 @@ func refresh_clients_table():
 			StatusIcon.rect_min_size.x = 54
 			
 			var icon = ImageTexture.new()
-			icon.load("res://RaptorRender/GUI/icons/client_status/client_status_58x30.png")
+			icon = load("res://RaptorRender/GUI/icons/client_status/client_status_58x30.png")
 			StatusIcon.set_texture(icon)
 			
 			if rr_data.clients[client].status == RRStateScheme.client_rendering:
