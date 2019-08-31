@@ -2,6 +2,10 @@ extends MarginContainer
 
 class_name JobInfoPanel
 
+### preload Resources
+var OutputDirectoryHBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/OutputDirectoryHBox.tscn")
+
+### onready vars
 onready var JobInfoTabContainer : TabContainer = $"TabContainer"
 
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
@@ -13,21 +17,23 @@ onready var CreatorLabel : Label = $"TabContainer/Details/ScrollContainer/Margin
 onready var TimeCreatedLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/TimeCreatedLabel"
 
 onready var ProgressHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/ProgressHeading"
-onready var FilesHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/FilesHeading"
+onready var FilesHeading : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox/FilesHeading"
 
 onready var JobProgressBar = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/JobProgressBar"
 onready var ActiveClientsLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/ActiveClientsLabel"
 onready var TimeRenderedLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/TimeRenderedLabel"
 onready var TimeRemainingLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/progress/HBoxContainer/MarginContainer/VBoxContainer/TimeRemainingLabel"
 
-onready var SceneFileLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SceneFileLabel"
-onready var OutputFilesLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OutputFilesLabel"
-onready var LogFilesLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/LogFilesLabel"
+onready var FilesVBox : VBoxContainer = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox"
+onready var SceneFileLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox/SourceFileHBox/SceneFileLabel"
+onready var LogFilesLabel : Label = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox/LogFilesHBox/LogFilesLabel"
 
 onready var ChunkTimeGraph = $"TabContainer/Graphs/VSplitContainer/ChunkTimeGraph"
 onready var ClientPieChart = $"TabContainer/Graphs/VSplitContainer/ClientPieChart"
 
+### variables
 var current_displayed_job_id : int
+var output_directories_nodes : Array
 
 
 func _ready():
@@ -158,11 +164,28 @@ func update_job_info_panel(job_id : int):
 		# Scene File
 		SceneFileLabel.text = tr("JOB_DETAIL_11") + ":   " + selected_job["scene_path"]
 		
-		# Output Files
-		OutputFilesLabel.text = tr("JOB_DETAIL_12") + ":   " + selected_job["output_directory"]
-		
 		# Log Files
 		LogFilesLabel.text = tr("JOB_DETAIL_13") + ":   " + RRPaths.get_job_log_path( selected_job["id"] )
+		
+		# Output Files
+		var outputs_difference : int = output_directories_nodes.size() - selected_job["output_directories"].size()
+		
+		if outputs_difference == 0: # if correct number of outputs is already there, just update the ones
+			var count = 0
+			for output_dir_node in output_directories_nodes:
+				output_dir_node.set_output_directory(selected_job["output_directories"][count])
+				count += 1
+		else: # if not, clear everything and recreate it
+			for output_directory in output_directories_nodes:
+				output_directory.queue_free()
+			output_directories_nodes.clear()
+		
+			for output_directory in selected_job["output_directories"]:
+				var output_directory_HBox = OutputDirectoryHBoxRes.instance()
+				output_directory_HBox.output_directory = output_directory
+				output_directories_nodes.append(output_directory_HBox)
+				FilesVBox.add_child(output_directory_HBox)
+		
 		
 		
 		
@@ -179,9 +202,6 @@ func _on_OpenSceneFolderButton_pressed():
 	var scene_path : String = RaptorRender.rr_data.jobs[current_displayed_job_id].scene_path.get_base_dir()
 	JobFunctions.open_folder( scene_path )
 
-
-func _on_OpenOutputFolderButton_pressed():
-	JobFunctions.open_folder( RaptorRender.rr_data.jobs[current_displayed_job_id].output_directory )
 
 func _on_OpenLogsFolderButton_pressed():
 	JobFunctions.open_folder( RRPaths.get_job_log_path( RaptorRender.rr_data.jobs[current_displayed_job_id].id ) )

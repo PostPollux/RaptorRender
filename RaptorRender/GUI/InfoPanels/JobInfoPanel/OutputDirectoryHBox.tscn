@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/OutputDirectoryHBox.gd" type="Script" id=1]
+[ext_resource path="res://RaptorRender/GUI/icons/link/15x15/link_default_15x15.png" type="Texture" id=2]
+[ext_resource path="res://RaptorRender/GUI/icons/link/15x15/link_clicked_15x15.png" type="Texture" id=3]
+[ext_resource path="res://RaptorRender/GUI/icons/link/15x15/link_hover_15x15.png" type="Texture" id=4]
+
+[node name="OutputFilesHBox" type="HBoxContainer"]
+margin_top = 37.0
+margin_right = 648.0
+margin_bottom = 52.0
+custom_constants/separation = 5
+script = ExtResource( 1 )
+
+[node name="OpenOutputFolderButton" type="TextureButton" parent="."]
+margin_right = 15.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 15, 15 )
+size_flags_vertical = 4
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+
+[node name="OutputDirectoryLabel" type="Label" parent="."]
+margin_left = 20.0
+margin_right = 96.0
+margin_bottom = 14.0
+text = "Output files"
+[connection signal="pressed" from="OpenOutputFolderButton" to="." method="_on_OpenOutputFolderButton_pressed"]

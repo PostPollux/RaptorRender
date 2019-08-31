@@ -43,7 +43,7 @@ JOB_CONTEXT_MENU_4,Cancle Job Permanently,Job dauerhaft abbrechen
 JOB_CONTEXT_MENU_5,Configure Job,Job bearbeiten
 JOB_CONTEXT_MENU_6,Reset Job Error Count,Job-Fehlerzahl zurücksetzen
 JOB_CONTEXT_MENU_7,Resubmit Job Paused,Job erneut einreichen (pausiert)
-JOB_CONTEXT_MENU_8,Open Output Directory,Ausgabeverzeichnis öffnen
+JOB_CONTEXT_MENU_8,Open Output Directories,Ausgabeverzeichnisse öffnen
 JOB_CONTEXT_MENU_9,Open Scene Directory,Szenenverzeichnis öffnen
 JOB_CONTEXT_MENU_10,Remove Job,Job löschen
 JOB_CONTEXT_MENU_11,Pause Jobs Deferred,Jobs verzögert abbrechen
@@ -210,7 +210,7 @@ POPUP_BUTTON_OK,Ok,Ok
 POPUP_SUBMIT_JOB_1,Submit Job,Job abschicken
 POPUP_SUBMIT_JOB_2,Job Type:,Job Typ:
 POPUP_SUBMIT_JOB_3,Type Version:,Version:
-POPUP_SUBMIT_JOB_4,Job Name:,Jobname: 
+POPUP_SUBMIT_JOB_4,Job Name:,Jobname:
 POPUP_SUBMIT_JOB_5,Scene File:,Szenen Datei:
 POPUP_SUBMIT_JOB_6,Render Range:,Renderbereich:
 POPUP_SUBMIT_JOB_7,Chunk Size:,Paketgröße:

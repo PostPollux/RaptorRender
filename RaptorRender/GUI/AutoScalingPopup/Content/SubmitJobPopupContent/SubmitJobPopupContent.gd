@@ -536,7 +536,7 @@ func create_new_job():
 								"errors": 0,
 								"pools": [],
 								"scene_path" : SceneFileLineEdit.text,
-								"output_directory" : "",
+								"output_directories" : [],
 								"output_filename_pattern" : "",
 								"render_time" : 0,
 								"SpecificJobSettings" : specific_settings_dict,

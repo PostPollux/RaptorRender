@@ -13,7 +13,7 @@ func _ready():
 	
 	self.add_item("Resubmit Job paused", 9, 0)
 	self.add_separator()
-	self.add_item("Open Output Directory", 11, 0)
+	self.add_item("Open Output Directories", 11, 0)
 	self.add_item("Open Scene Directory", 12, 0)
 	self.add_separator()
 	self.add_item("Remove Job", 14, 0)
@@ -37,7 +37,7 @@ func set_item_names():
 		self.set_item_text(6, "JOB_CONTEXT_MENU_5") # Configure Job
 		self.set_item_text(7, "JOB_CONTEXT_MENU_6") # Reset Job Error count
 		self.set_item_text(9, "JOB_CONTEXT_MENU_7") # Resubmit Job paused
-		self.set_item_text(11, "JOB_CONTEXT_MENU_8") # Open Output Directory
+		self.set_item_text(11, "JOB_CONTEXT_MENU_8") # Open Output Directories
 		self.set_item_text(12, "JOB_CONTEXT_MENU_9") # Open Scene Directory
 		self.set_item_text(14, "JOB_CONTEXT_MENU_10") # Remove Job
 	else:
@@ -64,7 +64,7 @@ func enable_disable_items():
 	self.set_item_disabled(6, true)  # configure job
 	self.set_item_disabled(7, true)  # reset job error count
 	self.set_item_disabled(9, true)  # resubmit job paused
-	self.set_item_disabled(11, true)  # open output folder
+	self.set_item_disabled(11, true)  # open output directories
 	self.set_item_disabled(12, true)  # open scene folder
 	self.set_item_disabled(14, true)  # remove job
 	
@@ -106,7 +106,7 @@ func enable_disable_items():
 		
 		# items that are always active
 		self.set_item_disabled(9, false) # resubmit job paused
-		self.set_item_disabled(11, false) # open output folder
+		self.set_item_disabled(11, false) # open output directories
 		self.set_item_disabled(12, false) # open scene folder
 		self.set_item_disabled(14, false) # remove job
 
@@ -325,15 +325,16 @@ func _on_ContextMenu_index_pressed(index):
 			
 			
 			
-		11:  # Open Output Folder
+		11:  # Open Output Directories
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
 			for selected in selected_ids:
-				var output_path : String = RaptorRender.rr_data.jobs[selected].output_directory
-				if output_path == "":
-					RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_12"), 7) # The output path is unknown for this job!
-				else:
-					JobFunctions.open_folder( output_path )
+				for directory in RaptorRender.rr_data.jobs[selected].output_directories:
+					var output_path : String = directory
+					if output_path == "":
+						RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_12"), 7) # The output path is unknown for this job!
+					else:
+						JobFunctions.open_folder( output_path )
 		
 		
 		
