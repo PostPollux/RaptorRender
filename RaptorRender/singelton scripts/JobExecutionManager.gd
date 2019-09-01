@@ -90,10 +90,17 @@ func frame_name_detected( type : int, extracted_string : String):
 	# - .tga (also with transparency
 	# - .exr ( in some configuration it looks off)
 	
+	var output_dirs_and_patterns : Array = RaptorRender.rr_data.jobs[current_processing_job].output_dirs_and_file_name_patterns
+	
 	var output_directory : String = ""
-	if RaptorRender.rr_data.jobs[current_processing_job].output_directories.size() > 0:
-		output_directory = RaptorRender.rr_data.jobs[current_processing_job].output_directories[0]
-	var output_filename_pattern : String = RaptorRender.rr_data.jobs[current_processing_job].output_filename_pattern
+	var output_filename_pattern : String = ""
+	
+	if output_dirs_and_patterns.size() > 0:
+		if output_dirs_and_patterns[0].size() > 0:
+			output_directory = output_dirs_and_patterns[0][0]
+			
+			if output_dirs_and_patterns[0].size() > 1 and output_dirs_and_patterns[0][1].size() > 0:
+				output_filename_pattern = output_dirs_and_patterns[0][1][0]
 	
 	var final_file_name : String = ""
 	var final_dir_path : String = ""
@@ -112,12 +119,31 @@ func frame_name_detected( type : int, extracted_string : String):
 			final_full_path = extracted_string
 			
 			# set output directory and output filename pattern if they are not set already
+			var dir_already_known : bool = false
+			var pattern_already_known : bool = false
 			
-			if !RaptorRender.rr_data.jobs[current_processing_job].output_directories.has(final_dir_path):
-				RaptorRender.rr_data.jobs[current_processing_job].output_directories.append(final_dir_path)
+			for dir in output_dirs_and_patterns:
+				if dir.size() > 0:
+					if dir[0] == final_dir_path:
+						dir_already_known = true
+							
+						if dir.size() > 1:
+							for pattern in dir[1]:
+								var extracted_pattern : String = RRFunctions.replace_number_with_frame_number_placeholders(final_file_name)
+								if pattern == extracted_pattern:
+									pattern_already_known = true
 			
-			if RaptorRender.rr_data.jobs[current_processing_job].output_filename_pattern == "":
-				RaptorRender.rr_data.jobs[current_processing_job].output_filename_pattern = RRFunctions.replace_number_with_frame_number_placeholders(final_file_name)
+			if !dir_already_known:
+				RaptorRender.rr_data.jobs[current_processing_job].output_dirs_and_file_name_patterns.append( [final_dir_path,[RRFunctions.replace_number_with_frame_number_placeholders(final_file_name)]] )
+			else:
+				if !pattern_already_known:
+					for dir in RaptorRender.rr_data.jobs[current_processing_job].output_dirs_and_file_name_patterns:
+						if dir.size() > 0:
+							if dir[0] == final_dir_path:
+								if dir.size() > 1:
+									dir[1].append( RRFunctions.replace_number_with_frame_number_placeholders(final_file_name) )
+								else:
+									dir.append( [RRFunctions.replace_number_with_frame_number_placeholders(final_file_name)] )
 			
 			
 		# type 2: the extracted string is only the frame number without padding. E.g. "12" while the filename is: /home/test/render_012.png
@@ -140,7 +166,13 @@ func frame_name_detected( type : int, extracted_string : String):
 			var scaled_down_size : Vector2 = RRFunctions.calculate_size_for_specific_box(image.get_size(), max_thumbnail_size)
 			image.resize(scaled_down_size.x, scaled_down_size.y,Image.INTERPOLATE_CUBIC)
 			
-			var output_index : int = RaptorRender.rr_data.jobs[current_processing_job].output_directories.find(final_dir_path)
+			var output_index : int = 0
+			for dir in RaptorRender.rr_data.jobs[current_processing_job].output_dirs_and_file_name_patterns:
+				if dir.size() > 0:
+					if dir[0] == final_dir_path:
+						break
+				output_index += 1
+					
 			var save_path : String = RRPaths.get_job_thumbnail_path( RaptorRender.rr_data.jobs[current_processing_job].id ) + String(output_index) + "/"
 			
 			var path_check : Directory = Directory.new()

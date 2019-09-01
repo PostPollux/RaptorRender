@@ -59,7 +59,7 @@ func _ready():
 		"jobs": {
 			100: {
 				"id": 100,
-				"name": "renderfarmtest",
+				"name": "Blender test",
 				"type": "Blender",
 				"type_version": "default",
 				"priority": 50,
@@ -74,8 +74,7 @@ func _ready():
 				"errors": 0,
 				"pools": [],
 				"scene_path" : "/home/johannes/Schreibtisch/renderfarmtest.blend",
-				"output_directories" : ["/home/johannes/Schreibtisch/renderfarmtest/"],
-				"output_filename_pattern" : "####.png",
+				"output_dirs_and_file_name_patterns" : [["/home/johannes/Schreibtisch/renderfarmtest/",["####.png"]]],
 				"render_time" : 0,
 				"SpecificJobSettings" : {},
 				"chunks": {
@@ -138,8 +137,7 @@ func _ready():
 				"errors": 0,
 				"pools": [],
 				"scene_path" : "/home/johannes/Schreibtisch/natron_renderfarm_test.ntp",
-				"output_directories" : ["/home/johannes/Schreibtisch/renderfarmtest/"],
-				"output_filename_pattern" : "natron_test_###.png",
+				"output_dirs_and_file_name_patterns" : [["/home/johannes/Schreibtisch/renderfarmtest/",["natron_test_###.png"]]],
 				"render_time" : 0,
 				"SpecificJobSettings" : {
 					"writer_name" : "true",
@@ -205,8 +203,7 @@ func _ready():
 				"errors": 0,
 				"pools": [],
 				"scene_path" : "/home/johannes/Schreibtisch/Nuke_renderfarmtest.nknc",
-				"output_directories" : ["/home/johannes/Schreibtisch/renderfarmtest/"],
-				"output_filename_pattern" : "nuke_test_####.png",
+				"output_dirs_and_file_name_patterns" : [["/home/johannes/Schreibtisch/renderfarmtest/",["nuke_test_####.png"]]],
 				"render_time" : 0,
 				"SpecificJobSettings" : {
 					"non_commercial" : "true",
@@ -277,8 +274,7 @@ func _ready():
 				"errors": 0,
 				"pools": ["AE_Plugins"],
 				"scene_path" : "/home/johannes/Downloads/test.blend",
-				"output_directories" : ["/home/johannes/GodotTest/"],
-				"output_filename_pattern" : "####.png",
+				"output_dirs_and_file_name_patterns" : [["/home/johannes/GodotTest/",["####.png"]]],
 				"render_time" : 2487,
 				"SpecificJobSettings" : {},
 				"chunks": {

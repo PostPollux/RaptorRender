@@ -33,7 +33,7 @@ onready var ClientPieChart = $"TabContainer/Graphs/VSplitContainer/ClientPieChar
 
 ### variables
 var current_displayed_job_id : int
-var output_directories_nodes : Array
+var output_dirs_and_file_name_patterns_nodes : Array
 
 
 func _ready():
@@ -168,22 +168,22 @@ func update_job_info_panel(job_id : int):
 		LogFilesLabel.text = tr("JOB_DETAIL_13") + ":   " + RRPaths.get_job_log_path( selected_job["id"] )
 		
 		# Output Files
-		var outputs_difference : int = output_directories_nodes.size() - selected_job["output_directories"].size()
+		var outputs_difference : int = output_dirs_and_file_name_patterns_nodes.size() - selected_job["output_dirs_and_file_name_patterns"].size()
 		
 		if outputs_difference == 0: # if correct number of outputs is already there, just update the ones
 			var count = 0
-			for output_dir_node in output_directories_nodes:
-				output_dir_node.set_output_directory(selected_job["output_directories"][count])
+			for output_dir_node in output_dirs_and_file_name_patterns_nodes:
+				output_dir_node.set_output_directory(selected_job["output_dirs_and_file_name_patterns"][count][0])
 				count += 1
 		else: # if not, clear everything and recreate it
-			for output_directory in output_directories_nodes:
-				output_directory.queue_free()
-			output_directories_nodes.clear()
+			for output_directory_node in output_dirs_and_file_name_patterns_nodes:
+				output_directory_node.queue_free()
+			output_dirs_and_file_name_patterns_nodes.clear()
 		
-			for output_directory in selected_job["output_directories"]:
+			for output_directory in selected_job["output_dirs_and_file_name_patterns"]:
 				var output_directory_HBox = OutputDirectoryHBoxRes.instance()
-				output_directory_HBox.output_directory = output_directory
-				output_directories_nodes.append(output_directory_HBox)
+				output_directory_HBox.output_directory = output_directory[0]
+				output_dirs_and_file_name_patterns_nodes.append(output_directory_HBox)
 				FilesVBox.add_child(output_directory_HBox)
 		
 		
