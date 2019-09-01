@@ -179,7 +179,8 @@ func frame_name_detected( type : int, extracted_string : String):
 			if !path_check.dir_exists(save_path):
 				path_check.make_dir(save_path)
 			
-			var save_path_full : String = save_path + "thn_" + final_file_name
+			var final_file_name_without_extension : String = final_file_name.left( final_file_name.find_last("."))
+			var save_path_full : String = save_path + "thn_" + final_file_name_without_extension + ".png"
 			
 			image.save_png( save_path_full )
 
