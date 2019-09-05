@@ -180,7 +180,7 @@ func frame_name_detected( type : int, extracted_string : String):
 				path_check.make_dir(save_path)
 			
 			var final_file_name_without_extension : String = final_file_name.left( final_file_name.find_last("."))
-			var save_path_full : String = save_path + "thn_" + final_file_name_without_extension + ".png"
+			var save_path_full : String = save_path + RRFunctions.extract_frame_number_as_string(final_file_name_without_extension, true) + "_thn_" + final_file_name_without_extension + ".png"
 			
 			image.save_png( save_path_full )
 

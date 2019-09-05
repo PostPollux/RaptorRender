@@ -196,16 +196,40 @@ func replace_number_with_frame_number_placeholders(filename : String) -> String:
 	
 	if matches.size() > 0:
 		var last_match : RegExMatch = matches[ matches.size() - 1] # get last match
-		var padded_framenumber : String = last_match.get_string(0)
-		
-		var placeholders : String = ""
-		for i in range (0, padded_framenumber.length()):
-			placeholders += "#"
-		
-		return filename.replace( padded_framenumber, placeholders )
+		if last_match != null:
+			var padded_framenumber : String = last_match.get_string(0)
+			
+			var placeholders : String = ""
+			for i in range (0, padded_framenumber.length()):
+				placeholders += "#"
+			
+			return filename.replace( padded_framenumber, placeholders )
 	
 	return filename
 
+
+#  converts a string like "test_0049.png" to "49" or "0049"
+func extract_frame_number_as_string(filename : String, with_padding : bool) -> String:
+	
+	var pattern : RegEx = RegEx.new()
+	pattern.compile("\\d+") # select all connected digits
+	
+	var matches : Array = pattern.search_all( filename )
+	
+	if matches.size() > 0:
+		var last_match : RegExMatch = matches[ matches.size() - 1] # get last match
+		if last_match != null:
+			var padded_framenumber : String = last_match.get_string(0)
+			
+			if with_padding:
+				return padded_framenumber
+			else:
+				var unpadded_framenumber : String = padded_framenumber
+				while unpadded_framenumber[0] == "0":
+					unpadded_framenumber = unpadded_framenumber.right(1)
+				return unpadded_framenumber
+	
+	return ""
 
 
 

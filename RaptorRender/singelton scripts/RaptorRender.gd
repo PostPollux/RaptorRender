@@ -1099,6 +1099,7 @@ func job_selected(id_of_row : int):
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
 	JobInfoPanel.update_job_info_panel(id_of_row)
+	JobInfoPanel.update_images_tab()
 	JobInfoPanel.visible = true
 	TryInfoPanel.set_visibility(false)
 	refresh_chunks_table(id_of_row)
@@ -1197,12 +1198,14 @@ func update_all_visible_tables():
 	refresh_jobs_table()
 	refresh_clients_table()
 	
-	if JobInfoPanel.get_current_tab() == 0:
+	if JobInfoPanel.get_current_tab() == 0: # details
 		JobInfoPanel.update_job_info_panel(current_job_id_for_job_info_panel)
-	elif JobInfoPanel.get_current_tab() == 1:
+	elif JobInfoPanel.get_current_tab() == 1: # chnunks
 		refresh_chunks_table(current_job_id_for_job_info_panel)
 		refresh_tries_table(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel)
 		TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, current_try_id_for_job_info_panel)
+	elif JobInfoPanel.get_current_tab() == 3: # images
+		JobInfoPanel.update_images_tab()
 
 
 func refresh_jobs_table():

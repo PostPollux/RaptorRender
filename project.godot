@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://RaptorRender/GUI/InfoPanels/ClientInfoPanel/Client_Info_Panel.gd"
 }, {
+"base": "ColorRect",
+"class": "ImageThumbnail",
+"language": "GDScript",
+"path": "res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ImageThumbnail.gd"
+}, {
 "base": "MarginContainer",
 "class": "JobInfoPanel",
 "language": "GDScript",
@@ -67,6 +72,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AutoScalingPopup": "",
 "ClientInfoPanel": "",
+"ImageThumbnail": "",
 "JobInfoPanel": "",
 "NotificationSystem": "",
 "RRContextMenuBase": "",
@@ -98,7 +104,6 @@ CommandLineManager="*res://RaptorRender/singelton scripts/CommandLineManager.gd"
 RenderLogValidator="*res://RaptorRender/singelton scripts/RenderLogValidator.gd"
 JobExecutionManager="*res://RaptorRender/singelton scripts/JobExecutionManager.gd"
 JobDistributionManager="*res://RaptorRender/singelton scripts/JobDistributionManager.gd"
-ReadLogFileManager="*res://singelton scripts/ReadLogFileManager.gd"
 ReadLogFileManager="*res://RaptorRender/singelton scripts/ReadLogFileManager.gd"
 
 [debug]

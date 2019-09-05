@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://RaptorRender/GUI/icons/job_status/job_status_200x100.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=9]
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=10]
+[ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ThumbnailBox.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://GUI/fonts/Caliban.ttf"
@@ -36,6 +37,7 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -281,6 +283,7 @@ margin_bottom = 14.0
 text = "Log Files"
 
 [node name="Chunk List" type="Tabs" parent="TabContainer"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -351,17 +354,68 @@ split_offset = 60
 [node name="ChunkTimeGraph" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 9 )]
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 695.0
+margin_right = 703.0
 margin_bottom = 336.0
 
 [node name="ClientPieChart" parent="TabContainer/Graphs/VSplitContainer" instance=ExtResource( 10 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 348.0
-margin_right = 695.0
+margin_right = 703.0
 margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Images" type="Tabs" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Images"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+split_offset = 60
+
+[node name="DirScrollContainer" type="ScrollContainer" parent="TabContainer/Images/VSplitContainer"]
+margin_right = 703.0
+margin_bottom = 336.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="DirVBoxContainer" type="VBoxContainer" parent="TabContainer/Images/VSplitContainer/DirScrollContainer"]
+margin_right = 703.0
+margin_bottom = 336.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 30
+
+[node name="ThumbnailBox" parent="TabContainer/Images/VSplitContainer/DirScrollContainer/DirVBoxContainer" instance=ExtResource( 11 )]
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Images/VSplitContainer"]
+margin_top = 348.0
+margin_right = 703.0
+margin_bottom = 564.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="TabContainer/Images/VSplitContainer/MarginContainer"]
+margin_right = 703.0
+margin_bottom = 216.0
+
+[node name="CenterContainer" type="CenterContainer" parent="TabContainer/Images/VSplitContainer/MarginContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PreviewImage" type="TextureRect" parent="TabContainer/Images/VSplitContainer/MarginContainer/Panel/CenterContainer"]
+margin_left = 351.0
+margin_top = 108.0
+margin_right = 351.0
+margin_bottom = 108.0
 [connection signal="tab_selected" from="TabContainer" to="." method="_on_TabContainer_tab_selected"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox/SourceFileHBox/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox/LogFilesHBox/OpenLogsFolderButton" to="." method="_on_OpenLogsFolderButton_pressed"]

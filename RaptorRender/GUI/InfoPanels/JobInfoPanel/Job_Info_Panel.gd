@@ -4,6 +4,7 @@ class_name JobInfoPanel
 
 ### preload Resources
 var OutputDirectoryHBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/OutputDirectoryHBox.tscn")
+var ThumbnailBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ThumbnailBox.tscn")
 
 ### onready vars
 onready var JobInfoTabContainer : TabContainer = $"TabContainer"
@@ -30,6 +31,8 @@ onready var LogFilesLabel : Label = $"TabContainer/Details/ScrollContainer/Margi
 
 onready var ChunkTimeGraph = $"TabContainer/Graphs/VSplitContainer/ChunkTimeGraph"
 onready var ClientPieChart = $"TabContainer/Graphs/VSplitContainer/ClientPieChart"
+
+onready var DirVBoxContainer : VBoxContainer = $"TabContainer/Images/VSplitContainer/DirScrollContainer/DirVBoxContainer"
 
 ### variables
 var current_displayed_job_id : int
@@ -196,6 +199,21 @@ func update_job_info_panel(job_id : int):
 		ChunkTimeGraph.set_job_id(job_id)
 		ClientPieChart.set_job_id(job_id)
 
+
+func update_images_tab():
+	for child in DirVBoxContainer.get_children():
+		child.queue_free()
+	
+	var dircount : int = 0
+	for dir in RaptorRender.rr_data.jobs[current_displayed_job_id].output_dirs_and_file_name_patterns:
+		if dir.size() > 0:
+			var ThumbnailBox = ThumbnailBoxRes.instance()
+			ThumbnailBox.image_directory = dir[0]
+			ThumbnailBox.thumbnail_directory = RRPaths.get_job_thumbnail_path( RaptorRender.rr_data.jobs[current_displayed_job_id].id ) + String(dircount) + "/"
+			if dir.size() > 1:
+				ThumbnailBox.file_name_patterns = dir[1]
+			DirVBoxContainer.add_child(ThumbnailBox)
+			dircount += 1
 
 
 func _on_OpenSceneFolderButton_pressed():
