@@ -218,7 +218,7 @@ func update_images_tab():
 		var childs : Array = DirVBoxContainer.get_children()
 		var child_count : int = childs.size()
 		for i in range(1, abs(dir_difference) + 1):
-			childs[child_count - i].queue_free()
+			childs[child_count - i].self_destruct_as_soon_as_possible = true
 	
 	
 	# update ThumbnailBox nodes

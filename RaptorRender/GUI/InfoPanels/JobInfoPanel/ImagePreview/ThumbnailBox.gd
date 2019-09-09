@@ -29,6 +29,9 @@ var files : Array = []
 
 var currently_updating_thumbs : bool = false
 
+var self_destruct_as_soon_as_possible = false
+
+
 
 
 
@@ -48,7 +51,10 @@ func _process(delta):
 	# This is for rearanging the thumbs on resizing. Note: resized() or draw() signals don't really work, as it doesn't get resized or redrawn if get's pushed and clipped outside
 	if ThumbnailGridContainer != null and RaptorRender.JobInfoPanel.get_current_tab() == 3:
 		ThumbnailGridContainer.columns = RaptorRender.JobInfoPanel.rect_size.x / (thumbnail_size_x + 10)
-
+	
+	if self_destruct_as_soon_as_possible:
+		if !currently_updating_thumbs:
+			self.queue_free()
 
 
 
