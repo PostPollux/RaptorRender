@@ -27,6 +27,8 @@ var mutex : Mutex
 
 var files : Array = []
 
+var currently_updating_thumbs : bool = false
+
 
 
 
@@ -58,50 +60,54 @@ func refresh_thumbnails():
 	# You would have to add the nodes by .call_deferred("add_child", your node) which would effectively add it in the main thread at the end of the frame. But then you can't access the node in the thread later on, because it's not there yet.
 	# So manipulate the tree first and then start the thread
 	
-	
-	DirectoryPath.set_output_directory(image_directory)
-	
-	
-	# load all filenames of the thumbnails into the files array
-	
-	files.clear()
-	
-	var dir : Directory = Directory.new()
-	
-	dir.open(thumbnail_directory)
-	dir.list_dir_begin()
-	
-	while true:
-		var file = dir.get_next()
+	if !currently_updating_thumbs:
 		
-		if file == "":
-			break
-		if file.ends_with(".png"):
-			files.append(file)
+		currently_updating_thumbs = true
+		
+		DirectoryPath.set_output_directory(image_directory)
+		
+		
+		# load all filenames of the thumbnails into the files array
+		
+		files.clear()
+		
+		var dir : Directory = Directory.new()
+		
+		dir.open(thumbnail_directory)
+		dir.list_dir_begin()
+		
+		while true:
+			var file = dir.get_next()
 			
-	dir.list_dir_end()
-	
-	# create or delete Thumbnail nodes
-	var thumbnail_difference : int = files.size() - ThumbnailGridContainer.get_children().size()
-	
-	if thumbnail_difference > 0:
-		# create that amount of thumbnail nodes
-		for i in range(0, thumbnail_difference):
-			var ImageThumbnail = ImageThumbnailRes.instance()
-			ImageThumbnail.connect("thumbnail_pressed", self, "thumbnail_selected")
-			ThumbnailGridContainer.add_child(ImageThumbnail) # important to use here call_dfferred otherwise the thread will crash
+			if file == "":
+				break
+			if file.ends_with(".png"):
+				files.append(file)
+				
+		dir.list_dir_end()
 		
-	if thumbnail_difference < 0:
-		# remove that amount of thumbnail nodes
-		var childs : Array = ThumbnailGridContainer.get_children()
-		var child_count : int = childs.size()
-		for i in range(1, abs(thumbnail_difference) + 1):
-			childs[child_count - i].queue_free()
-	
-	# now start the thread that will actually load the textures from disk. (If this is not in a thread the UI will stutter on refresh)
-	start_load_thumbnails_thread()
+		# create or delete Thumbnail nodes
+		var thumbnail_difference : int = files.size() - ThumbnailGridContainer.get_children().size()
+		
+		if thumbnail_difference > 0:
+			# create that amount of thumbnail nodes
+			for i in range(0, thumbnail_difference):
+				var ImageThumbnail = ImageThumbnailRes.instance()
+				ImageThumbnail.connect("thumbnail_pressed", self, "thumbnail_selected")
+				ThumbnailGridContainer.add_child(ImageThumbnail) # important to use here call_dfferred otherwise the thread will crash
+			
+		if thumbnail_difference < 0:
+			# remove that amount of thumbnail nodes
+			var childs : Array = ThumbnailGridContainer.get_children()
+			var child_count : int = childs.size()
+			for i in range(1, abs(thumbnail_difference) + 1):
+				childs[child_count - i].queue_free()
+		
+		# now start the thread that will actually load the textures from disk. (If this is not in a thread the UI will stutter on refresh)
+		start_load_thumbnails_thread()
 
 func start_load_thumbnails_thread():
+	
 	if load_thumbnails_thread.is_active():
 		# stop here if already working
 		print ("load_thumbnails_thread still active")
@@ -129,7 +135,7 @@ func threaded_thumbnail_update(args):
 		var original_filename = file.right(file.find("thn_") + 4).replace(".png","")
 		ImageThumbnail.image_path = thumbnail_directory + files[count]
 		ImageThumbnail.image_name = original_filename
-		ImageThumbnail.image_number = files[count].left(files[count].find("_"))
+		ImageThumbnail.image_number = file.left(file.find("_"))
 		
 		ImageThumbnail.load_image()
 		
@@ -143,6 +149,7 @@ func threaded_thumbnail_update(args):
 func join_load_thumbnail_thread():
 	# this will effectively stop the thread
 	load_thumbnails_thread.wait_to_finish()
+	currently_updating_thumbs = false
 
 
 
