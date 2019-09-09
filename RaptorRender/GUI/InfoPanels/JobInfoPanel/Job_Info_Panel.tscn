@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://RaptorRender/GUI/icons/job_status/job_status_200x100.png" type="Texture" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=9]
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=10]
-[ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ThumbnailBox.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://GUI/fonts/Caliban.ttf"
@@ -393,8 +392,6 @@ margin_bottom = 336.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 30
-
-[node name="ThumbnailBox" parent="TabContainer/Images/VSplitContainer/DirScrollContainer/DirVBoxContainer" instance=ExtResource( 11 )]
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Images/VSplitContainer"]
 margin_top = 348.0

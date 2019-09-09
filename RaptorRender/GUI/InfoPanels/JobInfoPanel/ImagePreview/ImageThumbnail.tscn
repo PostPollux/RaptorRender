@@ -55,3 +55,5 @@ modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 [connection signal="button_down" from="MarginContainer/ImageTexture/Button" to="." method="_on_Button_button_down"]
+[connection signal="mouse_entered" from="MarginContainer/ImageTexture/Button" to="." method="_on_Button_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ImageTexture/Button" to="." method="_on_Button_mouse_exited"]

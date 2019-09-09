@@ -20,6 +20,9 @@ var image_path : String
 var image_name : String
 var image_number : String
 
+var selected : bool = false
+var hovered : bool = false
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -35,9 +38,8 @@ func _ready():
 	
 
 
-
-func load_image(path : String):
-	image_path = path
+func load_image():
+	
 	var thumbnail = ImageTexture.new()
 	thumbnail.load(image_path)
 	ThumbnailTexture.set_texture(thumbnail)
@@ -49,12 +51,46 @@ func load_image(path : String):
 
 
 func reset_selected():
-	self.color = RRColorScheme.bg_2
-	
-func set_selected():
-	self.color = RRColorScheme.selected
+	selected = false
+	if hovered:
+		self.color = RRColorScheme.bg_2.lightened(0.1)
+	else:
+		self.color = RRColorScheme.bg_2
 
+
+func set_selected():
+	selected = true
+	if hovered: 
+		self.color = RRColorScheme.selected.lightened(0.1)
+	else:
+		self.color = RRColorScheme.selected
+
+
+func set_hovered():
+	hovered = true
+	
+	if selected:
+		self.color = RRColorScheme.selected.lightened(0.1)
+	else:
+		self.color = RRColorScheme.bg_2.lightened(0.1)
+
+
+func reset_hovered():
+	hovered = false
+	
+	if selected:
+		self.color = RRColorScheme.selected
+	else:
+		self.color = RRColorScheme.bg_2
 
 
 func _on_Button_button_down():
 	emit_signal("thumbnail_pressed", image_number, self)
+
+
+func _on_Button_mouse_entered():
+	set_hovered()
+
+
+func _on_Button_mouse_exited():
+	reset_hovered()

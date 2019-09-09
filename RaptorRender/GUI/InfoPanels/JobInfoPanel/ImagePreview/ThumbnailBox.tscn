@@ -10,6 +10,7 @@ size_flags_horizontal = 3
 script = ExtResource( 1 )
 
 [node name="Header" type="MarginContainer" parent="."]
+editor/display_folded = true
 margin_right = 703.0
 margin_bottom = 19.0
 
