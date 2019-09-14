@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/Job_Info_Panel.gd" type="Script" id=1]
 [ext_resource path="res://RaptorRender/GUI/icons/job_status/job_status_200x100.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/TryInfoPanel/Try_Info_Panel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ChunkTimeGraph/ChunkTimeGraph.tscn" type="PackedScene" id=9]
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ClientPieChart/ClientPieChart.tscn" type="PackedScene" id=10]
+[ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ImagePreviewPanel.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://GUI/fonts/Caliban.ttf"
@@ -374,45 +375,7 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="VSplitContainer" type="VSplitContainer" parent="TabContainer/Images"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-split_offset = 60
-
-[node name="DirScrollContainer" type="ScrollContainer" parent="TabContainer/Images/VSplitContainer"]
-margin_right = 703.0
-margin_bottom = 336.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-scroll_horizontal_enabled = false
-
-[node name="DirVBoxContainer" type="VBoxContainer" parent="TabContainer/Images/VSplitContainer/DirScrollContainer"]
-margin_right = 703.0
-margin_bottom = 336.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 30
-
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Images/VSplitContainer"]
-margin_top = 348.0
-margin_right = 703.0
-margin_bottom = 564.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="TabContainer/Images/VSplitContainer/MarginContainer"]
-margin_right = 703.0
-margin_bottom = 216.0
-
-[node name="CenterContainer" type="CenterContainer" parent="TabContainer/Images/VSplitContainer/MarginContainer/Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="PreviewImage" type="TextureRect" parent="TabContainer/Images/VSplitContainer/MarginContainer/Panel/CenterContainer"]
-margin_left = 351.0
-margin_top = 108.0
-margin_right = 351.0
-margin_bottom = 108.0
+[node name="ImagePreviewPanel" parent="TabContainer/Images" instance=ExtResource( 11 )]
 [connection signal="tab_selected" from="TabContainer" to="." method="_on_TabContainer_tab_selected"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox/SourceFileHBox/OpenSceneFolderButton" to="." method="_on_OpenSceneFolderButton_pressed"]
 [connection signal="pressed" from="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/files/HBoxContainer/MarginContainer/FilesVBox/LogFilesHBox/OpenLogsFolderButton" to="." method="_on_OpenLogsFolderButton_pressed"]

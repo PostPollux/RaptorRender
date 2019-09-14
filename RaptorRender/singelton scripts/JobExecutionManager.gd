@@ -162,7 +162,7 @@ func frame_name_detected( type : int, extracted_string : String):
 		
 		if image.load(final_full_path) == 0:
 			
-			var max_thumbnail_size : Vector2 = Vector2(150,100)
+			var max_thumbnail_size : Vector2 = Vector2(192,108)
 			var scaled_down_size : Vector2 = RRFunctions.calculate_size_for_specific_box(image.get_size(), max_thumbnail_size)
 			image.resize(scaled_down_size.x, scaled_down_size.y,Image.INTERPOLATE_CUBIC)
 			

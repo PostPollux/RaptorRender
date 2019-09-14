@@ -17,8 +17,12 @@ onready var ThumbnailTexture : TextureRect = $"MarginContainer/ImageTexture"
 
 ### variables
 var image_path : String
-var image_name : String
-var image_number : String
+var image_name : String  # without extension
+var image_number : String  # with padding
+var image_size : Vector2
+var dir_index : int
+var thumbnail_scale_factor = 1.0
+var original_image_directory : String
 
 var selected : bool = false
 var hovered : bool = false
@@ -28,26 +32,56 @@ var hovered : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.color = RRColorScheme.bg_2
+	
 	var thumbnail = ImageTexture.new()
 	thumbnail.load(image_path)
+	
+	image_size = thumbnail.get_size()
+	
 	ThumbnailTexture.set_texture(thumbnail)
 	
 	ThumbnailButton.hint_tooltip = image_name
 	
 	ImageName.text = image_number
 	
+	set_thumbnail_size(thumbnail_scale_factor)
 
 
 func load_image():
 	
 	var thumbnail = ImageTexture.new()
 	thumbnail.load(image_path)
+	
+	image_size = thumbnail.get_size()
+	
 	ThumbnailTexture.set_texture(thumbnail)
 	
 	ThumbnailButton.hint_tooltip = image_name
 	
 	ImageName.text = image_number
+	
+	set_thumbnail_size(thumbnail_scale_factor)
 
+
+func set_thumbnail_size(scale_factor : float):
+	
+	thumbnail_scale_factor = scale_factor
+	
+	var thumbnail_size_x : float = (scale_factor * image_size.x) + 6  # +6 because of padding left (3) + padding right (3)
+	self.rect_min_size.x = thumbnail_size_x 
+	self.rect_size.x = thumbnail_size_x
+	
+	var thumbnail_size_y : float = (scale_factor * image_size.y) + 6  # +6 because of padding top (3) + padding bottom (3)
+	
+	self.rect_min_size.y = thumbnail_size_y
+	self.rect_size.y = thumbnail_size_y
+
+
+func set_framenumber_visibility(visible: bool):
+	if visible:
+		ImageName.visible = true
+	else:
+		ImageName.visible = false
 
 
 func reset_selected():

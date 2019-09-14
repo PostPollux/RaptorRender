@@ -4,7 +4,6 @@ class_name JobInfoPanel
 
 ### preload Resources
 var OutputDirectoryHBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/OutputDirectoryHBox.tscn")
-var ThumbnailBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ThumbnailBox.tscn")
 
 ### onready vars
 onready var JobInfoTabContainer : TabContainer = $"TabContainer"
@@ -32,7 +31,7 @@ onready var LogFilesLabel : Label = $"TabContainer/Details/ScrollContainer/Margi
 onready var ChunkTimeGraph = $"TabContainer/Graphs/VSplitContainer/ChunkTimeGraph"
 onready var ClientPieChart = $"TabContainer/Graphs/VSplitContainer/ClientPieChart"
 
-onready var DirVBoxContainer : VBoxContainer = $"TabContainer/Images/VSplitContainer/DirScrollContainer/DirVBoxContainer"
+onready var ImagePreviewPanel = $"TabContainer/Images/ImagePreviewPanel"
 
 ### variables
 var current_displayed_job_id : int
@@ -200,38 +199,6 @@ func update_job_info_panel(job_id : int):
 		ClientPieChart.set_job_id(job_id)
 
 
-# For performance reasons we only delete or create ThumbnailBox nodes when necessary and update the ones that are already there.
-# It also helps not to loose the visual change on hover or selection caused by deleting and recreating the node.
-func update_images_tab():
-	
-	# create or delete ThumbnailBox nodes
-	var dir_difference : int = RaptorRender.rr_data.jobs[current_displayed_job_id].output_dirs_and_file_name_patterns.size() - DirVBoxContainer.get_children().size()
-	
-	if dir_difference > 0:
-		# create that amount of ThumbnailBox nodes
-		for i in range(0, dir_difference):
-			var ThumbnailBox = ThumbnailBoxRes.instance()
-			DirVBoxContainer.add_child(ThumbnailBox)
-		
-	if dir_difference < 0:
-		# remove that amount of ThumbnailBox nodes
-		var childs : Array = DirVBoxContainer.get_children()
-		var child_count : int = childs.size()
-		for i in range(1, abs(dir_difference) + 1):
-			childs[child_count - i].self_destruct_as_soon_as_possible = true
-	
-	
-	# update ThumbnailBox nodes
-	var dircount : int = 0
-	for dir in RaptorRender.rr_data.jobs[current_displayed_job_id].output_dirs_and_file_name_patterns:
-		if dir.size() > 0:
-			var ThumbnailBox = DirVBoxContainer.get_child(dircount)
-			ThumbnailBox.image_directory = dir[0]
-			ThumbnailBox.thumbnail_directory = RRPaths.get_job_thumbnail_path( RaptorRender.rr_data.jobs[current_displayed_job_id].id ) + String(dircount) + "/"
-			if dir.size() > 1:
-				ThumbnailBox.file_name_patterns = dir[1]
-			ThumbnailBox.refresh_thumbnails()
-			dircount += 1
 
 
 func _on_OpenSceneFolderButton_pressed():
