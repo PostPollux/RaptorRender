@@ -9,7 +9,8 @@ var ThumbnailBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/Im
 onready var ThumbnailsDirectoriesVBox : VBoxContainer= $"VBoxContainer/ThumbnailsScrollContainer/ThumbnailDirectoriesVBox"
 onready var ThumbnailWidthSlider : HSlider = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/ThumbnailWidthSlider"
 onready var FramenumberVisibilityCheckBox : CheckBox = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/FramenumberVisibilityCheckBox"
-onready var PreviewImage : TextureRect = $"BigPreviewContainer/Panel/MarginContainer/PreviewImage"
+onready var EnlargedPreviewContainer : MarginContainer = $"EnlargedPreviewContainer"
+onready var PreviewImage : TextureRect = $"EnlargedPreviewContainer/Panel/MarginContainer/PreviewImage"
 onready var RefreshButton : Button = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/MarginContainer/RefreshButton"
 onready var SizeLabel : Label = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/SizeLabel" 
 
@@ -30,7 +31,9 @@ func _ready():
 	SizeLabel.text = "JOB_IMAGES_3" # size
 	FramenumberVisibilityCheckBox.text = "JOB_IMAGES_4" # frame numbers
 
-
+func _process(delta):
+	EnlargedPreviewContainer.rect_min_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
+	EnlargedPreviewContainer.rect_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
 
 
 # For performance reasons we only delete or create ThumbnailBox nodes when necessary and update the ones that are already there.
@@ -113,7 +116,11 @@ func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 		
 	PreviewImage.set_texture(PreviewImageTexture)
 	PreviewImage.visible = true
-
+	
+	#if PreviewImage.rect_min_size.x == 4:
+	#	PreviewImage.rect_min_size.x = 5
+	#else:
+	#	PreviewImage.rect_min_size.x = 4
 
 
 func try_to_select_first_thumbnail():
