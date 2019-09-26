@@ -48,6 +48,7 @@ func translate_tabs():
 	JobInfoTabContainer.set_tab_title(0 , tr("JOB_DETAIL_1") ) # Details
 	JobInfoTabContainer.set_tab_title(1 , tr("JOB_CHUNKS_1") ) # Chunks
 	JobInfoTabContainer.set_tab_title(2 , tr("JOB_GRAPHS_1") ) # Graphs
+	JobInfoTabContainer.set_tab_title(3 , tr("JOB_IMAGES_1") ) # Images
 
 
 func reset_to_first_tab():

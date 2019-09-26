@@ -10,6 +10,8 @@ onready var ThumbnailsDirectoriesVBox : VBoxContainer= $"VBoxContainer/Thumbnail
 onready var ThumbnailWidthSlider : HSlider = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/ThumbnailWidthSlider"
 onready var FramenumberVisibilityCheckBox : CheckBox = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/FramenumberVisibilityCheckBox"
 onready var PreviewImage : TextureRect = $"BigPreviewContainer/Panel/MarginContainer/PreviewImage"
+onready var RefreshButton : Button = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/MarginContainer/RefreshButton"
+onready var SizeLabel : Label = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/SizeLabel" 
 
 ### exported variables
 
@@ -24,7 +26,10 @@ var desire_to_select_first_thumbnail : bool = false
 
 
 func _ready():
-	pass # Replace with function body.
+	RefreshButton.text = "JOB_IMAGES_2" # refresh
+	SizeLabel.text = "JOB_IMAGES_3" # size
+	FramenumberVisibilityCheckBox.text = "JOB_IMAGES_4" # frame numbers
+
 
 
 
