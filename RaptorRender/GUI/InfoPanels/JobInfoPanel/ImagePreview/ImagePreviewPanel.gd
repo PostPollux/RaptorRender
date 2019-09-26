@@ -95,7 +95,10 @@ func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 		var extension : String = pattern.right(pattern.find_last("."))
 		var orig_image_path : String = currently_selected.original_image_directory + currently_selected.image_name + extension
 
-		PreviewImageTexture.load(orig_image_path)
+		var load_return_value : int = PreviewImageTexture.load(orig_image_path)
+		
+		if load_return_value == 12:
+			PreviewImageTexture = load("res://RaptorRender/GUI/images/image_load_failed_1280.png")
 	
 	PreviewImage.set_texture(PreviewImageTexture)
 	PreviewImage.visible = true
