@@ -143,7 +143,7 @@ func refresh_thumbnails():
 			if files.size() > 0:
 				var thumbnail = ImageTexture.new()
 				var file = File.new()
-				var thumb_size : Vector2
+				var thumb_size : Vector2 = Vector2(192,108)
 				
 				if file.file_exists(thumbnail_directory + files[0]):
 					thumbnail.load(thumbnail_directory + files[0])
