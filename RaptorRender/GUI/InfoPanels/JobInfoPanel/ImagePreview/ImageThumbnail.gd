@@ -25,16 +25,25 @@ var dir_index : int
 var thumbnail_scale_factor = 1.0
 var original_image_directory : String
 
+var LoadingImage : ImageTexture
+
 var selected : bool = false
 var hovered : bool = false
+
+var is_initialized : bool = false
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	self.color = RRColorScheme.bg_2
+	LoadingImage = load("res://RaptorRender/GUI/images/loading_thumbnail.png")
 	
 	load_image()
+	
+	is_initialized = true
+
 
 
 func load_image():
@@ -48,7 +57,7 @@ func load_image():
 		if ThumbnailTexture.get_texture() != null:
 			thumbnail = load("res://RaptorRender/GUI/images/image_load_failed_192x108.png")
 		else:
-			thumbnail = load("res://RaptorRender/GUI/images/loading_thumbnail.png")
+			thumbnail = LoadingImage
 			
 	image_size = thumbnail.get_size()
 	
@@ -60,7 +69,13 @@ func load_image():
 	
 	set_thumbnail_size(thumbnail_scale_factor)
 	
-	emit_signal("thumbnail_updated")
+	if is_initialized:
+		emit_signal("thumbnail_updated")
+
+
+func display_loading_image():
+	ThumbnailTexture.set_texture(LoadingImage)
+	set_thumbnail_size(thumbnail_scale_factor)
 
 
 func set_thumbnail_size(scale_factor : float):

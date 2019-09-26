@@ -19,6 +19,7 @@ onready var SizeLabel : Label = $"VBoxContainer/ThumbnailSettingsBar/HBoxContain
 ### variables
 var currently_selected : ImageThumbnail
 var desire_to_select_first_thumbnail : bool = false
+var job_just_selected : bool = false
 
 
 
@@ -34,6 +35,16 @@ func _ready():
 func _process(delta):
 	EnlargedPreviewContainer.rect_min_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
 	EnlargedPreviewContainer.rect_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
+
+
+func update_thumbnails_by_selecting_job():
+	
+	desire_to_select_first_thumbnail = true
+	job_just_selected = true
+	
+	PreviewImage.visible = false
+	
+	update_thumbnails()
 
 
 # For performance reasons we only delete or create ThumbnailBox nodes when necessary and update the ones that are already there.
@@ -77,9 +88,10 @@ func update_thumbnails():
 				ThumbnailBox.file_name_patterns = dir[1]
 			ThumbnailBox.thumbnail_scale_factor = ThumbnailWidthSlider.value
 			ThumbnailBox.show_frame_numbers = FramenumberVisibilityCheckBox.pressed
+			ThumbnailBox.job_just_selected = job_just_selected
 			ThumbnailBox.refresh_thumbnails()
 			dircount += 1
-
+	job_just_selected = false 
 
 func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 	
@@ -116,18 +128,7 @@ func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 		
 	PreviewImage.set_texture(PreviewImageTexture)
 	PreviewImage.visible = true
-	
-	#if PreviewImage.rect_min_size.x == 4:
-	#	PreviewImage.rect_min_size.x = 5
-	#else:
-	#	PreviewImage.rect_min_size.x = 4
 
-
-func try_to_select_first_thumbnail():
-	
-	desire_to_select_first_thumbnail = true
-	
-	PreviewImage.visible = false
 
 
 
@@ -145,7 +146,7 @@ func select_first_thumbnail():
 func _on_HSlider_value_changed(value):
 	for ThumbnailBox in ThumbnailsDirectoriesVBox.get_children():
 		ThumbnailBox.thumbnail_scale_factor = value
-		ThumbnailBox.calculate_numb_of_colums()
+		ThumbnailBox.calculate_number_of_colums()
 		ThumbnailBox.set_thumbnail_size(value)
 
 

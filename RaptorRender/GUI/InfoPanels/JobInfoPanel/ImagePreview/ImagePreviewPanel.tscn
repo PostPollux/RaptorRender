@@ -106,13 +106,11 @@ custom_constants/separation = 30
 
 [node name="EnlargedPreviewContainer" type="MarginContainer" parent="."]
 margin_top = 366.0
-margin_right = 500.0
 margin_bottom = 600.0
 size_flags_horizontal = 0
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="EnlargedPreviewContainer"]
-margin_right = 500.0
 margin_bottom = 234.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -128,7 +126,7 @@ custom_constants/margin_bottom = 10
 [node name="PreviewImage" type="TextureRect" parent="EnlargedPreviewContainer/Panel/MarginContainer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 490.0
+margin_right = 10.0
 margin_bottom = 224.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

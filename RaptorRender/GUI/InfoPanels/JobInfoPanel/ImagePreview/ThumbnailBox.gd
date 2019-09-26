@@ -34,6 +34,8 @@ var currently_updating_thumbs : bool = false
 
 var self_destruct_as_soon_as_possible = false
 
+var job_just_selected : bool = false
+
 
 
 
@@ -53,14 +55,14 @@ func _ready():
 
 func _process(delta):
 	# This is for rearanging the thumbs on resizing. Note: Needs to be in _process() as resized() or draw() signals will not be triggered if the content get's pushed and clipped outside
-	calculate_numb_of_colums()
+	calculate_number_of_colums()
 	
 	if self_destruct_as_soon_as_possible:
 		if !currently_updating_thumbs:
 			self.queue_free()
 
 
-func calculate_numb_of_colums():
+func calculate_number_of_colums():
 	
 	if ThumbnailGridContainer != null and RaptorRender.JobInfoPanel.get_current_tab() == 3:
 		if ThumbnailGridContainer.get_children().size() > 0:
@@ -135,6 +137,23 @@ func refresh_thumbnails():
 			
 		set_thumbnail_size(thumbnail_scale_factor)
 		set_framenumber_visibility(show_frame_numbers)
+		
+		# this is for displaying the loading image when a job got selected
+		if job_just_selected:
+			if files.size() > 0:
+				var thumbnail = ImageTexture.new()
+				var file = File.new()
+				var thumb_size : Vector2
+				
+				if file.file_exists(thumbnail_directory + files[0]):
+					thumbnail.load(thumbnail_directory + files[0])
+					thumb_size = thumbnail.get_size()
+					
+				for i in range(0, files.size() - 1):
+					ThumbnailGridContainer.get_child(i).image_size = thumb_size
+					ThumbnailGridContainer.get_child(i).display_loading_image()
+		job_just_selected = false
+		
 		
 		# now start the thread that will actually load the textures from disk. (If this is not in a thread the UI will stutter on refresh)
 		start_load_thumbnails_thread()

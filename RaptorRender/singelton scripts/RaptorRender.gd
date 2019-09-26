@@ -1099,8 +1099,7 @@ func job_selected(id_of_row : int):
 	ClientInfoPanel.visible = false
 	ClientInfoPanel.reset_to_first_tab()
 	JobInfoPanel.update_job_info_panel(id_of_row)
-	JobInfoPanel.ImagePreviewPanel.update_thumbnails()
-	JobInfoPanel.ImagePreviewPanel.try_to_select_first_thumbnail()
+	JobInfoPanel.ImagePreviewPanel.update_thumbnails_by_selecting_job()
 	JobInfoPanel.visible = true
 	TryInfoPanel.set_visibility(false)
 	refresh_chunks_table(id_of_row)
