@@ -37,6 +37,8 @@ func _process(delta):
 	EnlargedPreviewContainer.rect_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
 
 
+# this function will make sure that the first thumbnail gets selected and that all thumbs show the loading image while loading.
+# if you want to just update without changing selection or image use just "update_thumbnails()". For example if you want it to constantly update every 2 seconds.
 func update_thumbnails_by_selecting_job():
 	
 	desire_to_select_first_thumbnail = true
@@ -162,4 +164,5 @@ func _on_CheckBox_toggled(button_pressed):
 
 
 func _on_RefreshButton_pressed():
+	job_just_selected = true # this will lead to showing the loading images
 	update_thumbnails()
