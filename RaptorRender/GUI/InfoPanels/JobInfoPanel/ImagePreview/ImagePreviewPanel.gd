@@ -110,6 +110,7 @@ func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 	# load selected original image
 	var PreviewImageTexture = ImageTexture.new()
 	var file_name_patterns_for_this_directory : Array = RaptorRender.rr_data.jobs[RaptorRender.JobInfoPanel.current_displayed_job_id].output_dirs_and_file_name_patterns[currently_selected.dir_index][1]
+	var file_found : bool = false
 	
 	for pattern in file_name_patterns_for_this_directory:
 		var extension : String = pattern.right(pattern.find_last("."))
@@ -118,14 +119,17 @@ func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 		var file = File.new()
 	
 		if file.file_exists(orig_image_path):
-		
+			file_found = true
 			var load_return_value : int = PreviewImageTexture.load(orig_image_path)
 		
 			if load_return_value == 12:
 				PreviewImageTexture = load("res://RaptorRender/GUI/images/image_load_failed_1280x720.png")
-		else:
-			PreviewImageTexture = load("res://RaptorRender/GUI/images/image_load_failed_1280x720.png")
-		
+			break
+			
+			
+	if not file_found:
+		PreviewImageTexture = load("res://RaptorRender/GUI/images/image_load_failed_1280x720.png")
+	
 	PreviewImage.set_texture(PreviewImageTexture)
 	PreviewImage.visible = true
 
