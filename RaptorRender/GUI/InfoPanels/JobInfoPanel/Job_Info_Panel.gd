@@ -217,6 +217,9 @@ func _on_TabContainer_tab_selected(tab):
 	if tab == 1:
 		RaptorRender.refresh_chunks_table( RaptorRender.current_job_id_for_job_info_panel )
 	
+	# image tab selected
+	if tab == 3:
+		ImagePreviewPanel.update_thumbnails_by_selecting_job()
 
 
 

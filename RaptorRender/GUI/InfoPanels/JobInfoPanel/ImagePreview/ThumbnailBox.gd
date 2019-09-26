@@ -48,8 +48,6 @@ func _ready():
 	
 	# initialize thread
 	load_thumbnails_thread = Thread.new()
-	
-	start_load_thumbnails_thread()
 
 
 
@@ -149,7 +147,7 @@ func refresh_thumbnails():
 					thumbnail.load(thumbnail_directory + files[0])
 					thumb_size = thumbnail.get_size()
 					
-				for i in range(0, files.size() - 1):
+				for i in range(0, files.size() ):
 					ThumbnailGridContainer.get_child(i).image_size = thumb_size
 					ThumbnailGridContainer.get_child(i).display_loading_image()
 		job_just_selected = false

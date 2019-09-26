@@ -53,7 +53,7 @@ func update_thumbnails():
 	
 	##### create or delete ThumbnailBox nodes
 	
-	# get how many we have to create or delete
+	# get how many ThumbnailBoxes we have to create or delete
 	var already_existing_thumbnail_boxes : int = ThumbnailsDirectoriesVBox.get_children().size()
 	var needed_amount_of_thumbnail_boxes : int = RaptorRender.rr_data.jobs[RaptorRender.JobInfoPanel.current_displayed_job_id].output_dirs_and_file_name_patterns.size()
 	var dir_difference : int = needed_amount_of_thumbnail_boxes - already_existing_thumbnail_boxes
@@ -92,6 +92,8 @@ func update_thumbnails():
 			ThumbnailBox.refresh_thumbnails()
 			dircount += 1
 	job_just_selected = false 
+
+
 
 func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 	
