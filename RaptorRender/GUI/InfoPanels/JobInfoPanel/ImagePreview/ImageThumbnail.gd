@@ -10,7 +10,7 @@ signal thumbnail_pressed
 signal thumbnail_updated
 
 ### onready vars
-onready var ImageName : Label = $"MarginContainer/ImageTexture/Label"
+onready var ImageName : Label = $"MarginContainer/ImageTexture/FrameNumberLabel"
 onready var ThumbnailButton : Button = $"MarginContainer/ImageTexture/Button"
 onready var ThumbnailTexture : TextureRect = $"MarginContainer/ImageTexture"
 
@@ -34,27 +34,22 @@ var hovered : bool = false
 func _ready():
 	self.color = RRColorScheme.bg_2
 	
-	var thumbnail = ImageTexture.new()
-	thumbnail.load(image_path)
-	
-	image_size = thumbnail.get_size()
-	
-	ThumbnailTexture.set_texture(thumbnail)
-	
-	ThumbnailButton.hint_tooltip = image_name
-	
-	ImageName.text = image_number
-	
-	set_thumbnail_size(thumbnail_scale_factor)
-	
-	emit_signal("thumbnail_updated")
+	load_image()
 
 
 func load_image():
 	
 	var thumbnail = ImageTexture.new()
-	thumbnail.load(image_path)
+	var file = File.new()
 	
+	if file.file_exists(image_path):
+		thumbnail.load(image_path)
+	else:
+		if ThumbnailTexture.get_texture() != null:
+			thumbnail = load("res://RaptorRender/GUI/images/image_load_failed_192x108.png")
+		else:
+			thumbnail = load("res://RaptorRender/GUI/images/loading_thumbnail.png")
+			
 	image_size = thumbnail.get_size()
 	
 	ThumbnailTexture.set_texture(thumbnail)

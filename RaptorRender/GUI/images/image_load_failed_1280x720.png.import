@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/image_load_failed_1280.png-156e598445541d3d8356ec458dace190.stex"
+path="res://.import/image_load_failed_1280x720.png-882b38f5cbacd0f23e816178345ad1bf.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://RaptorRender/GUI/images/image_load_failed_1280.png"
-dest_files=[ "res://.import/image_load_failed_1280.png-156e598445541d3d8356ec458dace190.stex" ]
+source_file="res://RaptorRender/GUI/images/image_load_failed_1280x720.png"
+dest_files=[ "res://.import/image_load_failed_1280x720.png-882b38f5cbacd0f23e816178345ad1bf.stex" ]
 
 [params]
 
