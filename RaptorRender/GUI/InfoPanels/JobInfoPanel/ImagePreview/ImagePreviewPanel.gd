@@ -15,6 +15,7 @@ onready var PreviewImage : TextureRect = $"BigPreviewContainer/Panel/MarginConta
 
 ### variables
 var currently_selected : ImageThumbnail
+var desire_to_select_first_thumbnail : bool = false
 
 
 
@@ -34,13 +35,17 @@ func update_thumbnails():
 	##### create or delete ThumbnailBox nodes
 	
 	# get how many we have to create or delete
-	var dir_difference : int = RaptorRender.rr_data.jobs[RaptorRender.JobInfoPanel.current_displayed_job_id].output_dirs_and_file_name_patterns.size() - ThumbnailsDirectoriesVBox.get_children().size()
+	var already_existing_thumbnail_boxes : int = ThumbnailsDirectoriesVBox.get_children().size()
+	var needed_amount_of_thumbnail_boxes : int = RaptorRender.rr_data.jobs[RaptorRender.JobInfoPanel.current_displayed_job_id].output_dirs_and_file_name_patterns.size()
+	var dir_difference : int = needed_amount_of_thumbnail_boxes - already_existing_thumbnail_boxes
 	
 	if dir_difference > 0:
 		# create that amount of ThumbnailBox nodes
 		for i in range(0, dir_difference):
 			var ThumbnailBox = ThumbnailBoxRes.instance()
 			ThumbnailBox.connect("thumbnail_selected",self, "thumbnail_selected")
+			if already_existing_thumbnail_boxes == 0 and i == 0:
+				ThumbnailBox.connect("first_thumbnail_updated",self, "select_first_thumbnail")
 			ThumbnailsDirectoriesVBox.add_child(ThumbnailBox)
 		
 	if dir_difference < 0:
@@ -69,6 +74,7 @@ func update_thumbnails():
 
 
 func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
+	
 	currently_selected = Thumb
 	
 	# visually deselect every thumbnail other than the selected one
@@ -92,7 +98,27 @@ func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 		PreviewImageTexture.load(orig_image_path)
 	
 	PreviewImage.set_texture(PreviewImageTexture)
+	PreviewImage.visible = true
 
+
+
+func try_to_select_first_thumbnail():
+	
+	desire_to_select_first_thumbnail = true
+	
+	PreviewImage.visible = false
+
+
+
+func select_first_thumbnail():
+	
+	if desire_to_select_first_thumbnail:
+		var ThumbnailBox = ThumbnailsDirectoriesVBox.get_child(0)
+		
+		ThumbnailBox.ThumbnailGridContainer.get_child(0).select()
+		PreviewImage.visible = true
+		
+		desire_to_select_first_thumbnail = false
 
 
 func _on_HSlider_value_changed(value):

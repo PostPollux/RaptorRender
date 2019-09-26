@@ -5,6 +5,8 @@ var ImageThumbnailRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/
 
 ### signals
 signal thumbnail_selected
+signal thumbnails_updated
+signal first_thumbnail_updated
 
 ### onready vars
 onready var HeaderColorRect = $"Header/ColorRect"
@@ -25,7 +27,6 @@ var thumbnail_scale_factor : float = 1.0
 var currently_selected : ImageThumbnail
 
 var load_thumbnails_thread : Thread
-var mutex : Mutex
 
 var files : Array = []
 
@@ -45,7 +46,6 @@ func _ready():
 	
 	# initialize thread
 	load_thumbnails_thread = Thread.new()
-	mutex = Mutex.new()
 	
 	start_load_thumbnails_thread()
 
@@ -63,9 +63,10 @@ func _process(delta):
 func calculate_numb_of_colums():
 	
 	if ThumbnailGridContainer != null and RaptorRender.JobInfoPanel.get_current_tab() == 3:
-		if ThumbnailGridContainer.get_child(0) != null:
-			var thumbnail_node_size_x : float = thumbnail_scale_factor * ThumbnailGridContainer.get_child(0).image_size.x + 6 + 10 # 6 pading for border of each thumbnail; 10 for GridContainer spacing
-			ThumbnailGridContainer.columns = (RaptorRender.JobInfoPanel.rect_size.x - 15) / thumbnail_node_size_x
+		if ThumbnailGridContainer.get_children().size() > 0:
+			if ThumbnailGridContainer.get_child(0) != null:
+				var thumbnail_node_size_x : float = thumbnail_scale_factor * ThumbnailGridContainer.get_child(0).image_size.x + 6 + 10 # 6 pading for border of each thumbnail; 10 for GridContainer spacing
+				ThumbnailGridContainer.columns = (RaptorRender.JobInfoPanel.rect_size.x - 15) / thumbnail_node_size_x
 		
 		
 func set_thumbnail_size(thumbnail_scale_factor : float):
@@ -84,7 +85,7 @@ func refresh_thumbnails():
 	
 	# It is important to execute the code that adds or removes nodes from the tree in the main thread, as manipulating the tree in a thread is not safe.
 	# You would have to add the nodes by .call_deferred("add_child", your node) which would effectively add them in the main thread at the end of the frame. But then you can't access those nodes through the scene tree later on in the thread, because they are not there yet.
-	# So we manipulate the tree first and then start the thread
+	# So we manipulate the tree first and then start the thread for actually loading the images from disk to the TextureRect node.
 	
 	if !currently_updating_thumbs:
 		
@@ -113,13 +114,16 @@ func refresh_thumbnails():
 		dir.list_dir_end()
 		
 		# create or delete Thumbnail nodes
-		var thumbnail_difference : int = files.size() - ThumbnailGridContainer.get_children().size()
+		var already_existing_thumbnail_nodes : int = ThumbnailGridContainer.get_children().size()
+		var thumbnail_difference : int = files.size() - already_existing_thumbnail_nodes
 		
 		if thumbnail_difference > 0:
 			# create that amount of thumbnail nodes
 			for i in range(0, thumbnail_difference):
 				var ImageThumbnail = ImageThumbnailRes.instance()
 				ImageThumbnail.connect("thumbnail_pressed", self, "thumbnail_selected")
+				if already_existing_thumbnail_nodes == 0 and i == 0:
+					ImageThumbnail.connect("thumbnail_updated", self, "first_thumbnail_updated")
 				ThumbnailGridContainer.add_child(ImageThumbnail) # important to use here call_dfferred otherwise the thread will crash
 			
 		if thumbnail_difference < 0:
@@ -128,7 +132,7 @@ func refresh_thumbnails():
 			var child_count : int = childs.size()
 			for i in range(1, abs(thumbnail_difference) + 1):
 				childs[child_count - i].queue_free()
-		
+			
 		set_thumbnail_size(thumbnail_scale_factor)
 		set_framenumber_visibility(show_frame_numbers)
 		
@@ -137,7 +141,6 @@ func refresh_thumbnails():
 
 
 func start_load_thumbnails_thread():
-	
 	if load_thumbnails_thread.is_active():
 		# stop here if already working
 		print ("load_thumbnails_thread still active")
@@ -150,7 +153,6 @@ func start_load_thumbnails_thread():
 
 
 func threaded_thumbnail_update(args):
-	
 	files.sort()
 	
 	# update Thumbnail nodes
@@ -184,6 +186,7 @@ func join_load_thumbnail_thread():
 	# this will effectively stop the thread
 	load_thumbnails_thread.wait_to_finish()
 	currently_updating_thumbs = false
+	emit_signal("thumbnails_updated")
 
 
 
@@ -196,3 +199,7 @@ func deselect_all_thumbnails():
 
 func thumbnail_selected( framenumber : String, Thumb : ImageThumbnail):
 	emit_signal("thumbnail_selected", framenumber, Thumb)
+
+
+func first_thumbnail_updated():
+	emit_signal("first_thumbnail_updated")

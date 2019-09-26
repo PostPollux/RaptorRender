@@ -7,6 +7,7 @@ class_name ImageThumbnail
 
 ### signals
 signal thumbnail_pressed
+signal thumbnail_updated
 
 ### onready vars
 onready var ImageName : Label = $"MarginContainer/ImageTexture/Label"
@@ -45,6 +46,8 @@ func _ready():
 	ImageName.text = image_number
 	
 	set_thumbnail_size(thumbnail_scale_factor)
+	
+	emit_signal("thumbnail_updated")
 
 
 func load_image():
@@ -61,6 +64,8 @@ func load_image():
 	ImageName.text = image_number
 	
 	set_thumbnail_size(thumbnail_scale_factor)
+	
+	emit_signal("thumbnail_updated")
 
 
 func set_thumbnail_size(scale_factor : float):
@@ -118,8 +123,13 @@ func reset_hovered():
 		self.color = RRColorScheme.bg_2
 
 
-func _on_Button_button_down():
+func select():
 	emit_signal("thumbnail_pressed", image_number, self)
+	
+
+
+func _on_Button_button_down():
+	select()
 
 
 func _on_Button_mouse_entered():
