@@ -1,4 +1,15 @@
+#//////////////#
+# ThumbnailBox #
+#//////////////#
+
+# A ThumbnailBox holds all the available thumbnails that have been rendered to ONE directory.
+# Each Thumbnail is a ImageThumbnail.tscn node that gets appended to "ThumbnailGridContainer".
+# Multithreading is used in this script to make updating the thumbnails more performant and less laggy. 
+# Thanks to multithreading it could run constantly in a timer without freezing the UI. But that is not the case for now as it would cause a lot of used bandwidth.
+
+
 extends VBoxContainer
+
 
 ### PRELOAD RESOURCES
 var ImageThumbnailRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ImageThumbnail.tscn")

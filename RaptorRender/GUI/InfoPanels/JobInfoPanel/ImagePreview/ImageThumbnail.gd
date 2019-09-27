@@ -1,3 +1,10 @@
+#////////////////#
+# ImageThumbnail #
+#////////////////#
+
+# Each ImageThumbnail represents one rendered frame.
+
+
 extends ColorRect
 
 class_name ImageThumbnail

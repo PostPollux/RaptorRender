@@ -1,3 +1,12 @@
+#///////////////////#
+# ImagePreviewPanel #
+#///////////////////#
+
+# This panel enables you to quickly have a look at all your rendered images.
+# ImagePreviewPanel will create one ThumbnailBox.tscn for each directory where final images of the job are rendered to.
+# Each of theses ThumbnailBox elements will hold the respective thumbnails.
+
+
 extends VSplitContainer
 
 ### PRELOAD RESOURCES
