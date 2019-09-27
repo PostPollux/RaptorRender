@@ -137,7 +137,7 @@ func _on_BasicNotificationContainer_mouse_entered():
 	
 	# self destruct while mouse button is pressed too quickly remove several notifications
 	if Input.is_action_pressed("ui_left_mouse_button") or Input.is_action_pressed("ui_middle_mouse_button"):
-		 self_destruct()
+		self_destruct()
 	
 	# reset timer so the notification does not go away so quickly
 	else:

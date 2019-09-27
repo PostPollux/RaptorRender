@@ -146,4 +146,4 @@ func distribute_jobs():
 		return
 
 func sort_by_priority(a, b):
-        return a[1] > b[1]
+	return a[1] > b[1]

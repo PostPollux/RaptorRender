@@ -864,7 +864,7 @@ func get_hard_drive_info():
 			var linux_drive_array : Array = [] # a array with a dictionary for each drive. The dict will hold the following keys: name, mountpoint, label, size, rm, used
 			
 			var output : Array = [] #                     show these columns   |  format as json  | filter only mounted ones | remove line with "boot" |  remove snap mounted drives
-			                        #                                v                      v          v             .------------------'     .------------------'
+									#                                v                      v          v             .------------------'     .------------------'
 			var arguments : Array = ["-c","lsblk --output 'NAME,MOUNTPOINT,LABEL,SIZE,RM' --json | grep '/' | grep -v 'boot' | grep -v 'snapd\/snap'"]
 			OS.execute("bash", arguments, true, output)
 			

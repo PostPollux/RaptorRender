@@ -82,7 +82,7 @@ func draw_ChunkTimeGraph(job_id : int):
 	while bar_width < spacing_inbetween:
 		spacing_inbetween -= 1
 		bar_width = (total_width - chunk_count * spacing_inbetween) / chunk_count 
-		 
+		
 	
 	
 	# calculate shortest and longest rendertimes + average (we need those in order to draw the bars in another loop)
@@ -267,7 +267,7 @@ func _on_BarGraph_gui_input(ev):
 	
 	# test for double click
 	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:
-        
+		
 		# find double clicked chunk
 		var chunk : int = self.get_parent().get_parent().hovered_chunk
 		
