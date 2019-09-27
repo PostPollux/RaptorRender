@@ -1,5 +1,14 @@
 extends VBoxContainer
 
+
+### PRELOAD RESOURCES
+var HBoxContainerSep15Res = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/HBoxContainerSep15.tscn")
+var ActivateCheckBoxRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobSettingActivateCheckBox.tscn")
+
+### SIGNALS
+signal job_successfully_created
+
+### ONREADY VARIABLES
 onready var JobTypeOptionButton : OptionButton = $"JobTypeContainer/HBoxContainer/JobTypeOptionButton"
 onready var TypeVersionOptionButton : OptionButton = $"JobTypeContainer/HBoxContainer/JobTypeVersionButton"
 
@@ -10,7 +19,6 @@ onready var ContentScrollContainer : ScrollContainer = $"ScrollContainer"
 onready var MinimumSizeContianer : MarginContainer = $"ScrollContainer/MinimumSizeContainer"
 onready var TypeMaskContent : VBoxContainer = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent"
 onready var SpecificJobSettings : VBoxContainer = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/SpecificJobSettings"
-
 
 # Basic job info references
 onready var JobNameLabel : Label = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/JobName/JobNameLabel"
@@ -33,8 +41,9 @@ onready var StartPausedCheckBox : CheckBox = $"ScrollContainer/MinimumSizeContai
 
 onready var SelectSceneFileDialog : FileDialog = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/SceneFile/SelectSceneButton/SelectSceneFileDialog"
 
+### EXPORTED VARIABLES
 
-
+### VARIABLES
 var type_mask_content_label_min_size : float = 0
 var job_type_settings_path : String
 
@@ -43,14 +52,11 @@ var last_selected_path : String = ""
 var specific_input_fields : Dictionary
 
 
-signal job_successfully_created
-
-### preloads ####
-var HBoxContainerSep15Res = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/HBoxContainerSep15.tscn")
-var ActivateCheckBoxRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobSettingActivateCheckBox.tscn")
 
 
-# Called when the node enters the scene tree for the first time.
+########## FUNCTIONS ##########
+
+
 func _ready():
 	
 	get_parent().connect("popup_shown", self, "initialize_on_show")

@@ -8,11 +8,15 @@
 
 extends Control
 
-# variables to customize look of the graph
-var shortest_rendertime_color : Color = RRColorScheme.chunk_time_graph_shortest
-var longest_rendertime_color : Color = RRColorScheme.chunk_time_graph_longest
-var not_started_color : Color = RRColorScheme.chunk_time_graph_not_started
+### PRELOAD RESOURCES
 
+### SIGNALS
+signal chunk_hovered
+
+### ONREADY VARIABLES 
+
+### EXPORTED VARIABLES
+# variables to customize look of the graph
 export (bool) var draw_outline = false
 export (Color) var outline_color = Color("000000")
 
@@ -22,21 +26,18 @@ export (int) var spacing_bottom = 5
 
 export (Font) var font
 
-var accumulate_tries : bool = false
+### VARIABLES
+var shortest_rendertime_color : Color = RRColorScheme.chunk_time_graph_shortest
+var longest_rendertime_color : Color = RRColorScheme.chunk_time_graph_longest
+var not_started_color : Color = RRColorScheme.chunk_time_graph_not_started
 
-# other variables
+var accumulate_tries : bool = false
 var job_id : int = 0
 
-# signals
-signal chunk_hovered
 
 
 
-
-func _ready():
-	pass
-
-
+########## FUNCTIONS ##########
 
 
 func _process(delta):

@@ -2,13 +2,31 @@ extends Control
 
 class_name RRContextMenuBase
 
-export (String) var context_menu_id
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
 onready var ContextMenu = $"ContextMenu"
+
+### EXPORTED VARIABLES
+export (String) var context_menu_id
+
+### VARIABLES
+
+
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
 	# register to RaptorRender script
 	if RaptorRender != null:
 		RaptorRender.register_context_menu(self)
+
 
 func _process(delta):
 	

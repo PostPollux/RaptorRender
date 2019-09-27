@@ -1,9 +1,26 @@
 extends MarginContainer
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
 signal cancel_pressed
 signal ok_pressed
 signal popup_shown
 signal popup_hided
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
+
+
+
+
+########## FUNCTIONS ##########
+
 
 func cancel_pressed():
 	emit_signal("cancel_pressed")

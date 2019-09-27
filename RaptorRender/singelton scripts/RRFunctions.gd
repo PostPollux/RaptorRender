@@ -1,9 +1,25 @@
 extends Node
 
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
+
+
+
+
+########## FUNCTIONS ##########
+
+
 # convert a hex string to a PoolByteArray 
 # (hex string can be marked with 0x at the beginning, but doesn't have to)
-
 func hex_string_to_PoolByteArray(hex_string : String) -> Array:
 	
 	# convert to lower case

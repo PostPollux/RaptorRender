@@ -12,6 +12,17 @@
 extends Node
 
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+signal log_read_to_end_of_file
+signal no_log_file_found
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var LogFile : File
 
 var log_job_id : int
@@ -26,9 +37,9 @@ var file_pointer_position : int = 0
 
 
 
-signal log_read_to_end_of_file
-signal no_log_file_found
 
+
+########## FUNCTIONS ##########
 
 
 # Called when the node enters the scene tree for the first time.

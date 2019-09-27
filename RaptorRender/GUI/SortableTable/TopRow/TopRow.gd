@@ -13,6 +13,23 @@ extends MarginContainer
 class_name SortableTableTopRow
 
 
+### PRELOAD RESOURCES
+var ColumnSplitterRes = preload("res://RaptorRender/GUI/SortableTable/TopRow/ColumnSplitter.tscn")
+var ColumnButtonRes = preload("res://RaptorRender/GUI/SortableTable/TopRow/ColumnButton.tscn")
+
+### SIGNALS
+signal sort_invoked
+signal column_resized
+signal column_highlighted
+signal primary_sort_column_updated
+signal secondary_sort_column_updated
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
 # variables for defining the buttons and splitters
 var Splitters : Array = []
 var ColumnButtons : Array = []
@@ -33,25 +50,13 @@ var sort_column_secondary : int = 2
 var sort_column_primary_reversed : bool = false
 var sort_column_secondary_reversed : bool = false
 
-# preload Resources
-var ColumnSplitterRes = preload("res://RaptorRender/GUI/SortableTable/TopRow/ColumnSplitter.tscn")
-var ColumnButtonRes = preload("res://RaptorRender/GUI/SortableTable/TopRow/ColumnButton.tscn")
-
 var just_initialized : bool = false # variable for workaround
 
-# signals
-signal sort_invoked
-signal column_resized
-signal column_highlighted
-signal primary_sort_column_updated
-signal secondary_sort_column_updated
-
-
-func _ready():
-	pass
 
 
 
+
+########## FUNCTIONS ##########
 
 
 func _process(delta):

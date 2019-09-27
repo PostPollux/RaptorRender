@@ -8,6 +8,16 @@
 
 extends Node
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
 # Background colors for interface elements (eg. shades of grey)
 var bg_0 : Color = Color("262626") #  | dark
 var bg_1 : Color = Color("313131") #  |
@@ -41,3 +51,8 @@ var log_warning : String = "FAD25C"
 var log_error : String = "DF8731"
 var log_critical_error : String = "E44642"
 var log_critical_error_ignored : String = "D157F9"
+
+
+
+
+########## FUNCTIONS ##########

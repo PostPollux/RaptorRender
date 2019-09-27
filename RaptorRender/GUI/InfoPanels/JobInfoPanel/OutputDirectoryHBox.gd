@@ -1,14 +1,22 @@
 extends HBoxContainer
 
-### onready vars
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
 onready var label : Label = $"OutputDirectoryLabel"
 
-### exported vars
+### EXPORTED VARIABLES
 export (bool) var show_only_path : bool = false
 
-### variables
+### VARIABLES
 var output_directory : String = ""
 
+
+
+
+########## FUNCTIONS ##########
 
 
 func _ready():

@@ -9,9 +9,16 @@
 extends Node
 
 
+### PRELOAD RESOURCES
 
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var platform : String # to decide which function to call depending on os
-
 var hostname : String
 var username : String
 var platform_info : Array # First item: platform name (Linux/Windows/OSX), second item: version (kernel version, Windows version (XP,7,10)), third item: additional info (Linux Distribution, Windows version (Pro, Home, Ultimate))
@@ -25,7 +32,6 @@ var hard_drives : Array # array with a dict for each hard drive. The dict has th
 var memory_usage : int # percentage of memory used (int Value between 0 and 100)
 var cpu_usage : int # percentage of cpu usage (int Value between 0 and 100)
 
-
 var recent_cpu_stat_values : Array = [] # only relevant for Linux. Used to calculate cpu usage
 
 var user_data_dir : String
@@ -34,7 +40,11 @@ var collect_hardware_info_thread : Thread
 
 var unique_client_id : int
 
-	
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
 	

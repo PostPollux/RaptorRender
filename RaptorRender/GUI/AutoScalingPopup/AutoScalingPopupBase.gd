@@ -2,18 +2,16 @@ extends Control
 
 class_name AutoScalingPopup
 
-export (String) var popup_id : String = "popup-id"
 
-export (String) var title : String = "title"
-export (String) var cancel_button_string : String = "POPUP_BUTTON_CANCEL"
-export (String) var ok_button_string : String = "POPUP_BUTTON_OK"
+### PRELOAD RESOURCES
 
-export (float) var margin_left_percent : float = 10
-export (float) var margin_right_percent : float = 10
-export (float) var margin_top_percent : float  = 5
-export (float) var margin_bottom_percent : float = 5
+### SIGNALS
+signal cancel_pressed
+signal ok_pressed
+signal popup_shown
+signal popup_hided
 
-
+### ONREADY VARIABLES
 onready var TitleLabel : Label = $"MainBGPanel/VBoxContainer/Header/HeaderColorRect/HeadingLabel"
 
 onready var TransparentBackground : ColorRect = $"TransparentBackground"
@@ -26,10 +24,25 @@ onready var ContentContainer : MarginContainer = $"MainBGPanel/VBoxContainer/Con
 onready var CancelButton : Button = $"MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer/CancelButton"
 onready var OkButton : Button = $"MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer/OkButton"
 
-signal cancel_pressed
-signal ok_pressed
-signal popup_shown
-signal popup_hided
+### EXPORTED VARIABLES
+export (String) var popup_id : String = "popup-id"
+
+export (String) var title : String = "title"
+export (String) var cancel_button_string : String = "POPUP_BUTTON_CANCEL"
+export (String) var ok_button_string : String = "POPUP_BUTTON_OK"
+
+export (float) var margin_left_percent : float = 10
+export (float) var margin_right_percent : float = 10
+export (float) var margin_top_percent : float  = 5
+export (float) var margin_bottom_percent : float = 5
+
+### VARIABLES
+
+
+
+
+
+########## FUNCTIONS ##########
 
 
 # Called when the node enters the scene tree for the first time.

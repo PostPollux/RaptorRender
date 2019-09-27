@@ -9,10 +9,11 @@
 
 extends MarginContainer
 
-var job_id : int = -1
-var hovered_chunk : int
+### PRELOAD RESOURCES
 
-# references to other nodes of ChunkTimeGraph
+### SIGNALS
+
+### ONREADY VARIABLES 
 onready var HeadingLabel : Label = $"VBoxContainer/HeaderContainer/HeadingLabel"
 onready var BarGraph = $"VBoxContainer/ChunkTimeBarGraph"
 onready var ChunkNameLabel : Label = $"VBoxContainer/ClipContainer/ChunkInfoBox/VBoxContainer/HBoxContainer/ChunkNameLabel"
@@ -27,6 +28,17 @@ onready var ChunkInfoBox = $"VBoxContainer/ClipContainer/ChunkInfoBox"
 onready var GraphOptions = $"GraphOptions"
 onready var AccumulateTriesCheckBox : CheckBox = $"GraphOptions/MarginContainer/VBoxContainer/AccumulateTriesCheckBox"
 
+### EXPORTED VARIABLES
+
+### VARIABLES
+var job_id : int = -1
+var hovered_chunk : int
+
+
+
+
+
+########## FUNCTIONS ##########
 
 
 
@@ -137,7 +149,6 @@ func _on_BarGraph_mouse_exited():
 	ChunkClientValueLabel.text = "" 
 	ChunkRendertimeValueLabel.text =  ""
 	ChunkTriesValueLabel.text = ""
-
 
 
 

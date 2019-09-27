@@ -1,12 +1,28 @@
 extends HBoxContainer
 
-var job_id
-var JobLinkButton
-var CurrentJobLabel
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+onready var JobLinkButton : TextureButton = $"TextureButton"
+onready var CurrentJobLabel : Label = $"CurrentJobLabel"
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+var job_id : int
+
+
+
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
-	JobLinkButton = $"TextureButton"
-	CurrentJobLabel = $"CurrentJobLabel"
 	
 	if job_id != -1:
 		CurrentJobLabel.text = String( RaptorRender.rr_data.jobs[job_id].name )

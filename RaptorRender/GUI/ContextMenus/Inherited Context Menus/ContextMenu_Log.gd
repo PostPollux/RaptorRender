@@ -1,5 +1,22 @@
 extends PopupMenu
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
+
+
+
+########## FUNCTIONS ##########
+
+
 func _ready():
 	self.add_item("open log externally", 0, 0)
 	self.add_item("open logs folder", 1, 0)

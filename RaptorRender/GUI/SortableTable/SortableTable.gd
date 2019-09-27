@@ -17,21 +17,31 @@
 # RowContainerFilled contains the rows that actually show a data set, whereas RowContainerEmpty only visually fills up the available space with empty color alternating rows.
 
 
-
 extends ScrollContainer
 
 class_name SortableTable
 
 
-# column names and width arrays
-var column_names : Array = []
-var column_widths : Array = []
+### PRELOAD RESOURCES
+
+### SIGNALS
+signal refresh_table_content
+signal something_just_selected
+signal selection_cleared
+signal context_invoked
+
+### ONREADY VARIABLES
+onready var TopRow : SortableTableTopRow = $"VBox_TopRow_Content/TopRow"
+onready var RowScrollContainer : ScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
+onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled"
+onready var RowContainerEmpty = $ "VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
+onready var AutoScrollTween : Tween = $"AutoScrollTween"
+
+### EXPORTED VARIABLES
 
 # variables needed for sorting
 export (int) var sort_column_primary : int = 1
 export (int) var sort_column_secondary : int = 2
-var sort_column_primary_reversed : bool = false
-var sort_column_secondary_reversed : bool = false
 
 # some SortableTable settings
 export (bool) var columns_resizable : bool = true
@@ -53,25 +63,24 @@ export (float) var hover_brightness_boost : float = 0.1
 # id needed in the registring function of the RaptorRender autoload script
 export (String) var table_id : String = "custom id"
 
-# references to child nodes
-onready var TopRow : SortableTableTopRow = $"VBox_TopRow_Content/TopRow"
-onready var RowScrollContainer : ScrollContainer = $"VBox_TopRow_Content/RowScrollContainer"
-onready var RowContainerFilled = $"VBox_TopRow_Content/RowScrollContainer/VBoxContainer/RowContainerFilled"
-onready var RowContainerEmpty = $ "VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty"
-onready var AutoScrollTween : Tween = $"AutoScrollTween"
+### VARIABLES
+
+var sort_column_primary_reversed : bool = false
+var sort_column_secondary_reversed : bool = false
+
+# column names and width arrays
+var column_names : Array = []
+var column_widths : Array = []
 
 # variables needed for scrolling
 var previous_scroll_horizontal : int = 0
 var previous_scroll_vertical : int = 0
 var shift_ctrl_plus_scroll : bool = false
 
-# signals
-signal refresh_table_content
-signal something_just_selected
-signal selection_cleared
-signal context_invoked
 
 
+
+########## FUNCTIONS ##########
 
 
 func _ready():

@@ -1,5 +1,21 @@
 extends PopupMenu
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
+
+
+
+########## FUNCTIONS ##########
+
+
 func _ready():
 	self.add_item("Enable Client", 0, 0)
 	self.add_item("Disable Client Deferred", 1, 0)

@@ -8,10 +8,25 @@
 # Automatically animate in, show time left until notification dissapears, automatically animate out after specified time
 
 
-
 extends Control
 
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+onready var Background : NinePatchRect = $"BasicNotificationContainer/Background"
+onready var ProgressTexture : TextureRect= $"BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerProgress/ProgressTexture"
+onready var Heading : Label = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Heading"
+onready var Message : Label = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Text"
+onready var TweenAnimateIn : Tween = $"TweenAnimateIn"
+onready var TweenAnimateOut : Tween = $"TweenAnimateOut"
+onready var TweenMoveVertical : Tween = $"TweenMoveVertical"
+
+### EXPORTED VARIABLES
+
+### VARIABLES ###
 # variables set by NotificationSystem when creating a notification
 var heading : String = ""
 var message : String = ""
@@ -25,24 +40,13 @@ var animation_in_finshed : bool = false
 var supposed_position_y : int = 50
 var height : int 
 
-# references to child nodes
-onready var Background : NinePatchRect = $"BasicNotificationContainer/Background"
-onready var ProgressTexture : TextureRect= $"BasicNotificationContainer/MarginContainer/VBoxContainer/CenterContainerProgress/ProgressTexture"
-onready var Heading : Label = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Heading"
-onready var Message : Label = $"BasicNotificationContainer/MarginContainer/VBoxContainer/Text"
-onready var TweenAnimateIn : Tween = $"TweenAnimateIn"
-onready var TweenAnimateOut : Tween = $"TweenAnimateOut"
-onready var TweenMoveVertical : Tween = $"TweenMoveVertical"
 
 
 
-
-
-
+########## FUNCTIONS ##########
 
 
 func _ready():
-
 
 	# set texts
 	if heading != "":

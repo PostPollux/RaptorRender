@@ -2,6 +2,12 @@ extends MarginContainer
 
 class_name TryInfoPanel
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES 
 onready var TryInfoTabContainer : TabContainer = $"TabContainer"
 
 onready var DetailsVisibilityContainer = $"TabContainer/Details/ScrollContainer"
@@ -18,10 +24,18 @@ onready var CommandRichTextLabel : RichTextLabel = $"TabContainer/Details/Scroll
 onready var LogVisibilityContainer = $"TabContainer/Log/MarginContainer"
 onready var LogRichTextLabel : RichTextLabel = $"TabContainer/Log/MarginContainer/Log_RichTextLabel"
 
+### EXPORTED VARIABLES
+
+### VARIABLES
 var currently_displayed_try_id : int = 0
 var currently_displayed_chunk_id :int = 0
 
 var ctrl_plus_c_pressed: bool = false
+
+
+
+
+########## FUNCTIONS ##########
 
 
 func _ready():

@@ -1,9 +1,23 @@
 extends VSeparator
 
+### PRELOAD RESOURCES
+
+### SIGNALS
 signal just_clicked
 
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var splitter_id : int = 0
 var active : bool = true
+
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
 	if active:

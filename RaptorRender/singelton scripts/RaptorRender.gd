@@ -1,18 +1,20 @@
 extends Node
 
 
-###### Settings Variables ########
-
-var colorize_table_rows : bool = false
-
-
-#### preloads ####
+### PRELOAD RESOURCES
 var JobProgressBarRes = preload("res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.tscn")
 var JobPriorityControlRes = preload("res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/PriorityControl/PriorityControl.tscn")
 var CurrentJobLinkRes = preload("res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/CurrentJobLink/CurrentJobLink.tscn")
-
 var SubmitJobPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobPopupContent/SubmitJobPopupContent.tscn")
 
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+var colorize_table_rows : bool = false
 
 var NotificationSystem : NotificationSystem
 
@@ -32,7 +34,7 @@ var ClientInfoPanel : ClientInfoPanel
 var JobInfoPanel : JobInfoPanel
 var TryInfoPanel : TryInfoPanel
 
-var rr_data = {}
+var rr_data : Dictionary = {}
 
 var current_job_id_for_job_info_panel : int = 0
 var current_chunk_id_for_job_info_panel : int = 0
@@ -40,9 +42,14 @@ var current_try_id_for_job_info_panel : int = 0
 
 var refresh_interface_timer : Timer 
 
+
+
+
+
+########## FUNCTIONS ##########
+
+
 func _ready():
-	
-	
 	
 	# create timer to constantly distribute the work across the connected clients 
 	refresh_interface_timer = Timer.new()

@@ -14,11 +14,22 @@
 extends VBoxContainer
 
 
+### PRELOAD RESOURCES
+var SortableTableRowRes = preload("res://RaptorRender/GUI/SortableTable/SortableTableRow.tscn")
+
+### SIGNALS
+signal selection_cleared
+
+### ONREADY VARIABLES
+onready var TopRow = $"../../../../TopRow"
+onready var RowContainerFilled = $"../../RowContainerFilled"
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var row_height : int = 30
-var amount_of_needed_rows_to_fill_up_screen
-
-var EmptyRows = []
-
+var amount_of_needed_rows_to_fill_up_screen : int
+var EmptyRows : Array = []
 
 # row colors
 var row_color : Color = Color("3c3c3c")
@@ -32,23 +43,9 @@ var even_odd_brightness_difference : float = 0.05
 var hover_brightness_boost : float = 0.1
 
 
-# references to other nodes of sortable table
-onready var TopRow = $"../../../../TopRow"
-onready var RowContainerFilled = $"../../RowContainerFilled"
-
-# preload Resources
-var SortableTableRowRes = preload("res://RaptorRender/GUI/SortableTable/SortableTableRow.tscn")
 
 
-signal selection_cleared
-
-
-
-func _ready():
-	pass
-
-
-
+########## FUNCTIONS ##########
 
 
 ###################
@@ -68,7 +65,7 @@ func create_initial_empty_rows():
 	
 	update_positions_of_empty_rows()
 
-	
+
 
 # create an empty row
 func create_empty_row():
@@ -103,7 +100,7 @@ func create_empty_row():
 		
 		
 		# initialize column widths and highlight cell if needed
-		var column = 1
+		var column : int = 1
 		
 		for ColumnButton in TopRow.ColumnButtons:
 		
@@ -130,7 +127,7 @@ func remove_empty_row():
 # this function is needed for correct alternating colors
 func update_positions_of_empty_rows():
 	var filled_row_count = RowContainerFilled.SortableRows.size()
-	var count = 1
+	var count : int = 1
 	for Row in get_children():
 		Row.set_row_position(filled_row_count + count)
 		count += 1
@@ -200,7 +197,7 @@ func select_SortableRows(row_position):
 	elif Input.is_key_pressed(KEY_SHIFT):
 		if RowContainerFilled.selected_row_ids.size() > 0:
 			
-			var previous_selected_row_position = 0
+			var previous_selected_row_position : int = 0
 			for Row in SortableRows:
 				if Row.id == RowContainerFilled.selected_row_ids[RowContainerFilled.selected_row_ids.size() - 1]:
 					previous_selected_row_position = Row.row_position

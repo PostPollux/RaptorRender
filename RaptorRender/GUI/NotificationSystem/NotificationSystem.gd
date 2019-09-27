@@ -13,18 +13,28 @@ extends Control
 class_name NotificationSystem
 
 
-# preload Resources
+### PRELOAD RESOURCES
 var ErrorNotificationRes = preload("res://RaptorRender/GUI/NotificationSystem/NotificationBoxes/InheritedNotificationBoxes/ErrorNotification.tscn")
 var InfoNotificationRes = preload("res://RaptorRender/GUI/NotificationSystem/NotificationBoxes/InheritedNotificationBoxes/InfoNotification.tscn")
 
+### SIGNALS
+
+### ONREADY VARIABLES 
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 
 
+
+
+
+########## FUNCTIONS ##########
 
 
 func _ready():
 	
 	register_notification_system()
-
 
 
 

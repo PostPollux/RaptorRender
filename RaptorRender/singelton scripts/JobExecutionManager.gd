@@ -1,5 +1,15 @@
 extends Node
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var current_processing_job : int
 var current_processing_chunk : int
 var current_processing_try : int
@@ -7,6 +17,12 @@ var current_processing_try : int
 var current_amount_of_frame_successes : int  = 0
 var current_amount_of_critical_errors : int = 0
 var chunk_success_detected : bool = false
+
+
+
+
+
+########## FUNCTIONS ##########
 
 
 # Called when the node enters the scene tree for the first time.

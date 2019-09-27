@@ -1,10 +1,17 @@
 extends Control
 
-var job_id
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+signal segment_hovered
+
+### ONREADY VARIABLES 
+onready var NameLabel : Label = $"NameLabel"
+onready var ChunksLabel : Label = $"ChunksLabel"
+
+### EXPORTED VARIABLES
 # variables to customize look of the graph
-
-#export (Color) var not_started_color = Color(0.75,0.75,0.75,1)
 export (float) var filled_percentage : float = 0.3
 
 export (Color) var most_chunks_rendered_color : Color = Color ("5191d0") 
@@ -16,18 +23,18 @@ export (Color) var outline_color : Color = Color("000000")
 export (Color) var outline_color_highlighted : Color = Color("FFFFFF")
 export (int) var outline_thickness : int = 2
 
-
 export (int) var desired_spacing_between_segments_in_degrees : int  = 2
 
-onready var NameLabel : Label = $"NameLabel"
-onready var ChunksLabel : Label = $"ChunksLabel"
-
+### VARIABLES
+var job_id
 var hovered_client_id : int
 
-signal segment_hovered
 
-func _ready():
-	pass
+
+
+########## FUNCTIONS ##########
+
+
 
 func _process(delta):
 	update()
@@ -38,9 +45,7 @@ func set_job_id(job_ID):
 	update()
 
 
-
 func _draw():
-	
 	
 	var chunk_count : int = RaptorRender.rr_data.jobs[job_id].chunks.keys().size()
 	

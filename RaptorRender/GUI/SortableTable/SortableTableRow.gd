@@ -14,6 +14,22 @@ extends MarginContainer
 class_name SortableTableRow
 
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+signal row_clicked
+signal row_clicked_middle
+signal row_clicked_rmb
+signal drag_select
+signal drag_select_middle
+
+### ONREADY VARIABLES
+onready var HBoxForCells : HBoxContainer = $"HBoxContainer"
+onready var RowBackgroundColorRect : ColorRect = $"BackgroundColor"
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var column_count : int
 var row_position : int # position of the row in the table. First row is 1, not 0.
 var id : int # unique id of the representing content
@@ -23,8 +39,6 @@ var even : bool = false
 var selected : bool = false
 var hovered : bool = false
 var row_height : int = 30
-
-
 
 # cell references
 var CellsClipContainerArray : Array  = [] # used to clip the cell content
@@ -49,27 +63,15 @@ var row_color_selected_even : Color
 var row_color_selected_odd : Color
 
 
-# references to child nodes
-onready var HBoxForCells : HBoxContainer = $"HBoxContainer"
-onready var RowBackgroundColorRect : ColorRect = $"BackgroundColor"
 
 
-# signals
-signal row_clicked
-signal row_clicked_middle
-signal row_clicked_rmb
-signal drag_select
-signal drag_select_middle
-
-
-
+########## FUNCTIONS ##########
 
 
 func _ready():
 	set_additional_colors()
 	update_row_even_or_odd()
 	update_row_color()
-
 
 
 

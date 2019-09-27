@@ -2,6 +2,12 @@ extends MarginContainer
 
 class_name ClientInfoPanel
 
+### PRELOAD RESOURCES
+var HardDriveRes = preload("res://RaptorRender/GUI/InfoPanels/ClientInfoPanel/hard_drive.tscn")
+
+### SIGNALS
+
+### ONREADY VARIABLES 
 # references to nodes in details tab
 onready var ClientInfoTabContainer : TabContainer = $"TabContainer"
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
@@ -43,16 +49,23 @@ onready var TryButton : Button = $"TabContainer/Current Render Log/HBoxContainer
 
 onready var LogRichTextLabel : RichTextLabel = $"TabContainer/Current Render Log/MarginContainer/LogRichtTextLabel"
 
-# preload Resources
-var HardDriveRes = preload("res://RaptorRender/GUI/InfoPanels/ClientInfoPanel/hard_drive.tscn")
+### EXPORTED VARIABLES
 
+### VARIABLES
 var log_job_id : int
 var log_chunk_id : int
 var log_try_id : int 
 
-
 var currently_selected_client_id : int = 0
 var ctrl_plus_c_pressed : bool = false
+
+
+
+
+
+########## FUNCTIONS ##########
+
+
 
 func _ready():
 	RaptorRender.register_client_info_panel(self)

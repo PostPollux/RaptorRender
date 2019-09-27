@@ -12,6 +12,20 @@ extends VBoxContainer
 class_name SortableTableRowContainerFilled
 
 
+### PRELOAD RESOURCES
+var SortableTableRowRes = preload("res://RaptorRender/GUI/SortableTable/SortableTableRow.tscn")
+
+### SIGNALS
+
+### ONREADY VARIABLES
+onready var SortableTable = $"../../../.." as SortableTable
+onready var TopRow = $"../../../TopRow" as SortableTableTopRow
+onready var RowScrollContainer = $"../.." as ScrollContainer
+onready var RowContainerEmpty = $"../ClipContainerForEmptyRows/RowContainerEmpty"
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var row_height : int = 30
 
 # Array to hold all current rows. It get's updated when sorting, so it always reflects the current order of rows
@@ -22,7 +36,6 @@ var id_position_dict : Dictionary = {}
 
 # Array for selections. It hold's the ids, not the rows themselves
 var selected_row_ids : Array = []
-
 
 # row colors
 var row_color : Color = Color("3c3c3c")
@@ -35,26 +48,18 @@ var row_color_black : Color = Color("1d1d1d")
 var even_odd_brightness_difference : float = 0.05
 var hover_brightness_boost : float = 0.1
 
-
-# references to other nodes of sortable table
-onready var SortableTable = $"../../../.." as SortableTable
-onready var TopRow = $"../../../TopRow" as SortableTableTopRow
-onready var RowScrollContainer = $"../.." as ScrollContainer
-onready var RowContainerEmpty = $"../ClipContainerForEmptyRows/RowContainerEmpty"
-
-# preload Resources
-var SortableTableRowRes = preload("res://RaptorRender/GUI/SortableTable/SortableTableRow.tscn")
-
 # variables used for selection handling
 var row_pos_of_last_middle_mouse_click : int  = 0
 
 
 
 
+
+########## FUNCTIONS ##########
+
+
 func _ready():
 	row_height = SortableTable.row_height
-
-
 
 
 func _process(delta : float) -> void:
@@ -63,11 +68,6 @@ func _process(delta : float) -> void:
 		var row_scroll_container_rect : Rect2 = RowScrollContainer.get_global_rect()
 		if row_scroll_container_rect.has_point(mouse_pos):
 			select_all()
-
-
-
-
-
 
 
 

@@ -1,5 +1,22 @@
 extends Node
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
+
+
+
+
+########## FUNCTIONS ##########
+
+
 func get_chunk_counts_TotalFinishedActive(job_id) -> Array:
 
 	var chunk_keys : Array = RaptorRender.rr_data.jobs[job_id].chunks.keys()

@@ -2,10 +2,12 @@ extends MarginContainer
 
 class_name JobInfoPanel
 
-### preload Resources
+### PRELOAD RESOURCES
 var OutputDirectoryHBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/OutputDirectoryHBox.tscn")
 
-### onready vars
+### SIGNALS
+
+### ONREADY VARIABLES
 onready var JobInfoTabContainer : TabContainer = $"TabContainer"
 
 onready var StatusIconTexture = $"TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/Icon"
@@ -33,9 +35,16 @@ onready var ClientPieChart = $"TabContainer/Graphs/VSplitContainer/ClientPieChar
 
 onready var ImagePreviewPanel = $"TabContainer/Images/ImagePreviewPanel"
 
-### variables
+### EXPORTED VARIABLES
+
+### VARIABLES
 var current_displayed_job_id : int
 var output_dirs_and_file_name_patterns_nodes : Array
+
+
+
+
+########## FUNCTIONS ##########
 
 
 func _ready():

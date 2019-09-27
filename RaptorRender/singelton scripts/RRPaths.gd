@@ -1,5 +1,15 @@
 extends Node
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var raptor_render_network_directory : String
 
 var connected_server_id : int
@@ -10,6 +20,11 @@ var jobs_data_path : String
 var clients_data_path : String
 var job_types_default_path : String
 
+
+
+
+
+########## FUNCTIONS ##########
 
 
 func _ready():

@@ -2,16 +2,23 @@ extends Button
 
 class_name SortableTableCollumnButton
 
+### PRELOAD RESOURCES
 
+### SIGNALS
+signal column_button_pressed
+
+### ONREADY VARIABLES
 onready var NameLabel : Label = $"MarginContainer/HBoxContainer/Label"
 onready var PrimaryDown : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/primary_down"
 onready var PrimaryUp : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/primary_up"
 onready var SecondaryDown : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/secondary_down"
 onready var SecondaryUp : TextureRect = $"MarginContainer/HBoxContainer/MarginContainer/secondary_up"
 
+### EXPORTED VARIABLES
+
+### VARIABLES
 var column_button_name : String
 var id : int
-
 var primary_sort_column : bool = false
 var secondary_sort_column : bool = false
 var sort_column_primary_reversed : bool = false
@@ -22,9 +29,10 @@ var secondary_down_visible : bool = false
 var secondary_up_visible : bool = false
 
 
-signal column_button_pressed
 
 
+
+########## FUNCTIONS ##########
 
 
 func _ready():

@@ -3,20 +3,20 @@ extends ColorRect
 class_name ImageThumbnail
 
 
-### preload Resources
+### PRELOAD RESOURCES
 
-### signals
+### SIGNALS
 signal thumbnail_pressed
 signal thumbnail_updated
 
-### onready vars
+### ONREADY VARIABLES
 onready var ImageName : Label = $"MarginContainer/ImageTexture/FrameNumberLabel"
 onready var ThumbnailButton : Button = $"MarginContainer/ImageTexture/Button"
 onready var ThumbnailTexture : TextureRect = $"MarginContainer/ImageTexture"
 
-### exported vars
+### EXPORTED VARIABLES
 
-### variables
+### VARIABLES
 var image_path : String
 var image_name : String  # without extension
 var image_number : String  # with padding
@@ -32,7 +32,9 @@ var hovered : bool = false
 
 
 
-# Called when the node enters the scene tree for the first time.
+########## FUNCTIONS ##########
+
+
 func _ready():
 	
 	self.color = RRColorScheme.bg_2
@@ -68,6 +70,7 @@ func load_image():
 	set_thumbnail_size(thumbnail_scale_factor)
 	
 	emit_signal("thumbnail_updated")
+
 
 
 func display_loading_image():

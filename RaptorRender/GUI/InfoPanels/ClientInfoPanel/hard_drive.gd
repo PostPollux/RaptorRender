@@ -1,11 +1,26 @@
 extends VBoxContainer
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES 
 onready var NameLabel = $"HBoxContainer/Name"
 onready var SizeLabel = $"HBoxContainer/Size"
 onready var UsageBar = $"TextureProgress"
 
+### EXPORTED VARIABLES
+
+### VARIABLES
 var client_id
 var drive_number
+
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
 	set_label(client_id, drive_number)

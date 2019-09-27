@@ -11,6 +11,10 @@
 
 extends Node
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
 signal software_start_success_detected
 signal error_detected
 signal critical_error_detected
@@ -18,6 +22,11 @@ signal frame_success_detected
 signal frame_name_detected(type, extracted_string)
 signal success_detected
 
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 
 # CRP: current render process
 var job_type_settings_CRP : ConfigFile
@@ -34,7 +43,6 @@ var critical_error_exclude_regex_CRP : RegEx
 var frame_success_regex_CRP : RegEx
 var frame_name_detect_regex_CRP : RegEx
 var success_regex_CRP : RegEx
-
 
 # Highlight: used to colorize log lines
 var job_type_settings_HIGHLIGHT : ConfigFile
@@ -58,6 +66,12 @@ var success_regex_HIGHLIGHT : RegEx
 # vars to check if software started successfully. Will be reset automatically on each config load.
 var CRP_software_start_success_detected : bool = false 
 var HIGHLIGHT_software_start_success_detected : bool = false
+
+
+
+
+
+########## FUNCTIONS ##########
 
 
 func _ready():

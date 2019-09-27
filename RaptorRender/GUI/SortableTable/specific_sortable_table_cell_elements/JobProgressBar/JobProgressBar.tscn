@@ -3,7 +3,6 @@
 [ext_resource path="res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/JobProgressBar/JobProgressBar.gd" type="Script" id=1]
 [ext_resource path="res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/JobProgressBar/ColorRect_finished.gd" type="Script" id=2]
 
-
 [node name="JobProgressBar" type="MarginContainer"]
 margin_right = 153.0
 margin_bottom = 23.0
@@ -44,9 +43,6 @@ mouse_filter = 2
 size_flags_horizontal = 0
 color = Color( 0.454324, 0.683594, 0.264359, 1 )
 script = ExtResource( 2 )
-color_finished = Color( 0.45098, 0.682353, 0.262745, 1 )
-color_finished_paused = Color( 0.515625, 0.515625, 0.515625, 1 )
-color_finished_cancelled = Color( 0.0976562, 0.0976562, 0.0976562, 1 )
 
 [node name="ProgressLabel" type="Label" parent="."]
 margin_left = 2.0

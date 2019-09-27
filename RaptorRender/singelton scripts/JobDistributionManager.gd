@@ -1,9 +1,24 @@
 extends Node
 
-var distribute_job_timer : Timer 
+### PRELOAD RESOURCES
 
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+var distribute_job_timer : Timer 
 var jobs_active : Array # Array of the job ids that need clients (currently rendering jobs and queued jobs)
 var clients_available : Array # Array of the client ids that are free and can accept a job
+
+
+
+
+
+########## FUNCTIONS ##########
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

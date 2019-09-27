@@ -26,7 +26,7 @@ size_flags_horizontal = 3
 text = "100"
 align = 2
 
-[node name="plus" type="TextureButton" parent="."]
+[node name="PlusButton" type="TextureButton" parent="."]
 margin_left = 38.0
 margin_top = 12.0
 margin_right = 53.0
@@ -40,7 +40,7 @@ texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 3 )
 texture_disabled = ExtResource( 4 )
 
-[node name="minus" type="TextureButton" parent="."]
+[node name="MinusButton" type="TextureButton" parent="."]
 margin_left = 58.0
 margin_top = 12.0
 margin_right = 73.0
@@ -53,9 +53,9 @@ size_flags_vertical = 4
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
 texture_disabled = ExtResource( 7 )
-[connection signal="mouse_entered" from="plus" to="." method="_on_plus_mouse_entered"]
-[connection signal="mouse_exited" from="plus" to="." method="_on_plus_mouse_exited"]
-[connection signal="pressed" from="plus" to="." method="_on_plus_pressed"]
-[connection signal="mouse_entered" from="minus" to="." method="_on_minus_mouse_entered"]
-[connection signal="mouse_exited" from="minus" to="." method="_on_minus_mouse_exited"]
-[connection signal="pressed" from="minus" to="." method="_on_minus_pressed"]
+[connection signal="mouse_entered" from="PlusButton" to="." method="_on_plus_mouse_entered"]
+[connection signal="mouse_exited" from="PlusButton" to="." method="_on_plus_mouse_exited"]
+[connection signal="pressed" from="PlusButton" to="." method="_on_plus_pressed"]
+[connection signal="mouse_entered" from="MinusButton" to="." method="_on_minus_mouse_entered"]
+[connection signal="mouse_exited" from="MinusButton" to="." method="_on_minus_mouse_exited"]
+[connection signal="pressed" from="MinusButton" to="." method="_on_minus_pressed"]

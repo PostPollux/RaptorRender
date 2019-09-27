@@ -1,11 +1,11 @@
 extends VSplitContainer
 
-### preload resources
+### PRELOAD RESOURCES
 var ThumbnailBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ThumbnailBox.tscn")
 
-### signals
+### SIGNALS
 
-### onready variables
+### ONREADY VARIABLES
 onready var ThumbnailsDirectoriesVBox : VBoxContainer= $"VBoxContainer/ThumbnailsScrollContainer/ThumbnailDirectoriesVBox"
 onready var ThumbnailWidthSlider : HSlider = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/ThumbnailWidthSlider"
 onready var FramenumberVisibilityCheckBox : CheckBox = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/FramenumberVisibilityCheckBox"
@@ -14,9 +14,9 @@ onready var PreviewImage : TextureRect = $"EnlargedPreviewContainer/Panel/Margin
 onready var RefreshButton : Button = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/MarginContainer/RefreshButton"
 onready var SizeLabel : Label = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/SizeLabel" 
 
-### exported variables
+### EXPORTED VARIABLES
 
-### variables
+### VARIABLES
 var currently_selected : ImageThumbnail
 var desire_to_select_first_thumbnail : bool = false
 var job_just_selected : bool = false
@@ -24,7 +24,7 @@ var job_just_selected : bool = false
 
 
 
-########## Functions ##########
+########## FUNCTIONS ##########
 
 
 func _ready():

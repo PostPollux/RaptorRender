@@ -9,6 +9,16 @@
 extends Node
 
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
 # job states
 var job_rendering : String = "1_rendering"
 var job_rendering_paused_deferred : String = "2_rendering_paused_deferred"
@@ -43,4 +53,4 @@ var client_offline : String = "5_offline"
 
 
 
-
+########## FUNCTIONS ##########

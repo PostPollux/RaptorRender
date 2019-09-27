@@ -1,17 +1,30 @@
 extends MarginContainer
 
 
-onready var BarActive = $"ColorRect_active"
-onready var BarFinished = $"ColorRect_finished"
-onready var ProgressLabel = $"ProgressLabel"
+### PRELOAD RESOURCES
 
+### SIGNALS
+
+### ONREADY VARIABLES
+onready var BarActive : ColorRect = $"ColorRect_active"
+onready var BarFinished : ColorRect = $"ColorRect_finished"
+onready var ProgressLabel : Label = $"ProgressLabel"
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var CellContainer
-var in_sortable_table = false
+var in_sortable_table : bool = false
+var chunks_total : int = 3
+var chunks_finished : int = 1
+var chunks_active : int = 1
+var job_status : String = "normal"
 
-var chunks_total = 3
-var chunks_finished = 1
-var chunks_active = 1
-var job_status = "normal"
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
 	

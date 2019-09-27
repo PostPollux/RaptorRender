@@ -1,5 +1,21 @@
 extends PopupMenu
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
+
+
+
+
+########## FUNCTIONS ##########
+
+
 func _ready():
 	self.add_item("Pause Job Deffered", 0, 0)
 	self.add_item("Pause Job Immediately", 1, 0)

@@ -1,6 +1,23 @@
 extends Node
 
+
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var time_zone : Dictionary
+
+
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
 	time_zone = OS.get_time_zone_info()

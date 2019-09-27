@@ -11,11 +11,17 @@
 extends Node
 
 
+### PRELOAD RESOURCES
+
+### SIGNALS
 signal render_process_exited
 signal render_process_exited_without_software_start
 
+### ONREADY VARIABLES
 
+### EXPORTED VARIABLES
 
+### VARIABLES
 var platform : String # to decide which function to call depending on os
 
 var invoke_render_pid : int = 999999999 # start value is just a big unrealistic number. Otherwise it would be 0 by default which is the main process which is a bit dangerous...
@@ -36,6 +42,9 @@ var currently_rendering : bool = false
 var read_log_timer : Timer 
 
 
+
+
+########## FUNCTIONS ##########
 
 
 func _ready():

@@ -1,22 +1,22 @@
 extends VBoxContainer
 
-### preload Resources
+### PRELOAD RESOURCES
 var ImageThumbnailRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ImageThumbnail.tscn")
 
-### signals
+### SIGNALS
 signal thumbnail_selected
 signal thumbnails_updated
 signal first_thumbnail_updated
 
-### onready vars
+### ONREADY VARIABLES
 onready var HeaderColorRect = $"Header/ColorRect"
 onready var DirectoryPath = $"Header/MarginContainer/OutputFilesHBox"
 onready var ThumbnailGridContainer : GridContainer = $"ThumbnailGridContainer"
 
-### exported vars
+### EXPORTED VARIABLES
 
 
-### variables
+### VARIABLES
 var original_image_directory : String
 var thumbnail_directory : String
 var dir_index : int
@@ -38,6 +38,8 @@ var job_just_selected : bool = false
 
 
 
+
+########## FUNCTIONS ##########
 
 
 func _ready():

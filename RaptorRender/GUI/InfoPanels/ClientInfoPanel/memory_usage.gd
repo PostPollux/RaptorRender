@@ -1,11 +1,26 @@
 extends TextureProgress
 
 
+### PRELOAD RESOURCES
+
+### SIGNALS
+
+### ONREADY VARIABLES 
+
+### EXPORTED VARIABLES
+
+### VARIABLES
 var client_id : int = -1
 var MemoryUsageTween : Tween
 var last_shown_client : int
 
 var update_interval : float = 2
+
+
+
+
+########## FUNCTIONS ##########
+
 
 func _ready():
 	
