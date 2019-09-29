@@ -6,7 +6,6 @@
 [ext_resource path="res://RaptorRender/GUI/SortableTable/RowContainerFilled.gd" type="Script" id=4]
 [ext_resource path="res://RaptorRender/GUI/SortableTable/RowContainerEmpty.gd" type="Script" id=5]
 
-
 [node name="SortableTable" type="ScrollContainer"]
 margin_left = 60.0
 margin_top = 54.0
@@ -50,7 +49,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBox_TopRow_Content/TopRow"]
-editor/display_folded = true
 margin_right = 615.0
 margin_bottom = 20.0
 mouse_filter = 0
@@ -94,5 +92,4 @@ script = ExtResource( 5 )
 [node name="AutoScrollTween" type="Tween" parent="."]
 [connection signal="draw" from="." to="." method="_on_SortableTable_draw"]
 [connection signal="gui_input" from="." to="." method="_on_SortableTable_gui_input"]
-[connection signal="resized" from="VBox_TopRow_Content" to="VBox_TopRow_Content/TopRow" method="_on_VBox_TopRow_Content_resized"]
 [connection signal="resized" from="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows" to="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty" method="_on_ClipContainerForEmptyRows_resized"]
