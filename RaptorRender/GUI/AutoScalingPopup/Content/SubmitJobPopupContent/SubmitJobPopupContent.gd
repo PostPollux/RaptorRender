@@ -644,7 +644,14 @@ func _on_SelectSceneFileDialog_confirmed():
 	SceneFileLineEdit.text = SelectSceneFileDialog.current_path
 	last_selected_path = SelectSceneFileDialog.current_path
 
+func _on_SelectSceneFileDialog_file_selected(path):
+	SceneFileLineEdit.text = SelectSceneFileDialog.current_path
+	last_selected_path = SelectSceneFileDialog.current_path
+	
 
 func _on_SelectSceneButton_pressed():
 	SelectSceneFileDialog.current_path = last_selected_path
 	SelectSceneFileDialog.popup_centered_ratio(0.75)
+
+
+
