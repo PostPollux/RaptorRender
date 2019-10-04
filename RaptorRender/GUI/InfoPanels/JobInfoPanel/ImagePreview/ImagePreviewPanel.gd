@@ -15,7 +15,8 @@ var ThumbnailBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/Im
 ### SIGNALS
 
 ### ONREADY VARIABLES
-onready var ThumbnailsDirectoriesVBox : VBoxContainer= $"VBoxContainer/ThumbnailsScrollContainer/ThumbnailDirectoriesVBox"
+onready var ThumbnailsDirectoriesVBox : VBoxContainer = $"VBoxContainer/ThumbnailsScrollContainer/ThumbnailDirectoriesVBox"
+onready var ThumbnailsScrollBox : ScrollContainer = $"VBoxContainer/ThumbnailsScrollContainer"
 onready var ThumbnailWidthSlider : HSlider = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/ThumbnailWidthSlider"
 onready var FramenumberVisibilityCheckBox : CheckBox = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/FramenumberVisibilityCheckBox"
 onready var EnlargedPreviewContainer : MarginContainer = $"EnlargedPreviewContainer"
@@ -23,12 +24,16 @@ onready var PreviewImage : TextureRect = $"EnlargedPreviewContainer/Panel/Margin
 onready var RefreshButton : Button = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/MarginContainer/RefreshButton"
 onready var SizeLabel : Label = $"VBoxContainer/ThumbnailSettingsBar/HBoxContainer/SizeLabel" 
 
+
+
 ### EXPORTED VARIABLES
 
 ### VARIABLES
 var currently_selected : ImageThumbnail
 var desire_to_select_first_thumbnail : bool = false
 var job_just_selected : bool = false
+
+var previous_scroll_vertical : int = 0
 
 
 
@@ -44,6 +49,14 @@ func _ready():
 func _process(delta):
 	EnlargedPreviewContainer.rect_min_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
 	EnlargedPreviewContainer.rect_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
+
+
+func _input(event):
+	
+	# save the position of the vertical scroll as soon as shift or control is pressed
+	if Input.is_action_just_pressed("ui_ctrl") :
+		previous_scroll_vertical = ThumbnailsScrollBox.scroll_vertical
+
 
 
 # this function will make sure that the first thumbnail gets selected and that all thumbs show the loading image while loading.
@@ -175,3 +188,18 @@ func _on_CheckBox_toggled(button_pressed):
 func _on_RefreshButton_pressed():
 	job_just_selected = true # this will lead to showing the loading images
 	update_thumbnails()
+
+
+
+
+func _on_ThumbnailsScrollContainer_gui_input(event):
+	
+	if Input.is_key_pressed(KEY_CONTROL):
+		if event.is_action_pressed("ui_mouse_wheel_up"):
+				ThumbnailWidthSlider.value = ThumbnailWidthSlider.value + 0.1
+			
+		if event.is_action_pressed("ui_mouse_wheel_down"):
+				ThumbnailWidthSlider.value = ThumbnailWidthSlider.value - 0.1
+		
+		ThumbnailsScrollBox.scroll_vertical = previous_scroll_vertical
+
