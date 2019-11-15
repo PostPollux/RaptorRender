@@ -108,12 +108,12 @@ func _ready():
 	RowContainerEmpty.connect("selection_cleared", self, "emit_selection_cleared_signal")
 
 
+
 func _input(event):
 	
 	# save the position of the vertical scroll as soon as shift or control is pressed
 	if Input.is_action_just_pressed("ui_shift") or Input.is_action_just_pressed("ui_ctrl") :
 		previous_scroll_vertical = RowScrollContainer.scroll_vertical
-
 
 
 ################
@@ -286,17 +286,32 @@ func scroll_to_row (row_id):
 
 
 
-func _on_SortableTable_gui_input(ev):
-			
+func _on_SortableTable_gui_input(event: InputEvent) -> void:
 	
-	if ev.is_action_pressed("ui_mouse_wheel_up_or_down"):
-
+	print (previous_scroll_vertical)
+	
+	if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
+		RowScrollContainer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		RowScrollContainer.mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	if event.is_action_pressed("ui_mouse_wheel_up_or_down"):
+		
 		if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
 			shift_ctrl_plus_scroll = true
 			RowScrollContainer.scroll_vertical = previous_scroll_vertical
 		else:
 			shift_ctrl_plus_scroll = false
 			self.scroll_horizontal = previous_scroll_horizontal
+
+
+func _on_RowScrollContainer_gui_input(event: InputEvent) -> void:
+	
+	if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
+		RowScrollContainer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		RowScrollContainer.mouse_filter = Control.MOUSE_FILTER_STOP
+		
 
 
 
@@ -306,7 +321,6 @@ func _on_SortableTable_draw():
 		self.scroll_horizontal = previous_scroll_horizontal
 		
 	previous_scroll_horizontal = self.scroll_horizontal
-	
 
 
 
@@ -316,5 +330,7 @@ func _on_SortableTable_draw():
 
 func emit_ContextMenu_signal():
 	emit_signal("context_invoked")
+
+
 
 

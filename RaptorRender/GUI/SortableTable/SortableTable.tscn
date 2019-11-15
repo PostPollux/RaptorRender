@@ -16,6 +16,9 @@ size_flags_vertical = 3
 theme = ExtResource( 1 )
 scroll_vertical_enabled = false
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 row_color = Color( 0.235294, 0.235294, 0.235294, 1 )
 row_color_selected = Color( 0.584314, 0.384314, 0.282353, 1 )
 row_color_red = Color( 0.392157, 0.247059, 0.231373, 1 )
@@ -92,4 +95,5 @@ script = ExtResource( 5 )
 [node name="AutoScrollTween" type="Tween" parent="."]
 [connection signal="draw" from="." to="." method="_on_SortableTable_draw"]
 [connection signal="gui_input" from="." to="." method="_on_SortableTable_gui_input"]
+[connection signal="gui_input" from="VBox_TopRow_Content/RowScrollContainer" to="." method="_on_RowScrollContainer_gui_input"]
 [connection signal="resized" from="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows" to="VBox_TopRow_Content/RowScrollContainer/VBoxContainer/ClipContainerForEmptyRows/RowContainerEmpty" method="_on_ClipContainerForEmptyRows_resized"]
