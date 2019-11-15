@@ -64,7 +64,7 @@ func _process(delta):
 	if dragging_splitter:
 		resize_column_by_drag()
 	
-	# small workaround needed since Godot 3.1 (it will resize the first collumn one time after the first draw the refresh all top buttons which will then show the little arrows)
+	# small workaround needed since Godot 3.1 (it will resize the first collumn one time after the first draw then refresh all top buttons which will then show the little arrows)
 	if just_initialized:
 		ColumnButtons[0].rect_min_size.x = column_widths[0] - 1
 		column_widths[0] = column_widths[0] - 1

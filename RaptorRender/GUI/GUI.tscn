@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://RaptorRender/GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://RaptorRender/GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://RaptorRender/GUI/ContextMenus/Inherited Context Menus/ContextMenu_Log.tscn" type="PackedScene" id=8]
 [ext_resource path="res://RaptorRender/GUI/AutoScalingPopup/AutoScalingPopupBase.tscn" type="PackedScene" id=9]
 [ext_resource path="res://RaptorRender/GUI/NotificationSystem/NotificationSystem.tscn" type="PackedScene" id=10]
+[ext_resource path="res://RaptorRender/GUI/ClientsTabContainer.gd" type="Script" id=11]
 
 [node name="GUI" type="Node"]
 
@@ -22,6 +23,9 @@ color = Color( 0.14902, 0.14902, 0.14902, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MainHSplitContainer" type="HSplitContainer" parent="Control"]
 anchor_right = 1.0
@@ -30,7 +34,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="MainVSplitContainer" type="VSplitContainer" parent="Control/MainHSplitContainer"]
-editor/display_folded = true
 margin_right = 910.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -67,8 +70,9 @@ margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
+script = ExtResource( 11 )
 
-[node name="Clients" type="Tabs" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients"]
+[node name="All Clients" type="Tabs" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -76,7 +80,7 @@ margin_top = 29.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Clients_SortableTable" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients/Clients" instance=ExtResource( 2 )]
+[node name="Clients_SortableTable" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients/All Clients" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 0.0
@@ -119,6 +123,7 @@ context_menu_id = "chunks"
 [node name="ContextMenuBase" parent="Control" instance=ExtResource( 8 )]
 
 [node name="SubmitJobPopup" parent="Control" instance=ExtResource( 9 )]
+visible = false
 popup_id = "submit_job"
 title = "POPUP_SUBMIT_JOB_1"
 ok_button_string = "POPUP_SUBMIT_JOB_1"
@@ -128,3 +133,4 @@ margin_top_percent = 10.0
 margin_bottom_percent = 10.0
 
 [node name="NotificationSystem" parent="." instance=ExtResource( 10 )]
+[connection signal="tab_changed" from="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients" to="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients" method="_on_TabContainerClients_tab_changed"]

@@ -144,6 +144,68 @@ func refresh():
 	RowContainerFilled.update_selection()
 
 
+
+# This function makes sure that a table looks visually the same as another one. It does not copy the content.
+# It syncs stuff like column names, column widths, sorting information, selections, scroll states etc.
+# Until now only used for table syncing of the different pool tables.
+func viusally_sync_with_other_SortableTable(SourceTable : SortableTable):
+	
+	column_names = SourceTable.column_names
+	column_widths = SourceTable.column_widths
+	sort_column_primary = SourceTable.sort_column_primary
+	sort_column_primary_reversed = SourceTable.sort_column_primary_reversed
+	sort_column_secondary = SourceTable.sort_column_secondary
+	sort_column_secondary_reversed = SourceTable.sort_column_secondary_reversed 
+	RowContainerFilled.selected_row_ids = SourceTable.RowContainerFilled.selected_row_ids
+	
+	
+	# highlight the correct colors
+	highlight_column(sort_column_primary)
+	
+	# transfer the sort column settings from SortableTable to its TopRow
+	TopRow.sort_column_primary = sort_column_primary
+	TopRow.sort_column_secondary = sort_column_secondary
+	TopRow.sort_column_primary_reversed = sort_column_primary_reversed
+	TopRow.sort_column_secondary_reversed = sort_column_secondary_reversed
+	
+	# make sure the TopRow Buttons have the correct sorting icon and the correct size
+	var count : int = 1
+	
+	for button in TopRow.ColumnButtons:
+		
+		button.rect_min_size.x = column_widths[count - 1]
+		
+		
+		if count == sort_column_primary:
+			button.primary_sort_column = true
+			button.sort_column_primary_reversed = sort_column_primary_reversed
+			button.show_correct_icon()
+		
+		elif count == sort_column_secondary:
+			button.secondary_sort_column= true
+			button.sort_column_secondary_reversed = sort_column_secondary_reversed
+			button.show_correct_icon()
+		
+		else:
+			button.reset_button()
+		
+		count += 1
+		
+	# make sure the widths of the column are adjusted
+	for col in range(1, column_widths.size()): 
+		set_column_width(col, column_widths[col - 1])
+		
+	# update selection
+	RowContainerFilled.update_selection()
+	
+	# update scroll values. Vertical is reset to 0 as there probably will be different data in the table
+	previous_scroll_horizontal = SourceTable.scroll_horizontal
+	scroll_horizontal = SourceTable.scroll_horizontal
+	RowScrollContainer.scroll_vertical = 0
+	
+
+
+
 func sort():
 	RowContainerFilled.sort_rows()
 	RowContainerFilled.update_sortable_rows_array()
@@ -159,6 +221,8 @@ func update_primary_sort_column(column : int, is_reversed : bool):
 func update_secondary_sort_column(column : int, is_reversed : bool):
 	sort_column_secondary = column
 	sort_column_secondary_reversed = is_reversed
+
+
 
 ##################
 ### handle columns
@@ -198,8 +262,12 @@ func remove_row(id):
 	RowContainerEmpty.update_positions_of_empty_rows()
 
 
+func clear_table() -> void:
+	for id in RowContainerFilled.id_position_dict.keys():
+		remove_row(id)
 
-func set_row_color(row, color):
+
+func set_row_color(row : int, color : Color):
 	RowContainerFilled.set_row_color(row, color)
 
 
@@ -215,13 +283,74 @@ func set_row_color_by_string(row, color_string):
 
 # first row and column is 1, not 0
 # content has to be a node that can be added as a child to the cell
-func set_cell_content(row, column, child): 
+func set_cell_content(row : int, column : int, child : Node): 
 	RowContainerFilled.set_cell_content(row, column, child)
 
 
 # first row and column is 1, not 0
-func set_cell_sort_value(row, column, value):
+func set_cell_sort_value(row : int, column : int, value):
 	RowContainerFilled.set_cell_sort_value(row, column, value)
+
+
+# first row and column is 1, not 0
+func set_LABEL_cell(row : int, column : int, text : String):
+	var CellLabel = Label.new()
+	CellLabel.text = text
+	set_cell_content(row, column, CellLabel)
+	set_cell_sort_value(row, column, text.to_lower())
+
+
+# first row and column is 1, not 0
+func set_LABEL_cell_with_custom_sort(row : int, column : int, text : String, sort_value):
+	var CellLabel = Label.new()
+	CellLabel.text = text
+	set_cell_content(row, column, CellLabel)
+	set_cell_sort_value(row, column, sort_value)
+
+
+# first row and column is 1, not 0
+func update_LABEL_cell(row : int, column : int, text : String):
+	
+	var TableRow : SortableTableRow = get_row_by_position(row)
+	
+	if ( TableRow.sort_values[column] != text):
+		
+		# get reference to the cell
+		var Cell : Node = get_cell( row, column )
+		var CellLabel : Label = Cell.get_child(0)
+		
+		# change the cell value
+		CellLabel.text = text
+		
+		# update sort_value
+		set_cell_sort_value(row, column, text.to_lower())
+
+
+# first row and column is 1, not 0
+func update_LABEL_cell_with_custom_sort(row : int, column : int, text : String, sort_value):
+	
+	var TableRow : SortableTableRow = get_row_by_position(row)
+	
+	if ( TableRow.sort_values[column] != sort_value):
+		
+		# get reference to the cell
+		var Cell : Node = get_cell( row, column )
+		var CellLabel : Label = Cell.get_child(0)
+		
+		# change the cell value
+		CellLabel.text = text
+		
+		# update sort_value
+		set_cell_sort_value(row, column, sort_value)
+
+
+# first row and column is 1, not 0
+# this makes sense to use, if the value that goes into the cell is heavy to calculate
+func compare_sort_values_to_check_if_cell_needs_update(row : int, column : int, sort_value) -> bool:
+	
+	var TableRow : SortableTableRow = get_row_by_position(row)
+	
+	return TableRow.sort_values[column] != sort_value
 
 
 
@@ -287,8 +416,6 @@ func scroll_to_row (row_id):
 
 
 func _on_SortableTable_gui_input(event: InputEvent) -> void:
-	
-	print (previous_scroll_vertical)
 	
 	if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
 		RowScrollContainer.mouse_filter = Control.MOUSE_FILTER_IGNORE

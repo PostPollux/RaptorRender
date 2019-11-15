@@ -338,10 +338,11 @@ func _on_ContextMenu_index_pressed(index):
 				if status == RRStateScheme.client_offline:
 					
 					# id reset for Client Info Panel of CPU and memory brs. Otherwise it would crash
-					RaptorRender.ClientInfoPanel.CPUUsageBar.client_id = ""
-					RaptorRender.ClientInfoPanel.MemoryUsageBar.client_id = ""
+					RaptorRender.ClientInfoPanel.CPUUsageBar.client_id = -1
+					RaptorRender.ClientInfoPanel.MemoryUsageBar.client_id = -1
 					
 					# remove from database
+					RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
 					RaptorRender.rr_data.clients.erase(selected)
 				
 				
@@ -350,8 +351,10 @@ func _on_ContextMenu_index_pressed(index):
 				
 			# handle the Clients Info Panel
 			RaptorRender.ClientsTable.clear_selection()
+			RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
 			RaptorRender.ClientInfoPanel.visible = false
 			RaptorRender.ClientInfoPanel.reset_to_first_tab()
+			
 				
 				
 			RaptorRender.ClientsTable.refresh()

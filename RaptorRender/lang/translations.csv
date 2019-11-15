@@ -77,6 +77,9 @@ JOB_IMAGES_2,refresh,aktualisieren
 JOB_IMAGES_3,size,Größe
 JOB_IMAGES_4,frame numbers,Bildnummern
 ,,
+"","",""
+CLIENT_TAB_1,All Clients,Alle Clients
+"","",""
 CLIENT_COLUMN_1,Status,Status
 CLIENT_COLUMN_2,Name,Name
 CLIENT_COLUMN_3,Username,Benutzer

@@ -56,7 +56,7 @@ var log_job_id : int
 var log_chunk_id : int
 var log_try_id : int 
 
-var currently_selected_client_id : int = 0
+var currently_selected_client_id : int = -1
 var ctrl_plus_c_pressed : bool = false
 
 
@@ -340,7 +340,7 @@ func _on_TabContainer_tab_changed(tab):
 
 func check_if_newer_log_available():
 	
-	if currently_selected_client_id != 0:
+	if currently_selected_client_id != -1:
 		var fetched_job_id : int = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[0]
 		var fetched_chunk_id : int = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[1]
 		var fetched_try_id : int = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[2]

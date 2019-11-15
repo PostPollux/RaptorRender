@@ -111,7 +111,7 @@ func create_client_dict() -> Dictionary:
 		"last_render_log": [0,0,0],
 		"error_count": 0,
 		"platform": platform_info,
-		"pools": ["AE_Plugins", "another pool", "third pool"],
+		"pools": [],
 		"rr_version": 0.2,
 		"time_connected": 1528759663,
 		"cpu": cpu_info,
