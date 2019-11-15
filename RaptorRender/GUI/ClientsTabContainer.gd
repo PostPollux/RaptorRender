@@ -50,6 +50,11 @@ func update_tabs() -> void:
 		
 		tabs_pools_dict[tab_count] = pool
 		
+		Clients_SortableTable.connect("refresh_table_content", RaptorRender, "refresh_clients_table")
+		Clients_SortableTable.connect("something_just_selected", RaptorRender, "client_selected")
+		Clients_SortableTable.connect("selection_cleared", RaptorRender, "client_selection_cleared")
+		Clients_SortableTable.connect("context_invoked", RaptorRender, "client_context_menu_invoked")
+		
 		tab_count += 1
 
 
