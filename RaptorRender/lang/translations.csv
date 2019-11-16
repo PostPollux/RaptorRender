@@ -77,9 +77,9 @@ JOB_IMAGES_2,refresh,aktualisieren
 JOB_IMAGES_3,size,Größe
 JOB_IMAGES_4,frame numbers,Bildnummern
 ,,
-"","",""
+,,
 CLIENT_TAB_1,All Clients,Alle Clients
-"","",""
+,,
 CLIENT_COLUMN_1,Status,Status
 CLIENT_COLUMN_2,Name,Name
 CLIENT_COLUMN_3,Username,Benutzer
@@ -249,3 +249,6 @@ Ansonsten geht viel Zeit verloren, wenn ein halb fertiger Chunk mit z.b. 10 Fram
 Bei kurzen Renderzeiten pro Bild macht es hingegen Sinn, eine Höhere Zahl zu verwenden,
 da dann nicht für jedes Bild das Programm und die Szene erneut geladen werden müssen."
 POPUP_SUBMIT_JOB_TOOLTIP_3,Jobs with higher priority will be rendered first,Jobs mit einer höheren Priorität werden zuerst gerendert
+"","",""
+"","",""
+POPUP_POOLMANAGER_1,Poolmanager,Poolverwaltung

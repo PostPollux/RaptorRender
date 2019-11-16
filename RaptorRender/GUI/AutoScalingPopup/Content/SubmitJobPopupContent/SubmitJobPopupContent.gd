@@ -3,7 +3,7 @@ extends VBoxContainer
 
 ### PRELOAD RESOURCES
 var HBoxContainerSep15Res = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/HBoxContainerSep15.tscn")
-var ActivateCheckBoxRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobSettingActivateCheckBox.tscn")
+var ActivateCheckBoxRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobPopupContent/SubmitJobSettingActivateCheckBox.tscn")
 
 ### SIGNALS
 signal job_successfully_created
@@ -193,7 +193,7 @@ func fill_pool_menu_button() -> void:
 	PoolMenuButton.text = tr("CLIENT_TAB_1")
 	
 	for pool in RaptorRender.rr_data.pools.keys():
-		popup.add_check_item( RaptorRender.rr_data.pools[pool], pool )
+		popup.add_check_item( RaptorRender.rr_data.pools[pool].name, pool )
 
 
 
@@ -231,7 +231,7 @@ func pool_selected(pool_id : int) -> void:
 		if pool == 0:
 			selected_pools_str += tr("CLIENT_TAB_1") + "  |  "
 		else:
-			selected_pools_str += RaptorRender.rr_data.pools[pool] + "  |  "
+			selected_pools_str += RaptorRender.rr_data.pools[pool].name + "  |  "
 	
 	if selected_pools_str.length() > 0:
 		selected_pools_str = selected_pools_str.left(selected_pools_str.length() - 5 )

@@ -43,7 +43,7 @@ func update_tabs() -> void:
 		
 		
 		var tab : Tabs = Tabs.new()
-		tab.name = RaptorRender.rr_data.pools[pool]
+		tab.name = RaptorRender.rr_data.pools[pool].name
 		tab.add_child(Clients_SortableTable)
 		
 		self.add_child(tab)

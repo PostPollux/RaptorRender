@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://RaptorRender/GUI/NotificationSystem/NotificationSystem.gd"
 }, {
+"base": "MarginContainer",
+"class": "PoolItem",
+"language": "GDScript",
+"path": "res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/PoolItem.gd"
+}, {
 "base": "Control",
 "class": "RRContextMenuBase",
 "language": "GDScript",
@@ -75,6 +80,7 @@ _global_script_class_icons={
 "ImageThumbnail": "",
 "JobInfoPanel": "",
 "NotificationSystem": "",
+"PoolItem": "",
 "RRContextMenuBase": "",
 "SortableTable": "",
 "SortableTableCollumnButton": "",

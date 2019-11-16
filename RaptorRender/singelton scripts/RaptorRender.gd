@@ -6,6 +6,7 @@ var JobProgressBarRes = preload("res://RaptorRender/GUI/SortableTable/specific_s
 var JobPriorityControlRes = preload("res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/PriorityControl/PriorityControl.tscn")
 var CurrentJobLinkRes = preload("res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/CurrentJobLink/CurrentJobLink.tscn")
 var SubmitJobPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobPopupContent/SubmitJobPopupContent.tscn")
+var PoolManagerPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/PoolManagerPopupContent.tscn")
 
 ### SIGNALS
 
@@ -29,6 +30,7 @@ var ContextMenu_Chunks : RRContextMenuBase
 var ContextMenu_Log : RRContextMenuBase
 
 var SubmitJobPopup : AutoScalingPopup
+var PoolManagerPopup : AutoScalingPopup
 
 var ClientInfoPanel : ClientInfoPanel
 var JobInfoPanel : JobInfoPanel
@@ -910,10 +912,22 @@ func _ready():
 		
 		
 		"pools": {
-			1 : "AE_Plugins",
-			2 : "another pool",
-			3 : "third pool",
-			4 : "8GB+ VRam"
+			1 : {
+				"name" : "AE_Plugins",
+				"note" : "Red Giant plugins installed!"
+			},
+			2 : {
+				"name" : "another pool",
+				"note" : ""
+			},
+			3 :  {
+				"name" : "third pool",
+				"note" : ""
+			},
+			4 : {
+				"name" : "8GB+ VRam",
+				"note" : "All Computers in this pool have at least 8gb of vram."
+			}
 		}
 	}
 	
@@ -1090,6 +1104,13 @@ func register_popup(popup):
 			var SubmitJobPopupContent = SubmitJobPopupContentRes.instance()
 			SubmitJobPopupContent.connect("job_successfully_created", SubmitJobPopup, "hide_popup")
 			SubmitJobPopup.set_content(SubmitJobPopupContent )
+		
+		"poolmanager":
+			PoolManagerPopup = popup
+			
+			var PoolManagerPopupContent = PoolManagerPopupContentRes.instance()
+			#PoolManagerPopupContent.connect("job_successfully_created", PoolManagerPopup, "hide_popup")
+			PoolManagerPopup.set_content(PoolManagerPopupContent )
 
 
 
@@ -1188,6 +1209,12 @@ func _input(event):
 			SubmitJobPopup.show_popup()
 		else:
 			SubmitJobPopup.hide_popup()
+	
+	if Input.is_key_pressed(KEY_P):
+		if PoolManagerPopup.visible == false:
+			PoolManagerPopup.show_popup()
+		else:
+			PoolManagerPopup.hide_popup()
 			
 	if Input.is_key_pressed(KEY_L):
 		if TranslationServer.get_locale() == "de":
@@ -1342,7 +1369,7 @@ func refresh_clients_table():
 		
 		for tab in tabs_pools_dict:
 			if tabs_pools_dict[tab] == pool:
-				ClientsTabContainer.get_child(tab).name = rr_data.pools[pool] +  " (" + String ( num_of_clients_in_pool ) + ")"
+				ClientsTabContainer.get_child(tab).name = rr_data.pools[pool].name +  " (" + String ( num_of_clients_in_pool ) + ")"
 	
 	
 	#### Fill or update Clients Table ####
@@ -1544,12 +1571,12 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		
 		### Pools ###
 		
-		var pools_string = ""
-		var pool_count = 1
+		var pools_string : String = ""
+		var pool_count : int = 1
 			
 		if rr_data.jobs[job].pools.size() > 0:
 			for pool in rr_data.jobs[job].pools:
-				pools_string += rr_data.pools[pool]
+				pools_string += rr_data.pools[pool].name
 				if pool_count < rr_data.jobs[job].pools.size():
 					pools_string += ", "
 				pool_count += 1
@@ -1720,12 +1747,12 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		
 		if rr_data.jobs[job].pools.size() > 0:
 			for pool in rr_data.jobs[job].pools:
-				pools_string += rr_data.pools[pool]
+				pools_string += rr_data.pools[pool].name
 				if pool_count < rr_data.jobs[job].pools.size():
 					pools_string += ", "
 				pool_count += 1
 		
-		JobsTable.set_LABEL_cell(jobs_iterator, pools_column,pools_string)
+		JobsTable.set_LABEL_cell(jobs_iterator, pools_column, pools_string)
 		
 		
 		### Note ###
@@ -2190,7 +2217,7 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		if rr_data.clients[client].pools.size() > 0:
 			for pool in rr_data.clients[client].pools:
-				pools_string += rr_data.pools[pool]
+				pools_string += rr_data.pools[pool].name
 				if pool_count < rr_data.clients[client].pools.size():
 					pools_string += ", "
 				pool_count += 1
@@ -2308,7 +2335,7 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		if rr_data.clients[client].pools.size() > 0:
 			for pool in rr_data.clients[client].pools:
-				pools_string += rr_data.pools[pool]
+				pools_string += rr_data.pools[pool].name
 				if pool_count < rr_data.clients[client].pools.size():
 					pools_string += ", "
 				pool_count += 1

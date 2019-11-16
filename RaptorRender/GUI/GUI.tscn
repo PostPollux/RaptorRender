@@ -132,5 +132,12 @@ margin_right_percent = 25.0
 margin_top_percent = 10.0
 margin_bottom_percent = 10.0
 
+[node name="PoolManagerPopup" parent="Control" instance=ExtResource( 9 )]
+visible = false
+popup_id = "poolmanager"
+title = "POPUP_POOLMANAGER_1"
+margin_top_percent = 10.0
+margin_bottom_percent = 10.0
+
 [node name="NotificationSystem" parent="." instance=ExtResource( 10 )]
 [connection signal="tab_changed" from="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients" to="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients" method="_on_TabContainerClients_tab_changed"]
