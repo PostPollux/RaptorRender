@@ -16,7 +16,7 @@ onready var JobTypeLabel : Label = $"JobTypeContainer/HBoxContainer/JobTypeLabel
 onready var JobVersionLabel : Label = $"JobTypeContainer/HBoxContainer/JobVersionLabel"
 
 onready var ContentScrollContainer : ScrollContainer = $"ScrollContainer"
-onready var MinimumSizeContianer : MarginContainer = $"ScrollContainer/MinimumSizeContainer"
+onready var MinimumSizeContainer : MarginContainer = $"ScrollContainer/MinimumSizeContainer"
 onready var TypeMaskContent : VBoxContainer = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent"
 onready var SpecificJobSettings : VBoxContainer = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/SpecificJobSettings"
 
@@ -36,6 +36,7 @@ onready var RenderRangeLineEdit : LineEdit = $"ScrollContainer/MinimumSizeContai
 onready var ChunkSizeSpinBox : SpinBox = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/ChunkSize/ChunkSizeSpinBox"
 onready var PrioritySlider : HSlider = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority/PriorityHSlider"
 onready var PrioritySpinBox : SpinBox = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Priority/PriorityValueSpinBox"
+onready var PoolMenuButton : MenuButton = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Pool/PoolMenuButton"
 onready var NoteLineEdit : LineEdit = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/Note/NoteLineEdit"
 onready var StartPausedCheckBox : CheckBox = $"ScrollContainer/MinimumSizeContainer/TypeMaskContent/BasicJobInfo/StartPaused/StartPausedCheckBox"
 
@@ -49,6 +50,8 @@ var job_type_settings_path : String
 
 var last_selected_path : String = ""
 
+var selected_pools : Array = []
+
 var specific_input_fields : Dictionary
 
 
@@ -61,6 +64,8 @@ func _ready():
 	
 	get_parent().connect("popup_shown", self, "initialize_on_show")
 	get_parent().connect("ok_pressed", self, "validate_input_mask")
+	
+	PoolMenuButton.get_popup().connect("id_pressed", self, "pool_selected")
 	
 	specific_input_fields = {}
 	
@@ -95,9 +100,10 @@ func initialize_on_show():
 	PrioritySlider.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_3"
 	PrioritySpinBox.hint_tooltip = "POPUP_SUBMIT_JOB_TOOLTIP_3"
 	
-	# fill job type option buttons
+	# fill job type option buttons and pool option button
 	fill_job_type_option_button(job_type_settings_path)
 	fill_type_version_option_button( job_type_settings_path + JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id()) )
+	fill_pool_menu_button()
 	
 	# reset values to default values
 	JobNameLineEdit.text = tr("POPUP_SUBMIT_JOB_12") # New Job
@@ -172,6 +178,71 @@ func fill_type_version_option_button(path : String):
 		dir.list_dir_end()
 		
 		load_type_mask()
+
+
+# makes sure that all pools are listed in the popup
+func fill_pool_menu_button() -> void:
+	var popup : Popup = PoolMenuButton.get_popup()
+	popup.clear()
+	selected_pools.clear()
+	popup.hide_on_checkable_item_selection = false
+	
+	popup.add_check_item( tr("CLIENT_TAB_1"), 0 )
+	popup.set_item_checked(0, true)
+	selected_pools.append(0)
+	PoolMenuButton.text = tr("CLIENT_TAB_1")
+	
+	for pool in RaptorRender.rr_data.pools.keys():
+		popup.add_check_item( RaptorRender.rr_data.pools[pool], pool )
+
+
+
+# this function gets called by id_pressed signal of the popup. "pool_id" is the custom id we assigned to each entry on creation. It is the exact pool id, while index represents the position in the popup.
+func pool_selected(pool_id : int) -> void:
+	var popup : Popup = PoolMenuButton.get_popup()
+	var index : int = popup.get_item_index(pool_id)
+	
+	# handle deselecting
+	if popup.is_item_checked(index):
+		popup.set_item_checked(index, false)
+		selected_pools.erase(pool_id)
+		
+	# handle selecting
+	else:
+		if index == 0:
+			for pool in selected_pools:
+				if pool != 0:
+					popup.set_item_checked(popup.get_item_index(pool), false)
+			selected_pools.clear()
+			selected_pools.append(0)
+			popup.set_item_checked(0, true)
+		else:
+			popup.set_item_checked(index, true)
+			selected_pools.append(pool_id)
+	
+	# delete "All Clients" pool if we have another selected
+	if selected_pools.size() > 1:
+		selected_pools.erase(0)
+		popup.set_item_checked(0, false)
+	
+	# gnerate String that gets displayed
+	var selected_pools_str : String = ""
+	for pool in selected_pools:
+		if pool == 0:
+			selected_pools_str += tr("CLIENT_TAB_1") + "  |  "
+		else:
+			selected_pools_str += RaptorRender.rr_data.pools[pool] + "  |  "
+	
+	if selected_pools_str.length() > 0:
+		selected_pools_str = selected_pools_str.left(selected_pools_str.length() - 5 )
+	
+	# select "All Clients" if everything gets deselected
+	else: 
+		popup.set_item_checked(0, true)
+		selected_pools.append(0)
+		selected_pools_str = tr("CLIENT_TAB_1")
+		
+	PoolMenuButton.text = selected_pools_str
 
 
 
@@ -524,6 +595,7 @@ func create_new_job():
 				specific_settings_dict[specific_setting + "__cmd_value"] = cmd_value
 			
 			
+	selected_pools.erase(0) # make sure "All Clients" is not included as pool
 	
 	var new_job : Dictionary = {
 								"id": job_id,
@@ -540,7 +612,7 @@ func create_new_job():
 								"progress": 0,
 								"note": NoteLineEdit.text,
 								"errors": 0,
-								"pools": [],
+								"pools": selected_pools,
 								"scene_path" : SceneFileLineEdit.text,
 								"output_dirs_and_file_name_patterns" : [],
 								"render_time" : 0,
@@ -626,8 +698,8 @@ func _on_JobTypeVersionButton_item_selected(ID):
 	load_type_mask()
 	
 func _on_MinimumSizeContainer_draw():
-	MinimumSizeContianer.rect_min_size.x = ContentScrollContainer.rect_size.x - 15
-	MinimumSizeContianer.rect_min_size.y = ContentScrollContainer.rect_size.y - 15
+	MinimumSizeContainer.rect_min_size.x = ContentScrollContainer.rect_size.x - 15
+	MinimumSizeContainer.rect_min_size.y = ContentScrollContainer.rect_size.y - 15
 
 
 
