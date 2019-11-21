@@ -120,10 +120,8 @@ func initialize_row(id) -> SortableTableRow:
 	
 	# connect signals to enable selecting and invoking a context menu
 	Row.connect("row_clicked", self, "select_SortableRows")
-	Row.connect("row_clicked_middle", self, "select_SortableRows_middle_mouse")
 	Row.connect("row_clicked_rmb", self, "open_context_menu")
 	Row.connect("drag_select", self, "drag_select_SortableRows")
-	Row.connect("drag_select_middle", self, "drag_select_SortableRows_middle_mouse")
 	
 	# initialize the array for the sort values with correct amount of empty strings. Important, otherwise it would crash
 	for column in TopRow.ColumnButtons:
@@ -360,48 +358,6 @@ func select_SortableRows(row_position : int):
 
 
 
-func select_SortableRows_middle_mouse(row_position : int):
-	
-	var ClickedRow : SortableTableRow = SortableRows[row_position - 1]
-	
-	if row_pos_of_last_middle_mouse_click == 0:
-		row_pos_of_last_middle_mouse_click = ClickedRow.row_position
-		
-	if Input.is_key_pressed(KEY_SHIFT):
-		
-		if selected_row_ids.size() > 0:
-			
-			if row_position > row_pos_of_last_middle_mouse_click:
-				
-				for i in range(row_pos_of_last_middle_mouse_click, row_position + 1):
-					if SortableRows[i-1].selected == true:
-						SortableRows[i-1].set_selected(false)
-						selected_row_ids.erase(SortableRows[i-1].id)
-			
-			if row_position < row_pos_of_last_middle_mouse_click:
-				
-				for i in range(row_position , row_pos_of_last_middle_mouse_click + 1):
-					if SortableRows[i-1].selected == true:
-						SortableRows[i-1].set_selected(false)
-						selected_row_ids.erase(SortableRows[i-1].id)
-		else:
-			ClickedRow.set_selected(false)
-			selected_row_ids.erase(ClickedRow.id)
-		
-	else:
-		ClickedRow.set_selected(false)
-		selected_row_ids.erase(ClickedRow.id)
-	
-	row_pos_of_last_middle_mouse_click = ClickedRow.row_position
-	
-	# emit correct signal
-	if selected_row_ids.size() > 0:
-		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1] )
-	else:
-		SortableTable.emit_selection_cleared_signal()
-
-
-
 
 func drag_select_SortableRows(row_position : int):
 	
@@ -428,17 +384,6 @@ func drag_select_SortableRows(row_position : int):
 	if selected_row_ids.size() > 0:
 		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1])
 
-
-
-func drag_select_SortableRows_middle_mouse(row_position : int):
-	
-	var DragedRow : SortableTableRow  = SortableRows[row_position - 1]
-	
-	DragedRow.set_selected(false)
-	selected_row_ids.erase(DragedRow)
-	
-	if selected_row_ids.size() > 0:
-		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1])
 
 
 
