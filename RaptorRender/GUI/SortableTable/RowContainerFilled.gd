@@ -62,16 +62,6 @@ func _ready():
 	row_height = SortableTable.row_height
 
 
-func _process(delta : float) -> void:
-	if Input.is_action_just_pressed("select_all"):
-		var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-		var row_scroll_container_rect : Rect2 = RowScrollContainer.get_global_rect()
-		if row_scroll_container_rect.has_point(mouse_pos):
-			select_all()
-
-
-
-
 ###############
 ### manage rows
 ###############
@@ -122,6 +112,7 @@ func initialize_row(id) -> SortableTableRow:
 	Row.connect("row_clicked", self, "select_SortableRows")
 	Row.connect("row_clicked_rmb", self, "open_context_menu")
 	Row.connect("drag_select", self, "drag_select_SortableRows")
+	Row.connect("select_all_pressed", self, "select_all")
 	
 	# initialize the array for the sort values with correct amount of empty strings. Important, otherwise it would crash
 	for column in TopRow.ColumnButtons:
@@ -389,7 +380,6 @@ func drag_select_SortableRows(row_position : int):
 
 
 func select_all():
-	
 	# select or deselect all rows depending on wheter all are already selected or not
 	if selected_row_ids.size() != SortableRows.size():
 		

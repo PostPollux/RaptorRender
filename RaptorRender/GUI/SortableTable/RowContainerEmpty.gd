@@ -91,7 +91,7 @@ func create_empty_row():
 		
 		# connect signals to enable selecting
 		Row.connect("row_clicked", self, "select_SortableRows")
-		Row.connect("row_clicked_middle", self, "select_SortableRows_middle_mouse")
+		Row.connect("select_all_pressed", self, "select_all")
 		
 		Row.create_cells()
 		
@@ -213,19 +213,8 @@ func select_SortableRows(row_position):
 		RowContainerFilled.selected_row_ids.clear()
 		emit_signal("selection_cleared")
 
-func select_SortableRows_middle_mouse(row_position):
-	
-	var SortableRows = RowContainerFilled.SortableRows
-
-		
-	if Input.is_key_pressed(KEY_SHIFT):
-		
-		if RowContainerFilled.selected_row_ids.size() > 0:
-			
-			for i in range(RowContainerFilled.row_pos_of_last_middle_mouse_click, SortableRows.size() + 1):
-				if SortableRows[i-1].selected == true:
-					SortableRows[i-1].set_selected(false)
-					RowContainerFilled.selected_row_ids.erase(SortableRows[i-1].id)
 
 
+func select_all():
+	RowContainerFilled.select_all()
 

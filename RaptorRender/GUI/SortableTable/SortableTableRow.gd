@@ -20,6 +20,7 @@ class_name SortableTableRow
 signal row_clicked
 signal row_clicked_rmb
 signal drag_select
+signal select_all_pressed
 
 ### ONREADY VARIABLES
 onready var HBoxForCells : HBoxContainer = $"HBoxContainer"
@@ -71,6 +72,11 @@ func _ready():
 	update_row_even_or_odd()
 	update_row_color()
 
+
+func _process(delta : float) -> void:
+	if hovered:
+		if Input.is_action_just_pressed("select_all"):
+			emit_signal("select_all_pressed")
 
 
 
