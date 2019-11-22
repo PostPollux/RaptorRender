@@ -8,6 +8,7 @@ class_name PoolItem
 ### SIGNALS
 signal pool_item_clicked
 signal pool_item_doubleclicked
+signal select_all_pressed
 
 ### ONREADY VARIABLES
 onready var BgColorRect : ColorRect = $"BgColorRect"
@@ -19,6 +20,7 @@ onready var NameLineEdit : LineEdit = $"NameEdit"
 ### VARIABLES
 var pool_name : String = ""
 var selected : bool = false
+var hovered : bool = false
 
 
 
@@ -30,6 +32,12 @@ var selected : bool = false
 func _ready() -> void:
 	NameLabel.text = pool_name
 	#BgColorRect.color = RRColorScheme.bg_2
+
+
+func _process(delta : float) -> void:
+	if hovered:
+		if Input.is_action_just_pressed("select_all"):
+			emit_signal("select_all_pressed")
 
 
 func set_name(name : String) -> void:
@@ -103,7 +111,12 @@ func exit_and_apply_name_edit_mode() -> void:
 
 func select() -> void:
 	selected = true
-	BgColorRect.color = RRColorScheme.selected.lightened(0.1)
+	BgColorRect.color = RRColorScheme.selected
+	
+	var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+	if self.get_global_rect().has_point(mouse_pos):
+		BgColorRect.color = RRColorScheme.selected.lightened(0.1)
+
 
 
 func deselect() -> void:
@@ -138,10 +151,12 @@ func _on_NameEdit_text_entered(new_text: String) -> void:
 
 
 func _on_PoolItem_mouse_entered() -> void:
+	hovered = true
 	highlight()
 
 
 
 func _on_PoolItem_mouse_exited() -> void:
+	hovered = false
 	remove_highlight()
 

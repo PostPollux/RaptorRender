@@ -6,6 +6,9 @@
 margin_right = 386.0
 margin_bottom = 22.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BgColorRect" type="ColorRect" parent="."]
 margin_right = 386.0
@@ -16,14 +19,15 @@ size_flags_vertical = 3
 color = Color( 0.301961, 0.301961, 0.301961, 1 )
 
 [node name="Label" type="Label" parent="."]
+margin_top = 4.0
 margin_right = 386.0
-margin_bottom = 22.0
+margin_bottom = 18.0
 text = "test pool"
 
 [node name="NameEdit" type="LineEdit" parent="."]
 visible = false
 margin_right = 386.0
-margin_bottom = 22.0
+margin_bottom = 24.0
 [connection signal="gui_input" from="." to="." method="_on_PoolItem_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_PoolItem_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_PoolItem_mouse_exited"]

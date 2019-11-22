@@ -29,14 +29,6 @@ func _ready() -> void:
 	load_existing_pools()
 	pass 
 
-func _process(delta : float) -> void:
-	if self.visible:
-		if Input.is_action_just_pressed("select_all"):
-			var mouse_pos : Vector2 = get_viewport().get_mouse_position()
-			var PoolItemVBoxContainer_rect : Rect2 = PoolItemVBoxContainer.get_global_rect()
-			if PoolItemVBoxContainer_rect.has_point(mouse_pos):
-				select_all()
-
 
 
 func clear() -> void:
@@ -54,6 +46,7 @@ func load_existing_pools() -> void:
 		
 		# connect signals to enable selecting 
 		NewPoolItem.connect("pool_item_clicked", self, "select_PoolItem")
+		NewPoolItem.connect("select_all_pressed", self, "select_all")
 		
 		PoolItemVBoxContainer.add_child(NewPoolItem)
 
@@ -70,8 +63,13 @@ func create_new_pool_item() -> void:
 	
 	# connect signals to enable selecting 
 	NewPoolItem.connect("pool_item_clicked", self, "select_PoolItem")
+	NewPoolItem.connect("select_all_pressed", self, "select_all")
 	
 	PoolItemVBoxContainer.add_child(NewPoolItem)
+	
+	NewPoolItem.select()
+	SelectedPoolItems.append(NewPoolItem)
+
 
 
 func delete_pools() -> void:
@@ -82,6 +80,7 @@ func delete_pools() -> void:
 
 
 func _on_Create_Button_pressed() -> void:
+	clear_selection()
 	create_new_pool_item()
 
 
@@ -100,83 +99,40 @@ func _on_Delete_Button_pressed() -> void:
 func select_PoolItem( ClickedPoolItem : Node):
 	
 	if Input.is_key_pressed(KEY_CONTROL):
+		
+		exit_and_apply_name_edit_mode_for_all_items(ClickedPoolItem)
+		
 		if ClickedPoolItem.selected == true:
 			ClickedPoolItem.deselect()
 			SelectedPoolItems.erase(ClickedPoolItem)
 		else:
 			ClickedPoolItem.select()
 			SelectedPoolItems.append(ClickedPoolItem)
-
 		
 		
-#	elif Input.is_key_pressed(KEY_SHIFT):
-#
-#		if selected_row_ids.size() > 0:
-#
-#			var previous_selected_row_position : int = 0
-#
-#			for Row in SortableRows:
-#				if Row.id == selected_row_ids[selected_row_ids.size() - 1]:
-#					previous_selected_row_position = Row.row_position
-#
-#			if row_position > previous_selected_row_position:
-#
-#				for i in range(previous_selected_row_position, row_position + 1):
-#					if SortableRows[i-1].selected == false:
-#						SortableRows[i-1].set_selected(true)
-#						selected_row_ids.append(SortableRows[i-1].id)
-#
-#			if row_position < previous_selected_row_position:
-#
-#				for i in range(row_position, previous_selected_row_position):
-#					if SortableRows[i-1].selected == false:
-#						SortableRows[i-1].set_selected(true)
-#						selected_row_ids.append(SortableRows[i-1].id)
-#		else:
-#			ClickedRow.set_selected(true)
-#			selected_row_ids.append(ClickedRow.id)
-#
-#	else:
-#		for Row in SortableRows:
-#			Row.set_selected(false)
-#		selected_row_ids.clear()
-#
-#		ClickedRow.set_selected(true)
-#		selected_row_ids.append(ClickedRow.id)
-#
-#	# emit correct signal
-#	if selected_row_ids.size() > 0:
-#		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1] )
-#	else:
-#		SortableTable.emit_selection_cleared_signal()
+	elif Input.is_key_pressed(KEY_SHIFT):
+		
+		exit_and_apply_name_edit_mode_for_all_items(ClickedPoolItem)
+		
+		var last_selected_position : int = 0
+		last_selected_position = SelectedPoolItems.back().get_position_in_parent()
+		var position_of_just_clicked_item : int = ClickedPoolItem.get_position_in_parent()
+		
+		if last_selected_position < position_of_just_clicked_item:
+			for i in range(last_selected_position, position_of_just_clicked_item + 1, 1):
+				PoolItemVBoxContainer.get_child(i).select()
+		else:
+			for i in range(last_selected_position, position_of_just_clicked_item -1, -1):
+				PoolItemVBoxContainer.get_child(i).select()
+			
+		
+	else:
+		clear_selection()
+		exit_and_apply_name_edit_mode_for_all_items(ClickedPoolItem)
+		
+		ClickedPoolItem.select()
+		SelectedPoolItems.append(ClickedPoolItem)
 
-
-
-
-#func drag_select_SortableRows(row_position : int):
-#
-#	var DragedRow : SortableTableRow = SortableRows[row_position - 1]
-#
-#	if Input.is_key_pressed(KEY_CONTROL):
-#		DragedRow.set_selected(false)
-#		selected_row_ids.erase(DragedRow)
-#
-#
-#	elif Input.is_key_pressed(KEY_SHIFT):
-#		if DragedRow.selected == false:
-#			DragedRow.set_selected(true)
-#			selected_row_ids.append(DragedRow.id)
-#
-#	else:
-#		for Row in SortableRows:
-#			Row.set_selected(false)
-#		selected_row_ids.clear()
-#
-#		DragedRow.set_selected(true)
-#		selected_row_ids.append(DragedRow.id)
-#
-#	if selected_row_ids.size() > 0:
-#		SortableTable.emit_selection_signal( selected_row_ids[selected_row_ids.size() - 1])
 
 
 
@@ -196,17 +152,6 @@ func select_all():
 		clear_selection()
 
 
-#
-#func update_selection():
-#	for Row in SortableRows:
-#		Row.set_selected(false)
-#
-#	for selected_row_id in selected_row_ids:
-#		for Row in SortableRows:
-#			if Row.id == selected_row_id:
-#				Row.set_selected(true)
-
-
 
 func clear_selection():
 	
@@ -215,4 +160,13 @@ func clear_selection():
 	for child in PoolItemVBoxContainer.get_children():
 		if child.selected == true:
 			child.deselect()
+
+
+func exit_and_apply_name_edit_mode_for_all_items(currently_clicked : Node) -> void:
+	
+	for child in PoolItemVBoxContainer.get_children():
+		
+		# don't exit on the clicked one itself. Otherwise we could not enter that mode with a double click at all...
+		if child != currently_clicked:
+			child.exit_and_apply_name_edit_mode()
 
