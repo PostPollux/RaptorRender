@@ -25,38 +25,57 @@ func _ready() -> void:
 
 func update_tabs() -> void:
 	
-	var tab_count : int = 1
+	var current_tab_count : int = self.get_child_count()
+	var needed_tab_count : int = RaptorRender.rr_data.pools.keys().size() + 1
+	
+	var tab_iterator : int = 1
 	
 	for pool in RaptorRender.rr_data.pools.keys():
 		
-		var Clients_SortableTable = Clients_SortableTableRes.instance()
-		Clients_SortableTable.column_names = RaptorRender.ClientsTable.column_names
-		Clients_SortableTable.column_widths = RaptorRender.ClientsTable.column_widths
-		Clients_SortableTable.margin_bottom = 0
-		Clients_SortableTable.margin_left = 0
-		Clients_SortableTable.margin_right = 0
-		Clients_SortableTable.margin_top = 0
-		Clients_SortableTable.anchor_top = 0
-		Clients_SortableTable.anchor_left = 0
-		Clients_SortableTable.anchor_right = 1
-		Clients_SortableTable.anchor_bottom = 1
+		# change iffo for the tab
+		if tab_iterator < current_tab_count:
+			
+			tabs_pools_dict[tab_iterator] = pool
 		
 		
-		var tab : Tabs = Tabs.new()
-		tab.name = RaptorRender.rr_data.pools[pool].name
-		tab.add_child(Clients_SortableTable)
+		# create a new tab
+		else:
+			var Clients_SortableTable = Clients_SortableTableRes.instance()
+			Clients_SortableTable.column_names = RaptorRender.ClientsTable.column_names
+			Clients_SortableTable.column_widths = RaptorRender.ClientsTable.column_widths
+			Clients_SortableTable.margin_bottom = 0
+			Clients_SortableTable.margin_left = 0
+			Clients_SortableTable.margin_right = 0
+			Clients_SortableTable.margin_top = 0
+			Clients_SortableTable.anchor_top = 0
+			Clients_SortableTable.anchor_left = 0
+			Clients_SortableTable.anchor_right = 1
+			Clients_SortableTable.anchor_bottom = 1
+			
+			
+			var tab : Tabs = Tabs.new()
+			tab.name = RaptorRender.rr_data.pools[pool].name
+			tab.add_child(Clients_SortableTable)
+			
+			self.add_child(tab)
+			
+			tabs_pools_dict[tab_iterator] = pool
+			
+			Clients_SortableTable.connect("refresh_table_content", RaptorRender, "refresh_clients_table")
+			Clients_SortableTable.connect("something_just_selected", RaptorRender, "client_selected")
+			Clients_SortableTable.connect("selection_cleared", RaptorRender, "client_selection_cleared")
+			Clients_SortableTable.connect("context_invoked", RaptorRender, "client_context_menu_invoked")
+			
 		
-		self.add_child(tab)
-		
-		tabs_pools_dict[tab_count] = pool
-		
-		Clients_SortableTable.connect("refresh_table_content", RaptorRender, "refresh_clients_table")
-		Clients_SortableTable.connect("something_just_selected", RaptorRender, "client_selected")
-		Clients_SortableTable.connect("selection_cleared", RaptorRender, "client_selection_cleared")
-		Clients_SortableTable.connect("context_invoked", RaptorRender, "client_context_menu_invoked")
-		
-		tab_count += 1
-
+		tab_iterator += 1
+	
+	
+	
+	
+	# remove all tabs that are not needed anymore
+	if current_tab_count > needed_tab_count:
+		for i in range (needed_tab_count, current_tab_count ):
+			self.get_child(i).queue_free()
 
 
 
@@ -73,11 +92,6 @@ func _on_TabContainerClients_tab_changed(tab: int) -> void:
 	RaptorRender.ClientsTable = ClientsTable
 	
 	RaptorRender.refresh_clients_table()
-	
-	
-	
-	
-	
 	
 	
 	previous_active_tab = tab

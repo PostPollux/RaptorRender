@@ -1,3 +1,12 @@
+#//////////#
+# PoolItem #
+#//////////#
+
+# A PoolItem is just a clickable and dragable item supposed to ba a child of "PoolItemVBox" of the "PoolContainer".
+# Each PoolItem represents on pool.
+# It can be renamed with doubleclick. Dragging logic is handled here. 
+
+
 extends MarginContainer
 
 class_name PoolItem
@@ -8,6 +17,7 @@ class_name PoolItem
 ### SIGNALS
 signal pool_item_clicked
 signal pool_item_doubleclicked
+signal name_changed
 signal select_all_pressed
 
 ### ONREADY VARIABLES
@@ -19,6 +29,7 @@ onready var NameLineEdit : LineEdit = $"NameEdit"
 
 ### VARIABLES
 var pool_name : String = ""
+var pool_id : int
 var selected : bool = false
 var hovered : bool = false
 
@@ -42,6 +53,8 @@ func _process(delta : float) -> void:
 
 func set_name(name : String) -> void:
 	pool_name = name
+	if is_instance_valid(NameLabel):
+		NameLabel.text = pool_name
 
 
 func get_drag_data(_pos):
@@ -90,9 +103,12 @@ func remove_highlight() -> void:
 
 
 func apply_name() -> void:
-	pool_name = NameLineEdit.text
-	NameLabel.text = pool_name
+	
 	NameLineEdit.visible = false
+	if NameLineEdit.text != "" and pool_name != NameLineEdit.text:
+		pool_name = NameLineEdit.text
+		NameLabel.text = pool_name
+		emit_signal("name_changed", pool_id)
 
 
 func enter_name_edit_mode() -> void:

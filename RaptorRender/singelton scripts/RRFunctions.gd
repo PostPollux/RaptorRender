@@ -252,3 +252,7 @@ func extract_frame_number_as_string(filename : String, with_padding : bool) -> S
 func generate_job_id(time_created : int, job_name : String) -> int:
 	var job_string_to_hash : String = job_name + String(time_created)
 	return job_string_to_hash.hash()
+
+func generate_pool_id(time_created : int, pool_name : String) -> int:
+	var pool_string_to_hash : String = pool_name + String(time_created)
+	return pool_string_to_hash.hash()
