@@ -15,6 +15,7 @@ class_name ImageThumbnail
 ### SIGNALS
 signal thumbnail_pressed
 signal thumbnail_updated
+#signal drag_selected
 
 ### ONREADY VARIABLES
 onready var ImageName : Label = $"MarginContainer/ImageTexture/FrameNumberLabel"
@@ -153,7 +154,12 @@ func _on_Button_button_down():
 
 func _on_Button_mouse_entered():
 	set_hovered()
+	if Input.is_action_pressed("ui_left_mouse_button"):
+		emit_signal("thumbnail_pressed", image_number, self)
+
 
 
 func _on_Button_mouse_exited():
 	reset_hovered()
+
+

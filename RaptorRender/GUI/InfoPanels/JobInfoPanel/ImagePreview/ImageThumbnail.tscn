@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ImageThumbnail.gd" type="Script" id=1]
+[ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ButtonDragWorkaround.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://RaptorRender/GUI/fonts/Hack-Bold.ttf"
@@ -61,6 +62,10 @@ __meta__ = {
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="button_down" from="MarginContainer/ImageTexture/Button" to="." method="_on_Button_button_down"]
 [connection signal="mouse_entered" from="MarginContainer/ImageTexture/Button" to="." method="_on_Button_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/ImageTexture/Button" to="." method="_on_Button_mouse_exited"]
