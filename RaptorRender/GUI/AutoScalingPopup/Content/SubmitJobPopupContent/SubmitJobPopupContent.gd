@@ -685,6 +685,10 @@ func create_new_job():
 	# add job to rr_data
 	RaptorRender.rr_data.jobs[job_id] = new_job
 	
+	# add job_id to assigned pools
+	for pool in new_job.pools:
+		RaptorRender.rr_data.pools[pool].jobs.append(job_id)
+	
 	emit_signal("job_successfully_created")
 	
 	

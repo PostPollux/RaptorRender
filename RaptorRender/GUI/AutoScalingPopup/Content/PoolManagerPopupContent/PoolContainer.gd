@@ -55,11 +55,11 @@ func clear_immediately() -> void:
 
 func load_existing_pools() -> void:
 	
-	for pool in RaptorRender.rr_data.pools.keys():
+	for pool in pools_dict.keys():
 		
-		var NewPoolItem : PoolItem = PoolItemRes.instance()	
+		var NewPoolItem : PoolItem = PoolItemRes.instance()
 		
-		NewPoolItem.set_name(RaptorRender.rr_data.pools[pool].name)
+		NewPoolItem.set_name(pools_dict[pool].name)
 		NewPoolItem.pool_id = pool
 		
 		# connect signals to enable selecting 
@@ -97,7 +97,9 @@ func create_new_pool_item(pool_name : String, select_pool : bool) -> int:
 	
 	pools_dict[pool_id] = {
 				"name" : final_pool_name,
-				"note" : ""
+				"note" : "",
+				"clients": [],
+				"jobs" : []
 			}
 	
 	emit_signal("pool_created", pool_id)
@@ -176,6 +178,8 @@ func _on_Duplicate_Button_pressed() -> void:
 	for SelectedPoolItem in SelectedPoolItems:
 		var pool_id_of_new_PoolItem : int = create_new_pool_item(SelectedPoolItem.pool_name, false)
 		pools_dict[pool_id_of_new_PoolItem].note = pools_dict[SelectedPoolItem.pool_id].note
+		pools_dict[pool_id_of_new_PoolItem].clients = pools_dict[SelectedPoolItem.pool_id].clients
+		pools_dict[pool_id_of_new_PoolItem].jobs = pools_dict[SelectedPoolItem.pool_id].jobs
 
 
 func _on_Delete_Button_pressed() -> void:

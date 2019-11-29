@@ -17,6 +17,8 @@ var PoolManagerPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopu
 ### VARIABLES
 var colorize_table_rows : bool = false
 
+var currently_updating_pool_cache : bool = false
+
 var NotificationSystem : NotificationSystem
 
 var JobsTable : SortableTable
@@ -914,19 +916,27 @@ func _ready():
 		"pools": {
 			1 : {
 				"name" : "AE_Plugins",
-				"note" : "Red Giant plugins installed!"
+				"note" : "Red Giant plugins installed!",
+				"clients" : [1,2,3,4,5,6,7,10,11,12,13,16],
+				"jobs" : [4]
 			},
 			2 : {
 				"name" : "another pool",
-				"note" : ""
+				"note" : "",
+				"clients" : [2,4,6,16],
+				"jobs" : []
 			},
 			3 :  {
 				"name" : "third pool",
-				"note" : ""
+				"note" : "",
+				"clients" : [2,4,6,12,16],
+				"jobs" : []
 			},
 			4 : {
 				"name" : "8GB+ VRam",
-				"note" : "All Computers in this pool have at least 8gb of vram."
+				"note" : "All Computers in this pool have at least 8gb of vram.",
+				"clients" : [10,12,13,15],
+				"jobs" : []
 			}
 		}
 	}
@@ -1370,7 +1380,8 @@ func refresh_clients_table():
 			
 			for tab in tabs_pools_dict:
 				if tabs_pools_dict[tab] == pool:
-					ClientsTabContainer.get_child(tab).name = rr_data.pools[pool].name +  " (" + String ( num_of_clients_in_pool ) + ")"
+					if is_instance_valid(ClientsTabContainer.get_child(tab)):
+						ClientsTabContainer.get_child(tab).name = rr_data.pools[pool].name +  " (" + String ( num_of_clients_in_pool ) + ")"
 		
 		
 		#### Fill or update Clients Table ####
@@ -2213,18 +2224,19 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		### Pools ###
 		
-#		var pools_string : String = ""
-#		var pool_count : int = 1
-#
-#		if rr_data.clients[client].pools.size() > 0:
-#			for pool in rr_data.clients[client].pools:
-#				pools_string += rr_data.pools[pool].name
-#				if pool_count < rr_data.clients[client].pools.size():
-#					pools_string += ", "
-#				pool_count += 1
-#
-#		ClientsTable.update_LABEL_cell(row_position, pools_column, pools_string)
-#
+		var pools_string : String = ""
+		var pool_count : int = 1
+
+		if rr_data.clients[client].pools.size() > 0:
+			for pool in rr_data.clients[client].pools:
+				if rr_data.pools.has(pool):
+					pools_string += rr_data.pools[pool].name
+					if pool_count < rr_data.clients[client].pools.size():
+						pools_string += ", "
+					pool_count += 1
+
+		ClientsTable.update_LABEL_cell(row_position, pools_column, pools_string)
+
 		
 		### Note ###
 		ClientsTable.update_LABEL_cell(row_position, note_column,  rr_data.clients[client].note)
@@ -2330,19 +2342,20 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		
 		
-#		### Pools ###
-#		var pools_string = ""
-#		var pool_count = 1
-#
-#		if rr_data.clients[client].pools.size() > 0:
-#			for pool in rr_data.clients[client].pools:
-#				pools_string += rr_data.pools[pool].name
-#				if pool_count < rr_data.clients[client].pools.size():
-#					pools_string += ", "
-#				pool_count += 1
-#
-#		ClientsTable.set_LABEL_cell(client_iterator, pools_column, pools_string)
-#
+		### Pools ###
+		var pools_string = ""
+		var pool_count = 1
+
+		if rr_data.clients[client].pools.size() > 0:
+			for pool in rr_data.clients[client].pools:
+				if rr_data.pools.has(pool):
+					pools_string += rr_data.pools[pool].name
+					if pool_count < rr_data.clients[client].pools.size():
+						pools_string += ", "
+					pool_count += 1
+
+		ClientsTable.set_LABEL_cell(client_iterator, pools_column, pools_string)
+
 		
 		### Note ###
 		ClientsTable.set_LABEL_cell(client_iterator, note_column, rr_data.clients[client].note)

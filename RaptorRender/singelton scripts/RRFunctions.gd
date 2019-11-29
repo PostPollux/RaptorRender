@@ -256,3 +256,26 @@ func generate_job_id(time_created : int, job_name : String) -> int:
 func generate_pool_id(time_created : int, pool_name : String) -> int:
 	var pool_string_to_hash : String = pool_name + String(time_created)
 	return pool_string_to_hash.hash()
+	
+	
+
+
+func apply_pool_changes_to_all_jobs_and_clients() -> void:
+	
+	RaptorRender.currently_updating_pool_cache = true
+	
+	# clear all cached pool arrays
+	for job in RaptorRender.rr_data.jobs.keys():
+		RaptorRender.rr_data.jobs[job].pools.clear()
+	for client in RaptorRender.rr_data.clients.keys():
+		RaptorRender.rr_data.clients[client].pools.clear()
+	
+	# fill the cache again
+	for pool in RaptorRender.rr_data.pools.keys():
+		for job in RaptorRender.rr_data.pools[pool].jobs:
+			RaptorRender.rr_data.jobs[job].pools.append(pool)
+		for client in RaptorRender.rr_data.pools[pool].clients:
+			RaptorRender.rr_data.clients[client].pools.append(pool)
+	
+	RaptorRender.currently_updating_pool_cache = false
+	

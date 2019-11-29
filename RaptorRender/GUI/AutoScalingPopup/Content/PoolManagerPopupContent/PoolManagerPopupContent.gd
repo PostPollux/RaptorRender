@@ -72,15 +72,19 @@ func apply_changes() -> void:
 	# override the rr_data pool dict with the local one
 	RaptorRender.rr_data.pools = str2var( var2str(pools_dict_with_new_ids_in_correct_order) ) # conversion is needed to copy the dict. Otherwise you only get a reference
 	
-	# refresh tables
-	RaptorRender.refresh_clients_table()
-	RaptorRender.refresh_jobs_table()
+	RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
 	
 	# update pool-tabs / client-tabs
 	var PoolTabsContainer : TabContainer = RaptorRender.ClientsTable.get_parent().get_parent()
 	#PoolTabsContainer.current_tab = 0 # important so it doesn't try to autoupdate a table with data that has already been deleted
 	PoolTabsContainer.previous_active_tab = 0
 	PoolTabsContainer.update_tabs()
+	
+	# refresh tables
+	RaptorRender.refresh_clients_table()
+	RaptorRender.refresh_jobs_table()
+	
+	
 	
 	emit_signal("changes_applied_successfully")
 
