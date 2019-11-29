@@ -78,8 +78,9 @@ func apply_changes() -> void:
 	var PoolTabsContainer : TabContainer = RaptorRender.ClientsTable.get_parent().get_parent()
 	#PoolTabsContainer.current_tab = 0 # important so it doesn't try to autoupdate a table with data that has already been deleted
 	PoolTabsContainer.previous_active_tab = 0
-	PoolTabsContainer.update_tabs()
 	PoolTabsContainer.clear_all_pool_tabs_SortableTables()
+	PoolTabsContainer.update_tabs()
+	
 	
 	# refresh tables
 	RaptorRender.refresh_clients_table()

@@ -1370,11 +1370,7 @@ func refresh_clients_table():
 		ClientsTabContainer.get_child(0).name = tr("CLIENT_TAB_1") + " (" + String ( clients_array.size() ) + ")"
 		
 		for pool in rr_data.pools.keys():
-			var num_of_clients_in_pool : int = 0
-			
-			for client in rr_data.clients.keys():
-				if rr_data.clients[client].pools.has(pool):
-					num_of_clients_in_pool += 1
+			var num_of_clients_in_pool : int = rr_data.pools[pool].clients.size()
 			
 			var tabs_pools_dict : Dictionary = ClientsTabContainer.tabs_pools_dict.keys()
 			

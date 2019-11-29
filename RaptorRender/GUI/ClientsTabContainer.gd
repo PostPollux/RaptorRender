@@ -32,7 +32,7 @@ func update_tabs() -> void:
 	
 	for pool in RaptorRender.rr_data.pools.keys():
 		
-		# change iffo for the tab
+		# change info for the tab
 		if tab_iterator < current_tab_count:
 			
 			tabs_pools_dict[tab_iterator] = pool
