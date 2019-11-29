@@ -41,6 +41,7 @@ var hovered : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	DragManager.connect("drag_ended", self, "drag_just_ended")
 	NameLabel.text = pool_name
 	#BgColorRect.color = RRColorScheme.bg_2
 
@@ -59,6 +60,8 @@ func set_name(name : String) -> void:
 
 func get_drag_data(_pos):
 	
+	DragManager.currently_dragging = true
+	
 	# generate a position corrected clone of self
 	var drag_preview : Control = Control.new()
 	var drag_clone : Node = self.duplicate()
@@ -68,24 +71,26 @@ func get_drag_data(_pos):
 	set_drag_preview(drag_preview)
 	
 	# hide the source node
-	self.visible = false
+	self.modulate = Color(1, 1, 1, 0.3)
 	
 	# Return color as drag data
-	return Color(1,1,1,1)
+	return self
+
 
 
 func can_drop_data(_pos, data):
-	if _pos.x >=100:
-		NameLabel.text = "yeah, drop me!"
-	else:
-		NameLabel.text = "holla die waldfee"
-	return typeof(data) == TYPE_COLOR
+	return typeof(data) == TYPE_OBJECT
 
 
 
-#func drop_data(_pos, data):
-#	pass
-	#color = data
+func drop_data(_pos, data):
+	var desired_position : int = self.get_position_in_parent()
+	self.get_parent().move_child(data, desired_position)
+	data.modulate = Color(1, 1, 1, 1)
+
+func drag_just_ended() -> void:
+	self.modulate = Color(1, 1, 1, 1)
+
 
 
 func highlight() -> void:

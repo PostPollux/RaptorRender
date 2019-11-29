@@ -111,6 +111,7 @@ RenderLogValidator="*res://RaptorRender/singelton scripts/RenderLogValidator.gd"
 JobExecutionManager="*res://RaptorRender/singelton scripts/JobExecutionManager.gd"
 JobDistributionManager="*res://RaptorRender/singelton scripts/JobDistributionManager.gd"
 ReadLogFileManager="*res://RaptorRender/singelton scripts/ReadLogFileManager.gd"
+DragManager="*res://RaptorRender/singelton scripts/DragManager.gd"
 
 [debug]
 

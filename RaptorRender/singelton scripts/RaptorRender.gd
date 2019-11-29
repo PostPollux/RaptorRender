@@ -1426,8 +1426,8 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 	if JobsTable.RowContainerFilled.id_position_dict.has(job):
 		
 		# get reference to the row
-		var row_position = JobsTable.RowContainerFilled.id_position_dict[job]
-		var row = JobsTable.get_row_by_position( row_position )
+		var row_position : int = JobsTable.RowContainerFilled.id_position_dict[job]
+		var row : SortableTableRow = JobsTable.get_row_by_position( row_position )
 		
 		# update all cells that have changed
 		
@@ -1797,8 +1797,8 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		
 		
 		# get reference to the row
-		var row_position = ChunksTable.RowContainerFilled.id_position_dict[chunk]
-		var row = ChunksTable.get_row_by_position( row_position )
+		var row_position : int = ChunksTable.RowContainerFilled.id_position_dict[chunk]
+		var row : SortableTableRow = ChunksTable.get_row_by_position( row_position )
 		
 		# update all cells that have changed
 		
@@ -2075,8 +2075,8 @@ func update_or_create_try_row(try : int, tries_iterator : int) -> void:
 		
 		
 		# get reference to the row
-		var row_position = TriesTable.RowContainerFilled.id_position_dict[try]
-		var row = TriesTable.get_row_by_position( row_position )
+		var row_position : int = TriesTable.RowContainerFilled.id_position_dict[try]
+		var row : SortableTableRow = TriesTable.get_row_by_position( row_position )
 		
 		# update all cells that have changed
 		
