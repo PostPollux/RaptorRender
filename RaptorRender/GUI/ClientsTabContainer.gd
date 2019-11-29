@@ -71,13 +71,17 @@ func update_tabs() -> void:
 	
 	
 	
-	
 	# remove all tabs that are not needed anymore
 	if current_tab_count > needed_tab_count:
 		for i in range (needed_tab_count, current_tab_count ):
 			self.get_child(i).queue_free()
 
 
+func clear_all_pool_tabs_SortableTables() -> void:
+	if self.get_child_count() > 1:
+		for i in range (1, self.get_child_count()):
+			var TableToClear : SortableTable = self.get_child(i).get_child(0)
+			TableToClear.clear_table()
 
 
 func _on_TabContainerClients_tab_changed(tab: int) -> void:
@@ -92,6 +96,5 @@ func _on_TabContainerClients_tab_changed(tab: int) -> void:
 	RaptorRender.ClientsTable = ClientsTable
 	
 	RaptorRender.refresh_clients_table()
-	
 	
 	previous_active_tab = tab
