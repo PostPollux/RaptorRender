@@ -39,7 +39,6 @@ var pools_dict : Dictionary
 
 func _ready() -> void:
 	load_existing_pools()
-	pass 
 
 
 
@@ -110,6 +109,7 @@ func create_new_pool_item(pool_name : String, select_pool : bool) -> int:
 func delete_pools() -> void:
 	for DelPoolItem in PoolItemVBox.get_children():
 		if DelPoolItem.selected == true:
+			SelectedPoolItems.erase(DelPoolItem)
 			DelPoolItem.queue_free()
 			pools_dict.erase(DelPoolItem.pool_id)
 			emit_signal("pool_deleted", DelPoolItem.pool_id)
@@ -175,11 +175,12 @@ func _on_Create_Button_pressed() -> void:
 
 func _on_Duplicate_Button_pressed() -> void:
 	
-	for SelectedPoolItem in SelectedPoolItems:
-		var pool_id_of_new_PoolItem : int = create_new_pool_item(SelectedPoolItem.pool_name, false)
-		pools_dict[pool_id_of_new_PoolItem].note = pools_dict[SelectedPoolItem.pool_id].note
-		pools_dict[pool_id_of_new_PoolItem].clients = pools_dict[SelectedPoolItem.pool_id].clients
-		pools_dict[pool_id_of_new_PoolItem].jobs = pools_dict[SelectedPoolItem.pool_id].jobs
+	if SelectedPoolItems.size() > 0:
+		for SelectedPoolItem in SelectedPoolItems:
+			var pool_id_of_new_PoolItem : int = create_new_pool_item(SelectedPoolItem.pool_name, false)
+			pools_dict[pool_id_of_new_PoolItem].note = pools_dict[SelectedPoolItem.pool_id].note
+			pools_dict[pool_id_of_new_PoolItem].clients = pools_dict[SelectedPoolItem.pool_id].clients
+			pools_dict[pool_id_of_new_PoolItem].jobs = pools_dict[SelectedPoolItem.pool_id].jobs
 
 
 func _on_Delete_Button_pressed() -> void:

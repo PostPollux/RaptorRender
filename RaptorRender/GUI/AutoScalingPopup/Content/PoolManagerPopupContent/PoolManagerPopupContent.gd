@@ -18,6 +18,9 @@ signal changes_applied_successfully
 ### ONREADY VARIABLES
 onready var PoolNoteTextEdit : TextEdit = $"PoolContainer/MarginContainer/VBoxContainer/PoolNote"
 onready var PoolContainer : MarginContainer = $"PoolContainer/MarginContainer/VBoxContainer/ScrollContainer/PoolContainer"
+onready var ClientsInPool_ItemListBox : ItemListBox = $"ClientsContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/ClientsInPool_ItemListBox"
+onready var ClientsAvailable_ItemListBox : ItemListBox = $"ClientsContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/ClientsAvailable_ItemListBox"
+onready var MoveClientsButton : Button = $"ClientsContainer/VBoxContainer/HBoxContainer/VBoxContainer3/CenterContainer/MoveClientsButton"
 
 ### EXPORTED VARIABLES
 
@@ -97,7 +100,19 @@ func apply_changes() -> void:
 func pool_selected(pool_id : int) -> void:
 	currently_displayed_pool = pool_id
 	PoolNoteTextEdit.text = pools_dict[pool_id].note
-
+	
+	ClientsInPool_ItemListBox.clear()
+	ClientsAvailable_ItemListBox.clear()
+	
+	for client in pools_dict[pool_id].clients:
+		ClientsInPool_ItemListBox.add_item(RaptorRender.rr_data.clients[client].name, client)
+		
+	for client in RaptorRender.rr_data.clients.keys():
+		if pools_dict[pool_id].clients.has(client) == false:
+			ClientsAvailable_ItemListBox.add_item(RaptorRender.rr_data.clients[client].name, client)
+	
+	MoveClientsButton.text = ""
+	MoveClientsButton.disabled = true
 
 
 func pool_selection_cleared() -> void:
@@ -107,3 +122,41 @@ func pool_selection_cleared() -> void:
 
 func _on_PoolNote_text_changed() -> void:
 	pools_dict[currently_displayed_pool].note = PoolNoteTextEdit.text
+
+
+func _on_ClientsInPool_ItemListBox_item_selected(item_id : int) -> void:
+	ClientsAvailable_ItemListBox.clear_selection()
+	MoveClientsButton.text = "=>"
+	MoveClientsButton.disabled = false
+
+
+func _on_ClientsAvailable_ItemListBox_item_selected(item_id : int) -> void:
+	ClientsInPool_ItemListBox.clear_selection()
+	MoveClientsButton.text = "<="
+	MoveClientsButton.disabled = false
+
+
+
+
+
+func _on_MoveClientsButton_pressed() -> void:
+	
+	# remove clients from pool
+	if ClientsInPool_ItemListBox.SelectedItems.size() > 0:
+		for Item in ClientsInPool_ItemListBox.SelectedItems:
+			var client_id = Item.item_id
+			
+			pools_dict[currently_displayed_pool].clients.erase(client_id)
+			
+	
+	# add clients to pool
+	else:
+		for Item in ClientsAvailable_ItemListBox.SelectedItems:
+			var client_id = Item.item_id
+			
+			pools_dict[currently_displayed_pool].clients.append(client_id)
+	
+	# to update the two lists again
+	pool_selected(currently_displayed_pool)
+
+

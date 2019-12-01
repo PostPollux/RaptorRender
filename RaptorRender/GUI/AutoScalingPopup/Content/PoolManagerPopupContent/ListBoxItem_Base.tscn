@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/ListBoxItem_Base.gd" type="Script" id=1]
+
+[node name="Item" type="MarginContainer"]
+margin_right = 396.0
+margin_bottom = 14.0
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BgColorRect" type="ColorRect" parent="."]
+margin_right = 396.0
+margin_bottom = 14.0
+mouse_filter = 2
+color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 396.0
+margin_bottom = 14.0
+mouse_filter = 2
+custom_constants/margin_left = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer"]
+margin_left = 5.0
+margin_right = 396.0
+margin_bottom = 14.0
+text = "item"
+[connection signal="gui_input" from="." to="." method="_on_Item_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_Item_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Item_mouse_exited"]
