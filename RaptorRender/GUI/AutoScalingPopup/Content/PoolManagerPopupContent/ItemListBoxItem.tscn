@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/ListBoxItem_Base.gd" type="Script" id=1]
+[ext_resource path="res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/ItemListBoxItem.gd" type="Script" id=1]
 
 [node name="Item" type="MarginContainer"]
 margin_right = 396.0
@@ -34,6 +34,15 @@ margin_left = 5.0
 margin_right = 396.0
 margin_bottom = 14.0
 text = "item"
+
+[node name="NameEdit" type="LineEdit" parent="MarginContainer"]
+visible = false
+margin_left = 5.0
+margin_right = 396.0
+margin_bottom = 24.0
 [connection signal="gui_input" from="." to="." method="_on_Item_gui_input"]
+[connection signal="item_doubleclicked" from="." to="." method="_on_Item_item_doubleclicked"]
 [connection signal="mouse_entered" from="." to="." method="_on_Item_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Item_mouse_exited"]
+[connection signal="focus_exited" from="MarginContainer/NameEdit" to="." method="_on_NameEdit_focus_exited"]
+[connection signal="text_entered" from="MarginContainer/NameEdit" to="." method="_on_NameEdit_text_entered"]
