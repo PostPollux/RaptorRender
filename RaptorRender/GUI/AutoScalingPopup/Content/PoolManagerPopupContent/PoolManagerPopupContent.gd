@@ -39,6 +39,7 @@ func _ready() -> void:
 	get_parent().connect("ok_pressed", self, "apply_changes")
 	PoolContainer.connect("pool_selected", self, "pool_selected")
 	PoolContainer.connect("selection_cleared", self, "pool_selection_cleared")
+	PoolContainer.connect("pool_created", self, "pool_created")
 	
 
 
@@ -95,6 +96,8 @@ func apply_changes() -> void:
 
 
 
+func pool_created(pool_id : int) -> void:
+	pool_selected(pool_id)
 
 
 func pool_selected(pool_id : int) -> void:
