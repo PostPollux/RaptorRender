@@ -16,11 +16,11 @@ extends HBoxContainer
 signal changes_applied_successfully
 
 ### ONREADY VARIABLES
-onready var PoolNoteTextEdit : TextEdit = $"PoolContainer/MarginContainer/VBoxContainer/PoolNote"
-onready var PoolContainer : MarginContainer = $"PoolContainer/MarginContainer/VBoxContainer/ScrollContainer/PoolContainer"
-onready var ClientsInPool_ItemListBox : ItemListBox = $"ClientsContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/ClientsInPool_ItemListBox"
-onready var ClientsAvailable_ItemListBox : ItemListBox = $"ClientsContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/ClientsAvailable_ItemListBox"
-onready var MoveClientsButton : Button = $"ClientsContainer/VBoxContainer/HBoxContainer/VBoxContainer3/CenterContainer/MoveClientsButton"
+onready var PoolNoteTextEdit : TextEdit = $"PoolSection/MarginContainer/VBoxContainer/PoolNote"
+onready var PoolItemListBox : ItemListBox = $"PoolSection/MarginContainer/VBoxContainer/ScrollContainer/Pool_ItemListBox"
+onready var ClientsInPool_ItemListBox : ItemListBox = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/ClientsInPool_ItemListBox"
+onready var ClientsAvailable_ItemListBox : ItemListBox = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/ClientsAvailable_ItemListBox"
+onready var TransferClientsButton : Button = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer3/CenterContainer/TransferClientsButton"
 
 ### EXPORTED VARIABLES
 
@@ -37,29 +37,40 @@ var currently_displayed_pool : int
 func _ready() -> void:
 	get_parent().connect("popup_shown", self, "pool_manager_just_opened")
 	get_parent().connect("ok_pressed", self, "apply_changes")
-	PoolContainer.connect("pool_selected", self, "pool_selected")
-	PoolContainer.connect("selection_cleared", self, "pool_selection_cleared")
-	PoolContainer.connect("pool_created", self, "pool_created")
-	
+	PoolItemListBox.connect("item_selected", self, "pool_selected")
+	PoolItemListBox.connect("selection_cleared", self, "pool_selection_cleared")
+
 
 
 func pool_manager_just_opened() -> void:
+
+	PoolItemListBox.item_names_editable = true
+	PoolItemListBox.items_dragable = true
+	PoolItemListBox.item_bg_color_normal = RRColorScheme.bg_2
+	PoolItemListBox.item_bg_color_selected = RRColorScheme.selected
 	
 	# make a local copy of the current pools dict, so changes don't do anything until we hit apply.
 	pools_dict = str2var( var2str(RaptorRender.rr_data.pools) ) # conversion is needed to copy the dict. Otherwise you only get a reference
-	PoolContainer.pools_dict = pools_dict
 	
 	# clear the pools container and generate the pool items again
-	PoolContainer.clear_immediately()
-	PoolContainer.load_existing_pools()
+	PoolItemListBox.clear_immediately()
+	load_existing_pools()
 	
 	# clear selection and select the first one in the list
 	currently_displayed_pool = -1
-	PoolContainer.clear_selection()
+	PoolItemListBox.clear_selection()
 	
 	# select first pool item
-	if PoolContainer.PoolItemVBox.get_child_count() > 0:
-		PoolContainer.select_PoolItem( PoolContainer.PoolItemVBox.get_child(0) )
+	if PoolItemListBox.has_items():
+		PoolItemListBox.select_item( PoolItemListBox.get_first_item() )
+
+
+
+func load_existing_pools() -> void:
+	
+	for pool in pools_dict.keys():
+		PoolItemListBox.add_item(pools_dict[pool].name, pool)
+
 
 
 func apply_changes() -> void:
@@ -69,8 +80,8 @@ func apply_changes() -> void:
 	var pools_dict_with_new_ids_in_correct_order : Dictionary
 	
 	var pool_iterator : int = 1
-	for pool_item in PoolContainer.PoolItemVBox.get_children():
-		pools_dict_with_new_ids_in_correct_order[pool_iterator] = str2var( var2str(pools_dict[pool_item.pool_id]) )
+	for item in PoolItemListBox.get_all_items():
+		pools_dict_with_new_ids_in_correct_order[pool_iterator] = str2var( var2str(pools_dict[item.item_id]) )
 		pool_iterator += 1
 	
 	# override the rr_data pool dict with the local one
@@ -96,10 +107,82 @@ func apply_changes() -> void:
 
 
 
-func pool_created(pool_id : int) -> void:
-	pool_selected(pool_id)
+
+func create_new_pool(pool_name : String, select_pool : bool) -> int:
+	
+	var final_pool_name : String = check_pool_name(pool_name, -1)
+	
+	var pool_id : int
+	
+	pool_id = RRFunctions.generate_pool_id(OS.get_unix_time(), final_pool_name)
+	
+	var NewPoolItem : ItemListBoxItem = PoolItemListBox.add_item(final_pool_name, pool_id)
+	
+	pools_dict[pool_id] = {
+				"name" : final_pool_name,
+				"note" : "",
+				"clients": [],
+				"jobs" : []
+			}
+	
+	if select_pool:
+		PoolItemListBox.select_item(NewPoolItem)
+		pool_selected(pool_id)
+	
+	return pool_id
 
 
+
+# check a desired pool name against the already existing pools. Returns the name with a number suffix if name already exists
+func check_pool_name(pool_name : String, exclude_pool_id : int) -> String:
+	
+	var tmp_pool_name : String = pool_name
+	
+	var name_valid : bool = false
+	
+	while name_valid == false:
+		
+		var name_already_used : bool = false
+		
+		for pool in pools_dict.keys():
+			if pool != exclude_pool_id:
+				if tmp_pool_name == pools_dict[pool].name:
+					name_already_used = true
+		
+		if name_already_used == false:
+			name_valid = true
+			
+		# change name
+		else:
+			
+			var pattern : RegEx = RegEx.new()
+			pattern.compile("_\\d+\\b") # select underscor + number endings like "_1" or "_42"
+			
+			var matches : Array = pattern.search_all( tmp_pool_name )
+			
+			# increment number if already has an underscore with number
+			if matches.size() > 0:
+				var last_match : RegExMatch = matches[ matches.size() - 1] # get last match
+				tmp_pool_name = tmp_pool_name.replace(last_match.get_string(),"")
+				tmp_pool_name = tmp_pool_name + "_" + String ( int(last_match.get_string().replace("_","")) + 1 )
+			else:
+				tmp_pool_name = tmp_pool_name + "_2"
+			
+	return tmp_pool_name
+
+
+
+func delete_selected_pools() -> void:
+	for DelPoolItem in PoolItemListBox.get_all_items():
+		if DelPoolItem.selected == true:
+			PoolItemListBox.SelectedItems.erase(DelPoolItem)
+			DelPoolItem.queue_free()
+			pools_dict.erase(DelPoolItem.item_id)
+			pool_selection_cleared()
+
+
+
+# update the clients shown in the two lists to the right + update the transfer button
 func pool_selected(pool_id : int) -> void:
 	currently_displayed_pool = pool_id
 	PoolNoteTextEdit.text = pools_dict[pool_id].note
@@ -114,12 +197,17 @@ func pool_selected(pool_id : int) -> void:
 		if pools_dict[pool_id].clients.has(client) == false:
 			ClientsAvailable_ItemListBox.add_item(RaptorRender.rr_data.clients[client].name, client)
 	
-	MoveClientsButton.text = ""
-	MoveClientsButton.disabled = true
+	TransferClientsButton.text = ""
+	TransferClientsButton.disabled = true
+
+
 
 
 func pool_selection_cleared() -> void:
 	PoolNoteTextEdit.text = ""
+	
+	TransferClientsButton.text = ""
+	TransferClientsButton.disabled = true
 
 
 
@@ -129,20 +217,22 @@ func _on_PoolNote_text_changed() -> void:
 
 func _on_ClientsInPool_ItemListBox_item_selected(item_id : int) -> void:
 	ClientsAvailable_ItemListBox.clear_selection()
-	MoveClientsButton.text = "=>"
-	MoveClientsButton.disabled = false
+	TransferClientsButton.text = "=>"
+	TransferClientsButton.disabled = false
 
 
 func _on_ClientsAvailable_ItemListBox_item_selected(item_id : int) -> void:
 	ClientsInPool_ItemListBox.clear_selection()
-	MoveClientsButton.text = "<="
-	MoveClientsButton.disabled = false
+	TransferClientsButton.text = "<="
+	TransferClientsButton.disabled = false
+
+
+func _on_Pool_ItemListBox_item_selected(item_id : int) -> void:
+	pool_selected(item_id)
 
 
 
-
-
-func _on_MoveClientsButton_pressed() -> void:
+func _on_TransferClientsButton_pressed() -> void:
 	
 	# remove clients from pool
 	if ClientsInPool_ItemListBox.SelectedItems.size() > 0:
@@ -161,5 +251,28 @@ func _on_MoveClientsButton_pressed() -> void:
 	
 	# to update the two lists again
 	pool_selected(currently_displayed_pool)
+
+
+
+
+func _on_Create_Button_pressed() -> void:
+	create_new_pool("new pool", true)
+
+
+
+
+func _on_Duplicate_Button_pressed() -> void:
+	if PoolItemListBox.SelectedItems.size() > 0:
+		for SelectedItem in PoolItemListBox.SelectedItems:
+			var id_of_duplicated_pool : int = create_new_pool(SelectedItem.item_name, false)
+			pools_dict[id_of_duplicated_pool].note = pools_dict[SelectedItem.item_id].note
+			pools_dict[id_of_duplicated_pool].clients = pools_dict[SelectedItem.item_id].clients
+			pools_dict[id_of_duplicated_pool].jobs = pools_dict[SelectedItem.item_id].jobs
+
+
+
+func _on_Delete_Button_pressed() -> void:
+	delete_selected_pools()
+
 
 

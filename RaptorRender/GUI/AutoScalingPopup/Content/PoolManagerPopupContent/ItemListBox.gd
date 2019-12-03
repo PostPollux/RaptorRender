@@ -57,7 +57,7 @@ func clear_immediately() -> void:
 
 
 
-func add_item(name : String, item_id : int) -> int:
+func add_item(name : String, item_id : int) -> ItemListBoxItem:
 	var NewListBoxItem : ItemListBoxItem = ItemListBoxItemRes.instance()
 	
 	NewListBoxItem.set_name(name)
@@ -75,7 +75,22 @@ func add_item(name : String, item_id : int) -> int:
 	
 	ItemVBox.add_child(NewListBoxItem)
 	
-	return NewListBoxItem.get_position_in_parent()
+	return NewListBoxItem
+
+
+
+func has_items() -> bool:
+	return ItemVBox.get_child_count() > 0
+
+
+func get_first_item() -> ItemListBoxItem:
+	if ItemVBox.get_child_count() > 0:
+		return ItemVBox.get_child(0) as ItemListBoxItem
+	return null
+
+
+func get_all_items() -> Array:
+	return ItemVBox.get_children()
 
 
 
