@@ -15,7 +15,7 @@ extends VBoxContainer
 
 
 ### PRELOAD RESOURCES
-var SortableTableRowRes = preload("res://RaptorRender/GUI/SortableTable/SortableTableRow.tscn")
+var SortableTableRowRes = preload("SortableTableRow.tscn")
 
 ### SIGNALS
 signal selection_cleared

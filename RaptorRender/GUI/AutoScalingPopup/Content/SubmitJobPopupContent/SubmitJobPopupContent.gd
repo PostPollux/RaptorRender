@@ -2,8 +2,8 @@ extends VBoxContainer
 
 
 ### PRELOAD RESOURCES
-var HBoxContainerSep15Res = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/HBoxContainerSep15.tscn")
-var ActivateCheckBoxRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobPopupContent/SubmitJobSettingActivateCheckBox.tscn")
+var HBoxContainerSep15Res = preload("../HBoxContainerSep15.tscn")
+var ActivateCheckBoxRes = preload("SubmitJobSettingActivateCheckBox.tscn")
 
 ### SIGNALS
 signal job_successfully_created

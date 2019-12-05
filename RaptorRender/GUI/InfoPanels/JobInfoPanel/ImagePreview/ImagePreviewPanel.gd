@@ -10,7 +10,7 @@
 extends VSplitContainer
 
 ### PRELOAD RESOURCES
-var ThumbnailBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ThumbnailBox.tscn")
+var ThumbnailBoxRes = preload("ThumbnailBox.tscn")
 
 ### SIGNALS
 

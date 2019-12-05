@@ -13,7 +13,7 @@ class_name SortableTableRowContainerFilled
 
 
 ### PRELOAD RESOURCES
-var SortableTableRowRes = preload("res://RaptorRender/GUI/SortableTable/SortableTableRow.tscn")
+var SortableTableRowRes = preload("SortableTableRow.tscn")
 
 ### SIGNALS
 

@@ -14,8 +14,8 @@ class_name SortableTableTopRow
 
 
 ### PRELOAD RESOURCES
-var ColumnSplitterRes = preload("res://RaptorRender/GUI/SortableTable/TopRow/ColumnSplitter.tscn")
-var ColumnButtonRes = preload("res://RaptorRender/GUI/SortableTable/TopRow/ColumnButton.tscn")
+var ColumnSplitterRes = preload("ColumnSplitter.tscn")
+var ColumnButtonRes = preload("ColumnButton.tscn")
 
 ### SIGNALS
 signal sort_invoked

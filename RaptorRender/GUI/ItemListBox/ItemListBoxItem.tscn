@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/ItemListBoxItem.gd" type="Script" id=1]
+[ext_resource path="res://RaptorRender/GUI/ItemListBox/ItemListBoxItem.gd" type="Script" id=1]
 
 [node name="Item" type="MarginContainer"]
 margin_right = 396.0

@@ -27,12 +27,12 @@ _global_script_classes=[ {
 "base": "MarginContainer",
 "class": "ItemListBox",
 "language": "GDScript",
-"path": "res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/ItemListBox.gd"
+"path": "res://RaptorRender/GUI/ItemListBox/ItemListBox.gd"
 }, {
 "base": "MarginContainer",
 "class": "ItemListBoxItem",
 "language": "GDScript",
-"path": "res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/ItemListBoxItem.gd"
+"path": "res://RaptorRender/GUI/ItemListBox/ItemListBoxItem.gd"
 }, {
 "base": "MarginContainer",
 "class": "JobInfoPanel",

@@ -12,7 +12,7 @@ extends VBoxContainer
 
 
 ### PRELOAD RESOURCES
-var ImageThumbnailRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ImageThumbnail.tscn")
+var ImageThumbnailRes = preload("ImageThumbnail.tscn")
 
 ### SIGNALS
 signal thumbnail_selected

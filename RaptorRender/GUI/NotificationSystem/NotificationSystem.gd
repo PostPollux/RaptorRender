@@ -14,8 +14,8 @@ class_name NotificationSystem
 
 
 ### PRELOAD RESOURCES
-var ErrorNotificationRes = preload("res://RaptorRender/GUI/NotificationSystem/NotificationBoxes/InheritedNotificationBoxes/ErrorNotification.tscn")
-var InfoNotificationRes = preload("res://RaptorRender/GUI/NotificationSystem/NotificationBoxes/InheritedNotificationBoxes/InfoNotification.tscn")
+var ErrorNotificationRes = preload("NotificationBoxes/InheritedNotificationBoxes/ErrorNotification.tscn")
+var InfoNotificationRes = preload("NotificationBoxes/InheritedNotificationBoxes/InfoNotification.tscn")
 
 ### SIGNALS
 

@@ -3,7 +3,7 @@ extends MarginContainer
 class_name ClientInfoPanel
 
 ### PRELOAD RESOURCES
-var HardDriveRes = preload("res://RaptorRender/GUI/InfoPanels/ClientInfoPanel/hard_drive.tscn")
+var HardDriveRes = preload("hard_drive.tscn")
 
 ### SIGNALS
 

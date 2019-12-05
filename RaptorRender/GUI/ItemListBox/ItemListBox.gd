@@ -3,7 +3,7 @@ extends MarginContainer
 class_name ItemListBox
 
 ### PRELOAD RESOURCES
-var ItemListBoxItemRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/ItemListBoxItem.tscn")
+var ItemListBoxItemRes = preload("ItemListBoxItem.tscn")
 
 
 ### SIGNALS

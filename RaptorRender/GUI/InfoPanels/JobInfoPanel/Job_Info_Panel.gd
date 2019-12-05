@@ -3,7 +3,7 @@ extends MarginContainer
 class_name JobInfoPanel
 
 ### PRELOAD RESOURCES
-var OutputDirectoryHBoxRes = preload("res://RaptorRender/GUI/InfoPanels/JobInfoPanel/OutputDirectoryHBox.tscn")
+var OutputDirectoryHBoxRes = preload("OutputDirectoryHBox.tscn")
 
 ### SIGNALS
 
