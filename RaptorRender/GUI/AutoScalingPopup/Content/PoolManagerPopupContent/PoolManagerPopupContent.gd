@@ -46,8 +46,8 @@ func pool_manager_just_opened() -> void:
 
 	PoolItemListBox.item_names_editable = true
 	PoolItemListBox.items_dragable = true
-	PoolItemListBox.item_bg_color_normal = RRColorScheme.bg_2
-	PoolItemListBox.item_bg_color_selected = RRColorScheme.selected
+	
+	PoolItemListBox.update_colors(RRColorScheme.bg_2, RRColorScheme.bg_2, RRColorScheme.selected)
 	
 	# make a local copy of the current pools dict, so changes don't do anything until we hit apply.
 	pools_dict = str2var( var2str(RaptorRender.rr_data.pools) ) # conversion is needed to copy the dict. Otherwise you only get a reference

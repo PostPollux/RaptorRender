@@ -15,6 +15,7 @@ signal item_doubleclicked
 
 ### ONREADY VARIABLES
 onready var ItemVBox : VBoxContainer = $"ItemVBox"
+onready var BoxBackgroundColorRect : ColorRect = $"BGColorRect"
 
 
 ### EXPORTED VARIABLES
@@ -24,8 +25,8 @@ var SelectedItems : Array = []
 
 var item_names_editable : bool = false
 var items_dragable : bool = false
-var item_bg_color_normal : Color = Color(0.001, 0, 0, 1)
-var item_bg_color_selected : Color = Color(0.001, 0, 0, 1)
+var item_bg_color_normal : Color = RRColorScheme.bg_1
+var item_bg_color_selected : Color = RRColorScheme.selected
 
 
 
@@ -35,24 +36,35 @@ var item_bg_color_selected : Color = Color(0.001, 0, 0, 1)
 
 
 func _ready() -> void:
+	pass
+
+
+func get_all_items() -> Array:
+	return ItemVBox.get_children()
+
+
+
+func update_colors(bg_color : Color, item_color_normal : Color, item_color_selected : Color) -> void:
+	item_bg_color_normal = item_color_normal
+	item_bg_color_selected = item_color_selected
 	
-	if item_bg_color_normal == Color(0.001, 0, 0, 1):
-		item_bg_color_normal = RRColorScheme.bg_1
-		
-	if item_bg_color_selected == Color(0.001, 0, 0, 1):
-		item_bg_color_selected = RRColorScheme.selected
+	BoxBackgroundColorRect.color = bg_color
+	
+	for Item in get_all_items():
+		Item.set_colors(item_color_normal, item_color_selected)
+
 
 
 
 func clear() -> void:
-	for child in ItemVBox.get_children():
-		child.queue_free()
+	for Item in get_all_items():
+		Item.queue_free()
 	SelectedItems.clear()
 
 
 func clear_immediately() -> void:
-	for child in ItemVBox.get_children():
-		child.free()
+	for Item in get_all_items():
+		Item.free()
 	SelectedItems.clear()
 
 
@@ -89,32 +101,31 @@ func get_first_item() -> ItemListBoxItem:
 	return null
 
 
-func get_all_items() -> Array:
-	return ItemVBox.get_children()
+
 
 
 
 func remove_item_by_id (item_id : int) -> void:
-	for child in ItemVBox.get_children():
-		if item_id == child.item_id:
-			SelectedItems.erase(child)
-			child.queue_free()
+	for Item in get_all_items():
+		if item_id == Item.item_id:
+			SelectedItems.erase(Item)
+			Item.queue_free()
 
 
 func remove_item_by_name (item_name : String) -> void:
-	for child in ItemVBox.get_children():
-		if item_name == child.item_name:
-			SelectedItems.erase(child)
-			child.queue_free()
+	for Item in get_all_items():
+		if item_name == Item.item_name:
+			SelectedItems.erase(Item)
+			Item.queue_free()
 
 
 func exit_and_apply_name_edit_mode_for_all_items(currently_clicked : Node) -> void:
 	
-	for child in ItemVBox.get_children():
+	for Item in get_all_items():
 		
 		# don't exit on the clicked one itself. Otherwise we could not enter that mode with a double click at all...
-		if child != currently_clicked:
-			child.exit_and_apply_name_edit_mode()
+		if Item != currently_clicked:
+			Item.exit_and_apply_name_edit_mode()
 
 
 func item_doubleclicked(item_id : int) -> void:
@@ -209,10 +220,10 @@ func select_all():
 	# select or deselect all pool items depending on wheter all are already selected or not
 	if SelectedItems.size() != ItemVBox.get_child_count():
 		
-		for child in ItemVBox.get_children():
-			if child.selected == false:
-				child.select()
-				SelectedItems.append(child)
+		for Item in get_all_items():
+			if Item.selected == false:
+				Item.select()
+				SelectedItems.append(Item)
 		
 		emit_signal("item_selected", SelectedItems.back().item_id)
 		
@@ -225,8 +236,8 @@ func clear_selection():
 	
 	SelectedItems.clear()
 	
-	for child in ItemVBox.get_children():
-		if child.selected == true:
-			child.deselect()
+	for Item in get_all_items():
+		if Item.selected == true:
+			Item.deselect()
 	
 	emit_signal("selection_cleared")

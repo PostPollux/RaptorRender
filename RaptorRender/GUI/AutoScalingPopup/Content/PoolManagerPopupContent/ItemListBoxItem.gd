@@ -38,6 +38,9 @@ var name_editable : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	BgColorRect.color = color_normal
+	
 	if item_name != "":
 		NameLabel.text = item_name
 	DragManager.connect("drag_ended", self, "drag_just_ended")
@@ -47,6 +50,12 @@ func _process(delta : float) -> void:
 	if hovered:
 		if Input.is_action_just_pressed("select_all"):
 			emit_signal("select_all_pressed")
+
+
+func set_colors(bg_color_normal : Color, bg_color_selected : Color) -> void:
+	color_normal = bg_color_normal
+	color_selected = bg_color_selected
+	BgColorRect.color = color_normal
 
 
 func set_name(name : String) -> void:
