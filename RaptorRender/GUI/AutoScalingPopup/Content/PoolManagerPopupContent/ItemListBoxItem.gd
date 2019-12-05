@@ -52,6 +52,11 @@ func _process(delta : float) -> void:
 			emit_signal("select_all_pressed")
 
 
+# ony used for drag and drop
+func override_color(color : Color) -> void:
+	BgColorRect.color = color
+
+
 func set_colors(bg_color_normal : Color, bg_color_selected : Color) -> void:
 	color_normal = bg_color_normal
 	color_selected = bg_color_selected
@@ -108,6 +113,7 @@ func get_drag_data(_pos):
 		drag_clone.rect_position = -self.get_local_mouse_position()
 		drag_preview.add_child(drag_clone)
 		set_drag_preview(drag_preview)
+		drag_clone.override_color(RRColorScheme.selected)
 		
 		# hide the source node
 		self.modulate = Color(1, 1, 1, 0.3)
