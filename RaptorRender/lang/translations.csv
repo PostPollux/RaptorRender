@@ -135,8 +135,10 @@ CLIENT_CONTEXT_MENU_16,Wake on LAN,Computer via LAN hochfahren
 CLIENT_CONTEXT_MENU_17,Shutdown Computers,Computer herunterfahren
 CLIENT_CONTEXT_MENU_18,Reboot Computers,Computer neustarten
 CLIENT_CONTEXT_MENU_19,Execute command on clients,Befehl auf Clients ausführen
-CLIENT_CONTEXT_MENU_20,Remove Clients,Clients löschen
-,,
+CLIENT_CONTEXT_MENU_20,Add to Pool,Zu einem Pool hinzufügen
+CLIENT_CONTEXT_MENU_21,Remove from this Pool,Aus diesem Pool entfernen
+CLIENT_CONTEXT_MENU_22,Remove Clients,Clients löschen
+"","",""
 ,,
 ,,
 CHUNK_COLUMN_1,ID,ID
@@ -249,6 +251,6 @@ Ansonsten geht viel Zeit verloren, wenn ein halb fertiger Chunk mit z.b. 10 Fram
 Bei kurzen Renderzeiten pro Bild macht es hingegen Sinn, eine Höhere Zahl zu verwenden,
 da dann nicht für jedes Bild das Programm und die Szene erneut geladen werden müssen."
 POPUP_SUBMIT_JOB_TOOLTIP_3,Jobs with higher priority will be rendered first,Jobs mit einer höheren Priorität werden zuerst gerendert
-"","",""
-"","",""
+,,
+,,
 POPUP_POOLMANAGER_1,Poolmanager,Poolverwaltung

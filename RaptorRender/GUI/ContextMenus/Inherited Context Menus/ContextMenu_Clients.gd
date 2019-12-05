@@ -32,9 +32,12 @@ func _ready():
 	self.add_separator()
 	self.add_item("Execute command on client", 12, 0)
 	self.add_separator()
-	self.add_item("Remove Client", 14, 0)
+	self.add_item("Add to pool", 14, 0)
+	self.add_item("Remove from this pool", 15, 0)
+	self.add_separator()
+	self.add_item("Remove Client", 17, 0)
 	
-	# trick to calculate the correct size of the popup, so it doesn't display outside of the windo when invoked
+	# trick to calculate the correct size of the popup, so it doesn't display outside of the window when invoked
 	self.visible = true
 	self.visible = false
 	
@@ -53,7 +56,9 @@ func set_item_names():
 		self.set_item_text(9, "CLIENT_CONTEXT_MENU_7") # Shutdown Computer
 		self.set_item_text(10, "CLIENT_CONTEXT_MENU_8") # Reboot Computer
 		self.set_item_text(12, "CLIENT_CONTEXT_MENU_9") # Execute command on client
-		self.set_item_text(14, "CLIENT_CONTEXT_MENU_10") # Remove Client
+		self.set_item_text(14, "CLIENT_CONTEXT_MENU_20") # Add to Pool
+		self.set_item_text(15, "CLIENT_CONTEXT_MENU_21") # Remove from this Pool
+		self.set_item_text(17, "CLIENT_CONTEXT_MENU_10") # Remove Client
 	else:
 		self.set_item_text(0, "CLIENT_CONTEXT_MENU_11") # Enable Clients
 		self.set_item_text(1, "CLIENT_CONTEXT_MENU_12") # Disable Clients Deferred
@@ -64,7 +69,9 @@ func set_item_names():
 		self.set_item_text(9, "CLIENT_CONTEXT_MENU_17") # Shutdown Computers
 		self.set_item_text(10, "CLIENT_CONTEXT_MENU_18") # Reboot Computers
 		self.set_item_text(12, "CLIENT_CONTEXT_MENU_19") # Execute command on clients
-		self.set_item_text(14, "CLIENT_CONTEXT_MENU_20") # Remove Clients
+		self.set_item_text(14, "CLIENT_CONTEXT_MENU_20") # Add to Pool
+		self.set_item_text(15, "CLIENT_CONTEXT_MENU_21") # Remove from this Pool
+		self.set_item_text(17, "CLIENT_CONTEXT_MENU_22") # Remove Clients
 
 
 
@@ -80,7 +87,9 @@ func enable_disable_items():
 	self.set_item_disabled(9, true)  # shutdown computer
 	self.set_item_disabled(10, true)  # reboot computer
 	self.set_item_disabled(12, true)  # execute command
-	self.set_item_disabled(14, true)  # remove client
+	self.set_item_disabled(14, true)  # add to pool
+	self.set_item_disabled(15, true)  # remove from this pool
+	self.set_item_disabled(17, true)  # remove client
 	
 	
 	var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
@@ -89,6 +98,7 @@ func enable_disable_items():
 	for selected in selected_ids:
 		
 		var status =  RaptorRender.rr_data.clients[selected].status
+		
 		
 		if status == RRStateScheme.client_rendering:
 			self.set_item_disabled(1, false) # diable client deffered
@@ -123,7 +133,14 @@ func enable_disable_items():
 			self.set_item_disabled(4, false) # configure client
 			self.set_item_disabled(6, false) # reset client error count
 			self.set_item_disabled(8, false) # wake on LAN
-			self.set_item_disabled(14, false) # remove client
+			self.set_item_disabled(17, false) # remove client
+			
+		
+		if RaptorRender.clients_pool_filter != -1:
+			self.set_item_disabled(15, false)
+		
+		# always enabled options
+		self.set_item_disabled(14, false)  # add to pool
 
 
 
@@ -323,10 +340,40 @@ func _on_ContextMenu_index_pressed(index):
 		
 		13:  # Separator
 			pass
+		
+		
+		
+		14:  # Add to Pool
+			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
+		
+		
+		15:  # Remove from this Pool
+			
+			var selected_ids = str2var( var2str( RaptorRender.ClientsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
+			
+			for selected in selected_ids:
+				
+				RaptorRender.rr_data.pools[RaptorRender.clients_pool_filter].clients.erase(selected)
+				
+				# remove the row from the table
+				RaptorRender.ClientsTable.remove_row(selected)
+			
+			RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
 			
 			
-			
-		14:  # Remove Client
+				
+			# handle the Clients Info Panel
+			RaptorRender.ClientsTable.clear_selection()
+			RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
+			RaptorRender.ClientInfoPanel.visible = false
+			RaptorRender.ClientInfoPanel.reset_to_first_tab()
+		
+		
+		16:  # Separator
+			pass
+		
+		
+		17:  # Remove Client
 			
 			var selected_ids = str2var( var2str( RaptorRender.ClientsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
 			
