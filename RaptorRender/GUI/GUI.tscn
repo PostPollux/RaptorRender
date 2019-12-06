@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://RaptorRender/GUI/Themes/grey.tres" type="Theme" id=1]
 [ext_resource path="res://RaptorRender/GUI/SortableTable/SortableTable.tscn" type="PackedScene" id=2]
@@ -11,8 +11,10 @@
 [ext_resource path="res://RaptorRender/GUI/AutoScalingPopup/AutoScalingPopupBase.tscn" type="PackedScene" id=9]
 [ext_resource path="res://RaptorRender/GUI/NotificationSystem/NotificationSystem.tscn" type="PackedScene" id=10]
 [ext_resource path="res://RaptorRender/GUI/ClientsTabContainer.gd" type="Script" id=11]
+[ext_resource path="res://RaptorRender/GUI/GUI.gd" type="Script" id=12]
 
 [node name="GUI" type="Node"]
+script = ExtResource( 12 )
 
 [node name="BackgroundColor" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -27,26 +29,67 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MainHSplitContainer" type="HSplitContainer" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="MainVSplitContainer" type="VSplitContainer" parent="Control/MainHSplitContainer"]
-margin_right = 910.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+margin_right = 1280.0
+margin_bottom = 22.0
+custom_constants/separation = 10
+
+[node name="CreateJobButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+margin_right = 76.0
+margin_bottom = 22.0
+text = "create job"
+
+[node name="PoolManagerButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 86.0
+margin_right = 185.0
+margin_bottom = 22.0
+text = "pool manager"
+
+[node name="SwitchLanguageButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 195.0
+margin_right = 308.0
+margin_bottom = 22.0
+text = "switch language"
+
+[node name="ColorizeRowsButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 318.0
+margin_right = 484.0
+margin_bottom = 22.0
+text = "colorize erroneous rows"
+
+[node name="MainHSplitContainer" type="HSplitContainer" parent="Control/VBoxContainer"]
+margin_top = 26.0
+margin_right = 1280.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TabContainerJobs" type="TabContainer" parent="Control/MainHSplitContainer/MainVSplitContainer"]
+[node name="MainVSplitContainer" type="VSplitContainer" parent="Control/VBoxContainer/MainHSplitContainer"]
 margin_right = 910.0
-margin_bottom = 296.0
+margin_bottom = 574.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TabContainerJobs" type="TabContainer" parent="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer"]
+margin_right = 910.0
+margin_bottom = 283.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
 
-[node name="Jobs" type="Tabs" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerJobs"]
+[node name="Jobs" type="Tabs" parent="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerJobs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -54,7 +97,7 @@ margin_top = 29.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Jobs_SortableTable" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerJobs/Jobs" instance=ExtResource( 2 )]
+[node name="Jobs_SortableTable" parent="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerJobs/Jobs" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 0.0
@@ -63,16 +106,16 @@ margin_right = 0.0
 margin_bottom = 0.0
 table_id = "jobs"
 
-[node name="TabContainerClients" type="TabContainer" parent="Control/MainHSplitContainer/MainVSplitContainer"]
-margin_top = 304.0
+[node name="TabContainerClients" type="TabContainer" parent="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer"]
+margin_top = 291.0
 margin_right = 910.0
-margin_bottom = 600.0
+margin_bottom = 574.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
 script = ExtResource( 11 )
 
-[node name="All Clients" type="Tabs" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients"]
+[node name="All Clients" type="Tabs" parent="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -80,36 +123,34 @@ margin_top = 29.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Clients_SortableTable" parent="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients/All Clients" instance=ExtResource( 2 )]
+[node name="Clients_SortableTable" parent="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients/All Clients" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 0.0
 margin_bottom = 0.0
-row_color_yellow = Color( 0.346293, 0.352941, 0.231373, 1 )
-row_color_black = Color( 0.117188, 0.117188, 0.117188, 1 )
 table_id = "clients"
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/MainHSplitContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/MainHSplitContainer"]
 margin_left = 918.0
 margin_right = 1280.0
-margin_bottom = 600.0
+margin_bottom = 574.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.4
 
-[node name="Panel" type="Panel" parent="Control/MainHSplitContainer/PanelContainer"]
+[node name="Panel" type="Panel" parent="Control/VBoxContainer/MainHSplitContainer/PanelContainer"]
 margin_left = 6.0
 margin_top = 4.0
 margin_right = 356.0
-margin_bottom = 596.0
+margin_bottom = 570.0
 
-[node name="ClientInfoPanel" parent="Control/MainHSplitContainer/PanelContainer/Panel" instance=ExtResource( 3 )]
+[node name="ClientInfoPanel" parent="Control/VBoxContainer/MainHSplitContainer/PanelContainer/Panel" instance=ExtResource( 3 )]
 visible = false
 margin_right = 0.0
 
-[node name="JobInfoPanel" parent="Control/MainHSplitContainer/PanelContainer/Panel" instance=ExtResource( 4 )]
+[node name="JobInfoPanel" parent="Control/VBoxContainer/MainHSplitContainer/PanelContainer/Panel" instance=ExtResource( 4 )]
 visible = false
 margin_right = 0.0
 
@@ -140,4 +181,8 @@ margin_top_percent = 10.0
 margin_bottom_percent = 10.0
 
 [node name="NotificationSystem" parent="." instance=ExtResource( 10 )]
-[connection signal="tab_changed" from="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients" to="Control/MainHSplitContainer/MainVSplitContainer/TabContainerClients" method="_on_TabContainerClients_tab_changed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/CreateJobButton" to="." method="_on_CreateJobButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/PoolManagerButton" to="." method="_on_PoolManagerButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/SwitchLanguageButton" to="." method="_on_SwitchLanguageButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ColorizeRowsButton" to="." method="_on_ColorizeRowsButton_pressed"]
+[connection signal="tab_changed" from="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients" to="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients" method="_on_TabContainerClients_tab_changed"]

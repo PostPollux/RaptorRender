@@ -1212,41 +1212,6 @@ func log_context_menu_invoked():
 
 
 
-func _input(event):
-	
-	if Input.is_key_pressed(KEY_S):
-		if SubmitJobPopup.visible == false:
-			SubmitJobPopup.show_popup()
-		else:
-			SubmitJobPopup.hide_popup()
-	
-	if Input.is_key_pressed(KEY_P):
-		if PoolManagerPopup.visible == false:
-			PoolManagerPopup.show_popup()
-		else:
-			PoolManagerPopup.hide_popup()
-			
-	if Input.is_key_pressed(KEY_L):
-		if TranslationServer.get_locale() == "de":
-			TranslationServer.set_locale("en")
-		else:
-			TranslationServer.set_locale("de")
-		
-	if Input.is_key_pressed(KEY_C):
-		if colorize_erroneous_table_rows:
-			colorize_erroneous_table_rows = false
-		else:
-			colorize_erroneous_table_rows = true
-		JobsTable.refresh()
-		ClientsTable.refresh()
-		
-	if Input.is_key_pressed(KEY_X):
-		#rr_data.clients.erase("id4")
-		#rr_data.clients.erase("id8")
-		#rr_data.clients.erase("id10")
-		ClientsTable.clear_table()
-
-
 
 func update_all_visible_tables():
 	#ClientsTable.refresh()
