@@ -8,7 +8,7 @@
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/ClientInfoPanel/memory_usage.gd" type="Script" id=6]
 
 [sub_resource type="DynamicFontData" id=1]
-font_path = "res://GUI/fonts/Caliban.ttf"
+font_path = "res://RaptorRender/GUI/fonts/Caliban.ttf"
 
 [sub_resource type="DynamicFont" id=2]
 size = 20
@@ -22,6 +22,9 @@ margin_right = -802.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TabContainer" type="TabContainer" parent="."]
 margin_right = 478.0
@@ -89,7 +92,6 @@ expand = true
 stretch_mode = 6
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer"]
-editor/display_folded = true
 margin_left = 154.0
 margin_right = 418.0
 margin_bottom = 140.0
@@ -109,18 +111,18 @@ margin_bottom = 30.0
 custom_constants/separation = 10
 
 [node name="NameLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 9.0
+margin_right = 113.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 custom_fonts/font = SubResource( 2 )
 text = "JP System"
 
 [node name="UserLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 19.0
+margin_left = 123.0
 margin_top = 8.0
-margin_right = 142.0
+margin_right = 218.0
 margin_bottom = 22.0
-text = "user: Dennis Nedry"
+text = "(Dennis Nedry)"
 
 [node name="StatusLabel" type="Label" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer/MainInfo/HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 34.0
@@ -294,7 +296,6 @@ margin_bottom = 354.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="graphics_specs" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 358.0
 margin_right = 418.0
 margin_bottom = 390.0
@@ -339,7 +340,6 @@ margin_bottom = 414.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="network_specs" type="MarginContainer" parent="TabContainer/Details/ScrollContainer/MarginContainer/VBoxContainer"]
-editor/display_folded = true
 margin_top = 418.0
 margin_right = 418.0
 margin_bottom = 468.0
@@ -454,7 +454,6 @@ rect_min_size = Vector2( 0, 24 )
 size_flags_vertical = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Current Render Log/HBoxContainer/Job"]
-editor/display_folded = true
 margin_right = 86.0
 margin_bottom = 31.0
 mouse_filter = 2
@@ -500,7 +499,6 @@ rect_min_size = Vector2( 0, 24 )
 size_flags_vertical = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Current Render Log/HBoxContainer/Chunk"]
-editor/display_folded = true
 margin_right = 57.0
 margin_bottom = 31.0
 mouse_filter = 2
@@ -546,7 +544,6 @@ rect_min_size = Vector2( 0, 24 )
 size_flags_vertical = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Current Render Log/HBoxContainer/Try"]
-editor/display_folded = true
 margin_right = 37.0
 margin_bottom = 31.0
 mouse_filter = 2

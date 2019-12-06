@@ -38,18 +38,11 @@ var id_position_dict : Dictionary = {}
 var selected_row_ids : Array = []
 
 # row colors
-var row_color : Color = Color("3c3c3c")
-var row_color_selected : Color = Color("956248")
-var row_color_red : Color = Color("643f3b")
-var row_color_blue : Color = Color("3b5064")
-var row_color_green : Color = Color("3b5a3b")
-var row_color_yellow : Color = Color("585a3b")
-var row_color_black : Color = Color("1d1d1d")
+var row_color : Color = RRColorScheme.ST_row_default
+var row_color_selected : Color = RRColorScheme.selected
+
 var even_odd_brightness_difference : float = 0.05
 var hover_brightness_boost : float = 0.1
-
-# variables used for selection handling
-var row_pos_of_last_middle_mouse_click : int  = 0
 
 
 
@@ -80,10 +73,10 @@ func update_id_position_dict():
 
 # sets the "row_position" variable of each row, so that it knows which background color (even or odd) to show. 
 func update_positions_of_rows():
-	var count : int = 1
+	var iterator : int = 1
 	for Row in SortableRows:
-		Row.set_row_position(count)
-		count += 1
+		Row.set_row_position(iterator)
+		iterator += 1
 
 
 # creating a row
@@ -94,11 +87,6 @@ func initialize_row(id) -> SortableTableRow:
 	# set color variables of SortableTableRow
 	Row.row_color = row_color
 	Row.row_color_selected = row_color_selected 
-	Row.row_color_red = row_color_red
-	Row.row_color_blue = row_color_blue
-	Row.row_color_green = row_color_green
-	Row.row_color_yellow = row_color_yellow
-	Row.row_color_black = row_color_black
 	Row.even_odd_brightness_difference = even_odd_brightness_difference
 	Row.hover_brightness_boost = hover_brightness_boost
 	Row.set_additional_colors()
@@ -111,7 +99,7 @@ func initialize_row(id) -> SortableTableRow:
 	# connect signals to enable selecting and invoking a context menu
 	Row.connect("row_clicked", self, "select_SortableRows")
 	Row.connect("row_clicked_rmb", self, "open_context_menu")
-	Row.connect("drag_select", self, "drag_select_SortableRows")
+	Row.connect("drag_selected", self, "drag_select_SortableRows")
 	Row.connect("select_all_pressed", self, "select_all")
 	
 	# initialize the array for the sort values with correct amount of empty strings. Important, otherwise it would crash
@@ -176,14 +164,10 @@ func set_row_color(row : int, color : Color):
 		SortableRows[row - 1].set_row_color(color)
 
 
-func set_row_color_by_string(row : int, color_string : String):
-	if row >= 1:
-		SortableRows[row - 1].set_row_color_by_string(color_string)
-
 
 func reset_all_row_colors_to_default():
 	for Row in SortableRows:
-		Row.set_row_color_by_string("default")
+		Row.set_row_color(RRColorScheme.ST_row_default)
 
 
 func highlight_column(column : int):

@@ -19,7 +19,7 @@ class_name SortableTableRow
 ### SIGNALS
 signal row_clicked
 signal row_clicked_rmb
-signal drag_select
+signal drag_selected
 signal select_all_pressed
 
 ### ONREADY VARIABLES
@@ -45,13 +45,8 @@ var CellsArray : Array = [] # references to the actual cells. For appending chil
 var CellsColorRectArray : Array = [] # used for highlighting the primary sort column
 
 # row colors
-var row_color : Color = Color("3c3c3c")
-var row_color_selected : Color = Color("956248")
-var row_color_red : Color = Color("643f3b")
-var row_color_blue : Color = Color("3b5064")
-var row_color_green : Color = Color("3b5a3b")
-var row_color_yellow : Color = Color("585a3b")
-var row_color_black : Color = Color("1d1d1d")
+var row_color : Color = RRColorScheme.ST_row_default
+var row_color_selected : Color = RRColorScheme.selected
 
 var even_odd_brightness_difference : float = 0.05
 var hover_brightness_boost : float = 0.1
@@ -239,18 +234,6 @@ func set_additional_colors():
 
 
 
-func set_row_color_by_string(color_string):
-	
-	match color_string: 
-		"default": set_row_color(row_color)
-		"red": set_row_color(row_color_red)
-		"green": set_row_color(row_color_green)
-		"blue": set_row_color(row_color_blue)
-		"yellow": set_row_color(row_color_yellow)
-		"black": set_row_color(row_color_black)
-
-
-
 func set_row_color(color : Color):
 	
 	row_color_even = color
@@ -313,7 +296,7 @@ func _on_SortabelTableRow_mouse_entered():
 	hovered = true
 	update_row_color()
 	if Input.is_action_pressed("ui_left_mouse_button"):
-		emit_signal("drag_select", row_position)
+		emit_signal("drag_selected", row_position)
 
 
 

@@ -15,7 +15,7 @@ var PoolManagerPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopu
 ### EXPORTED VARIABLES
 
 ### VARIABLES
-var colorize_table_rows : bool = false
+var colorize_erroneous_table_rows : bool = false
 
 var currently_updating_pool_cache : bool = false
 
@@ -1233,10 +1233,10 @@ func _input(event):
 			TranslationServer.set_locale("de")
 		
 	if Input.is_key_pressed(KEY_C):
-		if colorize_table_rows:
-			colorize_table_rows = false
+		if colorize_erroneous_table_rows:
+			colorize_erroneous_table_rows = false
 		else:
-			colorize_table_rows = true
+			colorize_erroneous_table_rows = true
 		JobsTable.refresh()
 		ClientsTable.refresh()
 		
@@ -1442,35 +1442,26 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 			
 			if rr_data.jobs[job].status == RRStateScheme.job_rendering:
 				StatusIcon.set_modulate(RRColorScheme.state_active)
-				if colorize_table_rows:
-					JobsTable.set_row_color_by_string(row_position, "blue")
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_rendering_paused_deferred:
 				StatusIcon.set_modulate(RRColorScheme.state_paused_deferred)
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_queued:
 				StatusIcon.set_modulate(RRColorScheme.state_queued)
-				if colorize_table_rows:
-					JobsTable.set_row_color_by_string(row_position, "yellow")
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_error:
 				StatusIcon.set_modulate(RRColorScheme.state_error)
-				if colorize_table_rows:
-					JobsTable.set_row_color_by_string(row_position, "red")
+				if colorize_erroneous_table_rows:
+					JobsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_paused:
 				StatusIcon.set_modulate(RRColorScheme.state_paused)
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_finished:
 				StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
-				if colorize_table_rows:
-					JobsTable.set_row_color_by_string(row_position, "green")
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_cancelled:
 				StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
-				if colorize_table_rows:
-					JobsTable.set_row_color_by_string(row_position, "black")
-					cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
 					
 			
 			# update sort_value
@@ -1572,8 +1563,8 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 			JobsTable.set_cell_sort_value(row_position, errors_column,  rr_data.jobs[job].errors)
 			
 			if rr_data.jobs[job].errors > 0:
-				if colorize_table_rows:
-						JobsTable.set_row_color_by_string(row_position, "red")
+				if colorize_erroneous_table_rows:
+						JobsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 		
 		
 		
@@ -1633,36 +1624,27 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		
 		if rr_data.jobs[job].status == RRStateScheme.job_rendering:
 			StatusIcon.set_modulate(RRColorScheme.state_active)
-			if colorize_table_rows:
-				JobsTable.set_row_color_by_string(jobs_iterator, "blue")
 				
 		elif rr_data.jobs[job].status == RRStateScheme.job_rendering_paused_deferred:
 			StatusIcon.set_modulate(RRColorScheme.state_paused_deferred)
 			
 		elif rr_data.jobs[job].status == RRStateScheme.job_queued:
 			StatusIcon.set_modulate(RRColorScheme.state_queued)
-			if colorize_table_rows:
-				JobsTable.set_row_color_by_string(jobs_iterator, "yellow")
 				
 		elif rr_data.jobs[job].status == RRStateScheme.job_error:
 			StatusIcon.set_modulate(RRColorScheme.state_error)
-			if colorize_table_rows:
-				JobsTable.set_row_color_by_string(jobs_iterator, "red")
+			if colorize_erroneous_table_rows:
+				JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_error)
 				
 		elif rr_data.jobs[job].status == RRStateScheme.job_paused:
 			StatusIcon.set_modulate(RRColorScheme.state_paused)
 				
 		elif rr_data.jobs[job].status == RRStateScheme.job_finished:
 			StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
-			if colorize_table_rows:
-				JobsTable.set_row_color_by_string(jobs_iterator, "green")
 				
 		elif rr_data.jobs[job].status == RRStateScheme.job_cancelled:
 			StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
-			if colorize_table_rows:
-				JobsTable.set_row_color_by_string(jobs_iterator, "black")
-				StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
-				
+		
 		
 		JobsTable.set_cell_content(jobs_iterator, status_column, StatusIcon)
 		
@@ -1745,8 +1727,8 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		JobsTable.set_LABEL_cell_with_custom_sort(jobs_iterator, errors_column, String(rr_data.jobs[job].errors), rr_data.jobs[job].errors)
 		
 		if rr_data.jobs[job].errors > 0:
-			if colorize_table_rows:
-					JobsTable.set_row_color_by_string(jobs_iterator, "red")
+			if colorize_erroneous_table_rows:
+					JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_error)
 		
 		
 		### Pools ###
@@ -1815,32 +1797,23 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 			
 			if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering:
 				StatusIcon.set_modulate(RRColorScheme.state_active)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(row_position, "blue")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_queued:
 				StatusIcon.set_modulate(RRColorScheme.state_queued)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(row_position, "yellow")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_error:
 				StatusIcon.set_modulate(RRColorScheme.state_error)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(row_position, "red")
+				if colorize_erroneous_table_rows:
+					ChunksTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
 				StatusIcon.set_modulate(RRColorScheme.state_paused)
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished:
 				StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(row_position, "green")
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_cancelled:
 				StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
-				if colorize_table_rows:
-					ChunksTable.set_row_color_by_string(row_position, "black")
-					cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
 					
 			
 			
@@ -1951,32 +1924,23 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		
 		if rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_rendering:
 			StatusIcon.set_modulate(RRColorScheme.state_active)
-			if colorize_table_rows:
-				ChunksTable.set_row_color_by_string(chunks_iterator, "blue")
 				
 		elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_queued:
 			StatusIcon.set_modulate(RRColorScheme.state_queued)
-			if colorize_table_rows:
-				ChunksTable.set_row_color_by_string(chunks_iterator, "yellow")
 				
 		elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_error:
 			StatusIcon.set_modulate(RRColorScheme.state_error)
-			if colorize_table_rows:
-				ChunksTable.set_row_color_by_string(chunks_iterator, "red")
+			if colorize_erroneous_table_rows:
+				ChunksTable.set_row_color(chunks_iterator, RRColorScheme.ST_row_error)
 				
 		elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
 			StatusIcon.set_modulate(RRColorScheme.state_paused)
 				
 		elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_finished:
 			StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
-			if colorize_table_rows:
-				ChunksTable.set_row_color_by_string(chunks_iterator, "green")
 				
 		elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_cancelled:
 			StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
-			if colorize_table_rows:
-				ChunksTable.set_row_color_by_string(chunks_iterator, "black")
-				StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
 				
 		
 		ChunksTable.set_cell_content(chunks_iterator, status_column, StatusIcon)
@@ -2139,13 +2103,9 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 			
 			if rr_data.clients[client].status == RRStateScheme.client_rendering:
 				StatusIcon.set_modulate(RRColorScheme.state_active)
-				if colorize_table_rows:
-					ClientsTable.set_row_color_by_string(row_position, "blue")
 				
 			elif rr_data.clients[client].status == RRStateScheme.client_available:
 				StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
-				if colorize_table_rows:
-					ClientsTable.set_row_color_by_string(row_position, "green")
 				
 			elif rr_data.clients[client].status == RRStateScheme.client_error:
 				StatusIcon.set_modulate(RRColorScheme.state_error)
@@ -2155,9 +2115,6 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 			
 			elif rr_data.clients[client].status == RRStateScheme.client_offline:
 				StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
-				if colorize_table_rows:
-					ClientsTable.set_row_color_by_string(row_position, "black")
-					cell.get_child(0).set_modulate(Color(0.6, 0.6, 0.6, 1))
 			
 			
 			# update sort_value
@@ -2214,8 +2171,8 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		ClientsTable.update_LABEL_cell_with_custom_sort(row_position, error_count_column, String (errors), errors)
 		
 		if errors > 0:
-			if colorize_table_rows:
-				ClientsTable.set_row_color_by_string(row_position, "red")
+			if colorize_erroneous_table_rows:
+				ClientsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 		
 		
 		### Pools ###
@@ -2266,13 +2223,9 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		if rr_data.clients[client].status == RRStateScheme.client_rendering:
 			StatusIcon.set_modulate(RRColorScheme.state_active)
-			if colorize_table_rows:
-				ClientsTable.set_row_color_by_string(client_iterator, "blue")
 			
 		elif rr_data.clients[client].status == RRStateScheme.client_available:
 			StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
-			if colorize_table_rows:
-				ClientsTable.set_row_color_by_string(client_iterator, "green")
 			
 		elif rr_data.clients[client].status == RRStateScheme.client_error:
 			StatusIcon.set_modulate(RRColorScheme.state_error)
@@ -2282,9 +2235,6 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		elif rr_data.clients[client].status == RRStateScheme.client_offline:
 			StatusIcon.set_modulate(RRColorScheme.state_offline_or_cancelled)
-			if colorize_table_rows:
-				ClientsTable.set_row_color_by_string(client_iterator, "black")
-				StatusIcon.set_modulate(Color(0.6, 0.6, 0.6, 1))
 			
 		StatusIcon.set_texture(icon)
 		ClientsTable.set_cell_content(client_iterator, status_column, StatusIcon)
@@ -2333,8 +2283,8 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		ClientsTable.set_LABEL_cell_with_custom_sort(client_iterator, error_count_column, String(rr_data.clients[client].error_count), rr_data.clients[client].error_count )
 		
 		if rr_data.clients[client].error_count > 0:
-			if colorize_table_rows:
-				ClientsTable.set_row_color_by_string(client_iterator, "red")
+			if colorize_erroneous_table_rows:
+				ClientsTable.set_row_color(client_iterator, RRColorScheme.ST_row_error)
 		
 		
 		

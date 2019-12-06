@@ -13,7 +13,7 @@
 [ext_resource path="res://RaptorRender/GUI/InfoPanels/JobInfoPanel/ImagePreview/ImagePreviewPanel.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFontData" id=1]
-font_path = "res://GUI/fonts/Caliban.ttf"
+font_path = "res://RaptorRender/GUI/fonts/Caliban.ttf"
 
 [sub_resource type="DynamicFont" id=2]
 size = 20
@@ -27,6 +27,9 @@ margin_right = -569.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TabContainer" type="TabContainer" parent="."]
 margin_right = 711.0
@@ -37,7 +40,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Details" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -283,7 +285,6 @@ margin_bottom = 14.0
 text = "Log Files"
 
 [node name="Chunk List" type="Tabs" parent="TabContainer"]
-editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0

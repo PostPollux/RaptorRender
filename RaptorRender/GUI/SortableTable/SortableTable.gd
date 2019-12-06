@@ -52,11 +52,6 @@ export (int) var row_height : int = 30
 # color variables
 export (Color) var row_color : Color = Color("3c3c3c")
 export (Color) var row_color_selected : Color = Color("956248")
-export (Color) var row_color_red : Color = Color("643f3b")
-export (Color) var row_color_blue : Color = Color("3b5064")
-export (Color) var row_color_green : Color = Color("3b5a3b")
-export (Color) var row_color_yellow : Color = Color("585a3b")
-export (Color) var row_color_black : Color = Color("1d1d1d")
 export (float) var row_brightness_difference : float = 0.05
 export (float) var hover_brightness_boost : float = 0.1
 
@@ -96,9 +91,7 @@ func _ready():
 	RowContainerEmpty.row_height = row_height
 	RowContainerEmpty.create_initial_empty_rows()
 	
-	
-	
-	
+
 	# connect signals
 	TopRow.connect("sort_invoked", self, "sort")
 	TopRow.connect("column_resized", self, "set_column_width")
@@ -269,10 +262,6 @@ func clear_table() -> void:
 
 func set_row_color(row : int, color : Color):
 	RowContainerFilled.set_row_color(row, color)
-
-
-func set_row_color_by_string(row, color_string):
-	RowContainerFilled.set_row_color_by_string(row, color_string)
 
 
 

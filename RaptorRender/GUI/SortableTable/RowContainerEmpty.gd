@@ -34,11 +34,7 @@ var EmptyRows : Array = []
 # row colors
 var row_color : Color = Color("3c3c3c")
 var row_color_selected : Color = Color("956248")
-var row_color_red : Color = Color("643f3b")
-var row_color_blue : Color = Color("3b5064")
-var row_color_green : Color = Color("3b5a3b")
-var row_color_yellow : Color = Color("585a3b")
-var row_color_black : Color = Color("1d1d1d")
+
 var even_odd_brightness_difference : float = 0.05
 var hover_brightness_boost : float = 0.1
 
@@ -76,11 +72,7 @@ func create_empty_row():
 		# set color variables of SortableTableRow
 		Row.row_color = row_color
 		Row.row_color_selected = row_color_selected 
-		Row.row_color_red = row_color_red
-		Row.row_color_blue = row_color_blue
-		Row.row_color_green = row_color_green
-		Row.row_color_yellow = row_color_yellow
-		Row.row_color_black = row_color_black
+		
 		Row.even_odd_brightness_difference = even_odd_brightness_difference
 		Row.hover_brightness_boost = hover_brightness_boost
 		Row.set_additional_colors()
