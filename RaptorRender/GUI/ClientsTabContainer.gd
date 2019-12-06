@@ -95,6 +95,7 @@ func _on_TabContainerClients_tab_changed(tab: int) -> void:
 	
 	RaptorRender.ClientsTable = ClientsTable
 	
+	RaptorRender.ClientsTable.clear_table()
 	RaptorRender.refresh_clients_table()
 	
 	previous_active_tab = tab
