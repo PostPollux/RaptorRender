@@ -152,7 +152,7 @@ func apply_name() -> void:
 		if NameLineEdit.text != "" and item_name != NameLineEdit.text:
 			item_name = NameLineEdit.text
 			NameLabel.text = item_name
-			emit_signal("name_changed", item_id)
+			emit_signal("name_changed", self)
 
 
 func enter_name_edit_mode() -> void:

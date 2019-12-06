@@ -147,8 +147,8 @@ func item_doubleclicked(item_id : int) -> void:
 	emit_signal("item_doubleclicked", item_id)
 
 
-func item_name_changed(item_id : int) -> void:
-	emit_signal("item_name_changed", item_id)
+func item_name_changed(Item : ItemListBoxItem) -> void:
+	emit_signal("item_name_changed", Item)
 
 
 #############

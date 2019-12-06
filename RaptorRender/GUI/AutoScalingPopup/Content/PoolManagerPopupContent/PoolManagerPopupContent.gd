@@ -47,6 +47,7 @@ func _ready() -> void:
 	get_parent().connect("ok_pressed", self, "apply_changes")
 	PoolItemListBox.connect("item_selected", self, "pool_selected")
 	PoolItemListBox.connect("selection_cleared", self, "pool_selection_cleared")
+	PoolItemListBox.connect("item_name_changed", self, "pool_name_changed")
 	
 	handle_localization()
 	
@@ -231,6 +232,10 @@ func pool_selection_cleared() -> void:
 	TransferClientsButton.text = ""
 	TransferClientsButton.disabled = true
 
+
+
+func pool_name_changed(Item : ItemListBoxItem) -> void:
+	pools_dict[Item.item_id].name = Item.item_name
 
 
 func _on_PoolNote_text_changed() -> void:
