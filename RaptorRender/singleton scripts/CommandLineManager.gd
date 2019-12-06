@@ -149,7 +149,7 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 			
 			# this will only be the process id of the process that starts the render process. Unfortunately we don't get the process id of the render process itself.
 			invoked_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
-		
+			
 		# Windows
 		"Windows" :
 		
@@ -160,7 +160,7 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 			invoked_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
 	
 	
-	
+	print("executing: " + cmdline_instruction)
 	
 	current_commandline_instructions = cmdline_instruction
 	current_commandline_instructions_without_executable = cmdline_instruction_without_executable
@@ -176,23 +176,49 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 
 func check_if_render_process_is_running() -> bool:
 	
-	# this command will retun 0 if the process id exists, and something else, if it doesn't exist
-	var output : Array = []
-	var arguments : Array = ["-c","kill -0 " + String(invoked_render_pid) + " && echo \"$?\""]
-	OS.execute("bash", arguments, true, output)
-	
-	if output[0].begins_with("0"):
-		currently_rendering = true
-		return true
-	else:
-		currently_rendering = false
-		read_log_timer.stop()
-		if RenderLogValidator.CRP_software_start_success_detected:
-			emit_signal("render_process_exited")
-		else:
-			emit_signal("render_process_exited_without_software_start")
-		return false
-
+	match platform:
+		
+		# Linux
+		"X11" : 
+			
+			# this command will retun 0 if the process id exists, and something else, if it doesn't exist
+			#var output : Array = []
+			#var arguments : Array = ["-c","kill -0 " + String(invoked_render_pid) + " && echo \"$?\""]
+			#OS.execute("bash", arguments, true, output)
+			
+			
+			# get the list of all pids
+			var output : Array = []
+			var arguments : Array = ["-c","ps ax"]
+			
+			var get_all_pids_pid : int = OS.execute("bash", arguments, true, output)
+			
+			# split the resulting string in lines (each line one pid)
+			var splitted_output : Array = output[0].split('\n', false, 0)  
+			
+			var num_of_found_processes : int = 0
+			
+			for pid_line in splitted_output:
+				
+				# now search in the pids for the command line without the executable path and count the number of matches.
+				# Because for example if the executable is a shell script that links to another location, the path of the actual renderprocess might actually change while we would still search for the wrong one.
+				if pid_line.find(current_commandline_instructions_without_executable) != -1:
+					num_of_found_processes += 1
+			
+			# if we have less than two processes (the invoking + the actual render process) that contain the "command line" string in it's name, the render process has exited
+			if num_of_found_processes > 1:
+				currently_rendering = true
+				return true
+			else:
+				currently_rendering = false
+				read_log_timer.stop()
+				if RenderLogValidator.CRP_software_start_success_detected:
+					emit_signal("render_process_exited")
+				else:
+					emit_signal("render_process_exited_without_software_start")
+				return false
+				
+	return false
 
 
 
