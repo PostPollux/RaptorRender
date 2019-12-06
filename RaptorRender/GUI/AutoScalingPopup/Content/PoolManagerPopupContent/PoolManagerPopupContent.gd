@@ -21,6 +21,14 @@ onready var PoolItemListBox : ItemListBox = $"PoolSection/MarginContainer/VBoxCo
 onready var ClientsInPool_ItemListBox : ItemListBox = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer/ScrollContainer/ClientsInPool_ItemListBox"
 onready var ClientsAvailable_ItemListBox : ItemListBox = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer2/ScrollContainer/ClientsAvailable_ItemListBox"
 onready var TransferClientsButton : Button = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer3/CenterContainer/TransferClientsButton"
+onready var CreatePoolButton : Button = $"PoolSection/MarginContainer/VBoxContainer/ButtonsContainer/Create Button"
+onready var DuplicatePoolButton : Button = $"PoolSection/MarginContainer/VBoxContainer/ButtonsContainer/Duplicate Button"
+onready var DeletePoolButton : Button = $"PoolSection/MarginContainer/VBoxContainer/ButtonsContainer/Delete Button"
+
+onready var PoolListHeading : Label = $"PoolSection/MarginContainer/VBoxContainer/Heading"
+onready var NoteHeading : Label = $"PoolSection/MarginContainer/VBoxContainer/Note Heading"
+onready var ClientsListLeftHeading : Label = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer/Heading"
+onready var ClientsListRightHeading : Label = $"ClientsSection/VBoxContainer/HBoxContainer/VBoxContainer2/Heading"
 
 ### EXPORTED VARIABLES
 
@@ -39,6 +47,20 @@ func _ready() -> void:
 	get_parent().connect("ok_pressed", self, "apply_changes")
 	PoolItemListBox.connect("item_selected", self, "pool_selected")
 	PoolItemListBox.connect("selection_cleared", self, "pool_selection_cleared")
+	
+	handle_localization()
+	
+
+func handle_localization():
+	
+	# set labels
+	PoolListHeading.text = "POPUP_POOLMANAGER_2" # Pools
+	CreatePoolButton.text = "POPUP_POOLMANAGER_3" # create
+	DuplicatePoolButton.text = "POPUP_POOLMANAGER_4" # duplicate
+	DeletePoolButton.text = "POPUP_POOLMANAGER_5" # delete
+	NoteHeading.text = "POPUP_POOLMANAGER_6" # Note
+	ClientsListLeftHeading.text = "POPUP_POOLMANAGER_7" # Clients in pool
+	ClientsListRightHeading.text = "POPUP_POOLMANAGER_8" # Clients available for pool
 
 
 

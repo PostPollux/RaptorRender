@@ -138,7 +138,7 @@ CLIENT_CONTEXT_MENU_19,Execute command on clients,Befehl auf Clients ausführen
 CLIENT_CONTEXT_MENU_20,Add to Pool,Zu einem Pool hinzufügen
 CLIENT_CONTEXT_MENU_21,Remove from this Pool,Aus diesem Pool entfernen
 CLIENT_CONTEXT_MENU_22,Remove Clients,Clients löschen
-"","",""
+,,
 ,,
 ,,
 CHUNK_COLUMN_1,ID,ID
@@ -254,3 +254,12 @@ POPUP_SUBMIT_JOB_TOOLTIP_3,Jobs with higher priority will be rendered first,Jobs
 ,,
 ,,
 POPUP_POOLMANAGER_1,Poolmanager,Poolverwaltung
+POPUP_POOLMANAGER_2,Pools,Pools
+POPUP_POOLMANAGER_3,create,Pool erstellen
+POPUP_POOLMANAGER_4,duplicate,duplizieren
+POPUP_POOLMANAGER_5,delete,löschen
+POPUP_POOLMANAGER_6,Note:,Notiz:
+POPUP_POOLMANAGER_7,Clients in pool,Clients in diesem Pool
+POPUP_POOLMANAGER_8,Clients available for pool,Verfügbare Clients
+,"",""
+"","",""
