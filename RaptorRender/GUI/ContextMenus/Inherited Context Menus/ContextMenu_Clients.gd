@@ -9,7 +9,7 @@ extends PopupMenu
 ### EXPORTED VARIABLES
 
 ### VARIABLES
-
+var PoolSubmenu : PopupMenu = PopupMenu.new()
 
 
 
@@ -17,6 +17,10 @@ extends PopupMenu
 
 
 func _ready():
+	
+	PoolSubmenu.set_name("PoolSubmenu")
+	PoolSubmenu.connect("id_pressed", self, "pool_submenu_item_selected")
+	
 	self.add_item("Enable Client", 0, 0)
 	self.add_item("Disable Client Deferred", 1, 0)
 	self.add_item("Disable Client Immediately", 2, 0)
@@ -32,7 +36,7 @@ func _ready():
 	self.add_separator()
 	self.add_item("Execute command on client", 12, 0)
 	self.add_separator()
-	self.add_item("Add to pool", 14, 0)
+	self.add_submenu_item("Add to pool", "PoolSubmenu", 14)
 	self.add_item("Remove from this pool", 15, 0)
 	self.add_separator()
 	self.add_item("Remove Client", 17, 0)
@@ -42,6 +46,20 @@ func _ready():
 	self.visible = false
 	
 	set_item_names()
+
+
+
+# override show function to make sure the PoolSubmenu is always up to date if we show the clients context menu
+func show():
+	
+	PoolSubmenu.clear()
+	for pool in RaptorRender.rr_data.pools.keys():
+		PoolSubmenu.add_item(RaptorRender.rr_data.pools[pool].name, pool)
+	self.add_child(PoolSubmenu)
+	
+	# don't forget to call the original function of the parent
+	.show()
+
 
 
 func set_item_names():
@@ -141,8 +159,6 @@ func enable_disable_items():
 		
 		# always enabled options
 		self.set_item_disabled(14, false)  # add to pool
-
-
 
 
 
@@ -405,6 +421,18 @@ func _on_ContextMenu_index_pressed(index):
 				
 				
 			RaptorRender.ClientsTable.refresh()
+
+
+
+func pool_submenu_item_selected(pool_id : int) -> void:
+	
+	var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
+		
+	for selected in selected_ids:
+		if not RaptorRender.rr_data.pools[pool_id].clients.has(selected):
+			RaptorRender.rr_data.pools[pool_id].clients.append(selected)
+		
+	RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
 
 
 
