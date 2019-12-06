@@ -24,12 +24,13 @@ signal render_process_exited_without_software_start
 ### VARIABLES
 var platform : String # to decide which function to call depending on os
 
-var invoke_render_pid : int = 999999999 # start value is just a big unrealistic number. Otherwise it would be 0 by default which is the main process which is a bit dangerous...
+var invoked_render_pid : int = 999999999 # start value is just a big unrealistic number. Otherwise it would be 0 by default which is the main process which is a bit dangerous...
 
 var log_data_path : String
 
 var active_render_log_file : File
 var current_commandline_instructions : String
+var current_commandline_instructions_without_executable : String
 
 var file_pointer_position : int = 0
 
@@ -117,7 +118,7 @@ func join_read_log_file_thread():
 
 
 
-func start_render_process (unique_job_id : int, cmdline_instruction : String, log_file_name : String):
+func start_render_process (unique_job_id : int, cmdline_instruction : String, cmdline_instruction_without_executable : String, log_file_name : String):
 	
 	if currently_rendering:
 		kill_current_render_process()
@@ -146,7 +147,8 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, lo
 			var output : Array = []
 			var arguments : Array = ["-c", cmdline_instruction + " > " + log_file_name_full + " 2>&1"] # 2>&1  redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
 			
-			invoke_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
+			# this will only be the process id of the process that starts the render process. Unfortunately we don't get the process id of the render process itself.
+			invoked_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
 		
 		# Windows
 		"Windows" :
@@ -154,12 +156,14 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, lo
 			var output : Array = []
 			var arguments : Array = ['/C', cmdline_instruction + ' > ' + log_file_name_full + ' 2>&1'] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file. Unfortunately under windows the errors will be printed at the end of the file and not in a chronological order together with the "stdout" stream.
 			
-			invoke_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
+			# this will only be the process id of the process that starts the render process. Unfortunately we don't get the process id of the render process itself.
+			invoked_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
 	
 	
 	
 	
 	current_commandline_instructions = cmdline_instruction
+	current_commandline_instructions_without_executable = cmdline_instruction_without_executable
 	
 	currently_rendering = true
 	
@@ -174,7 +178,7 @@ func check_if_render_process_is_running() -> bool:
 	
 	# this command will retun 0 if the process id exists, and something else, if it doesn't exist
 	var output : Array = []
-	var arguments : Array = ["-c","kill -0 " + String(invoke_render_pid) + " && echo \"$?\""]
+	var arguments : Array = ["-c","kill -0 " + String(invoked_render_pid) + " && echo \"$?\""]
 	OS.execute("bash", arguments, true, output)
 	
 	if output[0].begins_with("0"):
@@ -196,21 +200,31 @@ func kill_current_render_process():
 	
 	read_log_timer.stop()
 	
-	OS.kill(invoke_render_pid)
+	# kill the process that started the render process
+	OS.kill(invoked_render_pid)
 	
+	# Now find and kill the actual render process that has been invoked by "invoked_render_pid" process
+	# First we get the list of all pids
 	var output : Array = []
-	var arguments : Array = ["-c","ps ax | grep \"" + current_commandline_instructions + "\""]
-	OS.execute("bash", arguments, true, output)
-			
-	# split String in lines
+	var arguments : Array = ["-c","ps ax"]
+	
+	var get_all_pids_pid : int = OS.execute("bash", arguments, true, output)
+	
+	# split the resulting string in lines (each line one pid)
 	var splitted_output : Array = output[0].split('\n', false, 0)  
 		
-	for line in splitted_output:
+	for pid_line in splitted_output:
 		
-		#split line by spaces
-		var splitted_line : Array = line.split(' ', false, 0)
-		var pid : int = int(splitted_line[0])
-		OS.kill(pid)
+		# We will have to search in the pids for the command line without the executable path. 
+		# Because for example if the executable is a shell script that links to another location, the path of the actual renderprocess might actually change while we would still search for the wrong one.
+		if pid_line.find(current_commandline_instructions_without_executable) != -1:
+			
+			# split line by spaces to extract the pid number
+			var splitted_line : Array = pid_line.split(' ', false, 0)
+			var pid : int = int(splitted_line[0])
+			
+			print("killing pid: " + String(pid))
+			OS.kill(pid)
 	
 	currently_rendering = false
 	

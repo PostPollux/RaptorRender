@@ -304,6 +304,9 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int):
 	# add cmd value to try information
 	RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].cmd = cmd_string
 	
+	# when we want to kill a process later on we will have to search in the pids for this command line string. As the path can change, for example if the executable is a shell script that links to another location, we should rather search for a string without the executable path.
+	var cmd_string_without_executable : String = cmd_string.replace(job_type_settings.get_value("JobTypeSettings", "path_executable", ""), "").dedent()
+	
 	# now invoke the render process with the freshly created commandline string
-	CommandLineManager.start_render_process( RaptorRender.rr_data.jobs[job_id].id, cmd_string, log_file_name)
+	CommandLineManager.start_render_process( RaptorRender.rr_data.jobs[job_id].id, cmd_string, cmd_string_without_executable, log_file_name)
 	
