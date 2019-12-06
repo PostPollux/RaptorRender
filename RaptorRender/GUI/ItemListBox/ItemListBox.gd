@@ -22,6 +22,7 @@ onready var BoxBackgroundColorRect : ColorRect = $"BGColorRect"
 
 ### VARIABLES
 var SelectedItems : Array = []
+var hovered : bool = false
 
 var item_names_editable : bool = false
 var items_dragable : bool = false
@@ -37,6 +38,20 @@ var item_bg_color_selected : Color = RRColorScheme.selected
 
 func _ready() -> void:
 	pass
+
+
+func _process(delta : float) -> void:
+	
+	if hovered:
+		
+		if Input.is_action_just_pressed("select_all"):
+			
+			# check if mouse is really hovering the box. Because in some circumstances the mouse exited event doesn't fire
+			if self.get_global_rect().has_point( get_viewport().get_mouse_position() ):
+				select_all()
+			else:
+				hovered = false
+
 
 
 func get_all_items() -> Array:
@@ -241,3 +256,13 @@ func clear_selection():
 			Item.deselect()
 	
 	emit_signal("selection_cleared")
+
+
+
+
+func _on_ItemListBox_mouse_entered() -> void:
+	hovered = true
+
+
+func _on_ItemListBox_mouse_exited() -> void:
+	hovered = false
