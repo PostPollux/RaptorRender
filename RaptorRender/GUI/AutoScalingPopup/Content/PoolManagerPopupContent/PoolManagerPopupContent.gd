@@ -298,3 +298,8 @@ func _on_Delete_Button_pressed() -> void:
 
 
 
+
+
+func _on_Pool_ItemListBox_selection_cleared() -> void:
+	ClientsInPool_ItemListBox.clear()
+	ClientsAvailable_ItemListBox.clear()
