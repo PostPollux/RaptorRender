@@ -215,10 +215,14 @@ func pool_selected(pool_id : int) -> void:
 	
 	for client in pools_dict[pool_id].clients:
 		ClientsInPool_ItemListBox.add_item(RaptorRender.rr_data.clients[client].name, client)
+	
+	ClientsInPool_ItemListBox.sort_items_by_name()
 		
 	for client in RaptorRender.rr_data.clients.keys():
 		if pools_dict[pool_id].clients.has(client) == false:
 			ClientsAvailable_ItemListBox.add_item(RaptorRender.rr_data.clients[client].name, client)
+	
+	ClientsAvailable_ItemListBox.sort_items_by_name()
 	
 	TransferClientsButton.text = ""
 	TransferClientsButton.disabled = true

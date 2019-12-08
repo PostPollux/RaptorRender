@@ -151,6 +151,35 @@ func item_name_changed(Item : ItemListBoxItem) -> void:
 	emit_signal("item_name_changed", Item)
 
 
+
+func sort_items_by_name() -> void:
+	
+	var sort_array : Array = []
+	
+	# create the array to sort
+	for Item in self.get_all_items():
+	
+		sort_array.append([Item, Item.item_name.to_lower()])
+	
+	# sort the array
+	sort_array.sort_custom ( self, "items_custom_sort" )
+	
+	# update the table by moving the row nodes
+	var item_position : int = 0
+	
+	for item in sort_array:
+		ItemVBox.move_child(item[0], item_position)
+		item_position += 1
+
+
+func items_custom_sort(a, b):
+	print (a[1])
+	return a[1] < b[1]
+	
+
+
+
+
 #############
 ### Selection
 #############
