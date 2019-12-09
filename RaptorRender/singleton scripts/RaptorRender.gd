@@ -15,7 +15,7 @@ var PoolManagerPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopu
 ### EXPORTED VARIABLES
 
 ### VARIABLES
-var colorize_erroneous_table_rows : bool = false
+var colorize_erroneous_table_rows : bool = true
 
 var currently_updating_pool_cache : bool = false
 
@@ -1416,8 +1416,6 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_error:
 				StatusIcon.set_modulate(RRColorScheme.state_error)
-				if colorize_erroneous_table_rows:
-					JobsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 					
 			elif rr_data.jobs[job].status == RRStateScheme.job_paused:
 				StatusIcon.set_modulate(RRColorScheme.state_paused)
@@ -1514,23 +1512,15 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		
 		
 		### Errors ###
+		var errors : int = rr_data.jobs[job].errors
 		
-		# only change when value is different
-		if (row.sort_values[errors_column] != rr_data.jobs[job].errors):
-			
-			# get reference to the cell
-			var cell = JobsTable.get_cell( row_position, errors_column )
-			
-			# change the cell value
-			cell.get_child(0).text = String(rr_data.jobs[job].errors)
-			
-			# update sort_value
-			JobsTable.set_cell_sort_value(row_position, errors_column,  rr_data.jobs[job].errors)
-			
+		JobsTable.update_LABEL_cell_with_custom_sort(row_position, errors_column, String(errors), errors)
+		
+		JobsTable.set_row_color(row_position, RRColorScheme.ST_row_default)
+		if colorize_erroneous_table_rows:
 			if rr_data.jobs[job].errors > 0:
-				if colorize_erroneous_table_rows:
-						JobsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
-		
+				JobsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
+				
 		
 		
 		### Pools ###
@@ -1545,19 +1535,7 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 					pools_string += ", "
 				pool_count += 1
 					
-		# only change when value is different
-		if (row.sort_values[pools_column] != pools_string.to_lower()):
-			
-			# get reference to the cell
-			var cell = JobsTable.get_cell( row_position, pools_column )
-			
-			# change the cell value
-			cell.get_child(0).text = pools_string
-			
-			# update sort_value
-			JobsTable.set_cell_sort_value(row_position, pools_column,  pools_string.to_lower())
-		
-		
+		JobsTable.update_LABEL_cell(row_position, pools_column, pools_string)
 		
 		### Note ###
 		JobsTable.update_LABEL_cell(row_position, note_column, rr_data.jobs[job].note)
@@ -1598,8 +1576,6 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 				
 		elif rr_data.jobs[job].status == RRStateScheme.job_error:
 			StatusIcon.set_modulate(RRColorScheme.state_error)
-			if colorize_erroneous_table_rows:
-				JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_error)
 				
 		elif rr_data.jobs[job].status == RRStateScheme.job_paused:
 			StatusIcon.set_modulate(RRColorScheme.state_paused)
@@ -1691,9 +1667,10 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		### Errors ###
 		JobsTable.set_LABEL_cell_with_custom_sort(jobs_iterator, errors_column, String(rr_data.jobs[job].errors), rr_data.jobs[job].errors)
 		
-		if rr_data.jobs[job].errors > 0:
-			if colorize_erroneous_table_rows:
-					JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_error)
+		JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_default)
+		if colorize_erroneous_table_rows:
+			if rr_data.jobs[job].errors > 0:
+				JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_error)
 		
 		
 		### Pools ###
@@ -1768,8 +1745,6 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_error:
 				StatusIcon.set_modulate(RRColorScheme.state_error)
-				if colorize_erroneous_table_rows:
-					ChunksTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 					
 			elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
 				StatusIcon.set_modulate(RRColorScheme.state_paused)
@@ -1831,6 +1806,10 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		var errors : int = rr_data.jobs[job_id].chunks[chunk].errors
 		ChunksTable.update_LABEL_cell_with_custom_sort(row_position, errors_column, String(errors), errors)
 		
+		ChunksTable.set_row_color(row_position, RRColorScheme.ST_row_default)
+		if colorize_erroneous_table_rows:
+			if errors > 0:
+				ChunksTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 		
 		### Time Started ###
 		
@@ -1895,8 +1874,6 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 				
 		elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_error:
 			StatusIcon.set_modulate(RRColorScheme.state_error)
-			if colorize_erroneous_table_rows:
-				ChunksTable.set_row_color(chunks_iterator, RRColorScheme.ST_row_error)
 				
 		elif rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
 			StatusIcon.set_modulate(RRColorScheme.state_paused)
@@ -1958,8 +1935,13 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		
 		
 		### Number of Errors ###
-		ChunksTable.set_LABEL_cell_with_custom_sort(chunks_iterator, errors_column, String(rr_data.jobs[job_id].chunks[chunk].errors), rr_data.jobs[job_id].chunks[chunk].errors) 
+		var errors : int = rr_data.jobs[job_id].chunks[chunk].errors
+		ChunksTable.set_LABEL_cell_with_custom_sort(chunks_iterator, errors_column, String(errors), errors) 
 		
+		ChunksTable.set_row_color(chunks_iterator, RRColorScheme.ST_row_default)
+		if colorize_erroneous_table_rows:
+			if errors > 0:
+				ChunksTable.set_row_color(chunks_iterator, RRColorScheme.ST_row_error)
 		
 		### Time Started ###
 		var time_started : int = 0
@@ -2135,8 +2117,9 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		var errors : int = rr_data.clients[client].error_count
 		ClientsTable.update_LABEL_cell_with_custom_sort(row_position, error_count_column, String (errors), errors)
 		
-		if errors > 0:
-			if colorize_erroneous_table_rows:
+		ClientsTable.set_row_color(row_position, RRColorScheme.ST_row_default)
+		if colorize_erroneous_table_rows:
+			if errors > 0:
 				ClientsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
 		
 		
@@ -2247,8 +2230,9 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		ClientsTable.set_LABEL_cell_with_custom_sort(client_iterator, error_count_column, String(rr_data.clients[client].error_count), rr_data.clients[client].error_count )
 		
-		if rr_data.clients[client].error_count > 0:
-			if colorize_erroneous_table_rows:
+		ClientsTable.set_row_color(client_iterator, RRColorScheme.ST_row_default)
+		if colorize_erroneous_table_rows:
+			if rr_data.clients[client].error_count > 0:
 				ClientsTable.set_row_color(client_iterator, RRColorScheme.ST_row_error)
 		
 		
