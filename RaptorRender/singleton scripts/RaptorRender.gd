@@ -1517,9 +1517,11 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		JobsTable.update_LABEL_cell_with_custom_sort(row_position, errors_column, String(errors), errors)
 		
 		JobsTable.set_row_color(row_position, RRColorScheme.ST_row_default)
+		JobsTable.mark_erroneous(row_position, false)
 		if colorize_erroneous_table_rows:
 			if rr_data.jobs[job].errors > 0:
 				JobsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
+				JobsTable.mark_erroneous(row_position, true)
 				
 		
 		
@@ -1668,9 +1670,11 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		JobsTable.set_LABEL_cell_with_custom_sort(jobs_iterator, errors_column, String(rr_data.jobs[job].errors), rr_data.jobs[job].errors)
 		
 		JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_default)
+		JobsTable.mark_erroneous(jobs_iterator, false)
 		if colorize_erroneous_table_rows:
 			if rr_data.jobs[job].errors > 0:
 				JobsTable.set_row_color(jobs_iterator, RRColorScheme.ST_row_error)
+				JobsTable.mark_erroneous(jobs_iterator, true)
 		
 		
 		### Pools ###
@@ -1807,9 +1811,11 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		ChunksTable.update_LABEL_cell_with_custom_sort(row_position, errors_column, String(errors), errors)
 		
 		ChunksTable.set_row_color(row_position, RRColorScheme.ST_row_default)
+		ChunksTable.mark_erroneous(row_position, false)
 		if colorize_erroneous_table_rows:
 			if errors > 0:
 				ChunksTable.set_row_color(row_position, RRColorScheme.ST_row_error)
+				ChunksTable.mark_erroneous(row_position, true)
 		
 		### Time Started ###
 		
@@ -1939,9 +1945,11 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		ChunksTable.set_LABEL_cell_with_custom_sort(chunks_iterator, errors_column, String(errors), errors) 
 		
 		ChunksTable.set_row_color(chunks_iterator, RRColorScheme.ST_row_default)
+		ChunksTable.mark_erroneous(chunks_iterator, false)
 		if colorize_erroneous_table_rows:
 			if errors > 0:
 				ChunksTable.set_row_color(chunks_iterator, RRColorScheme.ST_row_error)
+				ChunksTable.mark_erroneous(chunks_iterator, false)
 		
 		### Time Started ###
 		var time_started : int = 0
@@ -2118,9 +2126,11 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		ClientsTable.update_LABEL_cell_with_custom_sort(row_position, error_count_column, String (errors), errors)
 		
 		ClientsTable.set_row_color(row_position, RRColorScheme.ST_row_default)
+		ClientsTable.mark_erroneous(row_position, false)
 		if colorize_erroneous_table_rows:
 			if errors > 0:
 				ClientsTable.set_row_color(row_position, RRColorScheme.ST_row_error)
+				ClientsTable.mark_erroneous(row_position, true)
 		
 		
 		### Pools ###
@@ -2230,10 +2240,13 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		ClientsTable.set_LABEL_cell_with_custom_sort(client_iterator, error_count_column, String(rr_data.clients[client].error_count), rr_data.clients[client].error_count )
 		
+		
 		ClientsTable.set_row_color(client_iterator, RRColorScheme.ST_row_default)
+		ClientsTable.mark_erroneous(client_iterator, false)
 		if colorize_erroneous_table_rows:
 			if rr_data.clients[client].error_count > 0:
 				ClientsTable.set_row_color(client_iterator, RRColorScheme.ST_row_error)
+				ClientsTable.mark_erroneous(client_iterator, true)
 		
 		
 		

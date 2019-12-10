@@ -32,6 +32,7 @@ var popup_black_transparent : Color = Color("cc000000")
 # SortableTable colors
 var ST_row_default : Color = Color("3c3c3c")
 var ST_row_error : Color =  Color("643f3b")
+var ST_row_error_selected : Color = Color ("C35A58") # red
 
 # state colors
 var state_finished_or_online : Color = Color("77B223")

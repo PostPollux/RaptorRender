@@ -164,6 +164,12 @@ func set_row_color(row : int, color : Color):
 		SortableRows[row - 1].set_row_color(color)
 
 
+# first row and column is 1, not 0
+func mark_erroneous(row : int, erroneous : bool) -> void:
+	if row >= 1 and row < SortableRows.size():
+		SortableRows[row - 1].mark_erroneous(erroneous)
+
+
 
 func reset_all_row_colors_to_default():
 	for Row in SortableRows:

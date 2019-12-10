@@ -38,6 +38,7 @@ var even : bool = false
 var selected : bool = false
 var hovered : bool = false
 var row_height : int = 30
+var marked_erroneous : bool = false
 
 # cell references
 var CellsClipContainerArray : Array  = [] # used to clip the cell content
@@ -47,6 +48,7 @@ var CellsColorRectArray : Array = [] # used for highlighting the primary sort co
 # row colors
 var row_color : Color = RRColorScheme.ST_row_default
 var row_color_selected : Color = RRColorScheme.selected
+var row_color_selected_erroneous : Color = RRColorScheme.ST_row_error_selected 
 
 var even_odd_brightness_difference : float = 0.05
 var hover_brightness_boost : float = 0.1
@@ -55,6 +57,8 @@ var row_color_even : Color
 var row_color_odd : Color
 var row_color_selected_even : Color
 var row_color_selected_odd : Color
+var row_color_selected_erroneous_even : Color
+var row_color_selected_erroneous_odd : Color
 
 
 
@@ -231,7 +235,8 @@ func set_additional_colors():
 	row_color_odd = row_color.lightened(even_odd_brightness_difference)
 	row_color_selected_even = row_color_selected
 	row_color_selected_odd = row_color_selected.lightened(hover_brightness_boost)
-
+	row_color_selected_erroneous_even = row_color_selected_erroneous
+	row_color_selected_erroneous_odd = row_color_selected_erroneous.lightened(hover_brightness_boost)
 
 
 func set_row_color(color : Color):
@@ -243,6 +248,20 @@ func set_row_color(color : Color):
 
 func modulate_cell_color(column : int, color : Color):
 	CellsColorRectArray[column - 1].set_modulate( color )
+
+
+
+func mark_erroneous(erroneous : bool) -> void:
+	
+	marked_erroneous = erroneous
+	
+	if erroneous:
+		row_color_selected_even = row_color_selected_erroneous
+		row_color_selected_odd = row_color_selected_erroneous.lightened(hover_brightness_boost)
+	else:
+		row_color_selected_even = row_color_selected
+		row_color_selected_odd = row_color_selected.lightened(hover_brightness_boost)
+	
 
 
 

@@ -236,7 +236,7 @@ func highlight_column(column : int):
 ### handle rows
 ###############
 
-func create_row(id):
+func create_row(id) -> void:
 	
 	RowContainerFilled.initialize_row(id)
 	RowContainerFilled.update_positions_of_rows()
@@ -246,7 +246,7 @@ func create_row(id):
 
 
 # remove a specific row
-func remove_row(id):
+func remove_row(id) -> void:
 	
 	RowContainerFilled.remove_row(id)
 	RowContainerFilled.update_positions_of_rows()
@@ -260,9 +260,12 @@ func clear_table() -> void:
 		remove_row(id)
 
 
-func set_row_color(row : int, color : Color):
+func set_row_color(row : int, color : Color) -> void:
 	RowContainerFilled.set_row_color(row, color)
 
+
+func mark_erroneous(row : int, erroneous : bool) -> void:
+	RowContainerFilled.mark_erroneous(row, erroneous)
 
 
 
