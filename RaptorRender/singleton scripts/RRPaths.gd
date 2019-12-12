@@ -20,6 +20,8 @@ var jobs_data_path : String
 var clients_data_path : String
 var job_types_default_path : String
 
+var windows_logging_util_path : String
+
 
 
 
@@ -29,6 +31,7 @@ var job_types_default_path : String
 
 func _ready():
 	set_directories("/home/johannes/Schreibtisch/", 1234567890)
+	windows_logging_util_path = OS.get_executable_path() + "/LoggingUtil.exe"
 
 
 

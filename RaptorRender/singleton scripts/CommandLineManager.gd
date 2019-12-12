@@ -152,9 +152,12 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 			
 		# Windows
 		"Windows" :
-		
+			
+			# unix style redirecting works in windows as well:  2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1), so we can log both at the same time.
+			# Unfortunately under windows the stdout and stderr outputs will be wildly mixed up in no chronological order if we use this unix style syntax. That's very problematic.
+			# That's why we need another solution to save the outputs in a log file.
 			var output : Array = []
-			var arguments : Array = ['/C', cmdline_instruction + ' > ' + log_file_name_full + ' 2>&1'] # 2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file. Unfortunately under windows the errors will be printed at the end of the file and not in a chronological order together with the "stdout" stream.
+			var arguments : Array = ['/C', RRPaths.windows_logging_util_path + " --plain-output --no-append --logfile " + log_file_name_full + " : " + cmdline_instruction ] 
 			
 			# this will only be the process id of the process that starts the render process. Unfortunately we don't get the process id of the render process itself.
 			invoked_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
