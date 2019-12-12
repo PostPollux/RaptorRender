@@ -36,7 +36,7 @@ var file_pointer_position : int = 0
 
 var read_log_file_thread : Thread
 
-var active_render_log_file_name : String
+var active_render_log_file_path : String
 
 var currently_rendering : bool = false
 
@@ -83,11 +83,9 @@ func start_read_log_file_thread():
 
 func validate_log_file(args):
 	
-	var active_render_log_file_path : String = log_data_path + active_render_log_file_name + ".txt"
-	
 	if active_render_log_file.file_exists(active_render_log_file_path):
 		
-		active_render_log_file.open(active_render_log_file_path, 1)
+		active_render_log_file.open(active_render_log_file_path, File.READ)
 		
 		active_render_log_file.seek(file_pointer_position)
 		
@@ -118,7 +116,7 @@ func join_read_log_file_thread():
 
 
 
-func start_render_process (unique_job_id : int, cmdline_instruction : String, cmdline_instruction_without_executable : String, log_file_name : String):
+func start_render_process (job_id : int, cmdline_instruction : String, cmdline_instruction_without_executable : String, full_log_file_path : String):
 	
 	if currently_rendering:
 		kill_current_render_process()
@@ -126,8 +124,8 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 	# create directories if they don't exist yet
 	# set log directory
 	var dir : Directory = Directory.new()
-	log_data_path = RRPaths.get_job_log_path(unique_job_id)
-	var thumbnails_path : String = RRPaths.get_job_thumbnail_path(unique_job_id)
+	log_data_path = RRPaths.get_job_log_path(job_id)
+	var thumbnails_path : String = RRPaths.get_job_thumbnail_path(job_id)
 	
 	if !dir.dir_exists(log_data_path):
 		dir.make_dir_recursive(log_data_path)
@@ -136,16 +134,13 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 		dir.make_dir_recursive(thumbnails_path)
 	
 	
-	
-	var log_file_name_full : String =  log_data_path + log_file_name + ".txt"
-	
 	match platform:
 		
 		# Linux
 		"X11" : 
 			
 			var output : Array = []
-			var arguments : Array = ["-c", cmdline_instruction + " > " + log_file_name_full + " 2>&1"] # 2>&1  redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
+			var arguments : Array = ["-c", cmdline_instruction + " > " + full_log_file_path + " 2>&1"] # 2>&1  redirects the "stderr" stream (2) to the "stdout" stream (1). Otherwise the errors will not be included in the output file.
 			
 			# this will only be the process id of the process that starts the render process. Unfortunately we don't get the process id of the render process itself.
 			invoked_render_pid = OS.execute("bash", arguments, false, output) # important to make this non blocking
@@ -156,8 +151,9 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 			# unix style redirecting works in windows as well:  2>&1 redirects the "stderr" stream (2) to the "stdout" stream (1), so we can log both at the same time.
 			# Unfortunately under windows the stdout and stderr outputs will be wildly mixed up in no chronological order if we use this unix style syntax. That's very problematic.
 			# That's why we need another solution to save the outputs in a log file.
+			# So instead we use a third-party software called "LoggingUtil" (https://github.com/lordmulder/LoggingUtil). It sits inbetween and correctly writes the logs files.
 			var output : Array = []
-			var arguments : Array = ['/C', RRPaths.windows_logging_util_path + " --plain-output --no-append --logfile " + log_file_name_full + " : " + cmdline_instruction ] 
+			var arguments : Array = ['/C', RRPaths.windows_logging_util_path + " --plain-output --no-append --logfile " + full_log_file_path + " : " + cmdline_instruction ] 
 			
 			# this will only be the process id of the process that starts the render process. Unfortunately we don't get the process id of the render process itself.
 			invoked_render_pid = OS.execute('CMD.exe', arguments, false, output) # important to make this non blocking
@@ -170,7 +166,7 @@ func start_render_process (unique_job_id : int, cmdline_instruction : String, cm
 	
 	currently_rendering = true
 	
-	active_render_log_file_name = log_file_name
+	active_render_log_file_path = full_log_file_path
 	file_pointer_position = 0
 	read_log_timer.start()
 
@@ -212,6 +208,7 @@ func check_if_render_process_is_running() -> bool:
 			if num_of_found_processes > 1:
 				currently_rendering = true
 				return true
+				
 			else:
 				currently_rendering = false
 				read_log_timer.stop()

@@ -489,6 +489,11 @@ func highlight_log_line(line : String) -> String:
 				return "[color=#" + RRColorScheme.log_success + "]" + line + "[/color]"
 	
 	
+	
+	# validate agains "Raptor Render Error"
+	if line.find( "Raptor Render Error" ) > -1:
+		return "[color=#" + RRColorScheme.log_critical_error + "]" + line + "[/color]"
+	
 	return line
 
 

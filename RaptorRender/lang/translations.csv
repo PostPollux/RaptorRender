@@ -201,7 +201,7 @@ MSG_ERROR_14,A __cmd_value definition is missing in your job. It‘s mandatory t
 MSG_ERROR_15,"Each __cmd_value string has to be splittable into 3 parts. Make sure prefix, value and substitute are correctly devided by „;;“. Problematic definition:","Jeder __cmd_value String muss in 3 Teile unterteilbar sein. Stelle sicher, dass prefix, value und substitute korrekt durch „;;“ unterteilt sind. Problematische Definition:"
 MSG_ERROR_16,There is an error in your job type configuration file. The following setting has to be a string containing two values separated by „;;“:,"Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Die folgende Einstellung muss ein String sein, der zwei Werte enthält, die durch „;;“ getrennt sind:"
 MSG_ERROR_17,There is an error in your job type configuration file. The following setting has to be a string containing three values separated by „;;“:,"Die Job-Typ-Konfigurationsdatei ist fehlerhaft. Die folgende Einstellung muss ein String sein, der drei Werte enthält, die durch „;;“ getrennt sind:"
-,,
+MSG_ERROR_18,"The render process exited without writing anything to the log file. This happens in very rare cases. To find the error, please try to execute the command from above manually in your terminal.","Der Renderprozess wurde beendet, ohne etwas in die Log-Datei zu schreiben. Dies kann in seltenen Fällen vorkommen. Um den Fehler zu finden, kopieren Sie bitte den Befehl von oben direkt in ihr Terminal und führen ihn aus."
 ,,
 ,,
 ,,
@@ -261,5 +261,5 @@ POPUP_POOLMANAGER_5,delete,löschen
 POPUP_POOLMANAGER_6,Note:,Notiz:
 POPUP_POOLMANAGER_7,Clients in pool,Clients in diesem Pool
 POPUP_POOLMANAGER_8,Clients available for pool,Verfügbare Clients
-,"",""
-"","",""
+,,
+,,

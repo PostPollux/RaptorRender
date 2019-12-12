@@ -18,6 +18,8 @@ var current_amount_of_frame_successes : int  = 0
 var current_amount_of_critical_errors : int = 0
 var chunk_success_detected : bool = false
 
+var current_log_file_path : String = ""
+
 
 
 
@@ -40,6 +42,34 @@ func render_process_exited_without_software_start():
 	# this check makes sense, because if it misses the "software_start_successful" string for any reason while it actually started, it would throw an error after finishing the chunk correctly 
 	if current_amount_of_frame_successes == 0:
 		critical_error_detected()
+	
+	var log_file : File = File.new()
+	
+	# check if log file is empty (in some rare cases they error output can't be captured. So for this cases we want to add a hint in the logfile)
+	if log_file.file_exists(current_log_file_path):
+		log_file.open(current_log_file_path, File.READ_WRITE)
+		
+		var line_iterator : int = 0
+		while true:
+			var line : String = log_file.get_line()
+			
+			# break loop if end of file is reached
+			if log_file.eof_reached():
+				break
+			
+			if line_iterator > 0:
+				break
+				
+			line_iterator += 1
+		
+		# handle empty  log file
+		if line_iterator == 0:
+			
+			log_file.WRITE
+			log_file.store_line("Raptor Render Error: " + tr("MSG_ERROR_18") ) # MSG_ERROR_18: The render process exited without writing anything to the log file. This happens in very rare cases. To find the error, please try to execute the command from above manually in your terminal.
+		
+		log_file.close()
+			
 
 
 
@@ -300,6 +330,7 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int):
 	
 	# build a reasonable log file name
 	log_file_name = "chunk_" + String(chunk_id) + "_try_" + String(try_id)
+	current_log_file_path = RRPaths.get_job_log_path(job_id) + log_file_name + ".txt"
 	
 	# load the correct job type settings file for the validation of the coming render process
 	RenderLogValidator.load_job_type_settings_CRP(job_type, job_type_version)
@@ -311,5 +342,5 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int):
 	var cmd_string_without_executable : String = cmd_string.replace(job_type_settings.get_value("JobTypeSettings", "path_executable", ""), "").dedent()
 	
 	# now invoke the render process with the freshly created commandline string
-	CommandLineManager.start_render_process( RaptorRender.rr_data.jobs[job_id].id, cmd_string, cmd_string_without_executable, log_file_name)
+	CommandLineManager.start_render_process( RaptorRender.rr_data.jobs[job_id].id, cmd_string, cmd_string_without_executable, current_log_file_path)
 	
