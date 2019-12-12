@@ -80,6 +80,7 @@ func distribute_jobs():
 			var jobs_active_sort_array : Array = []
 			
 			for job in jobs_active:
+				# New jobs with no rendered chunks will get a priority boost
 				if RaptorRender.rr_data.jobs[job].priority_boost == true:
 					jobs_active_sort_array.append( [job, 101] )
 				else:
@@ -135,7 +136,6 @@ func distribute_jobs():
 								
 								break
 						
-						break
 					
 					
 		
