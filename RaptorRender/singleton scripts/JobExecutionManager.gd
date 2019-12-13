@@ -225,7 +225,7 @@ func frame_name_detected( type : int, extracted_string : String):
 						break
 				output_index += 1
 					
-			var save_path : String = RRPaths.get_job_thumbnail_path( RaptorRender.rr_data.jobs[current_processing_job].id ) + String(output_index) + "/"
+			var save_path : String = RRPaths.get_job_thumbnail_path( current_processing_job ) + String(output_index) + "/"
 			
 			var path_check : Directory = Directory.new()
 			if !path_check.dir_exists(save_path):
@@ -341,5 +341,5 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int):
 	var cmd_string_without_executable : String = cmd_string.replace(job_type_settings.get_value("JobTypeSettings", "path_executable", ""), "").dedent()
 	
 	# now invoke the render process with the freshly created commandline string
-	CommandLineManager.start_render_process( RaptorRender.rr_data.jobs[job_id].id, cmd_string, cmd_string_without_executable, current_log_file_path)
+	CommandLineManager.start_render_process(job_id, cmd_string, cmd_string_without_executable, current_log_file_path)
 	

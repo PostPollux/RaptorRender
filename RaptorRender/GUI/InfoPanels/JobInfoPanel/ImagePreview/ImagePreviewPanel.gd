@@ -106,7 +106,7 @@ func update_thumbnails():
 		if dir.size() > 0:
 			var ThumbnailBox = ThumbnailsDirectoriesVBox.get_child(dircount)
 			ThumbnailBox.original_image_directory = dir[0]
-			ThumbnailBox.thumbnail_directory = RRPaths.get_job_thumbnail_path( RaptorRender.rr_data.jobs[RaptorRender.JobInfoPanel.current_displayed_job_id].id ) + String(dircount) + "/"
+			ThumbnailBox.thumbnail_directory = RRPaths.get_job_thumbnail_path( RaptorRender.JobInfoPanel.current_displayed_job_id ) + String(dircount) + "/"
 			ThumbnailBox.dir_index = dircount
 			if dir.size() > 1:
 				ThumbnailBox.file_name_patterns = dir[1]

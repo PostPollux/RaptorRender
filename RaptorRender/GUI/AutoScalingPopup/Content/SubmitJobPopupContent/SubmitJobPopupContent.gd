@@ -598,7 +598,6 @@ func create_new_job():
 	selected_pools.erase(0) # make sure "All Clients" is not included as pool
 	
 	var new_job : Dictionary = {
-								"id": job_id,
 								"name": JobNameLineEdit.text,
 								"type": JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id()),
 								"type_version": TypeVersionOptionButton.get_item_text(TypeVersionOptionButton.get_selected_id()),

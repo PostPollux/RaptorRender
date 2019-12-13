@@ -107,7 +107,7 @@ func read_and_colorize_log_file(args):
 	
 	# generate correct file path
 	var filename : String = "chunk_" + String(log_chunk_id) + "_try_" + String(log_try_id) + ".txt"
-	var filepath : String = RRPaths.get_job_log_path(RaptorRender.rr_data.jobs[log_job_id].id) + filename
+	var filepath : String = RRPaths.get_job_log_path(log_job_id) + filename
 	
 	var lines_read : String = ""
 	

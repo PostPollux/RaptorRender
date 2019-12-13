@@ -177,7 +177,7 @@ func update_job_info_panel(job_id : int):
 		SceneFileLabel.text = tr("JOB_DETAIL_11") + ":   " + selected_job["scene_path"]
 		
 		# Log Files
-		LogFilesLabel.text = tr("JOB_DETAIL_13") + ":   " + RRPaths.get_job_log_path( selected_job["id"] )
+		LogFilesLabel.text = tr("JOB_DETAIL_13") + ":   " + RRPaths.get_job_log_path( job_id )
 		
 		# Output Files
 		var outputs_difference : int = output_dirs_and_file_name_patterns_nodes.size() - selected_job["output_dirs_and_file_name_patterns"].size()
@@ -217,7 +217,7 @@ func _on_OpenSceneFolderButton_pressed():
 
 
 func _on_OpenLogsFolderButton_pressed():
-	JobFunctions.open_folder( RRPaths.get_job_log_path( RaptorRender.rr_data.jobs[current_displayed_job_id].id ) )
+	JobFunctions.open_folder( RRPaths.get_job_log_path( current_displayed_job_id ) )
 	
 
 func _on_TabContainer_tab_selected(tab):
