@@ -97,7 +97,6 @@ func success_detected():
 	# make sure the rendering process gets terminated when chunk success is detected. For some reason the none blocking process doesn't terminate it self anymore since Godot 3.2
 	CommandLineManager.kill_current_render_process()
 	
-	
 	if !chunk_success_detected and current_amount_of_critical_errors == 0:
 		var current_tries_count : int = RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries.keys().size()
 		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_finished

@@ -42,6 +42,8 @@ var currently_rendering : bool = false
 
 var read_log_timer : Timer 
 
+var delayed_exited_timer : Timer 
+
 
 
 
@@ -62,11 +64,18 @@ func _ready():
 	# create timer to constantly read the current render log in a specific interval 
 	read_log_timer = Timer.new()
 	read_log_timer.name = "Read Log Timer"
-	read_log_timer.wait_time = 1
+	read_log_timer.wait_time = 0.5
 	read_log_timer.connect("timeout",self,"start_read_log_file_thread")
+	
+	# create timer for sending the render_process_exited signal delayed
+	delayed_exited_timer = Timer.new()
+	delayed_exited_timer.name = "Delayed Exit Signal Timer"
+	
+	
 	var root_node : Node = get_tree().get_root().get_node("RaptorRenderMainScene")
 	if root_node != null:
 		root_node.add_child(read_log_timer)
+		root_node.add_child(delayed_exited_timer)
 	
 	RenderLogValidator.connect("critical_error_detected", self, "kill_current_render_process")
 
@@ -211,10 +220,13 @@ func check_if_render_process_is_running() -> bool:
 				
 			else:
 				currently_rendering = false
-				read_log_timer.stop()
+				
 				if RenderLogValidator.CRP_software_start_success_detected:
-					emit_signal("render_process_exited")
+					# This is delayed to make sure that the log validation has time to detect the success message before it starts a new render process and thus looking in the wrong log file
+					# The delay has to be a bit bigger than the read_log_timer wait time
+					delayed_render_process_exited_signal(0.8)
 				else:
+					read_log_timer.stop()
 					emit_signal("render_process_exited_without_software_start")
 				return false
 				
@@ -251,8 +263,15 @@ func kill_current_render_process():
 			
 			print("killing pid: " + String(pid))
 			OS.kill(pid)
-	
-	currently_rendering = false
-	
-	emit_signal("render_process_exited")
 
+
+# This is delayed to make sure that the log validation has time to detect the success message before it starts a new render process and thus looking in the wrong log file
+func delayed_render_process_exited_signal(delay_sec : float):
+	delayed_exited_timer.set_wait_time(delay_sec) # Set Timer's delay to "sec" seconds
+	delayed_exited_timer.start() # Start the Timer counting down
+	yield( delayed_exited_timer, "timeout") # Wait for the timer to wind down
+	
+	# Stuff to happen when delay hit the timeout
+	read_log_timer.stop()
+	currently_rendering = false
+	emit_signal("render_process_exited")
