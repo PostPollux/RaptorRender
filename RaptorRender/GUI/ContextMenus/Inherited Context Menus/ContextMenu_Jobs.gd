@@ -331,6 +331,9 @@ func _on_ContextMenu_index_pressed(index):
 				var job_id : int = RRFunctions.generate_job_id(job_to_resubmit.time_created, job_to_resubmit.name)
 				RaptorRender.rr_data.jobs[job_id] = job_to_resubmit
 				
+				# add job to assigned pools
+				for pool in job_to_resubmit.pools:
+					RaptorRender.rr_data.pools[pool].jobs.append(job_id)
 				
 			RaptorRender.JobsTable.refresh()
 			

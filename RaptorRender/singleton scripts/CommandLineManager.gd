@@ -224,7 +224,7 @@ func check_if_render_process_is_running() -> bool:
 				if RenderLogValidator.CRP_software_start_success_detected:
 					# This is delayed to make sure that the log validation has time to detect the success message before it starts a new render process and thus looking in the wrong log file
 					# The delay has to be a bit bigger than the read_log_timer wait time
-					delayed_render_process_exited_signal(0.8)
+					delayed_detect_render_process_exited(0.8)
 				else:
 					read_log_timer.stop()
 					emit_signal("render_process_exited_without_software_start")
@@ -266,7 +266,7 @@ func kill_current_render_process():
 
 
 # This is delayed to make sure that the log validation has time to detect the success message before it starts a new render process and thus looking in the wrong log file
-func delayed_render_process_exited_signal(delay_sec : float):
+func delayed_detect_render_process_exited(delay_sec : float):
 	delayed_exited_timer.set_wait_time(delay_sec) # Set Timer's delay to "sec" seconds
 	delayed_exited_timer.start() # Start the Timer counting down
 	yield( delayed_exited_timer, "timeout") # Wait for the timer to wind down
