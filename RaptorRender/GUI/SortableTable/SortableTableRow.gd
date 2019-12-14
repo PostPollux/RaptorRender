@@ -102,10 +102,7 @@ func update_row_even_or_odd():
 
 func set_selected (sel : bool):
 	selected = sel
-	if selected:
-		update_row_color_select()
-	else:
-		update_row_color()
+	update_row_color()
 
 
 
@@ -262,15 +259,6 @@ func mark_erroneous(erroneous : bool) -> void:
 		row_color_selected_even = row_color_selected
 		row_color_selected_odd = row_color_selected.lightened(hover_brightness_boost)
 	
-
-
-
-# highlight the row when it is selected
-func update_row_color_select():
-	if even:
-		RowBackgroundColorRect.color = row_color_selected_even
-	else:
-		RowBackgroundColorRect.color = row_color_selected_odd
 
 
 
