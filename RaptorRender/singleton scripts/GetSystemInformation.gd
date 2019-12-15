@@ -38,7 +38,7 @@ var user_data_dir : String
 
 var collect_hardware_info_thread : Thread
 
-var unique_client_id : int
+var own_client_id : int
 
 
 
@@ -96,30 +96,32 @@ func _ready():
 	
 	
 	# add the client to the clients dictionary
-	unique_client_id = mac_addresses[0].hash()
-	RaptorRender.rr_data.clients[unique_client_id] = create_client_dict()
+	own_client_id = mac_addresses[0].hash()
+	RaptorRender.rr_data.clients[own_client_id] = create_client_dict()
 
 
 func create_client_dict() -> Dictionary:
 	var new_client = {
-		"name": hostname,
-		"username": username,
-		"mac_addresses": mac_addresses,
-		"ip_addresses": ip_addresses,
+		"machine_properties" : {
+			"name": hostname,
+			"username": username,
+			"mac_addresses": mac_addresses,
+			"ip_addresses": ip_addresses,
+			"platform": platform_info,
+			"cpu": cpu_info,
+			"cpu_usage": cpu_usage,
+			"memory": total_memory,
+			"memory_usage": memory_usage,
+			"graphics": graphic_cards,
+			"hard_drives": hard_drives,
+		},
 		"status": RRStateScheme.client_available,
 		"current_job_id": -1,
 		"last_render_log": [0,0,0],
 		"error_count": 0,
-		"platform": platform_info,
 		"pools": [],
 		"rr_version": 0.2,
 		"time_connected": 1528759663,
-		"cpu": cpu_info,
-		"cpu_usage": cpu_usage,
-		"memory": total_memory,
-		"memory_usage": memory_usage,
-		"graphics": graphic_cards,
-		"hard_drives": hard_drives,
 		"software": ["Blender", "Natron"],
 		"note": ""
 	}
@@ -1056,9 +1058,8 @@ func collect_current_hardware_info(args):
 	
 	
 	# change the values
-	RaptorRender.rr_data.clients[unique_client_id].memory_usage = memory_usage
-	RaptorRender.rr_data.clients[unique_client_id].cpu_usage = cpu_usage
-	RaptorRender.rr_data.clients[unique_client_id].hard_drives = hard_drives
+	for client in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(client, "update_client_hw_stats", own_client_id, cpu_usage, memory_usage, hard_drives)
 	
 	# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
 	call_deferred("join_collect_hardware_info_thread")

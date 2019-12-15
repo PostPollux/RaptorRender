@@ -95,7 +95,7 @@ func _on_ContextMenu_index_pressed(index):
 					var number_of_tries : int = RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].number_of_tries
 					
 					# cancel render process TODO (temporarily)
-					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
+					if GetSystemInformation.own_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
 						CommandLineManager.kill_current_render_process()
 					
 					# change chunk status
@@ -126,7 +126,7 @@ func _on_ContextMenu_index_pressed(index):
 				if status == RRStateScheme.chunk_rendering:
 					
 					# cancel render process TODO (temporarily)
-					if GetSystemInformation.unique_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
+					if GetSystemInformation.own_client_id ==  RaptorRender.rr_data.jobs[RaptorRender.current_job_id_for_job_info_panel].chunks[selected].tries[number_of_tries].client:
 						CommandLineManager.kill_current_render_process()
 					
 					# change try status

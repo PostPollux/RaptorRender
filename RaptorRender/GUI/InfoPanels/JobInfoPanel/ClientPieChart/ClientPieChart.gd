@@ -242,10 +242,13 @@ func _on_ClientPieChart_segment_hovered(client_and_chunk_count : Array):
 	
 	hovered_client_id = client_and_chunk_count[0]
 	
-	if client_and_chunk_count[0] == -1:
+	if hovered_client_id == -1:
 		NameLabel.text = tr("JOB_CLIENT_PIE_CHART_1") # not assigned
 	else:
-		NameLabel.text = RaptorRender.rr_data.clients[ client_and_chunk_count[0] ].name
+		if RaptorRender.rr_data.clients.has(hovered_client_id):
+			NameLabel.text = RaptorRender.rr_data.clients[ hovered_client_id ].machine_properties.name
+		else:
+			NameLabel.text = tr("UNKNOWN")
 	ChunksLabel.text = tr("JOB_CLIENT_PIE_CHART_2") + ": " + String(client_and_chunk_count[1])
 
 

@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://RaptorRender/GUI/NotificationSystem/NotificationSystem.gd"
 }, {
+"base": "HBoxContainer",
+"class": "PriorityControl",
+"language": "GDScript",
+"path": "res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/PriorityControl/PriorityControl.gd"
+}, {
 "base": "Control",
 "class": "RRContextMenuBase",
 "language": "GDScript",
@@ -87,6 +92,7 @@ _global_script_class_icons={
 "ItemListBoxItem": "",
 "JobInfoPanel": "",
 "NotificationSystem": "",
+"PriorityControl": "",
 "RRContextMenuBase": "",
 "SortableTable": "",
 "SortableTableCollumnButton": "",
@@ -111,6 +117,7 @@ TimeFunctions="*res://RaptorRender/singleton scripts/TimeFunctions.gd"
 RRFunctions="*res://RaptorRender/singleton scripts/RRFunctions.gd"
 RaptorRender="*res://RaptorRender/singleton scripts/RaptorRender.gd"
 GetSystemInformation="*res://RaptorRender/singleton scripts/GetSystemInformation.gd"
+RRNetworkManager="*res://RaptorRender/singleton scripts/RRNetworkManager.gd"
 JobFunctions="*res://RaptorRender/singleton scripts/JobFunctions.gd"
 CommandLineManager="*res://RaptorRender/singleton scripts/CommandLineManager.gd"
 RenderLogValidator="*res://RaptorRender/singleton scripts/RenderLogValidator.gd"

@@ -26,6 +26,8 @@ var ClientsTable : SortableTable
 var ChunksTable : SortableTable
 var TriesTable : SortableTable
 
+var PoolTabsContainer : TabContainer 
+
 var ContextMenu_Clients : RRContextMenuBase
 var ContextMenu_Jobs : RRContextMenuBase
 var ContextMenu_Chunks : RRContextMenuBase
@@ -81,7 +83,6 @@ func _ready():
 				"frame_range": "10-25",
 				"frames_total": 16,
 				"status": RRStateScheme.job_paused,
-				"progress": 0,
 				"note": "blender test",
 				"errors": 0,
 				"pools": [],
@@ -143,7 +144,6 @@ func _ready():
 				"frame_range": "10-25",
 				"frames_total": 16,
 				"status": RRStateScheme.job_paused,
-				"progress": 0,
 				"note": "blender test",
 				"errors": 0,
 				"pools": [],
@@ -208,7 +208,6 @@ func _ready():
 				"frame_range": "10-25",
 				"frames_total": 16,
 				"status": RRStateScheme.job_paused,
-				"progress": 0,
 				"note": "Nuke test",
 				"errors": 0,
 				"pools": [],
@@ -278,7 +277,6 @@ func _ready():
 				"frame_range": "10-110",
 				"frames_total": 100,
 				"status": RRStateScheme.job_finished,
-				"progress": 100,
 				"note": "3 Fehler",
 				"errors": 0,
 				"pools": [1],
@@ -576,332 +574,291 @@ func _ready():
 		
 		"clients": {
 			1: {
-				"name": "T-Rex1",
-				"username": "Johannes",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.45","192.133.1.45"],
+				"machine_properties": {
+					"name": "T-Rex1",
+					"username": "Johannes",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.45","192.133.1.45"],
+					"platform": ["Linux","4.14.48-2"],
+					"cpu": ["Intel(R) Core(TM) i7-8800 CPU @ 3.00GHz", 1.8, 2, 4, 8],
+					"cpu_usage": 5,
+					"memory": 32610232,
+					"memory_usage": 22,
+					"graphics": ["NVidia GTX 970"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Linux","4.14.48-2"],
 				"pools": [1],
 				"rr_version": 1.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8800 CPU @ 3.00GHz", 1.8, 2, 4, 8],
-				"cpu_usage": 5,
-				"memory": 32610232,
-				"memory_usage": 22,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
 			2: {
-				"name": "Raptor1",
-				"username": "Michael",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.22"],
+				"machine_properties": {
+					"name": "Raptor1",
+					"username": "Michael",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.22"],
+					"platform": ["Windows","7"],
+					"cpu": ["Intel(R) Core(TM) i7-9000 CPU @ 2.80GHz", 2.8, 1, 8, 16],
+					"cpu_usage": 25,
+					"memory": 16305116,
+					"memory_usage": 10,
+					"graphics": ["Intel Onboard"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Windows","7"],
 				"pools": [1, 2, 3],
 				"rr_version": 0.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-9000 CPU @ 2.80GHz", 2.8, 1, 8, 16],
-				"cpu_usage": 25,
-				"memory": 16305116,
-				"memory_usage": 10,
-				"graphics": ["Intel Onboard"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
 			3: {
-				"name": "T-Rex2",
-				"username": "Max",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.156"],
+				"machine_properties": {
+					"name": "T-Rex2",
+					"username": "Max",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.156"],
+					"platform": ["OSX","SnowLeopard"],
+					"cpu": ["Intel(R) Core(TM) i7-7800 CPU @ 3.80GHz", 3.8, 1, 4, 8],
+					"cpu_usage": 55,
+					"memory": 65220464,
+					"memory_usage": 22,
+					"graphics": ["NVidia GTX 970"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["OSX","SnowLeopard"],
 				"pools": [1],
 				"rr_version": 1.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-7800 CPU @ 3.80GHz", 3.8, 1, 4, 8],
-				"cpu_usage": 55,
-				"memory": 65220464,
-				"memory_usage": 22,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
 			4: {
-				"name": "Raptor2",
-				"username": "Chris",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.87"],
+				"machine_properties": {
+					"name": "Raptor2",
+					"username": "Chris",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.87"],
+					"platform": ["Windows","10"],
+					"cpu": ["Intel(R) Core(TM) i7-10550U CPU @ 1.80GHz", 1.8, 1, 8, 16],
+					"cpu_usage": 88,
+					"memory": 8150060,
+					"memory_usage": 11,
+					"graphics": ["Intel Onboard"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
+				
 				"status": RRStateScheme.client_offline,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Windows","10"],
 				"pools": [1, 2, 3],
 				"rr_version": 0.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-10550U CPU @ 1.80GHz", 1.8, 1, 8, 16],
-				"cpu_usage": 88,
-				"memory": 8150060,
-				"memory_usage": 11,
-				"graphics": ["Intel Onboard"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
 			5: {
-				"name": "T-Rex3",
-				"username": "Angela",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.15"],
+				"machine_properties": {
+					"name": "T-Rex3",
+					"username": "Angela",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.15"],
+					"platform": ["Linux","4.14.48-2"],
+					"cpu": ["Intel(R) Core(TM) i9-8550 CPU @ 2.20GHz", 2.2, 1, 16, 32],
+					"cpu_usage": 27,
+					"memory": 4075030,
+					"memory_usage": 38,
+					"graphics": ["NVidia GTX 970"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_error,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 1,
-				"platform": ["Linux","4.14.48-2"],
 				"pools": [1],
 				"rr_version": 1.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i9-8550 CPU @ 2.20GHz", 2.2, 1, 16, 32],
-				"cpu_usage": 27,
-				"memory": 4075030,
-				"memory_usage": 38,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
 			6: {
-				"name": "Raptor3",
-				"username": "Nicolaj",
-				"mac_addresses": ["10:7b:44:7a:fb:e2","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.22"],
+				"machine_properties": {
+					"name": "Raptor3",
+					"username": "Nicolaj",
+					"mac_addresses": ["10:7b:44:7a:fb:e2","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.22"],
+					"platform": ["Windows","XP"],
+					"cpu": ["Intel(R) Core(TM) i7-6000 CPU @ 4.00GHz", 4.0, 1, 4, 8],
+					"cpu_usage": 100,
+					"memory": 16305116,
+					"memory_usage": 45,
+					"graphics": ["Intel Onboard"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_offline,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Windows","XP"],
 				"pools": [1, 2, 3],
 				"rr_version": 0.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-6000 CPU @ 4.00GHz", 4.0, 1, 4, 8],
-				"cpu_usage": 100,
-				"memory": 16305116,
-				"memory_usage": 45,
-				"graphics": ["Intel Onboard"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
 			7: {
-				"name": "T-Rex4",
-				"username": "Patrick",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.45"],
+				"machine_properties": {
+					"name": "T-Rex4",
+					"username": "Patrick",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.45"],
+					"platform": ["Linux","4.14.48-2"],
+					"cpu": ["Intel(R) Core(TM) i7-9200CPU @ 3.40GHz", 3.4, 1, 4, 8],
+					"cpu_usage": 65,
+					"memory": 32610232,
+					"memory_usage": 37,
+					"graphics": ["NVidia GTX 970"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Linux","4.14.48-2"],
 				"pools": [1],
 				"rr_version": 1.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-9200CPU @ 3.40GHz", 3.4, 1, 4, 8],
-				"cpu_usage": 65,
-				"memory": 32610232,
-				"memory_usage": 37,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
 			8: {
-				"name": "Raptor1",
-				"username": "Florian",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.22"],
+				"machine_properties": {
+					"name": "Raptor1",
+					"username": "Florian",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.22"],
+					"platform": ["Windows","10"],
+					"cpu": ["Intel(R) Core(TM) i7-8550 CPU @ 1.80GHz", 1.8, 1, 8, 16],
+					"cpu_usage": 10,
+					"memory": 16305116,
+					"memory_usage": 64,
+					"graphics": ["Intel Onboard"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Windows","10"],
 				"pools": [],
 				"rr_version": 0.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8550 CPU @ 1.80GHz", 1.8, 1, 8, 16],
-				"cpu_usage": 10,
-				"memory": 16305116,
-				"memory_usage": 64,
-				"graphics": ["Intel Onboard"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
-			},
-			9: {
-				"name": "T-Rex1",
-				"username": "Marcel",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.45"],
-				"status": RRStateScheme.client_disabled,
-				"current_job_id": -1,
-				"last_render_log": [0,0,0],
-				"error_count": 0,
-				"platform": ["Linux","4.14.48-2"],
-				"pools": [],
-				"rr_version": 1.2,
-				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz", 1.8, 1, 4, 8],
-				"cpu_usage": 23,
-				"memory": 32610232,
-				"memory_usage": 22,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
-				"software": ["Blender", "Natron", "Nuke"],
-				"note": ""
-			},
-			10: {
-				"name": "Raptor1",
-				"username": "Andreas",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.22"],
-				"status": RRStateScheme.client_disabled,
-				"current_job_id": -1,
-				"last_render_log": [0,0,0],
-				"error_count": 0,
-				"platform": ["Windows","10"],
-				"pools": [1, 4],
-				"rr_version": 0.2,
-				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-85 CPU @ 2.20GHz", 2.2, 1, 8, 16],
-				"cpu_usage": 75,
-				"memory": 16305116,
-				"memory_usage": 29,
-				"graphics": ["Intel Onboard"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
-				"software": ["Blender", "Natron"],
-				"note": "my workstation"
-			},
-			11: {
-				"name": "T-Rex2",
-				"username": "Thomas",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.156"],
-				"status": RRStateScheme.client_disabled,
-				"current_job_id": -1,
-				"last_render_log": [0,0,0],
-				"error_count": 0,
-				"platform": ["OSX","Snow Leopard"],
-				"pools": [1],
-				"rr_version": 1.2,
-				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8550U CPU @ 3.80GHz", 3.8, 1, 16, 32],
-				"cpu_usage": 15,
-				"memory": 65220464,
-				"memory_usage": 34,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
-				"software": ["Blender", "Natron", "Nuke"],
-				"note": "NVidia GTX 970"
 			},
 			12: {
-				"name": "Nedry",
-				"username": "Dennis",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.87"],
+				"machine_properties": {
+					"name": "Nedry",
+					"username": "Dennis",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.87"],
+					"platform": ["Windows","10"],
+					"cpu": ["Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz", 1.8, 1, 4, 8],
+					"cpu_usage": 78,
+					"memory": 16305116,
+					"memory_usage": 23,
+					"graphics": ["Intel Onboard"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Windows","10"],
 				"pools": [1, 4, 3],
 				"rr_version": 0.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz", 1.8, 1, 4, 8],
-				"cpu_usage": 78,
-				"memory": 16305116,
-				"memory_usage": 23,
-				"graphics": ["Intel Onboard"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": ""
 			},
 			13: {
-				"name": "T-Rex3",
-				"username": "Peter",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.15"],
+				"machine_properties": {
+					"name": "T-Rex3",
+					"username": "Peter",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.15"],
+					"platform": ["Linux","4.14.48-2"],
+					"cpu": ["Intel(R) Core(TM) i7-6600 CPU @ 3.80GHz", 3.8, 1, 6, 12],
+					"cpu_usage": 66,
+					"memory": 4075030,
+					"memory_usage": 82,
+					"graphics": ["NVidia GTX 970"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_error,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 5,
-				"platform": ["Linux","4.14.48-2"],
 				"pools": [1, 4],
 				"rr_version": 1.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-6600 CPU @ 3.80GHz", 3.8, 1, 6, 12],
-				"cpu_usage": 66,
-				"memory": 4075030,
-				"memory_usage": 82,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": ""
 			},
 			15: {
-				"name": "Dr.Malcom",
-				"username": "Horst",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.45"],
+				"machine_properties": {
+					"name": "Dr.Malcom",
+					"username": "Horst",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.45"],
+					"platform": ["Linux","4.14.48-2"],
+					"cpu": ["Intel(R) Core(TM) i7-1200 CPU @ 3.20GHz", 3.2, 1, 12, 24],
+					"cpu_usage": 61,
+					"memory": 2030015,
+					"memory_usage": 72,
+					"graphics": ["NVidia GTX 970"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Linux","4.14.48-2"],
 				"pools": [4],
 				"rr_version": 1.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-1200 CPU @ 3.20GHz", 3.2, 1, 12, 24],
-				"cpu_usage": 61,
-				"memory": 2030015,
-				"memory_usage": 72,
-				"graphics": ["NVidia GTX 970"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron", "Nuke"],
 				"note": "Just a slow computer"
 			},
 			16: {
-				"name": "Hammond",
-				"username": "Daniel",
-				"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
-				"ip_addresses": ["192.168.1.22"],
+				"machine_properties": {
+					"name": "Hammond",
+					"username": "Daniel",
+					"mac_addresses": ["80:fa:5b:53:8b:43","f8:63:3f:cf:77:7c"],
+					"ip_addresses": ["192.168.1.22"],
+					"platform": ["Windows","7"],
+					"cpu": ["Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz", 1.8, 1, 4, 8],
+					"cpu_usage": 5,
+					"memory": 120440928,
+					"memory_usage": 25,
+					"graphics": ["Intel Onboard"],
+					"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
+				},
 				"status": RRStateScheme.client_disabled,
 				"current_job_id": -1,
 				"last_render_log": [0,0,0],
 				"error_count": 0,
-				"platform": ["Windows","7"],
 				"pools": [1, 2, 3],
 				"rr_version": 0.2,
 				"time_connected": 1528759663,
-				"cpu": ["Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz", 1.8, 1, 4, 8],
-				"cpu_usage": 5,
-				"memory": 120440928,
-				"memory_usage": 25,
-				"graphics": ["Intel Onboard"],
-				"hard_drives": [{"name": "C:", "label": "System", "size": "256 GB", "percentage_used": 24, "type": 1}, {"name": "E:", "label": "", "size": "1 TB", "percentage_used": 5, "type": 1}, {"name": "D:", "label": "", "size": "2 TB", "percentage_used": 56, "type": 2}, {"name": "Z:", "label": "Daten", "size": "40 TB", "percentage_used": 76, "type": 3} ],
 				"software": ["Blender", "Natron"],
 				"note": "The Monster Machine!"
 			}
@@ -913,7 +870,7 @@ func _ready():
 			1 : {
 				"name" : "AE_Plugins",
 				"note" : "Red Giant plugins installed!",
-				"clients" : [1,2,3,4,5,6,7,10,11,12,13,16],
+				"clients" : [1,2,3,4,5,6,7,12,13,16],
 				"jobs" : [4]
 			},
 			2 : {
@@ -931,7 +888,7 @@ func _ready():
 			4 : {
 				"name" : "8GB+ VRam",
 				"note" : "All Computers in this pool have at least 8gb of vram.",
-				"clients" : [10,12,13,15],
+				"clients" : [12,13,15],
 				"jobs" : []
 			}
 		}
@@ -1083,6 +1040,9 @@ func register_table(SortableTableInstance : SortableTable):
 			ClientsTable.column_widths.append(200)
 			ClientsTable.column_widths.append(150)
 			ClientsTable.column_widths.append(90)
+			
+			if not is_instance_valid(PoolTabsContainer):
+				PoolTabsContainer = ClientsTable.get_parent().get_parent()
 
 
 func register_context_menu(ContextMenu):  
@@ -1441,9 +1401,10 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		
 		# change the cell value
 		var ChildNode : Node = priority_cell.get_child(0)
-		if ChildNode.is_class("JobProgressBar"):
-			priority_cell.get_child(0).disable_if_needed()
-			priority_cell.get_child(0).LabelPriority.text = String( rr_data.jobs[job].priority )
+		if ChildNode is PriorityControl:
+			
+			ChildNode.disable_if_needed()
+			ChildNode.set_text(String( rr_data.jobs[job].priority )) 
 			
 			# update sort_value
 			JobsTable.set_cell_sort_value(row_position, priority_column,  rr_data.jobs[job].priority)
@@ -1774,10 +1735,13 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		
 		### Client ###
 		if number_of_tries != 0:
-			
-			var client_name : String = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].client ].name
-			ChunksTable.update_LABEL_cell(row_position, client_column, client_name)
-			
+			var client_id : int = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].client
+			if rr_data.clients.has(client_id):
+				var client_name : String = rr_data.clients[ client_id ].machine_properties.name
+				ChunksTable.update_LABEL_cell(row_position, client_column, client_name)
+			else:
+				var client_name : String = tr("UNKNOWN")
+				ChunksTable.update_LABEL_cell(row_position, client_column, client_name)
 		else:
 			ChunksTable.update_LABEL_cell(row_position, client_column, "")
 		
@@ -1909,9 +1873,13 @@ func update_or_create_chunk_row(chunk : int, chunks_iterator : int, job_id : int
 		var LabelClient = Label.new()
 		
 		if number_of_tries != 0:
-			
-			var client_name : String = rr_data.clients[ rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].client ].name
-			ChunksTable.set_LABEL_cell(chunks_iterator, client_column, client_name)
+			var client_id : int = rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].client
+			if rr_data.clients.has(client_id):
+				var client_name : String = rr_data.clients[client_id].machine_properties.name
+				ChunksTable.set_LABEL_cell(chunks_iterator, client_column, client_name)
+			else:
+				var client_name : String = tr("UNKNOWN")
+				ChunksTable.set_LABEL_cell(chunks_iterator, client_column, client_name)
 			
 		else:
 			ChunksTable.set_LABEL_cell(chunks_iterator, client_column, "-")
@@ -2074,24 +2042,25 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		
 		### Name ###
-		ClientsTable.update_LABEL_cell(row_position, name_column, rr_data.clients[client].name)
+		ClientsTable.update_LABEL_cell(row_position, name_column, rr_data.clients[client].machine_properties.name)
 		
 		
 		### Username ###
-		ClientsTable.update_LABEL_cell(row_position, username_column, rr_data.clients[client].username)
+		ClientsTable.update_LABEL_cell(row_position, username_column, rr_data.clients[client].machine_properties.username)
 		
 		
 		### Platform ###
-		ClientsTable.update_LABEL_cell(row_position, platform_column,  rr_data.clients[client].platform[0])
+		ClientsTable.update_LABEL_cell(row_position, platform_column,  rr_data.clients[client].machine_properties.platform[0])
 		
 		
 		### CPU ###
-		var ghz : float = rr_data.clients[client].cpu[1] * rr_data.clients[client].cpu[2] * rr_data.clients[client].cpu[3]
+		var cpu_array : Array = rr_data.clients[client].machine_properties.cpu
+		var ghz : float = cpu_array[1] * cpu_array[2] * cpu_array[3]
 		ClientsTable.update_LABEL_cell_with_custom_sort(row_position, cpu_column, String( ghz ) + " GHZ", ghz)
 		
 		
 		### RAM ###
-		ClientsTable.update_LABEL_cell_with_custom_sort(row_position, memory_column, String( round(float(rr_data.clients[client].memory) / 1024 / 1024 ))+ " GB", rr_data.clients[client].memory)
+		ClientsTable.update_LABEL_cell_with_custom_sort(row_position, memory_column, String( round(float(rr_data.clients[client].machine_properties.memory) / 1024 / 1024 ))+ " GB", rr_data.clients[client].machine_properties.memory)
 		
 		
 		### Current Job ###
@@ -2198,25 +2167,26 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		
 		### Name ###
-		ClientsTable.set_LABEL_cell(client_iterator, name_column, rr_data.clients[client].name)
+		ClientsTable.set_LABEL_cell(client_iterator, name_column, rr_data.clients[client].machine_properties.name)
 		
 		
 		### Username ###
-		ClientsTable.set_LABEL_cell(client_iterator, username_column, rr_data.clients[client].username)
+		ClientsTable.set_LABEL_cell(client_iterator, username_column, rr_data.clients[client].machine_properties.username)
 		
 		
 		### Platform ###
-		ClientsTable.set_LABEL_cell(client_iterator, platform_column, rr_data.clients[client].platform[0])
+		ClientsTable.set_LABEL_cell(client_iterator, platform_column, rr_data.clients[client].machine_properties.platform[0])
 		
 		
 		### CPU ###
-		var ghz : float = rr_data.clients[client].cpu[1] * rr_data.clients[client].cpu[2] * rr_data.clients[client].cpu[3]
+		var cpu_array : Array = rr_data.clients[client].machine_properties.cpu
+		var ghz : float = cpu_array[1] * cpu_array[2] * cpu_array[3]
 		ClientsTable.set_LABEL_cell_with_custom_sort(client_iterator, cpu_column, String( ghz ) + " GHZ", ghz)
 		
 		
 		### RAM ###
-		var ram : String  = String( round(float(rr_data.clients[client].memory) / 1024 / 1024 ))+ " GB"
-		ClientsTable.set_LABEL_cell_with_custom_sort(client_iterator, memory_column, ram, rr_data.clients[client].memory)
+		var ram : String  = String( round(float(rr_data.clients[client].machine_properties.memory) / 1024 / 1024 ))+ " GB"
+		ClientsTable.set_LABEL_cell_with_custom_sort(client_iterator, memory_column, ram, rr_data.clients[client].machine_properties.memory)
 		
 		
 		### Current Job ###

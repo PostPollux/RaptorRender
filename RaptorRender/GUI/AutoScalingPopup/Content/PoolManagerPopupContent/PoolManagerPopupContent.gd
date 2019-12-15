@@ -108,23 +108,8 @@ func apply_changes() -> void:
 		pool_iterator += 1
 	
 	# override the rr_data pool dict with the local one
-	RaptorRender.rr_data.pools = str2var( var2str(pools_dict_with_new_ids_in_correct_order) ) # conversion is needed to copy the dict. Otherwise you only get a reference
-	
-	RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
-	
-	# update pool-tabs / client-tabs
-	var PoolTabsContainer : TabContainer = RaptorRender.ClientsTable.get_parent().get_parent()
-	#PoolTabsContainer.current_tab = 0 # important so it doesn't try to autoupdate a table with data that has already been deleted
-	PoolTabsContainer.previous_active_tab = 0
-	PoolTabsContainer.clear_all_pool_tabs_SortableTables()
-	PoolTabsContainer.update_tabs()
-	
-	
-	# refresh tables
-	RaptorRender.refresh_clients_table()
-	RaptorRender.refresh_jobs_table()
-	
-	
+	for client in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(client, "update_pools", str2var( var2str(pools_dict_with_new_ids_in_correct_order) ))
 	
 	emit_signal("changes_applied_successfully")
 
@@ -214,13 +199,13 @@ func pool_selected(pool_id : int) -> void:
 	ClientsAvailable_ItemListBox.clear()
 	
 	for client in pools_dict[pool_id].clients:
-		ClientsInPool_ItemListBox.add_item(RaptorRender.rr_data.clients[client].name, client)
+		ClientsInPool_ItemListBox.add_item(RaptorRender.rr_data.clients[client].machine_properties.name, client)
 	
 	ClientsInPool_ItemListBox.sort_items_by_name()
 		
 	for client in RaptorRender.rr_data.clients.keys():
 		if pools_dict[pool_id].clients.has(client) == false:
-			ClientsAvailable_ItemListBox.add_item(RaptorRender.rr_data.clients[client].name, client)
+			ClientsAvailable_ItemListBox.add_item(RaptorRender.rr_data.clients[client].machine_properties.name, client)
 	
 	ClientsAvailable_ItemListBox.sort_items_by_name()
 	

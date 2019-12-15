@@ -173,7 +173,6 @@ func sort_items_by_name() -> void:
 
 
 func items_custom_sort(a, b):
-	print (a[1])
 	return a[1] < b[1]
 	
 

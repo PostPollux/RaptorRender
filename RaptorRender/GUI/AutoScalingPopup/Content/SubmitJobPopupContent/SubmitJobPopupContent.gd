@@ -608,7 +608,6 @@ func create_new_job():
 								"frame_range": RenderRangeLineEdit.text.replace(";", "; "),
 								"frames_total": 0,
 								"status": RRStateScheme.job_paused if StartPausedCheckBox.pressed else RRStateScheme.job_queued,
-								"progress": 0,
 								"note": NoteLineEdit.text,
 								"errors": 0,
 								"pools": selected_pools,
@@ -681,12 +680,8 @@ func create_new_job():
 	# update total frame count
 	new_job.frames_total = frames_total
 	
-	# add job to rr_data
-	RaptorRender.rr_data.jobs[job_id] = new_job
-	
-	# add job_id to assigned pools
-	for pool in new_job.pools:
-		RaptorRender.rr_data.pools[pool].jobs.append(job_id)
+	# Finally add the job
+	RRNetworkManager.rpc("add_job", job_id, new_job)
 	
 	emit_signal("job_successfully_created")
 	

@@ -28,7 +28,7 @@ func _ready():
 
 
 func set_label(client_id, drive_number):
-	var drive = RaptorRender.rr_data.clients[client_id].hard_drives[drive_number]
+	var drive = RaptorRender.rr_data.clients[client_id].machine_properties.hard_drives[drive_number]
 	
 	# Name
 	if drive.label != "":
@@ -42,5 +42,5 @@ func set_label(client_id, drive_number):
 
 func set_percentage_used(client_id, drive_number):
 	
-	UsageBar.value = RaptorRender.rr_data.clients[client_id].hard_drives[drive_number].percentage_used
+	UsageBar.value = RaptorRender.rr_data.clients[client_id].machine_properties.hard_drives[drive_number].percentage_used
 

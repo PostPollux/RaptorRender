@@ -76,19 +76,9 @@ func render_process_exited_without_software_start():
 func critical_error_detected():
 	
 	current_amount_of_critical_errors += 1
-	RaptorRender.rr_data.jobs[current_processing_job].errors += 1
-	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].errors += 1
-	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries[current_processing_try].status = RRStateScheme.try_error
-	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries[current_processing_try].time_stopped = OS.get_unix_time()
-	RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_queued
 	
-	var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(current_processing_job)
-		
-	# change status only, if there are no active chunks left
-	if chunk_counts[2] == 0:
-		
-		# set job status to "queued" if no active chunks are left
-		RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_queued
+	for client in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(client, "chunk_error", current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
 
 
 
@@ -98,28 +88,11 @@ func success_detected():
 	CommandLineManager.kill_current_render_process()
 	
 	if !chunk_success_detected and current_amount_of_critical_errors == 0:
-		var current_tries_count : int = RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries.keys().size()
-		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].status = RRStateScheme.chunk_finished
 		
 		# set time stopped and status of try
-		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries[current_tries_count].time_stopped = OS.get_unix_time()
-		RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].tries[current_tries_count].status = RRStateScheme.try_finished
+		for client in RRNetworkManager.management_gui_clients:
+			RRNetworkManager.rpc_id(client, "chunk_finished_successfully", current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
 		
-		var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(current_processing_job)
-		
-		# change status only, if there are no active chunks left
-		if chunk_counts[2] == 0:
-			
-			# set job status to "finished" if all chunks are finished
-			if chunk_counts[0] == chunk_counts[1]:
-				RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_finished
-			else:
-				RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_queued
-				
-		# set job status to "paused" if all active chunks of a "paused deffered" job have finished
-		if RaptorRender.rr_data.jobs[current_processing_job].status == RRStateScheme.job_rendering_paused_deferred and chunk_counts[2] == 0:
-			RaptorRender.rr_data.jobs[current_processing_job].status = RRStateScheme.job_paused
-			
 	chunk_success_detected = true
 
 
@@ -134,6 +107,7 @@ func frame_success_detected():
 	#	success_detected()
 
 
+# this will create a thumbnail image 
 func frame_name_detected( type : int, extracted_string : String):
 	
 	# Thumbnail creation works fine with:
@@ -335,7 +309,7 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int):
 	RenderLogValidator.load_job_type_settings_CRP(job_type, job_type_version)
 	
 	# add cmd value to try information
-	RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].cmd = cmd_string
+	RRNetworkManager.rpc("update_try_cmd", job_id, chunk_id, try_id, cmd_string)
 	
 	# when we want to kill a process later on we will have to search in the pids for this command line string. As the path can change, for example if the executable is a shell script that links to another location, we should rather search for a string without the executable path.
 	var cmd_string_without_executable : String = cmd_string.replace(job_type_settings.get_value("JobTypeSettings", "path_executable", ""), "").dedent()

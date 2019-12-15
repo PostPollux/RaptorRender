@@ -87,15 +87,19 @@ func fill_chunk_info_box(chunk_number : int):
 		if BarGraph.accumulate_tries:
 			
 			# initialize client with the name of the client of the first try
-			var client : String = RaptorRender.rr_data.clients[ chunk_dict.tries[1].client ].name
+			var client : String = RaptorRender.rr_data.clients[ chunk_dict.tries[1].client ].machine_properties.name
 			for try in range(1, number_of_tries + 1):
-				if RaptorRender.rr_data.clients[ chunk_dict.tries[try].client ].name != client:
+				if RaptorRender.rr_data.clients[ chunk_dict.tries[try].client ].machine_properties.name != client:
 					client = tr("JOB_CHUNK_TIME_GRAPH_8")
 					
 			ChunkClientValueLabel.text = client
 			
 		else:
-			ChunkClientValueLabel.text = RaptorRender.rr_data.clients[ chunk_dict.tries[number_of_tries].client ].name
+			var client_id : int = chunk_dict.tries[number_of_tries].client
+			if RaptorRender.rr_data.clients.has(client_id):
+				ChunkClientValueLabel.text = RaptorRender.rr_data.clients[ client_id ].machine_properties.name
+			else:
+				ChunkClientValueLabel.text = tr("UNKNOWN")
 	else:
 		ChunkClientValueLabel.text = "-" 
 	

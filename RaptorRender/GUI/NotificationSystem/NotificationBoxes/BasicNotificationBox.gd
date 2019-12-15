@@ -218,7 +218,6 @@ func _on_TweenAnimateIn_tween_completed(object, key):
 	
 	if !animation_in_finshed:
 		if self_destruction:
-			print("fired")
 			start_timer_for_self_destruct(self_destruction_time)
 			ProgressTexture.set_modulate(Color("40ffffff"))
 	

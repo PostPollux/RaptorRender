@@ -43,12 +43,12 @@ func update_cpu_usage_bar():
 		# smooth animate the value when we stay at this client
 		if last_shown_client == client_id:
 			CpuUsageTween.stop_all()
-			CpuUsageTween.interpolate_property(self,"value", self.get_value(), RaptorRender.rr_data.clients[client_id].cpu_usage, update_interval, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			CpuUsageTween.interpolate_property(self,"value", self.get_value(), RaptorRender.rr_data.clients[client_id].machine_properties.cpu_usage, update_interval, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			CpuUsageTween.start()
 		
 		# immediately show the value when we just switched to this client from another one
 		else:
 			CpuUsageTween.stop_all()
-			self.set_value(RaptorRender.rr_data.clients[client_id].cpu_usage)
+			self.set_value(RaptorRender.rr_data.clients[client_id].machine_properties.cpu_usage)
 			last_shown_client = client_id
 

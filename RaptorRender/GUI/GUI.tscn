@@ -66,6 +66,18 @@ margin_right = 484.0
 margin_bottom = 22.0
 text = "colorize erroneous rows"
 
+[node name="ServerButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 494.0
+margin_right = 546.0
+margin_bottom = 22.0
+text = "Server"
+
+[node name="ClientButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 556.0
+margin_right = 605.0
+margin_bottom = 22.0
+text = "Client"
+
 [node name="MainHSplitContainer" type="HSplitContainer" parent="Control/VBoxContainer"]
 margin_top = 26.0
 margin_right = 1280.0
@@ -185,4 +197,6 @@ margin_bottom_percent = 10.0
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/PoolManagerButton" to="." method="_on_PoolManagerButton_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/SwitchLanguageButton" to="." method="_on_SwitchLanguageButton_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ColorizeRowsButton" to="." method="_on_ColorizeRowsButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ServerButton" to="." method="_on_ServerButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ClientButton" to="." method="_on_ClientButton_pressed"]
 [connection signal="tab_changed" from="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients" to="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients" method="_on_TabContainerClients_tab_changed"]

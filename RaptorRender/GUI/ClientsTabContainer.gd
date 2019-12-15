@@ -41,8 +41,9 @@ func update_tabs() -> void:
 		# create a new tab
 		else:
 			var Clients_SortableTable = Clients_SortableTableRes.instance()
-			Clients_SortableTable.column_names = RaptorRender.ClientsTable.column_names
-			Clients_SortableTable.column_widths = RaptorRender.ClientsTable.column_widths
+			var BaseTable : SortableTable = self.get_child(0).get_child(0)
+			Clients_SortableTable.column_names = BaseTable.column_names
+			Clients_SortableTable.column_widths = BaseTable.column_widths
 			Clients_SortableTable.margin_bottom = 0
 			Clients_SortableTable.margin_left = 0
 			Clients_SortableTable.margin_right = 0

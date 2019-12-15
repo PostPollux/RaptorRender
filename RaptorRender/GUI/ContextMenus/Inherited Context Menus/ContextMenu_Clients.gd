@@ -374,7 +374,10 @@ func _on_ContextMenu_index_pressed(index):
 				# remove the row from the table
 				RaptorRender.ClientsTable.remove_row(selected)
 			
-			RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
+			#RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
+			
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_pools", RaptorRender.rr_data.pools)
 			
 			
 				

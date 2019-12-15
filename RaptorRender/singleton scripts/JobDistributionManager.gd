@@ -46,7 +46,7 @@ func _ready():
 	
 	# TODO - this is just temporarily
 func reactivate_client():
-	RaptorRender.rr_data.clients[GetSystemInformation.unique_client_id].status = RRStateScheme.client_available
+	RaptorRender.rr_data.clients[GetSystemInformation.own_client_id].status = RRStateScheme.client_available
 	
 
 
@@ -54,96 +54,102 @@ func reactivate_client():
 
 func distribute_jobs():
 	
-	# update the jobs_active array, so that we know, if there is some work to do
-	jobs_active = []
-	for job in RaptorRender.rr_data.jobs.keys():
-		var job_status = RaptorRender.rr_data.jobs[job].status
-		if job_status == RRStateScheme.job_rendering or job_status == RRStateScheme.job_queued:
-			jobs_active.append(job)
-	
-	# Is there some work to do?
-	if jobs_active.size() > 0:
+	# make sure only the server distributes jobs
+	if get_tree().is_network_server():
 		
-		# are there resources to wake over lan that can help?
+		# update the jobs_active array, so that we know, if there is some work to do
+		jobs_active = []
+		for job in RaptorRender.rr_data.jobs.keys():
+			var job_status = RaptorRender.rr_data.jobs[job].status
+			if job_status == RRStateScheme.job_rendering or job_status == RRStateScheme.job_queued:
+				jobs_active.append(job)
 		
-		# update the clients_available array
-		clients_available = []
-		for client in RaptorRender.rr_data.clients.keys():
-			if RaptorRender.rr_data.clients[client].status == RRStateScheme.client_available:
-				clients_available.append(client)
-		
-		
-		# are there any available clients to distribute the work to?
-		if clients_available.size() > 0:
+		# Is there some work to do?
+		if jobs_active.size() > 0:
 			
-			# create a priority sortable jobs array 
-			var jobs_active_sort_array : Array = []
+			# are there resources to wake over lan that can help?
 			
-			for job in jobs_active:
-				# New jobs with no rendered chunks will get a priority boost
-				if RaptorRender.rr_data.jobs[job].priority_boost == true:
-					jobs_active_sort_array.append( [job, 101] )
-				else:
-					jobs_active_sort_array.append( [job, RaptorRender.rr_data.jobs[job].priority] )
-			
-			# sort jobs_active_sort_array
-			jobs_active_sort_array.sort_custom ( self, "sort_by_priority" )
+			# update the clients_available array
+			clients_available = []
+			for client in RaptorRender.rr_data.clients.keys():
+				if RaptorRender.rr_data.clients[client].status == RRStateScheme.client_available:
+					clients_available.append(client)
 			
 			
-			
-			# assign a job to each available client
-			for client in clients_available:
+			# are there any available clients to distribute the work to?
+			if clients_available.size() > 0:
 				
-				# go through the priority sorted jobs and take the first one that uses a JobType supported by the client
-				for job in jobs_active_sort_array:
+				# create a priority sortable jobs array 
+				var jobs_active_sort_array : Array = []
+				
+				for job in jobs_active:
+					# New jobs with no rendered chunks will get a priority boost
+					if RaptorRender.rr_data.jobs[job].priority_boost == true:
+						jobs_active_sort_array.append( [job, 101] )
+					else:
+						jobs_active_sort_array.append( [job, RaptorRender.rr_data.jobs[job].priority] )
+				
+				# sort jobs_active_sort_array
+				jobs_active_sort_array.sort_custom ( self, "sort_by_priority" )
+				
+				
+				
+				# assign a job to each available client
+				for client in clients_available:
 					
-					# check if job can be processed by this client
-					if true:
+					# go through the priority sorted jobs and take the first one that uses a JobType supported by the client
+					for job in jobs_active_sort_array:
 						
-						# assign a chunk
-						for chunk in RaptorRender.rr_data.jobs[job[0]].chunks.keys():
-							if RaptorRender.rr_data.jobs[job[0]].chunks[chunk].status == RRStateScheme.chunk_queued:
-								
-								# add a new try
-								var current_tries_count : int = RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries
-								var new_try_data : Dictionary = {
-									"cmd" : "",
-									"status" : RRStateScheme.try_rendering,
-									"client" : client,
-									"time_started" : OS.get_unix_time(),
-									"time_stopped" : 0
-									}
-								RaptorRender.rr_data.jobs[job[0]].chunks[chunk].tries[current_tries_count + 1] = new_try_data
-								RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries += 1
-								
-								# start this chunk on the client
-								JobExecutionManager.start_chunk( job[0] , chunk, current_tries_count + 1)
-								
-								# eliminate priority boost, as now at least one chunk is rendering
-								RaptorRender.rr_data.jobs[job[0]].priority_boost = false
-								
-								# set "current_job" and "last_render_log" information for the client
-								RaptorRender.rr_data.clients[client].current_job_id = job[0]
-								RaptorRender.rr_data.clients[client].last_render_log = [job[0], chunk, current_tries_count + 1]
-								
-								
-								RaptorRender.rr_data.jobs[job[0]].status = RRStateScheme.job_rendering
-								
-								RaptorRender.rr_data.jobs[job[0]].chunks[chunk].status = RRStateScheme.chunk_rendering
-								
-								
-								RaptorRender.rr_data.clients[client].status = RRStateScheme.client_rendering
-								
-								break
+						# check if job can be processed by this client
+						if true:
+							
+							# assign a chunk
+							for chunk in RaptorRender.rr_data.jobs[job[0]].chunks.keys():
+								if RaptorRender.rr_data.jobs[job[0]].chunks[chunk].status == RRStateScheme.chunk_queued:
+									
+									# add a new try
+									var current_tries_count : int = RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries
+									var new_try_data : Dictionary = {
+										"cmd" : "",
+										"status" : RRStateScheme.try_rendering,
+										"client" : client,
+										"time_started" : OS.get_unix_time(),
+										"time_stopped" : 0
+										}
+									
+									
+									RRNetworkManager.rpc("add_try", job[0], chunk, current_tries_count + 1, new_try_data)
+									#RaptorRender.rr_data.jobs[job[0]].chunks[chunk].tries[current_tries_count + 1] = new_try_data
+									#RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries += 1
+									
+									# start this chunk on the client
+									JobExecutionManager.start_chunk( job[0] , chunk, current_tries_count + 1)
+									
+									# eliminate priority boost, as now at least one chunk is rendering
+									RaptorRender.rr_data.jobs[job[0]].priority_boost = false
+									
+									# set "current_job" and "last_render_log" information for the client
+									RaptorRender.rr_data.clients[client].current_job_id = job[0]
+									RaptorRender.rr_data.clients[client].last_render_log = [job[0], chunk, current_tries_count + 1]
+									
+									
+									RaptorRender.rr_data.jobs[job[0]].status = RRStateScheme.job_rendering
+									
+									RaptorRender.rr_data.jobs[job[0]].chunks[chunk].status = RRStateScheme.chunk_rendering
+									
+									
+									RaptorRender.rr_data.clients[client].status = RRStateScheme.client_rendering
+									
+									break
+							
 						
-					
-					
-		
-	else:
-		
-		# check if timeout for shutting down pc is reached
-			# automatically shut down pcs
-		return
+						
+			
+		else:
+			
+			# check if timeout for shutting down pc is reached
+				# automatically shut down pcs
+			return
 
 func sort_by_priority(a, b):
 	return a[1] > b[1]

@@ -172,7 +172,7 @@ func _on_ContextMenu_index_pressed(index):
 							RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
 							
 							# cancel render process TODO (temporarily)
-							if GetSystemInformation.unique_client_id == client:
+							if GetSystemInformation.own_client_id == client:
 								CommandLineManager.kill_current_render_process()
 					
 					# cancle active chunks
@@ -243,7 +243,7 @@ func _on_ContextMenu_index_pressed(index):
 							RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
 							
 							# cancel render process TODO (temporarily)
-							if GetSystemInformation.unique_client_id == client:
+							if GetSystemInformation.own_client_id == client:
 								CommandLineManager.kill_current_render_process()
 							
 							
@@ -329,11 +329,9 @@ func _on_ContextMenu_index_pressed(index):
 				
 				# create a new job id
 				var job_id : int = RRFunctions.generate_job_id(job_to_resubmit.time_created, job_to_resubmit.name)
-				RaptorRender.rr_data.jobs[job_id] = job_to_resubmit
 				
-				# add job to assigned pools
-				for pool in job_to_resubmit.pools:
-					RaptorRender.rr_data.pools[pool].jobs.append(job_id)
+				# Add the job
+				RRNetworkManager.rpc("add_job", job_id, job_to_resubmit)
 				
 			RaptorRender.JobsTable.refresh()
 			

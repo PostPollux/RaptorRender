@@ -94,8 +94,11 @@ func update_try_info_panel(job_id : int, chunk_id : int, try_id : int):
 			RRStateScheme.try_marked_as_finished : StatusLabel.text = tr("TRY_DETAIL_3") + ":   " + tr("TRY_DETAIL_STATUS_5")
 		
 		var client_id : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].client
-		ClientLabel.text = tr("TRY_DETAIL_4") + ":   " + RaptorRender.rr_data.clients[client_id].name
-		
+		if RaptorRender.rr_data.clients.has(client_id):
+			ClientLabel.text = tr("TRY_DETAIL_4") + ":   " + RaptorRender.rr_data.clients[client_id].machine_properties.name
+		else:
+			ClientLabel.text = tr("TRY_DETAIL_4") + ":   " + tr("UNKNOWN")
+			
 		var time_started : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_started
 		TimeStartedLabel.text = tr("TRY_DETAIL_5") + ":   " + TimeFunctions.time_stamp_to_date_as_string(time_started, 1, true)
 		

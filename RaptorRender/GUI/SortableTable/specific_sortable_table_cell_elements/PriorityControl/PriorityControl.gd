@@ -1,5 +1,7 @@
 extends HBoxContainer
 
+class_name PriorityControl
+
 ### PRELOAD RESOURCES
 
 ### SIGNALS
@@ -27,6 +29,11 @@ func _ready():
 
 
 
+func set_text(priority : String) -> void:
+	if is_instance_valid(PriorityLabel):
+		PriorityLabel.text = priority
+
+
 func disable_if_needed():
 	var status = RaptorRender.rr_data.jobs[job_id].status
 	if status == RRStateScheme.job_finished or status == RRStateScheme.job_cancelled:
@@ -39,13 +46,12 @@ func _on_plus_pressed():
 	
 	if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
 		# increase by one
-		RaptorRender.rr_data.jobs[job_id].priority = min(RaptorRender.rr_data.jobs[job_id].priority + 1, 100)
-		PriorityLabel.text = String ( RaptorRender.rr_data.jobs[job_id].priority )
+		RRNetworkManager.rpc("update_job_priority", job_id, min(RaptorRender.rr_data.jobs[job_id].priority + 1, 100) )
+		set_text( String ( RaptorRender.rr_data.jobs[job_id].priority ) )
 	else:
 		# increase by 5
-		RaptorRender.rr_data.jobs[job_id].priority = min(RaptorRender.rr_data.jobs[job_id].priority + 5, 100)
-		PriorityLabel.text = String ( RaptorRender.rr_data.jobs[job_id].priority )
-	# RaptorRender.TableJobs.refresh()
+		RRNetworkManager.rpc("update_job_priority", job_id, min(RaptorRender.rr_data.jobs[job_id].priority + 5, 100) )
+		set_text( String ( RaptorRender.rr_data.jobs[job_id].priority ) )
 
 
 
@@ -53,13 +59,13 @@ func _on_minus_pressed():
 	
 	if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
 		# decrease by one
-		RaptorRender.rr_data.jobs[job_id].priority = max(RaptorRender.rr_data.jobs[job_id].priority - 1, 0)
-		PriorityLabel.text = String ( RaptorRender.rr_data.jobs[job_id].priority )
+		RRNetworkManager.rpc("update_job_priority", job_id, max(RaptorRender.rr_data.jobs[job_id].priority - 1, 0) )
+		set_text( String ( RaptorRender.rr_data.jobs[job_id].priority ) )
 	else:
 		# decrease by 5
-		RaptorRender.rr_data.jobs[job_id].priority = max(RaptorRender.rr_data.jobs[job_id].priority - 5, 0)
-		PriorityLabel.text = String ( RaptorRender.rr_data.jobs[job_id].priority )
-	# RaptorRender.TableJobs.refresh()
+		RRNetworkManager.rpc("update_job_priority", job_id, max(RaptorRender.rr_data.jobs[job_id].priority - 5, 0) )
+		set_text( String ( RaptorRender.rr_data.jobs[job_id].priority ) )
+
 
 
 

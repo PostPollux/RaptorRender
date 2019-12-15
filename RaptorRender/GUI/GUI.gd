@@ -1,16 +1,10 @@
 extends Node
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
 
 
 func _on_CreateJobButton_pressed() -> void:
@@ -37,3 +31,12 @@ func _on_ColorizeRowsButton_pressed() -> void:
 		RaptorRender.colorize_erroneous_table_rows = true
 	RaptorRender.JobsTable.refresh()
 	RaptorRender.ClientsTable.refresh()
+
+
+func _on_ClientButton_pressed() -> void:
+	RRNetworkManager.connect_to_server()
+
+
+func _on_ServerButton_pressed() -> void:
+	RRNetworkManager.create_server()
+
