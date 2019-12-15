@@ -368,18 +368,23 @@ func get_cell(row, column):
 ### Selection
 #############
 
-func select_by_id(id):
+func select_by_id(id) -> void:
 	RowContainerFilled.clear_selection()
 	RowContainerFilled.add_id_to_selection(id)
 	RowContainerFilled.update_selection()
 	
 	
-func clear_selection():
+func clear_selection() -> void:
 	RowContainerFilled.clear_selection()
 	
 	
-func get_selected_ids():
+func get_selected_ids() -> Array:
 	return RowContainerFilled.selected_row_ids
+
+
+func set_selected_ids(selected_ids : Array) -> void:
+	RowContainerFilled.selected_row_ids = selected_ids
+	RowContainerFilled.update_selection()
 
 
 func emit_selection_signal(last_selected):

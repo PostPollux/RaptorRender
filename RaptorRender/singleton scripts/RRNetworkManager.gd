@@ -56,8 +56,8 @@ func connect_to_server():
 	client.create_client(server_ip, RR_PORT)
 	client.set_always_ordered(true)
 	get_tree().set_network_peer(client)
-
-
+	
+	
 
 
 ######## connecting callbacks ##########
@@ -66,6 +66,8 @@ func connect_to_server():
 # Callback from SceneTree, called when client connects
 func _client_connected(id):
 	print("New Client connected (", id, ")")
+
+
 
 
 
@@ -87,6 +89,10 @@ func _connected_ok():
 	
 	# login management gui
 	rpc_id(1, "login_management_gui", get_tree().get_network_unique_id())
+	
+	# add client to the clients dict
+	for client in management_gui_clients:
+		rpc_id(client, "add_client", GetSystemInformation.own_client_id, GetSystemInformation.get_machine_properties())
 
 
 # Callback from SceneTree, called when server disconnect
@@ -135,16 +141,43 @@ remotesync func add_job(job_id : int, job : Dictionary):
 			RaptorRender.rr_data.pools[pool].jobs.append(job_id)
 
 
-remotesync func remove_job(job_id : int):
-	######## not finished yet #########
-	# cancel render process if this is the job where the machine is currently working on
-	if JobExecutionManager.current_processing_job == job_id:
-		CommandLineManager.kill_current_render_process()
-		
-	RaptorRender.rr_data.jobs.erase(job_id)
+
+remotesync func remove_jobs(job_ids : Array):
 	
-	# remove the row from the table
-	#RaptorRender.JobsTable.remove_row(selected)
+	# save the current JobsTable selection
+	var selections : Array = RaptorRender.JobsTable.get_selected_ids().duplicate()
+	
+	for job in job_ids:
+		
+		# cancel render process if this is the job where the machine is currently working on
+		if CommandLineManager.currently_rendering and JobExecutionManager.current_processing_job == job:
+			CommandLineManager.kill_current_render_process()
+			
+			#TODO
+			# make client available again
+			#RaptorRender.rr_data.clients[client].current_job_id = -1
+			#RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
+		
+		# hide the JobInfoPanel, if the currently displayed job gets deleted
+		if job == RaptorRender.current_job_id_for_job_info_panel:
+			RaptorRender.JobInfoPanel.current_displayed_job_id = -1
+			RaptorRender.JobInfoPanel.reset_to_first_tab()
+			RaptorRender.JobInfoPanel.visible = false
+		
+		# remove the job from the dict
+		RaptorRender.rr_data.jobs.erase(job)
+		
+		# filter and restore the selection
+		selections.erase(job)
+	
+	# clear the table
+	RaptorRender.JobsTable.clear_table()
+	
+	# refresh the table
+	RaptorRender.JobsTable.refresh()
+	
+	# restore the selection
+	RaptorRender.JobsTable.set_selected_ids(selections)
 
 
 
@@ -220,9 +253,48 @@ remotesync func chunk_error(job_id : int, chunk_id : int, try_id : int, time_sto
 
 
 
+remotesync func add_client(client_id : int, machine_properties : Dictionary):
+	
+	# just update the machine properties if the client already exists in the client dict
+	if RaptorRender.rr_data.clients.has(client_id):
+		RaptorRender.rr_data.clients[client_id].machine_properties = machine_properties
+	
+	# only on the server create the client if it does not exist yet (because the sever knows for sure what a default client should look like)
+	if get_tree().is_network_server():
+		if not RaptorRender.rr_data.clients.has(client_id):
+			
+			# create the correct dict
+			var new_client : Dictionary
+			new_client = RaptorRender.default_client.duplicate()
+			new_client.machine_properties = machine_properties
+			new_client["time_connected"] = OS.get_unix_time()
+			
+			# add it to the dict on the server
+			RaptorRender.rr_data.clients[client_id] = new_client
+			
+			# now send it to all connected management guis
+			for client in management_gui_clients:
+				rpc_id(client, "copy_client", client_id, new_client)
+
+
+
+# copies a client dictionary to all that don't have that client_id yet
+puppet func copy_client(client_id : int, client : Dictionary):
+	if not RaptorRender.rr_data.clients.has(client_id):
+		RaptorRender.rr_data.clients[client_id] = client
+
+
+
+
+remotesync func update_client_status(client_id : int, status : String):
+	if RaptorRender.rr_data.clients.has(client_id):
+		RaptorRender.rr_data.clients[client_id].status = status
+		# Not finished yet
+
+
 # This will update the hardware statistics like cpu usage etc. for a given client
 remotesync func update_client_hw_stats(client_id : int, cpu_usage : int, memory_usage : int, hard_drives : Array):
-	if RaptorRender.rr_data.jobs.has(client_id):
+	if RaptorRender.rr_data.clients.has(client_id):
 		RaptorRender.rr_data.clients[client_id].machine_properties.memory_usage = memory_usage
 		RaptorRender.rr_data.clients[client_id].machine_properties.cpu_usage = cpu_usage
 		RaptorRender.rr_data.clients[client_id].machine_properties.hard_drives = hard_drives
@@ -232,6 +304,10 @@ remotesync func update_client_hw_stats(client_id : int, cpu_usage : int, memory_
 remotesync func update_pools(pools : Dictionary):
 	
 	RaptorRender.rr_data.pools = pools
+	
+	# reset current pool filter if the pool does not exist anymore
+	if not RaptorRender.rr_data.pools.has(RaptorRender.clients_pool_filter):
+		RaptorRender.clients_pool_filter = -1
 	
 	RaptorRender.currently_updating_pool_cache = true
 	
@@ -252,27 +328,30 @@ remotesync func update_pools(pools : Dictionary):
 	
 	# update pool-tabs / client-tabs
 	var PoolTabsContainer : TabContainer = RaptorRender.PoolTabsContainer
-	#PoolTabsContainer.current_tab = 0 # important so it doesn't try to autoupdate a table with data that has already been deleted
-	#PoolTabsContainer.previous_active_tab = 0
 	PoolTabsContainer.clear_all_pool_tabs_SortableTables()
 	PoolTabsContainer.update_tabs()
 	
-	if PoolTabsContainer.previous_active_tab >= PoolTabsContainer.get_child_count():
-		PoolTabsContainer.previous_active_tab = 0
-		
+	# this currently destroys the selection and the tab is not correct, too, if we delete a tab before
+	
 	# refresh tables
 	RaptorRender.refresh_clients_table()
 	RaptorRender.refresh_jobs_table()
 	
+	# handle the Clients Info Panel
+	RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
+	RaptorRender.ClientInfoPanel.visible = false
+	RaptorRender.ClientInfoPanel.reset_to_first_tab()
 
 
+
+	
+	
+	
+	
+	
 # new image_directory detected
 
 # reset error counts
-
-# pools
-
-# delete job
 
 # update job status 
 

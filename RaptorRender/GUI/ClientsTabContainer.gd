@@ -70,6 +70,13 @@ func update_tabs() -> void:
 		
 		tab_iterator += 1
 	
+	# activate previous visible tab again if possible
+	if RaptorRender.clients_pool_filter != -1:
+		for tab in tabs_pools_dict.keys():
+			if tabs_pools_dict[tab] == RaptorRender.clients_pool_filter:
+				current_tab = tab
+	else:
+		current_tab = 0
 	
 	
 	# remove all tabs that are not needed anymore

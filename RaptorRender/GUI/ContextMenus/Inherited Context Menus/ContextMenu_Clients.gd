@@ -360,7 +360,8 @@ func _on_ContextMenu_index_pressed(index):
 		
 		
 		14:  # Add to Pool
-			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
+			# spawns a submenu
+			pass 
 		
 		
 		15:  # Remove from this Pool
@@ -368,24 +369,10 @@ func _on_ContextMenu_index_pressed(index):
 			var selected_ids = str2var( var2str( RaptorRender.ClientsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
 			
 			for selected in selected_ids:
-				
 				RaptorRender.rr_data.pools[RaptorRender.clients_pool_filter].clients.erase(selected)
-				
-				# remove the row from the table
-				RaptorRender.ClientsTable.remove_row(selected)
-			
-			#RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
 			
 			for client in RRNetworkManager.management_gui_clients:
 				RRNetworkManager.rpc_id(client, "update_pools", RaptorRender.rr_data.pools)
-			
-			
-				
-			# handle the Clients Info Panel
-			RaptorRender.ClientsTable.clear_selection()
-			RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
-			RaptorRender.ClientInfoPanel.visible = false
-			RaptorRender.ClientInfoPanel.reset_to_first_tab()
 		
 		
 		16:  # Separator
@@ -416,14 +403,9 @@ func _on_ContextMenu_index_pressed(index):
 					RaptorRender.ClientsTable.remove_row(selected)
 				
 			# handle the Clients Info Panel
-			RaptorRender.ClientsTable.clear_selection()
 			RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
 			RaptorRender.ClientInfoPanel.visible = false
 			RaptorRender.ClientInfoPanel.reset_to_first_tab()
-			
-				
-				
-			RaptorRender.ClientsTable.refresh()
 
 
 
@@ -434,8 +416,9 @@ func pool_submenu_item_selected(pool_id : int) -> void:
 	for selected in selected_ids:
 		if not RaptorRender.rr_data.pools[pool_id].clients.has(selected):
 			RaptorRender.rr_data.pools[pool_id].clients.append(selected)
-		
-	RRFunctions.apply_pool_changes_to_all_jobs_and_clients()
+	
+	for client in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(client, "update_pools", RaptorRender.rr_data.pools)
 
 
 

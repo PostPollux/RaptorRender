@@ -50,6 +50,21 @@ var refresh_interface_timer : Timer
 
 var clients_pool_filter : int = -1
 
+var default_client : Dictionary = {
+		"machine_properties" : {
+			
+		},
+		"status": RRStateScheme.client_available,
+		"current_job_id": -1,
+		"last_render_log": [0,0,0],
+		"error_count": 0,
+		"pools": [],
+		"rr_version": 1.0,
+		"time_connected": 0,
+		"software": [],
+		"note": ""
+	}
+
 
 
 

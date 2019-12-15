@@ -96,36 +96,24 @@ func _ready():
 	
 	
 	# add the client to the clients dictionary
-	own_client_id = mac_addresses[0].hash()
-	RaptorRender.rr_data.clients[own_client_id] = create_client_dict()
+	own_client_id = OS.get_unique_id().hash()
 
 
-func create_client_dict() -> Dictionary:
-	var new_client = {
-		"machine_properties" : {
-			"name": hostname,
-			"username": username,
-			"mac_addresses": mac_addresses,
-			"ip_addresses": ip_addresses,
-			"platform": platform_info,
-			"cpu": cpu_info,
-			"cpu_usage": cpu_usage,
-			"memory": total_memory,
-			"memory_usage": memory_usage,
-			"graphics": graphic_cards,
-			"hard_drives": hard_drives,
-		},
-		"status": RRStateScheme.client_available,
-		"current_job_id": -1,
-		"last_render_log": [0,0,0],
-		"error_count": 0,
-		"pools": [],
-		"rr_version": 0.2,
-		"time_connected": 1528759663,
-		"software": ["Blender", "Natron"],
-		"note": ""
+func get_machine_properties() -> Dictionary:
+	var machine_properties : Dictionary = {
+		"name": hostname,
+		"username": username,
+		"mac_addresses": mac_addresses,
+		"ip_addresses": ip_addresses,
+		"platform": platform_info,
+		"cpu": cpu_info,
+		"cpu_usage": cpu_usage,
+		"memory": total_memory,
+		"memory_usage": memory_usage,
+		"graphics": graphic_cards,
+		"hard_drives": hard_drives
 	}
-	return new_client
+	return machine_properties
 
 
 

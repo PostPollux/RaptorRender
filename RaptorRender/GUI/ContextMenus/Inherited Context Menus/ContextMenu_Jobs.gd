@@ -375,36 +375,5 @@ func _on_ContextMenu_index_pressed(index):
 			
 			var selected_ids = str2var( var2str( RaptorRender.JobsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
 			
-			for selected in selected_ids:
-				
-				# remove Clients from Job
-				for client in RaptorRender.rr_data.clients.keys():
-					if RaptorRender.rr_data.clients[client].current_job_id == selected:
-						RaptorRender.rr_data.clients[client].current_job_id = -1
-						RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
-				
-				# cancle active chunks
-				for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-					var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
-					if chunk_status == RRStateScheme.chunk_rendering or chunk_status == RRStateScheme.chunk_queued:
-						RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_cancelled
-						
-				# cancel render process
-				CommandLineManager.kill_current_render_process()
-				
-				# Remove the job from the database
-				RaptorRender.rr_data.jobs.erase(selected)
-				
-				# remove the row from the table
-				RaptorRender.JobsTable.remove_row(selected)
-				
-				
-				
-			# hide the Jobs Info Panel
-			RaptorRender.JobsTable.clear_selection()
-			RaptorRender.JobInfoPanel.visible = false
-			RaptorRender.JobInfoPanel.reset_to_first_tab()
-			
-			
-			# RaptorRender.JobsTable.refresh()
-			RaptorRender.ClientsTable.refresh()
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "remove_jobs", selected_ids)
