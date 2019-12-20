@@ -46,7 +46,7 @@ export (float) var margin_bottom_percent : float = 5
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	
 	# register to RaptorRender script
 	if RaptorRender != null:
@@ -81,15 +81,15 @@ func _ready():
 
 
 
-func set_content(child : Node):
+func set_content(child : Node) -> void:
 	ContentContainer.add_child( child )
 
 
-func hide_popup():
+func hide_popup() -> void:
 	self.visible = false
 	emit_signal("popup_hided")
 
-func show_popup():
+func show_popup() -> void:
 	
 	# set margins
 	MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
@@ -102,18 +102,20 @@ func show_popup():
 	
 	self.visible = true
 	emit_signal("popup_shown")
-	
-func _on_TransparentBackground_gui_input(event):
+
+
+
+func _on_TransparentBackground_gui_input(event) -> void:
 	if event.is_action_pressed("ui_left_mouse_button"):
 		hide_popup()
 
 
-func _on_CancelButton_pressed():
+func _on_CancelButton_pressed() -> void:
 	emit_signal("cancel_pressed")
 	hide_popup()
 	
 
 
-func _on_OkButton_pressed():
+func _on_OkButton_pressed() -> void:
 	emit_signal("ok_pressed")
 	

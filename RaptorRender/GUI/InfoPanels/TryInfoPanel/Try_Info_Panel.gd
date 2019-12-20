@@ -38,7 +38,7 @@ var ctrl_plus_c_pressed: bool = false
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	RaptorRender.register_try_info_panel(self)
 	ReadLogFileManager.connect("log_read_to_end_of_file", self, "add_text_to_log")
 	ReadLogFileManager.connect("no_log_file_found", self, "no_log_file_found")
@@ -46,16 +46,16 @@ func _ready():
 	translate_tabs()
 
 
-func translate_tabs():
+func translate_tabs() -> void:
 	TryInfoTabContainer.set_tab_title(0 , tr("TRY_DETAIL_1") ) # Details
 	TryInfoTabContainer.set_tab_title(1 , tr("TRY_LOG_1") ) # Log
 
 
-func reset_to_first_tab():
+func reset_to_first_tab() -> void:
 	TryInfoTabContainer.current_tab = 0
 
 
-func set_tab(tab_number : int):
+func set_tab(tab_number : int) -> void:
 	TryInfoTabContainer.current_tab = tab_number
 
 
@@ -63,12 +63,12 @@ func get_current_tab() -> int:
 	return TryInfoTabContainer.current_tab
 
 
-func set_visibility(visibility : bool):
+func set_visibility(visibility : bool) -> void:
 	DetailsVisibilityContainer.visible = visibility
 	LogVisibilityContainer.visible = visibility
 
 
-func _on_TabContainer_tab_changed(tab):
+func _on_TabContainer_tab_changed(tab) -> void:
 	if tab == 1:
 		clear_log()
 		read_log_file()
@@ -79,7 +79,7 @@ func _on_TabContainer_tab_changed(tab):
 #  Functions for Details Tab
 ############################
 
-func update_try_info_panel(job_id : int, chunk_id : int, try_id : int):
+func update_try_info_panel(job_id : int, chunk_id : int, try_id : int) -> void:
 	
 	if job_id != 0 and chunk_id != 0 and try_id != 0:
 	
@@ -124,11 +124,11 @@ func update_try_info_panel(job_id : int, chunk_id : int, try_id : int):
 #  Functions for Log Tab
 ########################
 
-func clear_log():
+func clear_log() -> void:
 	LogRichTextLabel.clear()
 
 
-func update_current_try_id(try_id : int):
+func update_current_try_id(try_id : int) -> void:
 	
 	# load log file when either chunk_id or try_id changed
 	if currently_displayed_chunk_id != RaptorRender.current_chunk_id_for_job_info_panel or currently_displayed_try_id != try_id:
@@ -142,9 +142,10 @@ func update_current_try_id(try_id : int):
 	
 	currently_displayed_try_id = try_id
 	currently_displayed_chunk_id = RaptorRender.current_chunk_id_for_job_info_panel
-	
 
-func read_log_file():
+
+
+func read_log_file() -> void:
 	var selected_job : int = RaptorRender.current_job_id_for_job_info_panel
 	var selected_chunk : int = RaptorRender.current_chunk_id_for_job_info_panel
 	var selected_try : int = currently_displayed_try_id
@@ -155,18 +156,18 @@ func read_log_file():
 	ReadLogFileManager.reset_file_pointer_position()
 	ReadLogFileManager.stop_read_log_timer()
 	ReadLogFileManager.read_log_file(selected_job, selected_chunk, selected_try)
-	
 
-func add_text_to_log(text : String):
+
+func add_text_to_log(text : String) -> void:
 	LogRichTextLabel.append_bbcode( text )
-	
 
-func no_log_file_found():
+
+func no_log_file_found() -> void:
 	LogRichTextLabel.clear()
 	LogRichTextLabel.append_bbcode( tr("TRY_LOG_2"))
 
 
-func _on_Log_RichTextLabel_gui_input(event):
+func _on_Log_RichTextLabel_gui_input(event) -> void:
 	if event.is_action_pressed("ui_right_mouse_button"):
 		RaptorRender.log_context_menu_invoked()
 	if Input.is_key_pressed(KEY_CONTROL) and Input.is_key_pressed(KEY_C):
@@ -178,7 +179,7 @@ func _on_Log_RichTextLabel_gui_input(event):
 
 
 
-func _on_CommandRichTextLabel_gui_input(event):
+func _on_CommandRichTextLabel_gui_input(event) -> void:
 	if Input.is_key_pressed(KEY_CONTROL) and Input.is_key_pressed(KEY_C):
 		if not ctrl_plus_c_pressed:
 			ctrl_plus_c_pressed = true
@@ -187,5 +188,5 @@ func _on_CommandRichTextLabel_gui_input(event):
 		ctrl_plus_c_pressed = false
 
 
-func _on_CommandRichTextLabel_resized():
+func _on_CommandRichTextLabel_resized() -> void:
 	CommandRichTextLabel.rect_min_size.y = CommandRichTextLabel.get_content_height()

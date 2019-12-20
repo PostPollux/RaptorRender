@@ -41,17 +41,17 @@ var previous_scroll_vertical : int = 0
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	RefreshButton.text = "JOB_IMAGES_2" # refresh
 	SizeLabel.text = "JOB_IMAGES_3" # size
 	FramenumberVisibilityCheckBox.text = "JOB_IMAGES_4" # frame numbers
 
-func _process(delta):
+func _process(delta) -> void:
 	EnlargedPreviewContainer.rect_min_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
 	EnlargedPreviewContainer.rect_size.x = RaptorRender.JobInfoPanel.rect_size.x - 15
 
 
-func _input(event):
+func _input(event) -> void:
 	
 	# save the position of the vertical scroll as soon as shift or control is pressed
 	if Input.is_action_just_pressed("ui_ctrl") :
@@ -61,7 +61,7 @@ func _input(event):
 
 # this function will make sure that the first thumbnail gets selected and that all thumbs show the loading image while loading.
 # if you want to just update without changing selection or image use just "update_thumbnails()". For example if you want it to constantly update every 2 seconds.
-func update_thumbnails_by_selecting_job():
+func update_thumbnails_by_selecting_job() -> void:
 	
 	desire_to_select_first_thumbnail = true
 	job_just_selected = true
@@ -73,7 +73,7 @@ func update_thumbnails_by_selecting_job():
 
 # For performance reasons we only delete or create ThumbnailBox nodes when necessary and update the ones that are already there.
 # It also helps not to loose the visual change on hover or selection caused by deleting and recreating the node.
-func update_thumbnails():
+func update_thumbnails() -> void:
 	
 	##### create or delete ThumbnailBox nodes
 	
@@ -119,7 +119,7 @@ func update_thumbnails():
 
 
 
-func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
+func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail) -> void:
 	
 	currently_selected = Thumb
 	
@@ -162,7 +162,7 @@ func thumbnail_selected(framenumber : String, Thumb : ImageThumbnail):
 
 
 
-func select_first_thumbnail():
+func select_first_thumbnail() -> void:
 	
 	if desire_to_select_first_thumbnail:
 		var ThumbnailBox = ThumbnailsDirectoriesVBox.get_child(0)
@@ -173,26 +173,26 @@ func select_first_thumbnail():
 		desire_to_select_first_thumbnail = false
 
 
-func _on_HSlider_value_changed(value):
+func _on_HSlider_value_changed(value) -> void:
 	for ThumbnailBox in ThumbnailsDirectoriesVBox.get_children():
 		ThumbnailBox.thumbnail_scale_factor = value
-		ThumbnailBox.calculate_number_of_colums()
+		ThumbnailBox.calculate_and_set_number_of_columns()
 		ThumbnailBox.set_thumbnail_size(value)
 
 
-func _on_CheckBox_toggled(button_pressed):
+func _on_CheckBox_toggled(button_pressed) -> void:
 	for ThumbnailBox in ThumbnailsDirectoriesVBox.get_children():
 		ThumbnailBox.set_framenumber_visibility(button_pressed)
 
 
-func _on_RefreshButton_pressed():
+func _on_RefreshButton_pressed() -> void:
 	job_just_selected = true # this will lead to showing the loading images
 	update_thumbnails()
 
 
 
 
-func _on_ThumbnailsScrollContainer_gui_input(event):
+func _on_ThumbnailsScrollContainer_gui_input(event) -> void:
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		if event.is_action_pressed("ui_mouse_wheel_up"):

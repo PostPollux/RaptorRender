@@ -101,7 +101,7 @@ func hex_string_to_PoolByteArray(hex_string : String) -> Array:
 
 # This function takes an array of control nodes, compares their actual width or height and sets all to the longest one by manipulating the rect_min_size value.
 # Can be used for example if you want to create an illusion of a table where all the labels are the same size, so the next "column" starts from the same position.
-func set_min_size_to_longest(ControlElements : Array, x : bool, y : bool):
+func set_min_size_to_longest(ControlElements : Array, x : bool, y : bool) -> void:
 	
 	for Element in ControlElements:
 		if x: Element.rect_min_size.x = 0

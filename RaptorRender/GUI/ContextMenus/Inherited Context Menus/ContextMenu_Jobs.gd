@@ -16,7 +16,7 @@ extends PopupMenu
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	self.add_item("Pause Job Deffered", 0, 0)
 	self.add_item("Pause Job Immediately", 1, 0)
 	self.add_item("Resume Job", 2, 0)
@@ -42,7 +42,7 @@ func _ready():
 
 
 
-func set_item_names():
+func set_item_names() -> void:
 	
 	if RaptorRender.JobsTable.get_selected_ids().size() <= 1:
 		#self.set_item_text(0, "Pause Job Deffered")
@@ -70,7 +70,7 @@ func set_item_names():
 
 
 
-func enable_disable_items():
+func enable_disable_items() -> void:
 	
 	# disable all
 	self.set_item_disabled(0, true)  # pause job deffered
@@ -129,7 +129,7 @@ func enable_disable_items():
 
 
 
-func _on_ContextMenu_index_pressed(index):
+func _on_ContextMenu_index_pressed(index) -> void:
 	
 	match index:
 		

@@ -42,7 +42,7 @@ var hovered_chunk : int
 
 
 
-func _ready():
+func _ready() -> void:
 	
 	GraphOptions.visible = false
 	
@@ -59,12 +59,12 @@ func _ready():
 	BarGraph.connect("chunk_hovered", self, "fill_chunk_info_box")
 
 
-func set_job_id(job_ID : int):
+func set_job_id(job_ID : int) -> void:
 	job_id = job_ID
 	BarGraph.job_id = job_ID
 	
 	
-func fill_chunk_info_box(chunk_number : int):
+func fill_chunk_info_box(chunk_number : int) -> void:
 	
 	hovered_chunk = chunk_number
 	
@@ -148,7 +148,7 @@ func fill_chunk_info_box(chunk_number : int):
 
 
 # reset labels if mouse leaves the graph
-func _on_BarGraph_mouse_exited():
+func _on_BarGraph_mouse_exited() -> void:
 	ChunkNameValueLabel.text = ""
 	ChunkClientValueLabel.text = "" 
 	ChunkRendertimeValueLabel.text =  ""
@@ -156,14 +156,14 @@ func _on_BarGraph_mouse_exited():
 
 
 
-func _on_OptionsButton_pressed():
+func _on_OptionsButton_pressed() -> void:
 	if GraphOptions.visible:
 		GraphOptions.visible = false
 	else:
 		GraphOptions.visible = true
 
 
-func _on_AccumulateTriesCheckBox_toggled(toggle_value):
+func _on_AccumulateTriesCheckBox_toggled(toggle_value) -> void:
 	GraphOptions.visible = false
 	BarGraph.accumulate_tries = toggle_value
 

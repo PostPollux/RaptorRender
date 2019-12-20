@@ -37,7 +37,7 @@ func get_chunk_counts_TotalFinishedActive(job_id) -> Array:
 
 
 
-func open_folder(path : String):
+func open_folder(path : String) -> void:
 
 	var platform : String = OS.get_name()
 	
@@ -96,7 +96,7 @@ func open_folder(path : String):
 
 
 
-func open_file_externally(path : String):
+func open_file_externally(path : String) -> void:
 
 	var platform : String = OS.get_name()
 	

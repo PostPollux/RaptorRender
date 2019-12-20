@@ -35,7 +35,7 @@ var secondary_up_visible : bool = false
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	set_name(column_button_name)
 	PrimaryDown.visible = primary_down_visible
 	PrimaryUp.visible = primary_up_visible
@@ -44,10 +44,10 @@ func _ready():
 
 
 
-func set_name(button_name : String):
+func set_name(button_name : String) -> void:
 	NameLabel.text = button_name
 
-func reset_button():
+func reset_button() -> void:
 	primary_sort_column = false
 	sort_column_primary_reversed = false
 	secondary_sort_column = false
@@ -59,7 +59,7 @@ func reset_button():
 
 
 
-func show_correct_icon():
+func show_correct_icon() -> void:
 	
 	if primary_sort_column:
 		
@@ -96,7 +96,7 @@ func show_correct_icon():
 
 
 
-func _on_ColumnButton_pressed():
+func _on_ColumnButton_pressed() -> void:
 	
 	# if ctrl, shift or alt pressed: set the column as secondary sort column
 	if Input.is_key_pressed(KEY_CONTROL) or Input.is_key_pressed(KEY_ALT) or Input.is_key_pressed(KEY_SHIFT):

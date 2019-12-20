@@ -16,7 +16,7 @@ var PoolSubmenu : PopupMenu = PopupMenu.new()
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	PoolSubmenu.set_name("PoolSubmenu")
 	PoolSubmenu.connect("id_pressed", self, "pool_submenu_item_selected")
@@ -50,7 +50,7 @@ func _ready():
 
 
 # override show function to make sure the PoolSubmenu is always up to date if we show the clients context menu
-func show():
+func show() -> void:
 	
 	PoolSubmenu.clear()
 	for pool in RaptorRender.rr_data.pools.keys():
@@ -62,7 +62,7 @@ func show():
 
 
 
-func set_item_names():
+func set_item_names() -> void:
 	
 	if RaptorRender.ClientsTable.get_selected_ids().size() <= 1:
 		self.set_item_text(0, "CLIENT_CONTEXT_MENU_1") # Enable Client
@@ -93,7 +93,7 @@ func set_item_names():
 
 
 
-func enable_disable_items():
+func enable_disable_items() -> void:
 	
 	# disable all
 	self.set_item_disabled(0, true)  # enable client
@@ -163,7 +163,7 @@ func enable_disable_items():
 
 
 
-func _on_ContextMenu_index_pressed(index):
+func _on_ContextMenu_index_pressed(index) -> void:
 	match index:
 		
 		0:  # Enable Client

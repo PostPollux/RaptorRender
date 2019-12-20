@@ -46,7 +46,7 @@ var own_client_id : int
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	# get current platform to call correct functions
 	platform  = OS.get_name()
@@ -122,7 +122,7 @@ func get_machine_properties() -> Dictionary:
 ### Debug function to print retrieved values
 ############################################
 
-func print_hardware_info():
+func print_hardware_info() -> void:
 	
 	var mem_available : int = get_available_memory()
 	
@@ -209,8 +209,6 @@ func get_MAC_addresses() -> Array:
 							if mac_address != "00:00:00:00:00:00":
 								mac_addresses.append(mac_address)
 						
-					
-					return mac_addresses
 		
 		# Windows
 		"Windows" :
@@ -230,8 +228,6 @@ func get_MAC_addresses() -> Array:
 				
 				mac_addresses.append(mac_address)
 				
-			
-			return mac_addresses
 	
 	return mac_addresses
 
@@ -256,8 +252,6 @@ func get_IP_addresses() -> Array:
 			
 			for line in splitted_output:
 				ip_addresses.append(line)
-			
-			return ip_addresses
 		
 		
 		# Windows
@@ -274,9 +268,6 @@ func get_IP_addresses() -> Array:
 				var splitted_line : Array = line.split(" ", false, 0)
 				
 				ip_addresses.append(splitted_line[1])
-			
-			
-			return ip_addresses
 	
 	return ip_addresses
 
@@ -318,8 +309,6 @@ func get_total_memory() -> int:
 					# break loop if end of file is reached
 					if line == "":
 						break
-			
-			return mem_total
 		
 		
 		# Windows
@@ -334,8 +323,6 @@ func get_total_memory() -> int:
 			var mem_total_str : String = output[0].strip_edges(true,true)  # strip away empty stuff
 			mem_total_str = mem_total_str.split("=")[1]  # Take the string behind the "="
 			mem_total = int(mem_total_str)
-			
-			return mem_total
 		
 	return mem_total
 
@@ -377,8 +364,6 @@ func get_available_memory() -> int:
 					# break loop if end of file is reached
 					if line == "":
 						break
-			
-			return mem_available
 		
 		
 		
@@ -394,8 +379,6 @@ func get_available_memory() -> int:
 			var mem_available_str : String = output[0].strip_edges(true,true)  # strip away empty stuff
 			mem_available_str = mem_available_str.split("=")[1]  # Take the string behind the "="
 			mem_available = int(mem_available_str)
-			
-			return mem_available
 	
 	return mem_available
 
@@ -488,7 +471,6 @@ func get_cpu_info() -> Array:
 				cpu.append(cores)
 				cpu.append(threads)
 				
-			return cpu
 		
 		
 		# Windows
@@ -546,8 +528,7 @@ func get_cpu_info() -> Array:
 			cpu.append(sockets)
 			cpu.append(cores)
 			cpu.append(threads)
-			
-			return cpu
+		
 		
 	return cpu
 
@@ -594,7 +575,6 @@ func get_cpu_usage() -> float:
 					
 				recent_cpu_stat_values = current_cpu_stat_values
 			
-			return cpu_usage_as_float
 			
 			
 		# Windows
@@ -639,10 +619,9 @@ func get_cpu_usage() -> float:
 			
 			OS.execute("CMD.exe", arguments, false, output)
 			
-			
-			return cpu_usage_as_float
-
+	
 	return cpu_usage_as_float
+
 
 
 # returns the name of the computer
@@ -661,7 +640,6 @@ func get_hostname() -> String:
 			
 			hostname = hostname_output[0].strip_edges(true,true)
 			
-			return hostname
 		
 		
 		# Windows
@@ -673,9 +651,9 @@ func get_hostname() -> String:
 			
 			hostname = hostname_output[0].strip_edges(true,true)
 			
-			return hostname
 	
 	return hostname
+
 
 
 # returns the current logged in username
@@ -697,7 +675,6 @@ func get_username() -> String:
 			
 			username = username_output[0].strip_edges(true,true)
 			
-			return username
 		
 		
 		# Windows
@@ -709,8 +686,7 @@ func get_username() -> String:
 			OS.execute('CMD.exe', arguments, true, username_output)
 			
 			username = username_output[0].strip_edges(true,true)
-			
-			return username
+	
 	
 	return username	
 
@@ -740,8 +716,6 @@ func get_platform_info() -> Array:
 			
 			platform_info_array.append(kernel_version) 
 			
-			
-			return platform_info_array
 		
 		
 		# Windows
@@ -764,19 +738,17 @@ func get_platform_info() -> Array:
 			if version_str_splitted.size() > 1:
 				platform_info_array.append(version_str_splitted[1])
 			
-			return platform_info_array
 			
 			
 		# Mac OS
 		"OSX" :
 			platform_info_array.append("OSX")
 			
-			return platform_info_array
-
+	
 	return platform_info_array
-	
-	
-	
+
+
+
 
 # return the names of the graphics devices
 func get_graphic_cards() -> Array:
@@ -813,8 +785,6 @@ func get_graphic_cards() -> Array:
 				# add the result to the array
 				graphic_cards_array.append(line)
 				
-			
-			return graphic_cards_array
 		
 		
 		# Windows
@@ -831,14 +801,14 @@ func get_graphic_cards() -> Array:
 			
 			graphic_cards_array.append(graphics)
 			
-			return graphic_cards_array
+			
 			
 	return graphic_cards_array
 
 
 
 # Get Hard Drive Information
-func get_hard_drive_info():
+func get_hard_drive_info() -> Array:
 	
 	# a array with an universal dictionary for each drive. The dict will hold the following keys: 
 	# name, label, size, percentage_used, type (1 Local Disk, 2 Removable Disk, 3 Network Drive)
@@ -928,9 +898,6 @@ func get_hard_drive_info():
 					"size": size_str, 
 					"percentage_used": drive.percentage_used, 
 					"type": type } )
-			
-			
-			return drive_dict_array
 		
 		
 		
@@ -1002,7 +969,7 @@ func get_hard_drive_info():
 			
 			
 			
-			return drive_dict_array
+	return drive_dict_array
 
 
 
@@ -1012,13 +979,13 @@ func get_hard_drive_info():
 ### Timer Function to get cpu and memory usage every x seconds
 ##############################################################
 
-func _on_hardware_info_timer_timeout():
+func _on_hardware_info_timer_timeout() -> void:
 	
 	# collect the current hardware info in a separate thread. Whithout threading we would have a lag in the UI under Windows each time the function were called.
 	start_collect_hardware_info_thread()
 	
 	
-func start_collect_hardware_info_thread():
+func start_collect_hardware_info_thread() -> void:
 	if collect_hardware_info_thread.is_active():
 		# stop here if already working
 		return
@@ -1028,7 +995,7 @@ func start_collect_hardware_info_thread():
 	
 	
 	
-func collect_current_hardware_info(args):
+func collect_current_hardware_info(args) -> void:
 	
 	# set memory usage
 	var mem_available : int = get_available_memory()
@@ -1054,7 +1021,7 @@ func collect_current_hardware_info(args):
 	
 	
 	
-func join_collect_hardware_info_thread():
+func join_collect_hardware_info_thread() -> void:
 	
 	# this will effectively stop the thread
 	collect_hardware_info_thread.wait_to_finish()

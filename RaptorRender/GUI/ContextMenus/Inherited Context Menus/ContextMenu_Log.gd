@@ -17,7 +17,7 @@ extends PopupMenu
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	self.add_item("open log externally", 0, 0)
 	self.add_item("open logs folder", 1, 0)
 	
@@ -29,12 +29,12 @@ func _ready():
 
 
 
-func set_item_names():
+func set_item_names() -> void:
 	self.set_item_text(0, "LOG_CONTEXT_MENU_1") # open log externally
 	self.set_item_text(1, "LOG_CONTEXT_MENU_2") # open logs folder
 
 
-func enable_disable_items():
+func enable_disable_items() -> void:
 	
 	# diable all
 	self.set_item_disabled(0, true)  # open log externally
@@ -49,7 +49,7 @@ func enable_disable_items():
 
 
 
-func _on_ContextMenu_index_pressed(index):
+func _on_ContextMenu_index_pressed(index) -> void:
 	
 	var filename : String = "chunk_" + String(RaptorRender.current_chunk_id_for_job_info_panel) + "_try_" + String(RaptorRender.TryInfoPanel.currently_displayed_try_id) + ".txt"
 	var log_directory: String = RRPaths.get_job_log_path( RaptorRender.current_job_id_for_job_info_panel)

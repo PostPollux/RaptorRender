@@ -60,7 +60,7 @@ var specific_input_fields : Dictionary
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	get_parent().connect("popup_shown", self, "initialize_on_show")
 	get_parent().connect("ok_pressed", self, "validate_input_mask")
@@ -73,7 +73,7 @@ func _ready():
 
 
 
-func initialize_on_show():
+func initialize_on_show() -> void:
 	
 	# load path to job type settings
 	job_type_settings_path = RRPaths.job_types_default_path
@@ -121,7 +121,7 @@ func initialize_on_show():
 
 
 # Function is supposed to get the path where the job type configuration folders lie. For each folder it will add an item to the option button.
-func fill_job_type_option_button(path : String):
+func fill_job_type_option_button(path : String) -> void:
 	
 	JobTypeOptionButton.clear()
 	
@@ -149,7 +149,7 @@ func fill_job_type_option_button(path : String):
 
 
 # Function is supposed to get the path where the type version configuration files lie. For each .cfg file it will add an item to the option button.
-func fill_type_version_option_button(path : String):
+func fill_type_version_option_button(path : String) -> void:
 	
 	TypeVersionOptionButton.clear()
 	
@@ -247,7 +247,7 @@ func pool_selected(pool_id : int) -> void:
 
 
 
-func load_type_mask():
+func load_type_mask() -> void:
 	
 	var job_type : String = JobTypeOptionButton.get_item_text(JobTypeOptionButton.get_selected_id())
 	var job_type_version : String = TypeVersionOptionButton.get_item_text(TypeVersionOptionButton.get_selected_id())
@@ -448,7 +448,7 @@ func load_type_mask():
 
 
 
-func validate_input_mask():
+func validate_input_mask() -> void:
 	
 	# check if file exists
 	var FileCheck : File = File.new()
@@ -497,7 +497,7 @@ func validate_input_mask():
 	create_new_job()
 
 
-func create_new_job():
+func create_new_job() -> void:
 	
 	# Generate unique ID. To generate a new unique id we just hash the job name + it's creation time
 	var time_created : int = OS.get_unix_time()
@@ -689,37 +689,39 @@ func create_new_job():
 	
 	
 
-func _on_JobTypeOptionButton_item_selected(ID):
+func _on_JobTypeOptionButton_item_selected(ID) -> void:
 	fill_type_version_option_button( job_type_settings_path + JobTypeOptionButton.get_item_text(ID) )
 
-func _on_JobTypeVersionButton_item_selected(ID):
+
+func _on_JobTypeVersionButton_item_selected(ID) -> void:
 	load_type_mask()
-	
-func _on_MinimumSizeContainer_draw():
+
+
+func _on_MinimumSizeContainer_draw() -> void:
 	MinimumSizeContainer.rect_min_size.x = ContentScrollContainer.rect_size.x - 15
 	MinimumSizeContainer.rect_min_size.y = ContentScrollContainer.rect_size.y - 15
 
 
 
 
-func _on_PriorityHSlider_value_changed(value):
+func _on_PriorityHSlider_value_changed(value) -> void:
 	PrioritySpinBox.value = value
 
-func _on_PriorityValueSpinBox_value_changed(value):
+func _on_PriorityValueSpinBox_value_changed(value) -> void:
 	PrioritySlider.value = value
 
 
-
-func _on_SelectSceneFileDialog_confirmed():
+func _on_SelectSceneFileDialog_confirmed() -> void:
 	SceneFileLineEdit.text = SelectSceneFileDialog.current_path
 	last_selected_path = SelectSceneFileDialog.current_path
 
-func _on_SelectSceneFileDialog_file_selected(path):
+
+func _on_SelectSceneFileDialog_file_selected(path) -> void:
 	SceneFileLineEdit.text = SelectSceneFileDialog.current_path
 	last_selected_path = SelectSceneFileDialog.current_path
 	
 
-func _on_SelectSceneButton_pressed():
+func _on_SelectSceneButton_pressed() -> void:
 	SelectSceneFileDialog.current_path = last_selected_path
 	SelectSceneFileDialog.popup_centered_ratio(0.75)
 

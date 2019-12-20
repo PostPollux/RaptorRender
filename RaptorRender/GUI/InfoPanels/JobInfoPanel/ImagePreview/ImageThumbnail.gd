@@ -43,7 +43,7 @@ var hovered : bool = false
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	self.color = RRColorScheme.bg_2
 	LoadingImage = load("res://RaptorRender/GUI/images/loading_thumbnail.png")
@@ -54,7 +54,7 @@ func _ready():
 
 
 
-func load_image():
+func load_image() -> void:
 	
 	var thumbnail = ImageTexture.new()
 	var file = File.new()
@@ -81,14 +81,14 @@ func load_image():
 
 
 
-func display_loading_image():
+func display_loading_image() -> void:
 	
 	ThumbnailTexture.set_texture(LoadingImage)
 	set_thumbnail_size(thumbnail_scale_factor)
 
 
 
-func set_thumbnail_size(scale_factor : float):
+func set_thumbnail_size(scale_factor : float) -> void:
 	
 	thumbnail_scale_factor = scale_factor
 	
@@ -102,14 +102,14 @@ func set_thumbnail_size(scale_factor : float):
 	self.rect_size.y = thumbnail_size_y
 
 
-func set_framenumber_visibility(visible: bool):
+func set_framenumber_visibility(visible: bool) -> void:
 	if visible:
 		ImageName.visible = true
 	else:
 		ImageName.visible = false
 
 
-func reset_selected():
+func reset_selected() -> void:
 	selected = false
 	if hovered:
 		self.color = RRColorScheme.bg_2.lightened(0.1)
@@ -117,7 +117,7 @@ func reset_selected():
 		self.color = RRColorScheme.bg_2
 
 
-func set_selected():
+func set_selected() -> void:
 	selected = true
 	if hovered: 
 		self.color = RRColorScheme.selected.lightened(0.1)
@@ -125,7 +125,7 @@ func set_selected():
 		self.color = RRColorScheme.selected
 
 
-func set_hovered():
+func set_hovered() -> void:
 	hovered = true
 	
 	if selected:
@@ -134,7 +134,7 @@ func set_hovered():
 		self.color = RRColorScheme.bg_2.lightened(0.1)
 
 
-func reset_hovered():
+func reset_hovered() -> void:
 	hovered = false
 	
 	if selected:
@@ -143,23 +143,23 @@ func reset_hovered():
 		self.color = RRColorScheme.bg_2
 
 
-func select():
+func select() -> void:
 	emit_signal("thumbnail_pressed", image_number, self)
 	
 
 
-func _on_Button_button_down():
+func _on_Button_button_down() -> void:
 	select()
 
 
-func _on_Button_mouse_entered():
+func _on_Button_mouse_entered() -> void:
 	set_hovered()
 	if Input.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("thumbnail_pressed", image_number, self)
 
 
 
-func _on_Button_mouse_exited():
+func _on_Button_mouse_exited() -> void:
 	reset_hovered()
 
 

@@ -29,13 +29,13 @@ var windows_logging_util_path : String
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	set_directories("/home/johannes/Schreibtisch/", 1234567890)
 	windows_logging_util_path = OS.get_executable_path() + "/LoggingUtil.exe"
 
 
 
-func set_directories(base_path : String, server_id : int):
+func set_directories(base_path : String, server_id : int) -> void:
 	
 	raptor_render_network_directory = base_path
 	

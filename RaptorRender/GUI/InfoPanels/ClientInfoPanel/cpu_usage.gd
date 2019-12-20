@@ -21,7 +21,7 @@ var update_interval : float = 2
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	# create a tween node
 	CpuUsageTween = Tween.new()
@@ -36,7 +36,7 @@ func _ready():
 	
 
 
-func update_cpu_usage_bar():
+func update_cpu_usage_bar() -> void:
 	
 	if client_id != -1:
 		

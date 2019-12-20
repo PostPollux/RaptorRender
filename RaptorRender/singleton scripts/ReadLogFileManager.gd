@@ -43,7 +43,7 @@ var file_pointer_position : int = 0
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 
 	# create the thread this script is using
 	read_log_file_thread = Thread.new()
@@ -62,15 +62,15 @@ func _ready():
 
 
 
-func reset_file_pointer_position():
+func reset_file_pointer_position() -> void:
 	file_pointer_position = 0
 
 
-func stop_read_log_timer():
+func stop_read_log_timer() -> void:
 	read_log_timer.stop()
 
 
-func read_log_file(job_id : int, chunk_id : int, try_id : int):
+func read_log_file(job_id : int, chunk_id : int, try_id : int) -> void:
 	log_job_id = job_id
 	log_chunk_id = chunk_id
 	log_try_id = try_id
@@ -86,7 +86,7 @@ func read_log_file(job_id : int, chunk_id : int, try_id : int):
 				start_read_log_file_thread()
 
 
-func start_read_log_file_thread():
+func start_read_log_file_thread() -> void:
 	if read_log_file_thread.is_active():
 		# stop here if already working
 		return
@@ -96,7 +96,7 @@ func start_read_log_file_thread():
 
 
 
-func read_and_colorize_log_file(args):
+func read_and_colorize_log_file(args) -> void:
 	
 	
 	
@@ -142,6 +142,6 @@ func read_and_colorize_log_file(args):
 
 
 
-func join_read_log_file_thread():
+func join_read_log_file_thread() -> void:
 	# this will effectively stop the thread
 	read_log_file_thread.wait_to_finish()

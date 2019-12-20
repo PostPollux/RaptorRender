@@ -26,7 +26,7 @@ var job_status : String = "normal"
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	# only connect the size to the parent cell if it is part of a Sortable Table
 	if in_sortable_table:
@@ -40,21 +40,21 @@ func _ready():
 
 
 
-func resize():
+func resize() -> void:
 	# set correct size
 	rect_min_size.x = CellContainer.rect_min_size.x - 5
 	show_progress()
 
 
 
-func set_chunks (total, finished, active):
+func set_chunks (total, finished, active) -> void:
 	chunks_total = total
 	chunks_finished = finished
 	chunks_active = active
 
 
 
-func match_color_to_status():
+func match_color_to_status() -> void:
 	match job_status:
 		"normal": BarFinished.set_color_finished()
 		"paused": BarFinished.set_color_paused()
@@ -62,7 +62,7 @@ func match_color_to_status():
 
 
 
-func show_progress():
+func show_progress() -> void:
 	
 	
 	var total_bar_size = rect_min_size.x - 4  # 4 because of margin left and right

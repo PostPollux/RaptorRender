@@ -32,21 +32,21 @@ var InfoNotificationRes = preload("NotificationBoxes/InheritedNotificationBoxes/
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	register_notification_system()
 
 
 
 # register to RaptorRender script
-func register_notification_system():
+func register_notification_system() -> void:
 	if RaptorRender != null:
 		RaptorRender.register_notification_system(self)
 
 
 
 # move existing notifications if a new one is incoming
-func move_all_notifications_down(height_of_new_notification):
+func move_all_notifications_down(height_of_new_notification) -> void:
 	
 	var notifications = self.get_children()
 	
@@ -63,7 +63,7 @@ func move_all_notifications_down(height_of_new_notification):
 ### add new notifications
 #########################
 
-func add_info_notification(heading : String, message : String, self_destruction_time : int):
+func add_info_notification(heading : String, message : String, self_destruction_time : int) -> void:
 	
 	var InfoNotification = InfoNotificationRes.instance()
 	InfoNotification.heading = heading
@@ -75,7 +75,7 @@ func add_info_notification(heading : String, message : String, self_destruction_
 
 
 
-func add_error_notification(heading : String, message : String, self_destruction_time : int):
+func add_error_notification(heading : String, message : String, self_destruction_time : int) -> void:
 	
 	var ErrorNotification = ErrorNotificationRes.instance()
 	ErrorNotification.heading = heading

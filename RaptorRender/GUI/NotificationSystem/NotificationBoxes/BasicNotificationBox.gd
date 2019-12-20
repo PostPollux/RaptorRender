@@ -46,7 +46,7 @@ var height : int
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 
 	# set texts
 	if heading != "":
@@ -88,7 +88,7 @@ func _ready():
 
 
 
-func _process(delta):
+func _process(delta) -> void:
 	
 	# animate the self destruction progress bar
 	if currently_self_destructing:
@@ -97,7 +97,7 @@ func _process(delta):
 
 
 
-func start_timer_for_self_destruct(sec : int):
+func start_timer_for_self_destruct(sec : int) -> void:
 	
 	self_destruction = true
 	
@@ -117,7 +117,7 @@ func start_timer_for_self_destruct(sec : int):
 
 
 
-func self_destruct():
+func self_destruct() -> void:
 	
 	# set self destruction progress bar to correct size
 	ProgressTexture.rect_min_size.x = 0
@@ -133,7 +133,7 @@ func self_destruct():
 ### Signals Handling
 ####################
 
-func _on_BasicNotificationContainer_mouse_entered():
+func _on_BasicNotificationContainer_mouse_entered() -> void:
 	
 	# self destruct while mouse button is pressed too quickly remove several notifications
 	if Input.is_action_pressed("ui_left_mouse_button") or Input.is_action_pressed("ui_middle_mouse_button"):
@@ -154,14 +154,14 @@ func _on_BasicNotificationContainer_mouse_entered():
 
 
 
-func _on_BasicNotificationContainer_mouse_exited():
+func _on_BasicNotificationContainer_mouse_exited() -> void:
 	
 	if self_destruction:
 		start_timer_for_self_destruct(self_destruction_time)
 
 
 
-func _on_BasicNotificationContainer_gui_input(ev):
+func _on_BasicNotificationContainer_gui_input(ev) -> void:
 	
 	if ev.is_action_pressed("ui_middle_mouse_button") or ev.is_action_pressed("ui_left_mouse_button") or Input.is_key_pressed(KEY_X):
 		
@@ -177,7 +177,7 @@ func _on_BasicNotificationContainer_gui_input(ev):
 ### Animations and Animation Signals Handling
 #############################################
 
-func animate_in():
+func animate_in() -> void:
 	
 	# animate in
 	var start_color : Color = Color(1.0, 1.0, 1.0, 0.0)
@@ -189,7 +189,7 @@ func animate_in():
 
 
 
-func animate_out():
+func animate_out() -> void:
 	
 	# animate out
 	var start_color : Color = Color(1.0, 1.0, 1.0, 1.0)
@@ -201,7 +201,7 @@ func animate_out():
 
 
 
-func move_vertical(amout_to_move_down : int):
+func move_vertical(amout_to_move_down : int) -> void:
 	
 	supposed_position_y += amout_to_move_down
 	
@@ -213,7 +213,7 @@ func move_vertical(amout_to_move_down : int):
 
 
 
-func _on_TweenAnimateIn_tween_completed(object, key):
+func _on_TweenAnimateIn_tween_completed(object, key) -> void:
 	
 	
 	if !animation_in_finshed:
@@ -225,7 +225,7 @@ func _on_TweenAnimateIn_tween_completed(object, key):
 
 
 
-func _on_TweenAnimateOut_tween_completed(object, key):
+func _on_TweenAnimateOut_tween_completed(object, key) -> void:
 	
 	# remove the Dialogbox from the tree
 	self.queue_free()

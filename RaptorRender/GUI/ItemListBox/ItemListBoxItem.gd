@@ -118,7 +118,7 @@ func get_drag_data(_pos):
 		# hide the source node
 		self.modulate = Color(1, 1, 1, 0.3)
 		
-		# Return color as drag data
+		# Return self as drag data
 		return self
 	
 	# Still return something. This is just a workaround. If we don't have this and we start to click and drag, mouse_entered and mouse_exited signals won't be executed on other nodes.
@@ -133,7 +133,7 @@ func can_drop_data(_pos, data):
 
 
 
-func drop_data(_pos, data):
+func drop_data(_pos, data) -> void:
 	if dragable:
 		var desired_position : int = self.get_position_in_parent()
 		self.get_parent().move_child(data, desired_position)

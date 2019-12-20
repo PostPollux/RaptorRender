@@ -40,7 +40,7 @@ var job_id : int = 0
 ########## FUNCTIONS ##########
 
 
-func _process(delta):
+func _process(delta) -> void:
 	
 	# only refresh when graph is visible
 	if self.is_visible_in_tree():
@@ -49,14 +49,14 @@ func _process(delta):
 
 
 
-func _draw():
+func _draw() -> void:
 	
 	draw_ChunkTimeGraph(job_id) # remember: all custom draw functions have to be called from the draw func
 
 
 
 
-func draw_ChunkTimeGraph(job_id : int):
+func draw_ChunkTimeGraph(job_id : int) -> void:
 	
 	# define variables
 	
@@ -263,7 +263,7 @@ func draw_ChunkTimeGraph(job_id : int):
 
 
 # Double click on a bar to select the chunk in the Chunk List
-func _on_BarGraph_gui_input(ev):
+func _on_BarGraph_gui_input(ev) -> void:
 	
 	# test for double click
 	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:

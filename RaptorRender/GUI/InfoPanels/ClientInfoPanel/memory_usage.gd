@@ -22,7 +22,7 @@ var update_interval : float = 2
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	# create a tween node
 	MemoryUsageTween = Tween.new()
@@ -36,7 +36,7 @@ func _ready():
 	timer.start()
 
 
-func update_memory_usage_bar():
+func update_memory_usage_bar() -> void:
 	
 	if client_id != -1:
 		

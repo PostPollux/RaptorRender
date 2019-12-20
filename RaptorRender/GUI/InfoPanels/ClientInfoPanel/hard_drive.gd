@@ -22,12 +22,12 @@ var drive_number
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	set_label(client_id, drive_number)
 	set_percentage_used(client_id, drive_number)
 
 
-func set_label(client_id, drive_number):
+func set_label(client_id, drive_number) -> void:
 	var drive = RaptorRender.rr_data.clients[client_id].machine_properties.hard_drives[drive_number]
 	
 	# Name
@@ -40,7 +40,7 @@ func set_label(client_id, drive_number):
 	SizeLabel.text =   drive.size 
 
 
-func set_percentage_used(client_id, drive_number):
+func set_percentage_used(client_id, drive_number) -> void:
 	
 	UsageBar.value = RaptorRender.rr_data.clients[client_id].machine_properties.hard_drives[drive_number].percentage_used
 

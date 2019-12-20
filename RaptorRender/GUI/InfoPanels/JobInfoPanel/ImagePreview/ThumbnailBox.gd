@@ -53,7 +53,7 @@ var job_just_selected : bool = false
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	HeaderColorRect.color = RRColorScheme.bg_1
 	
@@ -64,37 +64,40 @@ func _ready():
 
 
 
-func _process(delta):
+func _process(delta) -> void:
 	# This is for rearanging the thumbs on resizing. Note: Needs to be in _process() as resized() or draw() signals will not be triggered if the content get's pushed and clipped outside
-	calculate_number_of_colums()
+	calculate_and_set_number_of_columns()
 	
 	if self_destruct_as_soon_as_possible:
 		if !currently_updating_thumbs:
 			self.queue_free()
 
 
-func calculate_number_of_colums():
-	
+func calculate_and_set_number_of_columns() -> int:
+	var num_of_columns : int = 0
 	if ThumbnailGridContainer != null and RaptorRender.JobInfoPanel.get_current_tab() == 3:
 		if ThumbnailGridContainer.get_children().size() > 0:
 			if ThumbnailGridContainer.get_child(0) != null:
 				var thumbnail_node_size_x : float = thumbnail_scale_factor * ThumbnailGridContainer.get_child(0).image_size.x + 6 + 10 # 6 pading for border of each thumbnail; 10 for GridContainer spacing
-				ThumbnailGridContainer.columns = (RaptorRender.JobInfoPanel.rect_size.x - 15) / thumbnail_node_size_x
-		
-		
-func set_thumbnail_size(thumbnail_scale_factor : float):
+				num_of_columns = (RaptorRender.JobInfoPanel.rect_size.x - 15) / thumbnail_node_size_x
+				ThumbnailGridContainer.columns = num_of_columns
+	return num_of_columns
+
+
+
+func set_thumbnail_size(thumbnail_scale_factor : float) -> void:
 	for Thumbnail in ThumbnailGridContainer.get_children():
 		Thumbnail.set_thumbnail_size(thumbnail_scale_factor)
 
 
-func set_framenumber_visibility(visible : bool):
+func set_framenumber_visibility(visible : bool) -> void:
 	for Thumbnail in ThumbnailGridContainer.get_children():
 		Thumbnail.set_framenumber_visibility(visible)
 
 
 # For performance reasons we only delete or create thumbnail nodes when necessary and update the ones that are already there
 # It also helps not to loose the visual change on hover or selection caused by deleting and recreating the node.
-func refresh_thumbnails():
+func refresh_thumbnails() -> void:
 	
 	# It is important to execute the code that adds or removes nodes from the tree in the main thread, as manipulating the tree in a thread is not safe.
 	# You would have to add the nodes by .call_deferred("add_child", your node) which would effectively add them in the main thread at the end of the frame. But then you can't access those nodes through the scene tree later on in the thread, because they are not there yet.
@@ -170,7 +173,7 @@ func refresh_thumbnails():
 		start_load_thumbnails_thread()
 
 
-func start_load_thumbnails_thread():
+func start_load_thumbnails_thread() -> void:
 	if load_thumbnails_thread.is_active():
 		# stop here if already working
 		print ("load_thumbnails_thread still active")
@@ -182,7 +185,7 @@ func start_load_thumbnails_thread():
 
 
 
-func threaded_thumbnail_update(args):
+func threaded_thumbnail_update(args) -> void:
 	files.sort()
 	
 	# update Thumbnail nodes
@@ -212,7 +215,7 @@ func threaded_thumbnail_update(args):
 
 
 
-func join_load_thumbnail_thread():
+func join_load_thumbnail_thread() -> void:
 	# this will effectively stop the thread
 	load_thumbnails_thread.wait_to_finish()
 	currently_updating_thumbs = false
@@ -221,15 +224,15 @@ func join_load_thumbnail_thread():
 
 
 
-func deselect_all_thumbnails():
+func deselect_all_thumbnails() -> void:
 	for child in ThumbnailGridContainer.get_children():
 		child.reset_selected()
 
 
 
-func thumbnail_selected( framenumber : String, Thumb : ImageThumbnail):
+func thumbnail_selected( framenumber : String, Thumb : ImageThumbnail) -> void:
 	emit_signal("thumbnail_selected", framenumber, Thumb)
 
 
-func first_thumbnail_updated():
+func first_thumbnail_updated() -> void:
 	emit_signal("first_thumbnail_updated")

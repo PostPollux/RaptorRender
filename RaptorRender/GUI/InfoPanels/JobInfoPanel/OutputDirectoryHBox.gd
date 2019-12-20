@@ -19,14 +19,14 @@ var output_directory : String = ""
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	if show_only_path:
 		label.text = output_directory
 	else:
 		label.text = tr("JOB_DETAIL_12") + ":   " + output_directory
 
 
-func set_output_directory( dir_str : String):
+func set_output_directory( dir_str : String) -> void:
 	output_directory = dir_str
 	
 	if label != null:
@@ -36,5 +36,5 @@ func set_output_directory( dir_str : String):
 			label.text = tr("JOB_DETAIL_12") + ":   " + output_directory
 
 
-func _on_OpenOutputFolderButton_pressed():
+func _on_OpenOutputFolderButton_pressed() -> void:
 	JobFunctions.open_folder( output_directory )

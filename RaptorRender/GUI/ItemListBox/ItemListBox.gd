@@ -36,9 +36,6 @@ var item_bg_color_selected : Color = RRColorScheme.selected
 ########## FUNCTIONS ##########
 
 
-func _ready() -> void:
-	pass
-
 
 func _process(delta : float) -> void:
 	
@@ -117,9 +114,6 @@ func get_first_item() -> ItemListBoxItem:
 
 
 
-
-
-
 func remove_item_by_id (item_id : int) -> void:
 	for Item in get_all_items():
 		if item_id == Item.item_id:
@@ -127,11 +121,13 @@ func remove_item_by_id (item_id : int) -> void:
 			Item.queue_free()
 
 
+
 func remove_item_by_name (item_name : String) -> void:
 	for Item in get_all_items():
 		if item_name == Item.item_name:
 			SelectedItems.erase(Item)
 			Item.queue_free()
+
 
 
 func exit_and_apply_name_edit_mode_for_all_items(currently_clicked : Node) -> void:
@@ -143,8 +139,10 @@ func exit_and_apply_name_edit_mode_for_all_items(currently_clicked : Node) -> vo
 			Item.exit_and_apply_name_edit_mode()
 
 
+
 func item_doubleclicked(item_id : int) -> void:
 	emit_signal("item_doubleclicked", item_id)
+
 
 
 func item_name_changed(Item : ItemListBoxItem) -> void:
@@ -172,7 +170,8 @@ func sort_items_by_name() -> void:
 		item_position += 1
 
 
-func items_custom_sort(a, b):
+
+func items_custom_sort(a, b) -> bool:
 	return a[1] < b[1]
 	
 
@@ -184,7 +183,7 @@ func items_custom_sort(a, b):
 #############
 
 
-func select_item( ClickedItem : Node):
+func select_item( ClickedItem : Node) -> void:
 	
 	exit_and_apply_name_edit_mode_for_all_items(ClickedItem)
 	
@@ -236,7 +235,7 @@ func select_item( ClickedItem : Node):
 
 
 
-func drag_select_item(ClickedItem : ItemListBoxItem):
+func drag_select_item(ClickedItem : ItemListBoxItem) -> void:
 	
 	if Input.is_key_pressed(KEY_CONTROL):
 		ClickedItem.deselect()
@@ -258,7 +257,7 @@ func drag_select_item(ClickedItem : ItemListBoxItem):
 
 
 
-func select_all():
+func select_all() -> void:
 	
 	# select or deselect all pool items depending on wheter all are already selected or not
 	if SelectedItems.size() != ItemVBox.get_child_count():
@@ -275,7 +274,7 @@ func select_all():
 
 
 
-func clear_selection():
+func clear_selection() -> void:
 	
 	SelectedItems.clear()
 	

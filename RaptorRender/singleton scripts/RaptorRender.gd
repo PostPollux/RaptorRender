@@ -72,7 +72,7 @@ var default_client : Dictionary = {
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	# create timer to constantly distribute the work across the connected clients 
 	refresh_interface_timer = Timer.new()
@@ -911,30 +911,30 @@ func _ready():
 	
 
 
-func register_notification_system(NotificationSystemInstance : NotificationSystem):
+func register_notification_system(NotificationSystemInstance : NotificationSystem) -> void:
 	NotificationSystem = NotificationSystemInstance
 
 
 
-func register_client_info_panel(InfoPanel):  
+func register_client_info_panel(InfoPanel) -> void:  
 	
 	ClientInfoPanel = InfoPanel
 
 
 
-func register_job_info_panel(InfoPanel):  
+func register_job_info_panel(InfoPanel) -> void:  
 	
 	JobInfoPanel = InfoPanel
 
 
 
-func register_try_info_panel(InfoPanel):  
+func register_try_info_panel(InfoPanel) -> void:  
 	
 	TryInfoPanel = InfoPanel
 
 
 
-func register_table(SortableTableInstance : SortableTable):  
+func register_table(SortableTableInstance : SortableTable) -> void:  
 
 	var sortable_table_id : String = SortableTableInstance.table_id  
 	
@@ -1060,7 +1060,7 @@ func register_table(SortableTableInstance : SortableTable):
 				PoolTabsContainer = ClientsTable.get_parent().get_parent()
 
 
-func register_context_menu(ContextMenu):  
+func register_context_menu(ContextMenu) -> void:  
 	
 	match ContextMenu.context_menu_id: 
 		"clients":
@@ -1076,7 +1076,7 @@ func register_context_menu(ContextMenu):
 			ContextMenu_Log = ContextMenu
 			
 
-func register_popup(popup):  
+func register_popup(popup) -> void:  
 	
 	match popup.popup_id: 
 		"submit_job":
@@ -1096,7 +1096,7 @@ func register_popup(popup):
 
 
 
-func client_selected(id_of_row : int):
+func client_selected(id_of_row : int) -> void:
 	JobsTable.clear_selection()
 	ChunksTable.clear_selection()
 	JobInfoPanel.visible = false
@@ -1105,11 +1105,11 @@ func client_selected(id_of_row : int):
 	ClientInfoPanel.visible = true
 
 
-func client_selection_cleared():
+func client_selection_cleared() -> void:
 	ClientInfoPanel.visible = false
 
 
-func job_selected(id_of_row : int):
+func job_selected(id_of_row : int) -> void:
 	ClientsTable.clear_selection()
 	ChunksTable.clear_selection()
 	TriesTable.clear_selection()
@@ -1127,11 +1127,11 @@ func job_selected(id_of_row : int):
 	refresh_tries_table(id_of_row, 0)
 	
 
-func job_selection_cleared():
+func job_selection_cleared() -> void:
 	JobInfoPanel.visible = false
 
 
-func chunk_selected(id_of_row : int):
+func chunk_selected(id_of_row : int) -> void:
 	refresh_tries_table(current_job_id_for_job_info_panel, id_of_row)
 	TriesTable.clear_selection()
 	TriesTable.select_by_id(1)
@@ -1145,7 +1145,7 @@ func chunk_selected(id_of_row : int):
 			TryInfoPanel.currently_displayed_try_id = 0
 			TryInfoPanel.set_visibility(false)
 
-func chunk_selection_cleared():
+func chunk_selection_cleared() -> void:
 	current_chunk_id_for_job_info_panel = 0
 	current_try_id_for_job_info_panel = 0
 	refresh_tries_table(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel)
@@ -1153,38 +1153,38 @@ func chunk_selection_cleared():
 	TryInfoPanel.set_visibility(false)
 
 
-func try_selected(id_of_row : int):
+func try_selected(id_of_row : int) -> void:
 	current_try_id_for_job_info_panel = id_of_row
 	
 	TryInfoPanel.set_visibility(true)
 	TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, id_of_row)
 	TryInfoPanel.update_current_try_id(id_of_row)
 
-func try_selection_cleared():
+func try_selection_cleared() -> void:
 	current_try_id_for_job_info_panel = 0
 	TryInfoPanel.currently_displayed_try_id = 0
 	TryInfoPanel.set_visibility(false)
 
 
 
-func client_context_menu_invoked():
+func client_context_menu_invoked() -> void:
 	ContextMenu_Clients.show_at_mouse_position()
 
 
-func jobs_context_menu_invoked():
+func jobs_context_menu_invoked() -> void:
 	ContextMenu_Jobs.show_at_mouse_position()
 
 
-func chunks_context_menu_invoked():
+func chunks_context_menu_invoked() -> void:
 	ContextMenu_Chunks.show_at_mouse_position()
 
-func log_context_menu_invoked():
+func log_context_menu_invoked() -> void:
 	ContextMenu_Log.show_at_mouse_position()
 
 
 
 
-func update_all_visible_tables():
+func update_all_visible_tables() -> void:
 	#ClientsTable.refresh()
 	#JobsTable.refresh()
 	refresh_jobs_table()
@@ -1198,7 +1198,7 @@ func update_all_visible_tables():
 		TryInfoPanel.update_try_info_panel(current_job_id_for_job_info_panel, current_chunk_id_for_job_info_panel, current_try_id_for_job_info_panel)
 
 
-func refresh_jobs_table():
+func refresh_jobs_table() -> void:
 	
 	# get all jobs
 	var jobs_array = rr_data.jobs.keys()
@@ -1220,7 +1220,7 @@ func refresh_jobs_table():
 
 
 
-func refresh_chunks_table(job_id):
+func refresh_chunks_table(job_id) -> void:
 	
 	if RaptorRender.rr_data.jobs.has(job_id):
 	
@@ -1253,7 +1253,7 @@ func refresh_chunks_table(job_id):
 
 
 
-func refresh_tries_table(job_id : int, chunk_id : int):
+func refresh_tries_table(job_id : int, chunk_id : int) -> void:
 	
 	if rr_data.jobs.has(job_id):
 		if rr_data.jobs[job_id].chunks.has(chunk_id):
@@ -1293,7 +1293,7 @@ func refresh_tries_table(job_id : int, chunk_id : int):
 
 
 
-func refresh_clients_table():
+func refresh_clients_table() -> void:
 	
 	# get all clients
 	var clients_array = rr_data.clients.keys()

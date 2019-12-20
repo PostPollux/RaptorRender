@@ -51,7 +51,7 @@ var hover_brightness_boost : float = 0.1
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	row_height = SortableTable.row_height
 
 
@@ -61,18 +61,18 @@ func _ready():
 
 
 # Update the SortableRows array to reflect the current order of the sorted table
-func update_sortable_rows_array():
+func update_sortable_rows_array() -> void:
 	SortableRows = self.get_children()
 
 
 # Update the "id_position_dict". This dictionary is used to quickly look up the position of a row by it's id.
-func update_id_position_dict():
+func update_id_position_dict() -> void:
 	for Row in SortableRows:
 		id_position_dict[Row.id] = Row.get_index() + 1
 
 
 # sets the "row_position" variable of each row, so that it knows which background color (even or odd) to show. 
-func update_positions_of_rows():
+func update_positions_of_rows() -> void:
 	var iterator : int = 1
 	for Row in SortableRows:
 		Row.set_row_position(iterator)
@@ -132,7 +132,7 @@ func initialize_row(id) -> SortableTableRow:
 
 
 # removing a specific row
-func remove_row(id):
+func remove_row(id) -> void:
 	
 	# remove from selection
 	selected_row_ids.erase(id)
@@ -159,7 +159,7 @@ func remove_row(id):
 ##############
 
 
-func set_row_color(row : int, color : Color):
+func set_row_color(row : int, color : Color) -> void:
 	if row >= 1:
 		SortableRows[row - 1].set_row_color(color)
 
@@ -171,12 +171,13 @@ func mark_erroneous(row : int, erroneous : bool) -> void:
 
 
 
-func reset_all_row_colors_to_default():
+func reset_all_row_colors_to_default() -> void:
 	for Row in SortableRows:
 		Row.set_row_color(RRColorScheme.ST_row_default)
 
 
-func highlight_column(column : int):
+
+func highlight_column(column : int) -> void:
 	
 	# reset the color of each cell in each row
 	for Row in SortableRows:
@@ -196,7 +197,7 @@ func highlight_column(column : int):
 ##############
 
 
-func sort_rows():
+func sort_rows() -> void:
 	
 	var primary : int = SortableTable.sort_column_primary
 	var secondary : int = SortableTable.sort_column_secondary
@@ -220,7 +221,7 @@ func sort_rows():
 
 
 
-func raptor_render_custom_sort(a,b):
+func raptor_render_custom_sort(a, b) -> bool:
 	
 	# a custom sort function must return true if the first argument (a) is less than the second (b)
 	# to ensure that the rows are not jumping when refreshing and both, primary and secondary values are the same, it also uses the id to sort
@@ -263,13 +264,13 @@ func raptor_render_custom_sort(a,b):
 
 
 # first row and column is 1, not 0
-func set_cell_content(row : int, column : int, child : Node):
+func set_cell_content(row : int, column : int, child : Node) -> void:
 	if row <= SortableRows.size():
 		SortableRows[row - 1].set_cell_content(column, child)
 
 
 # first row and column is 1, not 0
-func set_cell_sort_value(row : int, column : int, value):
+func set_cell_sort_value(row : int, column : int, value) -> void:
 	if row <= SortableRows.size():
 		SortableRows[row - 1].sort_values[column] = value
 
@@ -283,7 +284,7 @@ func set_cell_sort_value(row : int, column : int, value):
 #############
 
 
-func select_SortableRows(row_position : int):
+func select_SortableRows(row_position : int) -> void:
 	
 	var ClickedRow : SortableTableRow = SortableRows[row_position - 1]
 	
@@ -340,7 +341,7 @@ func select_SortableRows(row_position : int):
 
 
 
-func drag_select_SortableRows(row_position : int):
+func drag_select_SortableRows(row_position : int) -> void:
 	
 	var DragedRow : SortableTableRow = SortableRows[row_position - 1]
 	
@@ -369,7 +370,7 @@ func drag_select_SortableRows(row_position : int):
 
 
 
-func select_all():
+func select_all() -> void:
 	# select or deselect all rows depending on wheter all are already selected or not
 	if selected_row_ids.size() != SortableRows.size():
 		
@@ -390,7 +391,7 @@ func select_all():
 		SortableTable.emit_selection_cleared_signal()
 
 
-func update_selection():
+func update_selection() -> void:
 	for Row in SortableRows:
 		Row.set_selected(false)
 		
@@ -401,7 +402,7 @@ func update_selection():
 
 
 
-func clear_selection():
+func clear_selection() -> void:
 	
 	selected_row_ids.clear()
 	
@@ -410,7 +411,7 @@ func clear_selection():
 
 
 
-func add_id_to_selection(id):
+func add_id_to_selection(id) -> void:
 	selected_row_ids.append(id)
 
 

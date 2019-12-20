@@ -17,7 +17,7 @@ extends PopupMenu
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	self.add_item("Requeue Chunk", 0, 0)
 	self.add_item("Mark as finished", 1, 0)
 	
@@ -29,7 +29,7 @@ func _ready():
 
 
 
-func set_item_names():
+func set_item_names() -> void:
 	
 	if RaptorRender.ChunksTable.get_selected_ids().size() <= 1:
 		self.set_item_text(0, "CHUNK_CONTEXT_MENU_1") # Requeue Chunk
@@ -39,7 +39,7 @@ func set_item_names():
 		self.set_item_text(1, "CHUNK_CONTEXT_MENU_4") # Mark Chunks as finished
 
 
-func enable_disable_items():
+func enable_disable_items() -> void:
 	
 	# diable all
 	self.set_item_disabled(0, true)  # requeue chunk
@@ -78,7 +78,7 @@ func enable_disable_items():
 
 
 
-func _on_ContextMenu_index_pressed(index):
+func _on_ContextMenu_index_pressed(index) -> void:
 	
 	match index:
 		

@@ -49,7 +49,7 @@ var hover_brightness_boost : float = 0.1
 ###################
 
 
-func create_initial_empty_rows():
+func create_initial_empty_rows() -> void:
 	
 	amount_of_needed_rows_to_fill_up_screen =  int( OS.get_screen_size()[1] / row_height )
 	
@@ -64,7 +64,7 @@ func create_initial_empty_rows():
 
 
 # create an empty row
-func create_empty_row():
+func create_empty_row() -> void:
 	
 	if EmptyRows.size() < amount_of_needed_rows_to_fill_up_screen:
 		var Row = SortableTableRowRes.instance()
@@ -108,7 +108,7 @@ func create_empty_row():
 			column += 1
 
 
-func remove_empty_row():
+func remove_empty_row() -> void:
 	if EmptyRows.size() > 1: # make sure one empty row is always available
 		
 		EmptyRows[0].free()
@@ -117,7 +117,7 @@ func remove_empty_row():
 
 
 # this function is needed for correct alternating colors
-func update_positions_of_empty_rows():
+func update_positions_of_empty_rows() -> void:
 	var filled_row_count = RowContainerFilled.SortableRows.size()
 	var count : int = 1
 	for Row in get_children():
@@ -132,11 +132,11 @@ func update_positions_of_empty_rows():
 ######################################
 
 
-func _on_ClipContainerForEmptyRows_resized():
+func _on_ClipContainerForEmptyRows_resized() -> void:
 	update_width_of_RowContainerEmpty()
 
 # this function is needed, as the size flag "fill, expand" doen't work if the parent container is a simple "Container" 
-func update_width_of_RowContainerEmpty():
+func update_width_of_RowContainerEmpty() -> void:
 	var width_of_clipcontainer = $"../../ClipContainerForEmptyRows".rect_size.x
 	rect_min_size.x = width_of_clipcontainer
 
@@ -149,7 +149,7 @@ func update_width_of_RowContainerEmpty():
 ##################
 
 
-func set_column_width(column, width):
+func set_column_width(column, width) -> void:
 	
 	for Row in EmptyRows:
 		Row.set_cell_width(column,width)
@@ -157,7 +157,7 @@ func set_column_width(column, width):
 
 
 # function to highlight the primary sort column 
-func highlight_column(column):
+func highlight_column(column) -> void:
 	
 	# reset the color of each cell in each row
 	for Row in EmptyRows:
@@ -178,7 +178,7 @@ func highlight_column(column):
 #############
 
 # empty rows are not selectable, but clicking them can have an effect on the selection of the filled ones
-func select_SortableRows(row_position):
+func select_SortableRows(row_position) -> void:
 	
 	var SortableRows = RowContainerFilled.SortableRows
 	
@@ -207,6 +207,6 @@ func select_SortableRows(row_position):
 
 
 
-func select_all():
+func select_all() -> void:
 	RowContainerFilled.select_all()
 

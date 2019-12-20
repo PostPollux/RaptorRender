@@ -26,7 +26,7 @@ var currently_dragging : bool = false
 
 ########## FUNCTIONS ##########
 	
-func _input(event):
+func _input(event) -> void:
 	
 	if currently_dragging:
 		if Input.is_action_just_released("ui_left_mouse_button"):

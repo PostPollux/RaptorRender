@@ -28,7 +28,7 @@ var current_log_file_path : String = ""
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	
 	RenderLogValidator.connect("success_detected", self, "success_detected")
 	RenderLogValidator.connect("frame_success_detected", self, "frame_success_detected")
@@ -38,7 +38,7 @@ func _ready():
 
 
 
-func render_process_exited_without_software_start():
+func render_process_exited_without_software_start() -> void:
 	# this check makes sense, because if it misses the "software_start_successful" string for any reason while it actually started, it would throw an error after finishing the chunk correctly 
 	if current_amount_of_frame_successes == 0:
 		critical_error_detected()
@@ -69,11 +69,11 @@ func render_process_exited_without_software_start():
 			log_file.store_line("Raptor Render Error: " + tr("MSG_ERROR_18") ) # MSG_ERROR_18: The render process exited without writing anything to the log file. This happens in very rare cases. To find the error, please try to execute the command from above manually in your terminal.
 		
 		log_file.close()
-			
 
 
 
-func critical_error_detected():
+
+func critical_error_detected() -> void:
 	
 	current_amount_of_critical_errors += 1
 	
@@ -82,7 +82,7 @@ func critical_error_detected():
 
 
 
-func success_detected():
+func success_detected() -> void:
 	
 	# make sure the rendering process gets terminated when chunk success is detected. For some reason the none blocking process doesn't terminate it self anymore since Godot 3.2
 	CommandLineManager.kill_current_render_process()
@@ -96,7 +96,7 @@ func success_detected():
 	chunk_success_detected = true
 
 
-func frame_success_detected():
+func frame_success_detected() -> void:
 	current_amount_of_frame_successes += 1
 	
 	var amount_of_chunk_frames : int = RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].frame_end - RaptorRender.rr_data.jobs[current_processing_job].chunks[current_processing_chunk].frame_start + 1
@@ -108,7 +108,7 @@ func frame_success_detected():
 
 
 # this will create a thumbnail image 
-func frame_name_detected( type : int, extracted_string : String):
+func frame_name_detected( type : int, extracted_string : String) -> void:
 	
 	# Thumbnail creation works fine with:
 	# - .jpg
@@ -215,7 +215,7 @@ func frame_name_detected( type : int, extracted_string : String):
 
 
 
-func start_chunk(job_id : int, chunk_id : int, try_id : int):
+func start_chunk(job_id : int, chunk_id : int, try_id : int) -> void:
 	
 	chunk_success_detected = false
 	current_amount_of_frame_successes = 0

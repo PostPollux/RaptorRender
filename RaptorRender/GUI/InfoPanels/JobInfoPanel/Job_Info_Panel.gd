@@ -47,24 +47,24 @@ var output_dirs_and_file_name_patterns_nodes : Array
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	RaptorRender.register_job_info_panel(self)
 	
 	translate_tabs()
 
 
-func translate_tabs():
+func translate_tabs() -> void:
 	JobInfoTabContainer.set_tab_title(0 , tr("JOB_DETAIL_1") ) # Details
 	JobInfoTabContainer.set_tab_title(1 , tr("JOB_CHUNKS_1") ) # Chunks
 	JobInfoTabContainer.set_tab_title(2 , tr("JOB_GRAPHS_1") ) # Graphs
 	JobInfoTabContainer.set_tab_title(3 , tr("JOB_IMAGES_1") ) # Images
 
 
-func reset_to_first_tab():
+func reset_to_first_tab() -> void:
 	JobInfoTabContainer.current_tab = 0
 
 
-func set_tab(tab_number : int):
+func set_tab(tab_number : int) -> void:
 	JobInfoTabContainer.current_tab = tab_number
 
 
@@ -72,7 +72,7 @@ func get_current_tab() -> int:
 	return JobInfoTabContainer.current_tab
 
 
-func update_job_info_panel(job_id : int):
+func update_job_info_panel(job_id : int) -> void:
 	
 	current_displayed_job_id = job_id
 	
@@ -211,16 +211,16 @@ func update_job_info_panel(job_id : int):
 
 
 
-func _on_OpenSceneFolderButton_pressed():
+func _on_OpenSceneFolderButton_pressed() -> void:
 	var scene_path : String = RaptorRender.rr_data.jobs[current_displayed_job_id].scene_path.get_base_dir()
 	JobFunctions.open_folder( scene_path )
 
 
-func _on_OpenLogsFolderButton_pressed():
+func _on_OpenLogsFolderButton_pressed() -> void:
 	JobFunctions.open_folder( RRPaths.get_job_log_path( current_displayed_job_id ) )
 	
 
-func _on_TabContainer_tab_selected(tab):
+func _on_TabContainer_tab_selected(tab) -> void:
 	
 	# chunk list tab selected
 	if tab == 1:

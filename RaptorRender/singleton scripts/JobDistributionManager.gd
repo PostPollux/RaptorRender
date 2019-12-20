@@ -21,7 +21,7 @@ var clients_available : Array # Array of the client ids that are free and can ac
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	
 	jobs_active = []
 	clients_available = []
@@ -45,14 +45,14 @@ func _ready():
 	
 	
 	# TODO - this is just temporarily
-func reactivate_client():
+func reactivate_client() -> void:
 	RaptorRender.rr_data.clients[GetSystemInformation.own_client_id].status = RRStateScheme.client_available
 	
 
 
 
 
-func distribute_jobs():
+func distribute_jobs() -> void:
 	
 	# make sure only the server distributes jobs
 	if get_tree().is_network_server():
@@ -151,5 +151,5 @@ func distribute_jobs():
 				# automatically shut down pcs
 			return
 
-func sort_by_priority(a, b):
+func sort_by_priority(a, b) -> bool:
 	return a[1] > b[1]

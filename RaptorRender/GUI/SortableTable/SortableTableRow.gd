@@ -66,7 +66,7 @@ var row_color_selected_erroneous_odd : Color
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	set_additional_colors()
 	update_row_even_or_odd()
 	update_row_color()
@@ -84,14 +84,14 @@ func _process(delta : float) -> void:
 ######################
 
 
-func set_row_position(pos : int):
+func set_row_position(pos : int) -> void:
 	row_position = pos
 	update_row_even_or_odd()
 	update_row_color()
 
 
 
-func update_row_even_or_odd():
+func update_row_even_or_odd() -> void:
 	if row_position:
 		if (row_position % 2) == 0:
 			even = true
@@ -100,13 +100,13 @@ func update_row_even_or_odd():
 
 
 
-func set_selected (sel : bool):
+func set_selected (sel : bool) -> void:
 	selected = sel
 	update_row_color()
 
 
 
-func set_row_height(height : int):
+func set_row_height(height : int) -> void:
 	row_height = height
 	rect_min_size.y = height
 	set_cell_height(height)
@@ -121,7 +121,7 @@ func set_row_height(height : int):
 
 
 # create the cells
-func create_cells():
+func create_cells() -> void:
 	
 	
 	CellsClipContainerArray.clear()
@@ -173,7 +173,7 @@ func create_cells():
 
 
 # put the cell references into arrays
-func fill_CellArrays ():
+func fill_CellArrays () -> void:
 	
 	CellsArray.clear()
 	
@@ -186,7 +186,7 @@ func fill_CellArrays ():
 
 
 # add a child node as content to a cell
-func set_cell_content(column : int, child : Node):
+func set_cell_content(column : int, child : Node) -> void:
 	
 	if column <= column_count:
 		if CellsArray[column-1].get_child_count() > 0: 
@@ -198,14 +198,14 @@ func set_cell_content(column : int, child : Node):
 
 
 # the width has to be set manually, as the "fill, expand" flag doesn't work with parent container that is used for clipping
-func set_cell_width(column : int, width : int):
+func set_cell_width(column : int, width : int) -> void:
 	if column <= column_count:
 		CellsClipContainerArray[column-1].rect_min_size.x = width
 		CellsColorRectArray[column-1].rect_min_size.x = width
 
 
 
-func set_cell_height(height : int):
+func set_cell_height(height : int) -> void:
 	
 	if HBoxForCells != null:
 		for ClipContainer in CellsClipContainerArray:
@@ -226,7 +226,7 @@ func set_cell_height(height : int):
 ##################
 
 
-func set_additional_colors():
+func set_additional_colors() -> void:
 	
 	row_color_even = row_color
 	row_color_odd = row_color.lightened(even_odd_brightness_difference)
@@ -236,14 +236,14 @@ func set_additional_colors():
 	row_color_selected_erroneous_odd = row_color_selected_erroneous.lightened(hover_brightness_boost)
 
 
-func set_row_color(color : Color):
+func set_row_color(color : Color) -> void:
 	
 	row_color_even = color
 	row_color_odd = color.lightened(even_odd_brightness_difference)
 
 
 
-func modulate_cell_color(column : int, color : Color):
+func modulate_cell_color(column : int, color : Color) -> void:
 	CellsColorRectArray[column - 1].set_modulate( color )
 
 
@@ -263,7 +263,7 @@ func mark_erroneous(erroneous : bool) -> void:
 
 
 # reset row color to default
-func update_row_color():
+func update_row_color() -> void:
 	if selected: 
 	
 		if hovered:
@@ -299,7 +299,7 @@ func update_row_color():
 ###################
 
 
-func _on_SortabelTableRow_mouse_entered():
+func _on_SortabelTableRow_mouse_entered() -> void:
 	hovered = true
 	update_row_color()
 	if Input.is_action_pressed("ui_left_mouse_button"):
@@ -307,13 +307,13 @@ func _on_SortabelTableRow_mouse_entered():
 
 
 
-func _on_SortabelTableRow_mouse_exited():
+func _on_SortabelTableRow_mouse_exited() -> void:
 	hovered = false
 	update_row_color()
 
 
 
-func _on_SortabelTableRow_gui_input(ev : InputEvent):
+func _on_SortabelTableRow_gui_input(ev : InputEvent) -> void:
 	if ev.is_action_pressed("ui_left_mouse_button"):
 		emit_signal("row_clicked", row_position)
 	if ev.is_action_pressed("ui_right_mouse_button"):
@@ -322,5 +322,5 @@ func _on_SortabelTableRow_gui_input(ev : InputEvent):
 
 # this is just a workaround. If we don't have this and we start to click and drag, mouse_entered and mouse_exited signals won't be executed on other nodes.
 # with this added they get executed as expected!
-func get_drag_data(_pos):
+func get_drag_data(_pos) -> String:
 	return "workaround"

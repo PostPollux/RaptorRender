@@ -33,7 +33,7 @@ func _ready() -> void:
 
 ###### connecting #######
 
-func create_server():
+func create_server() -> void:
 	
 	if get_tree().has_network_peer():
 		get_tree().set_network_peer(null) # Remove peer
@@ -44,7 +44,7 @@ func create_server():
 	get_tree().set_network_peer(host)
 
 
-func connect_to_server():
+func connect_to_server() -> void:
 	
 	# make sure
 	management_gui_clients = [1]

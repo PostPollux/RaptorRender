@@ -21,7 +21,7 @@ var job_id : int
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	PriorityLabel.text = String ( RaptorRender.rr_data.jobs[job_id].priority )
 	
@@ -34,7 +34,7 @@ func set_text(priority : String) -> void:
 		PriorityLabel.text = priority
 
 
-func disable_if_needed():
+func disable_if_needed() -> void:
 	var status = RaptorRender.rr_data.jobs[job_id].status
 	if status == RRStateScheme.job_finished or status == RRStateScheme.job_cancelled:
 		PlusButton.disabled = true
@@ -42,7 +42,7 @@ func disable_if_needed():
 
 
 
-func _on_plus_pressed():
+func _on_plus_pressed() -> void:
 	
 	if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
 		# increase by one
@@ -55,7 +55,7 @@ func _on_plus_pressed():
 
 
 
-func _on_minus_pressed():
+func _on_minus_pressed() -> void:
 	
 	if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CONTROL):
 		# decrease by one
@@ -70,7 +70,7 @@ func _on_minus_pressed():
 
 
 
-func _on_plus_mouse_entered():
+func _on_plus_mouse_entered() -> void:
 	
 	# mark row as hovered, otherwise the row hover color would disappear, if the mouse is over the button
 	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
@@ -81,7 +81,7 @@ func _on_plus_mouse_entered():
 
 
 
-func _on_plus_mouse_exited():
+func _on_plus_mouse_exited() -> void:
 	
 	# reset row hover color. It's needed, because otherwise if we fast pass the button with the mouse, the row would stay highlighted
 	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
@@ -91,7 +91,7 @@ func _on_plus_mouse_exited():
 
 
 
-func _on_minus_mouse_entered():
+func _on_minus_mouse_entered() -> void:
 	
 	# mark row as hovered, otherwise the row hover color would disappear, if the mouse is over the button
 	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
@@ -103,7 +103,7 @@ func _on_minus_mouse_entered():
 
 
 # reset row hover color. It's needed, because otherwise if we fast pass the button with the mouse, the row would stay highlighted
-func _on_minus_mouse_exited():
+func _on_minus_mouse_exited() -> void:
 	self.get_parent().get_parent().get_parent().get_parent().update_row_color()
 	
 	# reset button modulation

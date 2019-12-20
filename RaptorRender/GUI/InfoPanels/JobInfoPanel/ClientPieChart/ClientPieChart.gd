@@ -36,16 +36,16 @@ var hovered_client_id : int
 
 
 
-func _process(delta):
+func _process(delta) -> void:
 	update()
 
 
-func set_job_id(job_ID):
+func set_job_id(job_ID) -> void:
 	job_id = job_ID
 	update()
 
 
-func _draw():
+func _draw() -> void:
 	
 	var chunk_count : int = RaptorRender.rr_data.jobs[job_id].chunks.keys().size()
 	
@@ -163,7 +163,7 @@ func _draw():
 		client_number += 1
 
 
-func sort_clients_by_chunk_counts(a,b):
+func sort_clients_by_chunk_counts(a, b) -> bool:
 	
 	# a custom sort function must return true if the first argument (a) is less than the second (b)
 	
@@ -174,11 +174,11 @@ func sort_clients_by_chunk_counts(a,b):
 
 
 
-func draw_circle_segment(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color):
+func draw_circle_segment(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color) -> void:
 	var points_arc : PoolVector2Array = PoolVector2Array()
 	points_arc.push_back(center)
 	var colors : PoolColorArray = PoolColorArray([color])
-
+	
 	for i in range(number_of_points + 1):
 		var angle_point : float = deg2rad(angle_from + i * (angle_to - angle_from) / number_of_points - 90)
 		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
@@ -186,10 +186,10 @@ func draw_circle_segment(number_of_points : int, center : Vector2, radius : floa
 
 
 
-func draw_circle_segment_as_arc(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color, filled_percentage : float):
+func draw_circle_segment_as_arc(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color, filled_percentage : float) -> void:
 	var points_arc = PoolVector2Array()
 	var colors = PoolColorArray([color])
-
+	
 	for i in range(number_of_points + 1):
 		var angle_point : float = deg2rad(angle_from + i * (angle_to - angle_from) / number_of_points - 90)
 		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
@@ -202,10 +202,10 @@ func draw_circle_segment_as_arc(number_of_points : int, center : Vector2, radius
 
 
 
-func draw_circle_segment_as_arc_outline(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color, filled_percentage : float, line_thickness : int):
+func draw_circle_segment_as_arc_outline(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color, filled_percentage : float, line_thickness : int) -> void:
 	var points_arc : PoolVector2Array = PoolVector2Array()
 	var colors : PoolColorArray = PoolColorArray([color])
-
+	
 	for i in range(number_of_points + 1):
 		var angle_point : float = deg2rad(angle_from + i * (angle_to - angle_from) / number_of_points - 90)
 		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
@@ -227,18 +227,19 @@ func draw_circle_segment_as_arc_outline(number_of_points : int, center : Vector2
 
 
 
-func draw_circle_arc(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color):
+func draw_circle_arc(number_of_points : int, center : Vector2, radius : float, angle_from : float, angle_to : float, color : Color) -> void:
 	var points_arc = PoolVector2Array()
-
+		
 	for i in range(number_of_points + 1):
 		var angle_point = deg2rad(angle_from + i * (angle_to-angle_from) / number_of_points - 90)
 		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
-
+		
 	for index_point in range(number_of_points):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color)
 
 
-func _on_ClientPieChart_segment_hovered(client_and_chunk_count : Array):
+
+func _on_ClientPieChart_segment_hovered(client_and_chunk_count : Array) -> void:
 	
 	hovered_client_id = client_and_chunk_count[0]
 	
@@ -252,13 +253,15 @@ func _on_ClientPieChart_segment_hovered(client_and_chunk_count : Array):
 	ChunksLabel.text = tr("JOB_CLIENT_PIE_CHART_2") + ": " + String(client_and_chunk_count[1])
 
 
-func _on_ClientPieChart_mouse_exited():
+
+func _on_ClientPieChart_mouse_exited() -> void:
 	NameLabel.text = ""
 	ChunksLabel.text = ""
 
 
+
 # Double click on segment to select the client
-func _on_ClientPieChart_gui_input(ev):
+func _on_ClientPieChart_gui_input(ev) -> void:
 	
 	# test for double click
 	if  ev.is_pressed() and ev.doubleclick and ev.button_index==1:

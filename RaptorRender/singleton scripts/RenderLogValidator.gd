@@ -74,7 +74,7 @@ var HIGHLIGHT_software_start_success_detected : bool = false
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	job_type_settings_CRP = ConfigFile.new()
 	job_type_settings_HIGHLIGHT = ConfigFile.new()
 	
@@ -97,7 +97,7 @@ func _ready():
 
 
 
-func load_job_type_settings_CRP(job_type : String, job_type_version : String):
+func load_job_type_settings_CRP(job_type : String, job_type_version : String) -> void:
 	
 	var settings_file_path : String =  RRPaths.job_types_default_path + job_type + "/" + job_type_version + ".cfg"
 	var file_check : File = File.new()
@@ -150,7 +150,7 @@ func load_job_type_settings_CRP(job_type : String, job_type_version : String):
 
 
 
-func load_job_type_settings_HIGHLIGHT(job_type : String, job_type_version : String):
+func load_job_type_settings_HIGHLIGHT(job_type : String, job_type_version : String) -> void:
 	
 	var settings_file_path : String =  RRPaths.job_types_default_path + job_type + "/" + job_type_version + ".cfg"
 	var file_check : File = File.new()

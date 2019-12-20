@@ -21,15 +21,15 @@ var color_finished_cancelled : Color = RRColorScheme.state_offline_or_cancelled
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	self.color = color_finished
 
-func set_color_finished ():
+func set_color_finished () -> void:
 	self.color = color_finished
 	
-func set_color_paused ():
+func set_color_paused () -> void:
 	self.color = color_finished_paused
 
-func set_color_cancelled ():
+func set_color_cancelled () -> void:
 	self.color = color_finished_cancelled
 

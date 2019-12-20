@@ -67,7 +67,7 @@ var ctrl_plus_c_pressed : bool = false
 
 
 
-func _ready():
+func _ready() -> void:
 	RaptorRender.register_client_info_panel(self)
 	ReadLogFileManager.connect("log_read_to_end_of_file", self, "add_text_to_log")
 	ReadLogFileManager.connect("no_log_file_found", self, "no_log_file_found")
@@ -83,16 +83,16 @@ func _ready():
 	RaptorRender.refresh_interface_timer.connect("timeout", self, "check_if_newer_log_available")
 
 
-func translate_tabs():
+func translate_tabs() -> void:
 	ClientInfoTabContainer.set_tab_title(0 , tr("CLIENT_DETAIL_1") ) # Details
 	ClientInfoTabContainer.set_tab_title(1 , tr("CLIENT_LATEST_LOG_1") ) # Latest Log
 
 
-func reset_to_first_tab():
+func reset_to_first_tab() -> void:
 	ClientInfoTabContainer.current_tab = 0
 
 
-func set_tab(tab_number : int ):
+func set_tab(tab_number : int ) -> void:
 	ClientInfoTabContainer.current_tab = tab_number
 
 
@@ -100,7 +100,7 @@ func set_tab(tab_number : int ):
 # Functions for details tab
 ###########################
 
-func update_client_info_panel(client_id : int):
+func update_client_info_panel(client_id : int) -> void:
 	
 	currently_selected_client_id = client_id
 	
@@ -282,7 +282,7 @@ func update_client_info_panel(client_id : int):
 ######################################
 # Functions for current render log tab
 ######################################
-func update_log_buttons():
+func update_log_buttons() -> void:
 	
 	if RaptorRender.rr_data.jobs.has(log_job_id):
 		JobButton.disabled = false
@@ -300,11 +300,11 @@ func update_log_buttons():
 		TryButtonValue.text = "-"
 
 
-func clear_log():
+func clear_log() -> void:
 	LogRichTextLabel.clear()
 
 
-func read_log_file():
+func read_log_file() -> void:
 	log_job_id = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[0]
 	log_chunk_id = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[1]
 	log_try_id = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[2]
@@ -314,13 +314,13 @@ func read_log_file():
 	ReadLogFileManager.read_log_file(log_job_id, log_chunk_id, log_try_id)
 
 
-func add_text_to_log(text : String):
+func add_text_to_log(text : String) -> void:
 	LogRichTextLabel.append_bbcode( text )
 
-func no_log_file_found():
+func no_log_file_found() -> void:
 	LogRichTextLabel.append_bbcode( tr("TRY_LOG_2"))
 
-func _on_LogRichtTextLabel_gui_input(event):
+func _on_LogRichtTextLabel_gui_input(event) -> void:
 	if event.is_action_pressed("ui_right_mouse_button"):
 		RaptorRender.log_context_menu_invoked()
 	if Input.is_key_pressed(KEY_CONTROL) and Input.is_key_pressed(KEY_C):
@@ -331,14 +331,14 @@ func _on_LogRichtTextLabel_gui_input(event):
 		ctrl_plus_c_pressed = false
 
 
-func _on_TabContainer_tab_changed(tab):
+func _on_TabContainer_tab_changed(tab) -> void:
 	if tab == 1:
 		clear_log()
 		read_log_file()
 		update_log_buttons()
 
 
-func check_if_newer_log_available():
+func check_if_newer_log_available() -> void:
 	
 	if currently_selected_client_id != -1:
 		var fetched_job_id : int = RaptorRender.rr_data.clients[currently_selected_client_id].last_render_log[0]
@@ -351,7 +351,7 @@ func check_if_newer_log_available():
 			update_log_buttons()
 
 
-func _on_JobButton_pressed():
+func _on_JobButton_pressed() -> void:
 	# select job in jobs table, switch info panel to JobInfoPanel
 	RaptorRender.ClientsTable.clear_selection()
 	RaptorRender.current_job_id_for_job_info_panel = log_job_id
@@ -362,7 +362,7 @@ func _on_JobButton_pressed():
 	RaptorRender.JobInfoPanel.visible = true
 
 # chunk button pressed
-func _on_ChunkButton_pressed():
+func _on_ChunkButton_pressed() -> void:
 	
 	# select job in jobs table, switch info panel to JobInfoPanel
 	RaptorRender.ClientsTable.clear_selection()
@@ -383,7 +383,7 @@ func _on_ChunkButton_pressed():
 	RaptorRender.ChunksTable.scroll_to_row(log_chunk_id)
 
 
-func _on_TryButton_pressed():
+func _on_TryButton_pressed() -> void:
 	# select job in jobs table, switch info panel to JobInfoPanel
 	RaptorRender.ClientsTable.clear_selection()
 	RaptorRender.current_job_id_for_job_info_panel = log_job_id

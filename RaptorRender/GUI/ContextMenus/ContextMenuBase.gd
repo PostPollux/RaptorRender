@@ -22,13 +22,13 @@ export (String) var context_menu_id
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	# register to RaptorRender script
 	if RaptorRender != null:
 		RaptorRender.register_context_menu(self)
 
 
-func _process(delta):
+func _process(delta) -> void:
 	
 	# hide context menu when clicked somewhere else
 	if ContextMenu.visible:
@@ -40,7 +40,7 @@ func _process(delta):
 
 
 
-func show_at_mouse_position():
+func show_at_mouse_position() -> void:
 	var popup_pos_x
 	var popup_pos_y
 	var margin = 6

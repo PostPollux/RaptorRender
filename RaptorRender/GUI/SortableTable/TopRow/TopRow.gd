@@ -59,7 +59,7 @@ var just_initialized : bool = false # variable for workaround
 ########## FUNCTIONS ##########
 
 
-func _process(delta):
+func _process(delta) -> void:
 	
 	if dragging_splitter:
 		resize_column_by_drag()
@@ -76,7 +76,7 @@ func _process(delta):
 ### generating the top row
 ##########################
 
-func generate_top_row():
+func generate_top_row() -> void:
 	
 	# delete existing nodes
 	for CurrentNode in $HBoxContainer.get_children():
@@ -132,14 +132,14 @@ func generate_top_row():
 ### resizing the columns
 ########################
 
-func splitter_just_clicked(splitter_id):
+func splitter_just_clicked(splitter_id) -> void:
 	dragging_splitter_id = splitter_id
 	mouse_position_x_before_dragging = get_viewport().get_mouse_position().x
 	min_size_of_column_before_dragging = column_widths[splitter_id - 1]
 	dragging_splitter = true
 
 
-func resize_column_by_drag():
+func resize_column_by_drag() -> void:
 	
 	# Left mouse button still pressed
 	if Input.is_mouse_button_pressed(1):
@@ -177,7 +177,7 @@ func resize_column_by_drag():
 ### Button clicked for sorting
 ##############################
 
-func column_button_pressed(column_id):
+func column_button_pressed(column_id) -> void:
 	
 	# column set to be the primary sort column
 	if ColumnButtons[column_id - 1].primary_sort_column:

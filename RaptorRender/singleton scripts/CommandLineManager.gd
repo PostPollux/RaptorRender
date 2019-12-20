@@ -50,7 +50,7 @@ var delayed_exited_timer : Timer
 ########## FUNCTIONS ##########
 
 
-func _ready():
+func _ready() -> void:
 	
 	# get current platform to call correct functions
 	platform  = OS.get_name()
@@ -80,7 +80,7 @@ func _ready():
 	RenderLogValidator.connect("critical_error_detected", self, "kill_current_render_process")
 
 
-func start_read_log_file_thread():
+func start_read_log_file_thread() -> void:
 	if read_log_file_thread.is_active():
 		# stop here if already working
 		return
@@ -90,7 +90,7 @@ func start_read_log_file_thread():
 
 
 
-func validate_log_file(args):
+func validate_log_file(args) -> void:
 	
 	if active_render_log_file.file_exists(active_render_log_file_path):
 		
@@ -119,7 +119,7 @@ func validate_log_file(args):
 	call_deferred("join_read_log_file_thread")
 
 
-func join_read_log_file_thread():
+func join_read_log_file_thread() -> void:
 	# this will effectively stop the thread
 	read_log_file_thread.wait_to_finish()
 
