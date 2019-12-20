@@ -652,7 +652,7 @@ func create_new_job():
 						}
 						
 				# add chunk to new job
-				new_job.chunks[chunk_count] = chunk #str2var( var2str(chunk) )
+				new_job.chunks[chunk_count] = chunk
 				
 				chunk_count += 1
 			
@@ -672,7 +672,7 @@ func create_new_job():
 					}
 			
 			# add chunk to new job
-			new_job.chunks[chunk_count] = chunk#str2var( var2str(chunk) )
+			new_job.chunks[chunk_count] = chunk
 			frames_total += 1
 			chunk_count += 1
 	

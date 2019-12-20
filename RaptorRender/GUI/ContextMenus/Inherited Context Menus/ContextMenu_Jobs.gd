@@ -303,7 +303,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 			for selected in selected_ids:
 				
-				var job_to_resubmit = str2var( var2str(RaptorRender.rr_data.jobs[selected]) ) # conversion is needed to copy the dict. Otherwise you only get a reference
+				var job_to_resubmit = RaptorRender.rr_data.jobs[selected].duplicate()
 				
 				# set job status to paused
 				job_to_resubmit.status = RRStateScheme.job_paused
@@ -373,7 +373,7 @@ func _on_ContextMenu_index_pressed(index):
 			
 		14:  # Remove Job
 			
-			var selected_ids = str2var( var2str( RaptorRender.JobsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
+			var selected_ids = RaptorRender.JobsTable.get_selected_ids().duplicate()  # duplicate of array needed because the reference would change as rows get deleted...
 			
 			for client in RRNetworkManager.management_gui_clients:
 				RRNetworkManager.rpc_id(client, "remove_jobs", selected_ids)

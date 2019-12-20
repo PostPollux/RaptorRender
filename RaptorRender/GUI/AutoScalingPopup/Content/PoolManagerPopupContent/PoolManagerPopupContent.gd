@@ -73,7 +73,7 @@ func pool_manager_just_opened() -> void:
 	PoolItemListBox.update_colors(RRColorScheme.bg_2, RRColorScheme.bg_2, RRColorScheme.selected)
 	
 	# make a local copy of the current pools dict, so changes don't do anything until we hit apply.
-	pools_dict = str2var( var2str(RaptorRender.rr_data.pools) ) # conversion is needed to copy the dict. Otherwise you only get a reference
+	pools_dict = RaptorRender.rr_data.pools.duplicate()
 	
 	# clear the pools container and generate the pool items again
 	PoolItemListBox.clear_immediately()
@@ -104,12 +104,12 @@ func apply_changes() -> void:
 	
 	var pool_iterator : int = 1
 	for item in PoolItemListBox.get_all_items():
-		pools_dict_with_new_ids_in_correct_order[pool_iterator] = str2var( var2str(pools_dict[item.item_id]) )
+		pools_dict_with_new_ids_in_correct_order[pool_iterator] = pools_dict[item.item_id].duplicate()
 		pool_iterator += 1
 	
 	# override the rr_data pool dict with the local one
 	for client in RRNetworkManager.management_gui_clients:
-		RRNetworkManager.rpc_id(client, "update_pools", str2var( var2str(pools_dict_with_new_ids_in_correct_order) ))
+		RRNetworkManager.rpc_id(client, "update_pools", pools_dict_with_new_ids_in_correct_order.duplicate())
 	
 	emit_signal("changes_applied_successfully")
 

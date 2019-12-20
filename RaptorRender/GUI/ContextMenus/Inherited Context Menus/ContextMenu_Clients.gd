@@ -366,7 +366,7 @@ func _on_ContextMenu_index_pressed(index):
 		
 		15:  # Remove from this Pool
 			
-			var selected_ids = str2var( var2str( RaptorRender.ClientsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids().duplicate()  # duplicate needed because the reference would change as rows get deleted...
 			
 			for selected in selected_ids:
 				RaptorRender.rr_data.pools[RaptorRender.clients_pool_filter].clients.erase(selected)
@@ -381,7 +381,7 @@ func _on_ContextMenu_index_pressed(index):
 		
 		17:  # Remove Client
 			
-			var selected_ids = str2var( var2str( RaptorRender.ClientsTable.get_selected_ids() ))  # str2var hack needed to make sure it's not just a reference. Because the reference would change as rows get deleted...
+			var selected_ids = RaptorRender.ClientsTable.get_selected_ids().duplicate()  # duplicate needed because the reference would change as rows get deleted...
 			
 			for selected in selected_ids:
 				
@@ -397,6 +397,9 @@ func _on_ContextMenu_index_pressed(index):
 					# remove from database
 					RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
 					RaptorRender.rr_data.clients.erase(selected)
+					
+					for pool in RaptorRender.rr_data.pools:
+						RaptorRender.rr_data.pools[pool].clients.erase(selected)
 				
 				
 					# remove the row from the table
