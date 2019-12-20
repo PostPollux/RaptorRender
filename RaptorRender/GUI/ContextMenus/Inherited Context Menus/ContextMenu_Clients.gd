@@ -381,34 +381,17 @@ func _on_ContextMenu_index_pressed(index) -> void:
 		
 		17:  # Remove Client
 			
-			var selected_ids = RaptorRender.ClientsTable.get_selected_ids().duplicate()  # duplicate needed because the reference would change as rows get deleted...
-			
+			var selected_ids : Array = RaptorRender.ClientsTable.get_selected_ids().duplicate()  # duplicate needed because the reference would change as rows get deleted...
+			var final_selected_ids : Array
 			for selected in selected_ids:
-				
 				
 				var status =  RaptorRender.rr_data.clients[selected].status
 				
 				if status == RRStateScheme.client_offline:
-					
-					# id reset for Client Info Panel of CPU and memory brs. Otherwise it would crash
-					RaptorRender.ClientInfoPanel.CPUUsageBar.client_id = -1
-					RaptorRender.ClientInfoPanel.MemoryUsageBar.client_id = -1
-					
-					# remove from database
-					RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
-					RaptorRender.rr_data.clients.erase(selected)
-					
-					for pool in RaptorRender.rr_data.pools:
-						RaptorRender.rr_data.pools[pool].clients.erase(selected)
-				
-				
-					# remove the row from the table
-					RaptorRender.ClientsTable.remove_row(selected)
-				
-			# handle the Clients Info Panel
-			RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
-			RaptorRender.ClientInfoPanel.visible = false
-			RaptorRender.ClientInfoPanel.reset_to_first_tab()
+					final_selected_ids.append(selected)
+			
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "remove_clients", final_selected_ids)
 
 
 

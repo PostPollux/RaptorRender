@@ -2254,3 +2254,24 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		ClientsTable.set_LABEL_cell_with_custom_sort(client_iterator, rr_version_column, String(rr_data.clients[client].rr_version), rr_data.clients[client].rr_version)
 
 
+
+# This function will have a look at the pools dict of rr_data and transfer the information which clients and which jobs are in which pool to the clients and jobs themselves.
+# So we don't have to iterate through the pools for each job or client on each update of the tables.
+# This function has to be called each time something on the pools will change
+func update_pool_cache() -> void:
+	currently_updating_pool_cache = true
+	
+	# clear all cached pool arrays
+	for job in rr_data.jobs.keys():
+		rr_data.jobs[job].pools.clear()
+	for client in rr_data.clients.keys():
+		rr_data.clients[client].pools.clear()
+	
+	# fill the cache again
+	for pool in rr_data.pools.keys():
+		for job in rr_data.pools[pool].jobs:
+			rr_data.jobs[job].pools.append(pool)
+		for client in rr_data.pools[pool].clients:
+			rr_data.clients[client].pools.append(pool)
+	
+	currently_updating_pool_cache = false

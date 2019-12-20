@@ -145,7 +145,7 @@ remotesync func add_job(job_id : int, job : Dictionary) -> void:
 remotesync func remove_jobs(job_ids : Array) -> void:
 	
 	# save the current JobsTable selection
-	var selections : Array = RaptorRender.JobsTable.get_selected_ids().duplicate()
+	var current_selections : Array = RaptorRender.JobsTable.get_selected_ids().duplicate()
 	
 	for job in job_ids:
 		
@@ -164,11 +164,13 @@ remotesync func remove_jobs(job_ids : Array) -> void:
 			RaptorRender.JobInfoPanel.reset_to_first_tab()
 			RaptorRender.JobInfoPanel.visible = false
 		
-		# remove the job from the dict
+		# remove the job from rr_data
 		RaptorRender.rr_data.jobs.erase(job)
+		for pool in RaptorRender.rr_data.pools:
+			RaptorRender.rr_data.pools[pool].jobs.erase(job)
 		
 		# filter and restore the selection
-		selections.erase(job)
+		current_selections.erase(job)
 	
 	# clear the table
 	RaptorRender.JobsTable.clear_table()
@@ -177,7 +179,7 @@ remotesync func remove_jobs(job_ids : Array) -> void:
 	RaptorRender.JobsTable.refresh()
 	
 	# restore the selection
-	RaptorRender.JobsTable.set_selected_ids(selections)
+	RaptorRender.JobsTable.set_selected_ids(current_selections)
 
 
 
@@ -284,6 +286,43 @@ puppet func copy_client(client_id : int, client : Dictionary) -> void:
 		RaptorRender.rr_data.clients[client_id] = client
 
 
+remotesync func remove_clients(client_ids : Array) -> void:
+	
+	# save the current ClientsTable selection
+	var current_selections : Array = RaptorRender.ClientsTable.get_selected_ids().duplicate()
+	
+	for client in client_ids:
+		
+		# we don't need to cancle any render processes, as clients can only be removed if they are not reachable/offline.
+		
+		# hide the CLientInfoPanel, if the currently displayed clinet gets deleted
+		if client == RaptorRender.ClientInfoPanel.currently_selected_client_id:
+			RaptorRender.ClientInfoPanel.currently_selected_client_id = -1
+			RaptorRender.ClientInfoPanel.reset_to_first_tab()
+			RaptorRender.ClientInfoPanel.visible = false
+		
+		# id reset for Client Info Panel of CPU and memory bars. Otherwise it would crash
+		if client == RaptorRender.ClientInfoPanel.CPUUsageBar.client_id or client == RaptorRender.ClientInfoPanel.MemoryUsageBar.client_id:
+			RaptorRender.ClientInfoPanel.CPUUsageBar.client_id = -1
+			RaptorRender.ClientInfoPanel.MemoryUsageBar.client_id = -1
+		
+		# remove the job from rr_data
+		RaptorRender.rr_data.clients.erase(client)
+		for pool in RaptorRender.rr_data.pools:
+			RaptorRender.rr_data.pools[pool].clients.erase(client)
+		
+		# filter and restore the selection
+		current_selections.erase(client)
+	
+	# clear the table
+	RaptorRender.ClientsTable.clear_table()
+	
+	# refresh the table
+	RaptorRender.ClientsTable.refresh()
+	
+	# restore the selection
+	RaptorRender.ClientsTable.set_selected_ids(current_selections)
+
 
 
 remotesync func update_client_status(client_id : int, status : String) -> void:
@@ -309,22 +348,7 @@ remotesync func update_pools(pools : Dictionary) -> void:
 	if not RaptorRender.rr_data.pools.has(RaptorRender.clients_pool_filter):
 		RaptorRender.clients_pool_filter = -1
 	
-	RaptorRender.currently_updating_pool_cache = true
-	
-	# clear all cached pool arrays
-	for job in RaptorRender.rr_data.jobs.keys():
-		RaptorRender.rr_data.jobs[job].pools.clear()
-	for client in RaptorRender.rr_data.clients.keys():
-		RaptorRender.rr_data.clients[client].pools.clear()
-	
-	# fill the cache again
-	for pool in RaptorRender.rr_data.pools.keys():
-		for job in RaptorRender.rr_data.pools[pool].jobs:
-			RaptorRender.rr_data.jobs[job].pools.append(pool)
-		for client in RaptorRender.rr_data.pools[pool].clients:
-			RaptorRender.rr_data.clients[client].pools.append(pool)
-	
-	RaptorRender.currently_updating_pool_cache = false
+	RaptorRender.update_pool_cache()
 	
 	# update pool-tabs / client-tabs
 	var PoolTabsContainer : TabContainer = RaptorRender.PoolTabsContainer
