@@ -1011,13 +1011,14 @@ func collect_current_hardware_info(args) -> void:
 	# hard drive info
 	hard_drives = get_hard_drive_info()
 	
-	
-	# change the values
-	for client in RRNetworkManager.management_gui_clients:
-		RRNetworkManager.rpc_id(client, "update_client_hw_stats", own_client_id, cpu_usage, memory_usage, hard_drives)
-	
-	# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
-	call_deferred("join_collect_hardware_info_thread")
+	if get_tree().has_network_peer():
+		
+		# change the values
+		for client in RRNetworkManager.management_gui_clients:
+			RRNetworkManager.rpc_id(client, "update_client_hw_stats", own_client_id, cpu_usage, memory_usage, hard_drives)
+		
+		# call_deferred has to call another function in order to join the thread with the main thread. Otherwise it will just stay active.
+		call_deferred("join_collect_hardware_info_thread")
 	
 	
 	

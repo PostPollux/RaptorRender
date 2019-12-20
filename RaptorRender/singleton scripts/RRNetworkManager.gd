@@ -64,7 +64,7 @@ func connect_to_server() -> void:
 
 
 # Callback from SceneTree, called when client connects
-func _client_connected(id):
+func _client_connected(id) -> void:
 	print("New Client connected (", id, ")")
 
 
@@ -72,7 +72,7 @@ func _client_connected(id):
 
 
 # Callback from SceneTree, called when client disconnects. Every connected client/server will receive this signal
-func _client_disconnected(id):
+func _client_disconnected(id) -> void:
 	print("Client disconnected (", id, ")")
 	
 	if get_tree().is_network_server():
@@ -84,7 +84,7 @@ func _client_disconnected(id):
 
 
 # Callback from SceneTree, called when connect to server
-func _connected_ok():
+func _connected_ok() -> void:
 	print ("successfully connected to server!")
 	
 	# login management gui
@@ -96,7 +96,7 @@ func _connected_ok():
 
 
 # Callback from SceneTree, called when server disconnect
-func _server_disconnected():
+func _server_disconnected() -> void:
 	print("server disconnected")
 	#players.clear()
 	#emit_signal("server_disconnected")
@@ -105,7 +105,7 @@ func _server_disconnected():
 
 
 # Callback from SceneTree, called when unabled to connect to server
-func _connected_fail():
+func _connected_fail() -> void:
 	print("connecting to server failed...")
 	#get_tree().set_network_peer(null) # Remove peer
 	#emit_signal("connection_failed")
@@ -114,7 +114,7 @@ func _connected_fail():
 
 
 # this will add the given network id to the "management_gui_clients" array on the master. Then the master syncs this variable to all puppets
-master func login_management_gui(network_id : int):
+master func login_management_gui(network_id : int) -> void:
 	if not management_gui_clients.has(network_id):
 		management_gui_clients.append(network_id)
 		rset("management_gui_clients", management_gui_clients)
@@ -122,7 +122,7 @@ master func login_management_gui(network_id : int):
 
 
 # this will remove the given network from the "management_gui_clients" array on the master. Then the master syncs this variable to all puppets
-master func logout_management_gui(network_id : int):
+master func logout_management_gui(network_id : int) -> void:
 	if management_gui_clients.has(network_id):
 		management_gui_clients.erase(network_id)
 		rset("management_gui_clients", management_gui_clients)
@@ -132,7 +132,7 @@ master func logout_management_gui(network_id : int):
 
 ######## Remote Procedures ########
 
-remotesync func add_job(job_id : int, job : Dictionary):
+remotesync func add_job(job_id : int, job : Dictionary) -> void:
 	RaptorRender.rr_data.jobs[job_id] = job
 	
 	# add job to assigned pools
@@ -142,7 +142,7 @@ remotesync func add_job(job_id : int, job : Dictionary):
 
 
 
-remotesync func remove_jobs(job_ids : Array):
+remotesync func remove_jobs(job_ids : Array) -> void:
 	
 	# save the current JobsTable selection
 	var selections : Array = RaptorRender.JobsTable.get_selected_ids().duplicate()
@@ -181,14 +181,14 @@ remotesync func remove_jobs(job_ids : Array):
 
 
 
-remotesync func update_job_priority(job_id : int, priority : int):
+remotesync func update_job_priority(job_id : int, priority : int) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		RaptorRender.rr_data.jobs[job_id].priority = priority
 
 
 
 # add a new try
-remotesync func add_try(job_id : int, chunk_id : int, try_id : int, try : Dictionary):
+remotesync func add_try(job_id : int, chunk_id : int, try_id : int, try : Dictionary) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
 			RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id] = try
@@ -200,7 +200,7 @@ remotesync func add_try(job_id : int, chunk_id : int, try_id : int, try : Dictio
 
 
 # update a try with the exact command the rendering client is using
-remotesync func update_try_cmd(job_id : int, chunk_id : int, try_id : int, try_cmd : String):
+remotesync func update_try_cmd(job_id : int, chunk_id : int, try_id : int, try_cmd : String) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
 			if RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries.has(try_id):
@@ -208,7 +208,7 @@ remotesync func update_try_cmd(job_id : int, chunk_id : int, try_id : int, try_c
 
 
 
-remotesync func chunk_finished_successfully(job_id : int, chunk_id : int, try_id : int, time_finished : int):
+remotesync func chunk_finished_successfully(job_id : int, chunk_id : int, try_id : int, time_finished : int) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
 			if RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries.has(try_id):
@@ -233,7 +233,7 @@ remotesync func chunk_finished_successfully(job_id : int, chunk_id : int, try_id
 
 
 
-remotesync func chunk_error(job_id : int, chunk_id : int, try_id : int, time_stopped : int):
+remotesync func chunk_error(job_id : int, chunk_id : int, try_id : int, time_stopped : int) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
 			if RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries.has(try_id):
@@ -253,7 +253,7 @@ remotesync func chunk_error(job_id : int, chunk_id : int, try_id : int, time_sto
 
 
 
-remotesync func add_client(client_id : int, machine_properties : Dictionary):
+remotesync func add_client(client_id : int, machine_properties : Dictionary) -> void:
 	
 	# just update the machine properties if the client already exists in the client dict
 	if RaptorRender.rr_data.clients.has(client_id):
@@ -279,21 +279,21 @@ remotesync func add_client(client_id : int, machine_properties : Dictionary):
 
 
 # copies a client dictionary to all that don't have that client_id yet
-puppet func copy_client(client_id : int, client : Dictionary):
+puppet func copy_client(client_id : int, client : Dictionary) -> void:
 	if not RaptorRender.rr_data.clients.has(client_id):
 		RaptorRender.rr_data.clients[client_id] = client
 
 
 
 
-remotesync func update_client_status(client_id : int, status : String):
+remotesync func update_client_status(client_id : int, status : String) -> void:
 	if RaptorRender.rr_data.clients.has(client_id):
 		RaptorRender.rr_data.clients[client_id].status = status
 		# Not finished yet
 
 
 # This will update the hardware statistics like cpu usage etc. for a given client
-remotesync func update_client_hw_stats(client_id : int, cpu_usage : int, memory_usage : int, hard_drives : Array):
+remotesync func update_client_hw_stats(client_id : int, cpu_usage : int, memory_usage : int, hard_drives : Array) -> void:
 	if RaptorRender.rr_data.clients.has(client_id):
 		RaptorRender.rr_data.clients[client_id].machine_properties.memory_usage = memory_usage
 		RaptorRender.rr_data.clients[client_id].machine_properties.cpu_usage = cpu_usage
@@ -301,7 +301,7 @@ remotesync func update_client_hw_stats(client_id : int, cpu_usage : int, memory_
 
 
 
-remotesync func update_pools(pools : Dictionary):
+remotesync func update_pools(pools : Dictionary) -> void:
 	
 	RaptorRender.rr_data.pools = pools
 	
@@ -366,13 +366,13 @@ remotesync func update_pools(pools : Dictionary):
 
 
 # Server will call this function to update the status of a job on every client
-remote func update_job_status(job_id : int, status : String):
+remote func update_job_status(job_id : int, status : String) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		RaptorRender.rr_data.jobs[job_id].status = status
 
 
 
 # Server will call this function to update the status of a job on every client
-remote func update_chunk_status(job_id : int, chunk_id, status : String):
+remote func update_chunk_status(job_id : int, chunk_id, status : String) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		RaptorRender.rr_data.jobs[job_id].status = status
