@@ -69,7 +69,7 @@ func render_process_exited_without_software_start() -> void:
 				
 			line_iterator += 1
 		
-		# handle empty  log file
+		# handle empty log file
 		if line_iterator == 0:
 			
 			log_file.WRITE

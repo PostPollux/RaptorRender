@@ -133,139 +133,50 @@ func _on_ContextMenu_index_pressed(index) -> void:
 	
 	match index:
 		
-		0:  # Pause Job	Deffered
+		0:  # Pause Job Deffered
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for selected in selected_ids:
-				
-				var status =  RaptorRender.rr_data.jobs[selected].status
-				
-				if status == RRStateScheme.job_rendering or status == RRStateScheme.job_queued or status == RRStateScheme.job_error:
-					
-					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_rendering_paused_deferred
-					
-					# cancle active chunks
-					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
-						if chunk_status == RRStateScheme.chunk_queued:
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_paused
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_rendering_paused_deferred)
 			
 			RaptorRender.JobsTable.refresh()
 			
 			
 			
-		1:  # Pause Job	Immediately
+		1:  # Pause Job Immediately
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for selected in selected_ids:
-				
-				var status =  RaptorRender.rr_data.jobs[selected].status
-				
-				if status == RRStateScheme.job_rendering or status == RRStateScheme.job_queued or status == RRStateScheme.job_error or status == RRStateScheme.job_paused:
-					
-					# remove Clients from Job
-					for client in RaptorRender.rr_data.clients.keys():
-						if RaptorRender.rr_data.clients[client].current_job_id == selected:
-							RaptorRender.rr_data.clients[client].current_job_id = -1
-							RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
-							
-							# cancel render process TODO (temporarily)
-							if GetSystemInformation.own_client_id == client:
-								CommandLineManager.kill_current_render_process()
-					
-					# cancle active chunks
-					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
-						var number_of_tries : int = RaptorRender.rr_data.jobs[selected].chunks[chunk].number_of_tries
-						
-						if chunk_status == RRStateScheme.chunk_rendering: 
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_paused
-							
-							# change try status
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].status = RRStateScheme.try_cancelled
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].time_stopped = OS.get_unix_time()
-						
-						if chunk_status == RRStateScheme.chunk_queued:
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_paused
-							
-					# Set Job Status to paused
-					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_paused
-					
-					
-					
-				
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_paused)
+			
 			RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
 			
 			
-				
+			
 		2:  # Resume Job
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for selected in selected_ids:
-				
-				var status =  RaptorRender.rr_data.jobs[selected].status
-				
-				if status == RRStateScheme.job_paused:
-					
-					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_queued
-					
-					# queue all paused chunks
-					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						if RaptorRender.rr_data.jobs[selected].chunks[chunk].status == RRStateScheme.chunk_paused:
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_queued
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_queued)
 			
 			RaptorRender.JobsTable.refresh()
 			
 			
 			
 		3:  # Separator
-			pass	
+			pass
 			
 			
 		
 		4:  # Cancel Job Permanently
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for selected in selected_ids:
-				
-				var status =  RaptorRender.rr_data.jobs[selected].status
-				
-				if status == RRStateScheme.job_rendering or status == RRStateScheme.job_queued or status == RRStateScheme.job_error or status == RRStateScheme.job_paused:
-					
-					# remove Clients from Job
-					for client in RaptorRender.rr_data.clients.keys():
-						if RaptorRender.rr_data.clients[client].current_job_id == selected:
-							RaptorRender.rr_data.clients[client].current_job_id = -1
-							RaptorRender.rr_data.clients[client].status = RRStateScheme.client_available
-							
-							# cancel render process TODO (temporarily)
-							if GetSystemInformation.own_client_id == client:
-								CommandLineManager.kill_current_render_process()
-							
-							
-					# cancle active chunks
-					for chunk in RaptorRender.rr_data.jobs[selected].chunks.keys():
-						var chunk_status : String = RaptorRender.rr_data.jobs[selected].chunks[chunk].status
-						var number_of_tries : int = RaptorRender.rr_data.jobs[selected].chunks[chunk].number_of_tries
-						
-						if chunk_status == RRStateScheme.chunk_rendering: 
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_cancelled
-							
-							# change try status
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].status = RRStateScheme.try_cancelled
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].tries[number_of_tries].time_stopped = OS.get_unix_time()
-						
-						if chunk_status == RRStateScheme.chunk_queued:
-							RaptorRender.rr_data.jobs[selected].chunks[chunk].status = RRStateScheme.chunk_cancelled
-					
-					# Set Status to cancelled
-					RaptorRender.rr_data.jobs[selected].status = RRStateScheme.job_cancelled
-					
-					
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_cancelled)
 				
 			RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
@@ -273,7 +184,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 		
 		5:  # Separator
-			pass		
+			pass
 			
 			
 			

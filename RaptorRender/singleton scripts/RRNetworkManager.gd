@@ -192,6 +192,131 @@ remotesync func update_job_priority(job_id : int, priority : int) -> void:
 
 
 
+remotesync func update_job_states(job_ids : Array, desired_status : String) -> void:
+	for job in job_ids:
+		update_job_state(job, desired_status)
+
+
+
+remotesync func update_job_state(job_id : int, desired_status : String) -> void:
+	
+	if RaptorRender.rr_data.jobs.has(job_id):
+		
+		var current_status : String = RaptorRender.rr_data.jobs[job_id].status
+		
+		match desired_status:
+			
+			# desired state "rendering"
+			RRStateScheme.job_rendering:
+				RaptorRender.rr_data.jobs[job_id].status = desired_status
+			
+			
+			# desired state "rendering_paused_deferred"
+			RRStateScheme.job_rendering_paused_deferred:
+				
+				if current_status == RRStateScheme.job_rendering: 
+					
+					RaptorRender.rr_data.jobs[job_id].status = desired_status
+					
+					# pause queued chunks
+					for chunk in RaptorRender.rr_data.jobs[job_id].chunks.keys():
+						var chunk_status : String = RaptorRender.rr_data.jobs[job_id].chunks[chunk].status
+						if chunk_status == RRStateScheme.chunk_queued:
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].status = RRStateScheme.chunk_paused
+					
+				if current_status == RRStateScheme.job_queued or current_status == RRStateScheme.job_error:
+					RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_paused
+			
+			
+			# desired state "queued"
+			RRStateScheme.job_queued:
+				
+				if current_status == RRStateScheme.job_paused:
+					
+					RaptorRender.rr_data.jobs[job_id].status = desired_status
+					
+					# queue all paused chunks
+					for chunk in RaptorRender.rr_data.jobs[job_id].chunks.keys():
+						if RaptorRender.rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].status = RRStateScheme.chunk_queued
+			
+			
+			# desired state "error"
+			RRStateScheme.job_error:  
+				RaptorRender.rr_data.jobs[job_id].status = desired_status
+			
+			
+			# desired state "paused"
+			RRStateScheme.job_paused:  
+				
+				if current_status == RRStateScheme.job_rendering or current_status == RRStateScheme.job_queued or current_status == RRStateScheme.job_error:
+					
+					# cancel render if needed
+					if JobExecutionManager.current_processing_job == job_id:
+						CommandLineManager.kill_current_render_process()
+					
+					# remove current job from clients (the hint in the table)
+					for client in RaptorRender.rr_data.clients.keys():
+						if RaptorRender.rr_data.clients[client].current_job_id == job_id:
+							RaptorRender.rr_data.clients[client].current_job_id = -1
+					
+					# cancle active chunks
+					for chunk in RaptorRender.rr_data.jobs[job_id].chunks.keys():
+						var chunk_status : String = RaptorRender.rr_data.jobs[job_id].chunks[chunk].status
+						var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk].number_of_tries
+						
+						if chunk_status == RRStateScheme.chunk_rendering: 
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].status = RRStateScheme.chunk_paused
+							
+							# change try status
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].status = RRStateScheme.try_cancelled
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_stopped = OS.get_unix_time()
+						
+						if chunk_status == RRStateScheme.chunk_queued:
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].status = RRStateScheme.chunk_paused
+							
+					# Set Job Status to paused
+					RaptorRender.rr_data.jobs[job_id].status = desired_status
+			
+			
+			# desired state "finished"
+			RRStateScheme.job_finished:
+				RaptorRender.rr_data.jobs[job_id].status = desired_status
+			
+			
+			# desired state "cancelled"
+			RRStateScheme.job_cancelled:
+				if current_status == RRStateScheme.job_rendering or current_status == RRStateScheme.job_rendering_paused_deferred or current_status == RRStateScheme.job_queued or current_status == RRStateScheme.job_error or current_status == RRStateScheme.job_paused:
+					
+					# cancel render if needed
+					if JobExecutionManager.current_processing_job == job_id:
+						CommandLineManager.kill_current_render_process()
+					
+					# remove current job from clients (the hint in the table)
+					for client in RaptorRender.rr_data.clients.keys():
+						if RaptorRender.rr_data.clients[client].current_job_id == job_id:
+							RaptorRender.rr_data.clients[client].current_job_id = -1
+					
+					# cancle active chunks
+					for chunk in RaptorRender.rr_data.jobs[job_id].chunks.keys():
+						var chunk_status : String = RaptorRender.rr_data.jobs[job_id].chunks[chunk].status
+						var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk].number_of_tries
+						
+						if chunk_status == RRStateScheme.chunk_rendering: 
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].status = RRStateScheme.chunk_cancelled
+							
+							# change try status
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].status = RRStateScheme.try_cancelled
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].tries[number_of_tries].time_stopped = OS.get_unix_time()
+						
+						if chunk_status == RRStateScheme.chunk_queued:
+							RaptorRender.rr_data.jobs[job_id].chunks[chunk].status = RRStateScheme.chunk_cancelled
+							
+					# Set Job Status to paused
+					RaptorRender.rr_data.jobs[job_id].status = desired_status
+
+
+
 # add a new try
 remotesync func add_try(job_id : int, chunk_id : int, try_id : int, try : Dictionary) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
@@ -342,24 +467,24 @@ remotesync func update_client_state(client_id : int, desired_status : String) ->
 		
 		match desired_status:
 			
-			# desired state "client_rendering"
+			# desired state "rendering"
 			RRStateScheme.client_rendering:
 				RaptorRender.rr_data.clients[client_id].status = desired_status
 			
 			
-			# desired state "client_error"
+			# desired state "error"
 			RRStateScheme.client_error:
 				RaptorRender.rr_data.clients[client_id].status = desired_status
 			
 			
-			# desired state "client_available"
+			# desired state "available"
 			RRStateScheme.client_available:
 				
 				if current_status == RRStateScheme.client_disabled or current_status == RRStateScheme.client_rendering_disabled_deferred:
 					RaptorRender.rr_data.clients[client_id].status = desired_status
 			
 			
-			# desired state "client_rendering_disabled_deffered"
+			# desired state "rendering_disabled_deffered"
 			RRStateScheme.client_rendering_disabled_deferred:  
 				
 				if current_status == RRStateScheme.client_rendering: 
@@ -369,7 +494,7 @@ remotesync func update_client_state(client_id : int, desired_status : String) ->
 					RaptorRender.rr_data.clients[client_id].status = RRStateScheme.client_disabled
 			
 			
-			# desired state "client_disabled"
+			# desired state "disabled"
 			RRStateScheme.client_disabled:  
 				
 				if current_status == RRStateScheme.client_rendering or current_status == RRStateScheme.client_available or current_status == RRStateScheme.client_error:
@@ -382,7 +507,7 @@ remotesync func update_client_state(client_id : int, desired_status : String) ->
 					RaptorRender.rr_data.clients[client_id].status = desired_status
 			
 			
-			# desired state "client_offline"
+			# desired state "offline"
 			RRStateScheme.client_offline:
 				RaptorRender.rr_data.clients[client_id].status = desired_status
 
