@@ -208,7 +208,8 @@ remotesync func update_job_state(job_id : int, desired_status : String) -> void:
 			
 			# desired state "rendering"
 			RRStateScheme.job_rendering:
-				RaptorRender.rr_data.jobs[job_id].status = desired_status
+				if current_status != RRStateScheme.job_cancelled and current_status != RRStateScheme.job_finished:
+					RaptorRender.rr_data.jobs[job_id].status = desired_status
 			
 			
 			# desired state "rendering_paused_deferred"
@@ -314,6 +315,104 @@ remotesync func update_job_state(job_id : int, desired_status : String) -> void:
 							
 					# Set Job Status to paused
 					RaptorRender.rr_data.jobs[job_id].status = desired_status
+
+
+
+remotesync func update_chunk_states(job_id : int, chunk_ids : Array, desired_status : String) -> void:
+	for chunk in chunk_ids:
+		update_chunk_state(job_id, chunk, desired_status)
+
+
+
+remotesync func update_chunk_state(job_id : int, chunk_id : int, desired_status : String) -> void:
+	
+	if RaptorRender.rr_data.jobs.has(job_id):
+		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
+			
+			var current_status : String = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status
+			
+			match desired_status:
+				
+				# desired state "rendering"
+				RRStateScheme.chunk_rendering:
+					if current_status != RRStateScheme.chunk_cancelled and current_status != RRStateScheme.chunk_finished:
+						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = desired_status
+				
+				
+				# desired state "queued"
+				RRStateScheme.chunk_queued:
+					
+					if current_status == RRStateScheme.chunk_rendering:
+						
+						var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].number_of_tries
+						
+						# cancel render process if necessary
+						if JobExecutionManager.current_processing_job == job_id and JobExecutionManager.current_processing_chunk == chunk_id:
+							CommandLineManager.kill_current_render_process()
+						
+						# change try status
+						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[number_of_tries].status = RRStateScheme.try_cancelled
+						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[number_of_tries].time_stopped = OS.get_unix_time()
+						
+						# change chunk status
+						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = desired_status
+					
+					if current_status == RRStateScheme.chunk_paused or current_status == RRStateScheme.chunk_finished or current_status == RRStateScheme.chunk_error:
+						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = desired_status
+				
+				
+				# desired state "error"
+				RRStateScheme.chunk_error:  
+					RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = desired_status
+				
+				
+				# desired state "paused". This is not meant to be used, because we can not pause a single chunk. This will happen automatically if we pause the wohle job.
+				RRStateScheme.chunk_paused:  
+					pass
+				
+				
+				# desired state "finished"
+				RRStateScheme.chunk_finished:
+					if current_status != RRStateScheme.chunk_cancelled:
+						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = desired_status
+				
+				
+				# desired state "cancelled". This is not meant to be used, because we can not cancel a single chunk. This will happen automatically if we cancel the wohle job.
+				RRStateScheme.chunk_cancelled:
+					pass
+
+
+
+remotesync func mark_chunks_as_finished(job_id : int, chunk_ids : Array) -> void:
+	for chunk in chunk_ids:
+		mark_chunk_as_finished(job_id, chunk)
+
+
+
+remotesync func mark_chunk_as_finished(job_id : int, chunk_id : int) -> void:
+	
+	if RaptorRender.rr_data.jobs.has(job_id):
+		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
+			
+			var current_status : String = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status
+			
+			if current_status == RRStateScheme.chunk_rendering:
+				
+				var number_of_tries : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].number_of_tries
+				
+				# cancel render process if necessary
+				if JobExecutionManager.current_processing_job == job_id and JobExecutionManager.current_processing_chunk == chunk_id:
+					CommandLineManager.kill_current_render_process()
+				
+				# change try status
+				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[number_of_tries].status = RRStateScheme.try_cancelled
+				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[number_of_tries].time_stopped = OS.get_unix_time()
+				
+				# change chunk status
+				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = RRStateScheme.chunk_finished
+			
+			if current_status == RRStateScheme.chunk_paused or current_status == RRStateScheme.chunk_error or current_status == RRStateScheme.chunk_queued:
+				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = RRStateScheme.chunk_finished
 
 
 
@@ -556,22 +655,4 @@ remotesync func update_pools(pools : Dictionary) -> void:
 
 # reset error counts
 
-# update job status 
-
-# chunk requeuen
-
 # mark chunk as rendering
-
-
-
-# Server will call this function to update the status of a job on every client
-remote func update_job_status(job_id : int, status : String) -> void:
-	if RaptorRender.rr_data.jobs.has(job_id):
-		RaptorRender.rr_data.jobs[job_id].status = status
-
-
-
-# Server will call this function to update the status of a job on every client
-remote func update_chunk_status(job_id : int, chunk_id, status : String) -> void:
-	if RaptorRender.rr_data.jobs.has(job_id):
-		RaptorRender.rr_data.jobs[job_id].status = status
