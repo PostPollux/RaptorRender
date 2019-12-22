@@ -64,7 +64,7 @@ func _ready() -> void:
 	# create timer to constantly read the current render log in a specific interval 
 	read_log_timer = Timer.new()
 	read_log_timer.name = "Read Log Timer"
-	read_log_timer.wait_time = 0.5
+	read_log_timer.wait_time = 1.0
 	read_log_timer.connect("timeout",self,"start_read_log_file_thread")
 	
 	# create timer for sending the render_process_exited signal delayed
@@ -224,7 +224,7 @@ func check_if_render_process_is_running() -> bool:
 				if RenderLogValidator.CRP_software_start_success_detected:
 					# This is delayed to make sure that the log validation has time to detect the success message before it starts a new render process and thus looking in the wrong log file
 					# The delay has to be a bit bigger than the read_log_timer wait time
-					delayed_detect_render_process_exited(0.8)
+					delayed_detect_render_process_exited(1.2)
 				else:
 					read_log_timer.stop()
 					emit_signal("render_process_exited_without_software_start")

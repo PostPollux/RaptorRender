@@ -2038,6 +2038,9 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 			if rr_data.clients[client].status == RRStateScheme.client_rendering:
 				StatusIcon.set_modulate(RRColorScheme.state_active)
 				
+			elif rr_data.clients[client].status == RRStateScheme.client_rendering_disabled_deferred:
+				StatusIcon.set_modulate(RRColorScheme.state_paused_deferred)
+				
 			elif rr_data.clients[client].status == RRStateScheme.client_available:
 				StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)
 				
@@ -2161,6 +2164,9 @@ func update_or_create_client_row(client : int, client_iterator : int) -> void:
 		
 		if rr_data.clients[client].status == RRStateScheme.client_rendering:
 			StatusIcon.set_modulate(RRColorScheme.state_active)
+			
+		elif rr_data.clients[client].status == RRStateScheme.client_rendering_disabled_deferred:
+			StatusIcon.set_modulate(RRColorScheme.state_paused_deferred)
 			
 		elif rr_data.clients[client].status == RRStateScheme.client_available:
 			StatusIcon.set_modulate(RRColorScheme.state_finished_or_online)

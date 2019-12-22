@@ -45,10 +45,11 @@ var try_marked_as_finished: String = "5_marked_as_finished"
 
 # client states
 var client_rendering : String = "1_rendering"
-var client_available : String = "2_available"
-var client_error : String = "3_error"
-var client_disabled : String = "4_disabled"
-var client_offline : String = "5_offline"
+var client_rendering_disabled_deferred : String = "2_rendering_disabled_deferred"
+var client_available : String = "3_available"
+var client_error : String = "4_error"
+var client_disabled : String = "5_disabled"
+var client_offline : String = "6_offline"
 
 
 

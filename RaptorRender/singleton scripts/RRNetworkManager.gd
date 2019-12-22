@@ -46,7 +46,7 @@ func create_server() -> void:
 
 func connect_to_server() -> void:
 	
-	# make sure
+	# reset the management_gui_clients and make sure that everything get's at least sended to the server
 	management_gui_clients = [1]
 	
 	if get_tree().has_network_peer():
@@ -83,7 +83,7 @@ func _client_disconnected(id) -> void:
 
 
 
-# Callback from SceneTree, called when connect to server
+# Callback from SceneTree, called when successfully connected to server
 func _connected_ok() -> void:
 	print ("successfully connected to server!")
 	
@@ -95,22 +95,25 @@ func _connected_ok() -> void:
 		rpc_id(client, "add_client", GetSystemInformation.own_client_id, GetSystemInformation.get_machine_properties())
 
 
+
 # Callback from SceneTree, called when server disconnect
 func _server_disconnected() -> void:
 	print("server disconnected")
-	#players.clear()
 	#emit_signal("server_disconnected")
 	# Try to connect again
 	#connect_to_server()
 
 
+
 # Callback from SceneTree, called when unabled to connect to server
+# For some reason this never gets called. Seems to be a bug
 func _connected_fail() -> void:
 	print("connecting to server failed...")
 	#get_tree().set_network_peer(null) # Remove peer
 	#emit_signal("connection_failed")
 	# Try to connect again
-	#connect_to_server()
+	connect_to_server()
+
 
 
 # this will add the given network id to the "management_gui_clients" array on the master. Then the master syncs this variable to all puppets
@@ -325,10 +328,64 @@ remotesync func remove_clients(client_ids : Array) -> void:
 
 
 
-remotesync func update_client_status(client_id : int, status : String) -> void:
+remotesync func update_client_states(client_ids : Array, desired_status : String) -> void:
+	for client in client_ids:
+		update_client_state(client, desired_status)
+
+
+
+remotesync func update_client_state(client_id : int, desired_status : String) -> void:
+	
 	if RaptorRender.rr_data.clients.has(client_id):
-		RaptorRender.rr_data.clients[client_id].status = status
-		# Not finished yet
+		
+		var current_status : String = RaptorRender.rr_data.clients[client_id].status
+		
+		match desired_status:
+			
+			# desired state "client_rendering"
+			RRStateScheme.client_rendering:
+				RaptorRender.rr_data.clients[client_id].status = desired_status
+			
+			
+			# desired state "client_error"
+			RRStateScheme.client_error:
+				RaptorRender.rr_data.clients[client_id].status = desired_status
+			
+			
+			# desired state "client_available"
+			RRStateScheme.client_available:
+				
+				if current_status == RRStateScheme.client_disabled or current_status == RRStateScheme.client_rendering_disabled_deferred:
+					RaptorRender.rr_data.clients[client_id].status = desired_status
+			
+			
+			# desired state "client_rendering_disabled_deffered"
+			RRStateScheme.client_rendering_disabled_deferred:  
+				
+				if current_status == RRStateScheme.client_rendering: 
+					RaptorRender.rr_data.clients[client_id].status = desired_status
+				
+				if current_status == RRStateScheme.client_available or current_status == RRStateScheme.client_error:
+					RaptorRender.rr_data.clients[client_id].status = RRStateScheme.client_disabled
+			
+			
+			# desired state "client_disabled"
+			RRStateScheme.client_disabled:  
+				
+				if current_status == RRStateScheme.client_rendering or current_status == RRStateScheme.client_available or current_status == RRStateScheme.client_error:
+					
+					# cancel render process if required
+					if client_id == GetSystemInformation.own_client_id:
+						if RaptorRender.rr_data.clients[client_id].status == RRStateScheme.client_rendering:
+							CommandLineManager.kill_current_render_process()
+					
+					RaptorRender.rr_data.clients[client_id].status = desired_status
+			
+			
+			# desired state "client_offline"
+			RRStateScheme.client_offline:
+				RaptorRender.rr_data.clients[client_id].status = desired_status
+
 
 
 # This will update the hardware statistics like cpu usage etc. for a given client
@@ -368,11 +425,8 @@ remotesync func update_pools(pools : Dictionary) -> void:
 
 
 
-	
-	
-	
-	
-	
+# start chunk
+
 # new image_directory detected
 
 # reset error counts
@@ -382,10 +436,6 @@ remotesync func update_pools(pools : Dictionary) -> void:
 # chunk requeuen
 
 # mark chunk as rendering
-
-# add client
-
-# remove client
 
 
 

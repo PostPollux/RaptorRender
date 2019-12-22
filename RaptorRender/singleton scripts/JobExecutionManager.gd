@@ -34,7 +34,14 @@ func _ready() -> void:
 	RenderLogValidator.connect("frame_success_detected", self, "frame_success_detected")
 	RenderLogValidator.connect("critical_error_detected", self, "critical_error_detected")
 	RenderLogValidator.connect("frame_name_detected", self, "frame_name_detected")
+	CommandLineManager.connect("render_process_exited",self ,"reactivate_client")
 	CommandLineManager.connect("render_process_exited_without_software_start", self, "render_process_exited_without_software_start")
+
+
+# TODO - this is just temporarily
+func reactivate_client() -> void:
+	for client in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(client, "update_client_status", GetSystemInformation.own_client_id, RRStateScheme.client_available)
 
 
 
@@ -69,6 +76,8 @@ func render_process_exited_without_software_start() -> void:
 			log_file.store_line("Raptor Render Error: " + tr("MSG_ERROR_18") ) # MSG_ERROR_18: The render process exited without writing anything to the log file. This happens in very rare cases. To find the error, please try to execute the command from above manually in your terminal.
 		
 		log_file.close()
+	
+	reactivate_client()
 
 
 
@@ -94,6 +103,7 @@ func success_detected() -> void:
 			RRNetworkManager.rpc_id(client, "chunk_finished_successfully", current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
 		
 	chunk_success_detected = true
+
 
 
 func frame_success_detected() -> void:

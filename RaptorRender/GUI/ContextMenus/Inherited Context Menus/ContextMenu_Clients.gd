@@ -170,11 +170,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
-			for selected in selected_ids:
-				
-				if RaptorRender.rr_data.clients[selected].status == RRStateScheme.client_disabled:
-					
-					RaptorRender.rr_data.clients[selected].status = RRStateScheme.client_available
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_client_states", selected_ids, RRStateScheme.client_available)
 			
 			RaptorRender.ClientsTable.refresh()
 			
@@ -184,29 +181,19 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
-			for selected in selected_ids:
-				
-				var status =  RaptorRender.rr_data.clients[selected].status
-				
-				if status == RRStateScheme.client_rendering or status == RRStateScheme.client_available or status == RRStateScheme.client_error:
-					
-					RaptorRender.rr_data.clients[selected].status = RRStateScheme.client_disabled
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_client_states", selected_ids, RRStateScheme.client_rendering_disabled_deferred)
 				
 			RaptorRender.ClientsTable.refresh()
 			
 			
-				
+			
 		2:  # Disable Client Immediately
 			
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
-			for selected in selected_ids:
-				
-				var status =  RaptorRender.rr_data.clients[selected].status
-				
-				if status == RRStateScheme.client_rendering or status == RRStateScheme.client_available or status == RRStateScheme.client_error:
-					
-					RaptorRender.rr_data.clients[selected].status = RRStateScheme.client_disabled
+			for client in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(client, "update_client_states", selected_ids, RRStateScheme.client_disabled)
 			
 			RaptorRender.ClientsTable.refresh()
 			

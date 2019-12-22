@@ -26,10 +26,6 @@ func _ready() -> void:
 	jobs_active = []
 	clients_available = []
 	
-	CommandLineManager.connect("render_process_exited",self ,"reactivate_client") # TODO - this is just temporarily
-	CommandLineManager.connect("render_process_exited_without_software_start",self ,"reactivate_client") # TODO - this is just temporarily
-	
-	
 	# create timer to constantly distribute the work across the connected clients 
 	distribute_job_timer = Timer.new()
 	distribute_job_timer.name = "Distribute Job Timer"
@@ -41,13 +37,6 @@ func _ready() -> void:
 	
 	
 	distribute_job_timer.start()
-	
-	
-	
-	# TODO - this is just temporarily
-func reactivate_client() -> void:
-	RaptorRender.rr_data.clients[GetSystemInformation.own_client_id].status = RRStateScheme.client_available
-	
 
 
 
