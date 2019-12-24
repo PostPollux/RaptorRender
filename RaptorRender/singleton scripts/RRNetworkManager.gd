@@ -13,6 +13,8 @@ const MAX_CLIENTS = 4095 # 4095 is max. If we use 4096 there will be an error an
 # Network Id "1" is always the server. We want to be sure that the server receives ALL updates, so we add 1 by default.
 puppetsync var management_gui_clients : Array  = [1]
 
+var server_is_also_client : bool = true
+
 
 #func _process(delta : float) -> void:
 #	print (management_gui_clients)
@@ -42,6 +44,11 @@ func create_server() -> void:
 	host.create_server(RR_PORT, MAX_CLIENTS)
 	host.set_always_ordered(true)
 	get_tree().set_network_peer(host)
+	
+	# add the server to the clients table, too, if desired
+	if server_is_also_client:
+		for client in management_gui_clients:
+			rpc_id(client, "add_client", GetSystemInformation.own_client_id, GetSystemInformation.get_machine_properties())
 
 
 func connect_to_server() -> void:
@@ -614,6 +621,7 @@ remotesync func update_client_state(client_id : int, desired_status : String) ->
 
 # This will update the hardware statistics like cpu usage etc. for a given client
 remotesync func update_client_hw_stats(client_id : int, cpu_usage : int, memory_usage : int, hard_drives : Array) -> void:
+	
 	if RaptorRender.rr_data.clients.has(client_id):
 		RaptorRender.rr_data.clients[client_id].machine_properties.memory_usage = memory_usage
 		RaptorRender.rr_data.clients[client_id].machine_properties.cpu_usage = cpu_usage
