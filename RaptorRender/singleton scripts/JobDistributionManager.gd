@@ -58,6 +58,7 @@ func distribute_jobs() -> void:
 			if jobs_active.size() > 0:
 				
 				# are there resources to wake over lan that can help?
+				# to be implemnted 
 				
 				# update the clients_available array
 				clients_available = []
@@ -91,7 +92,18 @@ func distribute_jobs() -> void:
 						for job in jobs_active_sort_array:
 							
 							# check if job can be processed by this client
-							if true:
+							
+							# check pools
+							var pools_are_matching : bool = true
+							if RaptorRender.rr_data.jobs[job[0]].pools.size() > 0:
+								pools_are_matching = false
+								for pool in RaptorRender.rr_data.jobs[job[0]].pools:
+									if RaptorRender.rr_data.clients[client].pools.has(pool):
+										pools_are_matching = true
+							
+							# check enabled software
+							
+							if pools_are_matching and true:
 								
 								# assign a chunk
 								for chunk in RaptorRender.rr_data.jobs[job[0]].chunks.keys():

@@ -260,7 +260,7 @@ remotesync func update_job_state(job_id : int, desired_status : String) -> void:
 				if current_status == RRStateScheme.job_rendering or current_status == RRStateScheme.job_queued or current_status == RRStateScheme.job_error:
 					
 					# cancel render if needed
-					if JobExecutionManager.current_processing_job == job_id:
+					if JobExecutionManager.current_processing_job == job_id and CommandLineManager.currently_rendering:
 						CommandLineManager.kill_current_render_process()
 					
 					# remove current job from clients (the hint in the table)
@@ -561,11 +561,11 @@ remotesync func remove_clients(client_ids : Array) -> void:
 
 remotesync func update_client_states(client_ids : Array, desired_status : String) -> void:
 	for client in client_ids:
-		update_client_state(client, desired_status)
+		update_client_status(client, desired_status)
 
 
 
-remotesync func update_client_state(client_id : int, desired_status : String) -> void:
+remotesync func update_client_status(client_id : int, desired_status : String) -> void:
 	
 	if RaptorRender.rr_data.clients.has(client_id):
 		
@@ -586,7 +586,14 @@ remotesync func update_client_state(client_id : int, desired_status : String) ->
 			# desired state "available"
 			RRStateScheme.client_available:
 				
-				if current_status == RRStateScheme.client_disabled or current_status == RRStateScheme.client_rendering_disabled_deferred:
+				if current_status == RRStateScheme.client_disabled:
+					RaptorRender.rr_data.clients[client_id].status = desired_status
+				
+				if current_status == RRStateScheme.client_rendering or current_status == RRStateScheme.client_rendering_disabled_deferred:
+					if client_id == GetSystemInformation.own_client_id:
+						if CommandLineManager.currently_rendering:
+							CommandLineManager.kill_current_render_process()
+					
 					RaptorRender.rr_data.clients[client_id].status = desired_status
 			
 			

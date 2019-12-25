@@ -263,6 +263,7 @@ func kill_current_render_process():
 			
 			print("killing pid: " + String(pid))
 			OS.kill(pid)
+			emit_signal("render_process_exited")
 
 
 # This is delayed to make sure that the log validation has time to detect the success message before it starts a new render process and thus looking in the wrong log file
