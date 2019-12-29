@@ -40,8 +40,8 @@ func _ready() -> void:
 
 # TODO - this is just temporarily
 func reactivate_client() -> void:
-	for client in RRNetworkManager.management_gui_clients:
-		RRNetworkManager.rpc_id(client, "update_client_status", GetSystemInformation.own_client_id, RRStateScheme.client_available)
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "update_client_status", GetSystemInformation.own_client_id, RRStateScheme.client_available)
 
 
 
@@ -86,8 +86,8 @@ func critical_error_detected() -> void:
 	
 	current_amount_of_critical_errors += 1
 	
-	for client in RRNetworkManager.management_gui_clients:
-		RRNetworkManager.rpc_id(client, "chunk_error", current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "chunk_error", GetSystemInformation.own_client_id, current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
 
 
 
@@ -99,8 +99,8 @@ func success_detected() -> void:
 	if !chunk_success_detected and current_amount_of_critical_errors == 0:
 		
 		# set time stopped and status of try
-		for client in RRNetworkManager.management_gui_clients:
-			RRNetworkManager.rpc_id(client, "chunk_finished_successfully", current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
+		for peer in RRNetworkManager.management_gui_clients:
+			RRNetworkManager.rpc_id(peer, "chunk_finished_successfully", current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
 		
 	chunk_success_detected = true
 

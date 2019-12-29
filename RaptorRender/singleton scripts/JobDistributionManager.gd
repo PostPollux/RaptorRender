@@ -13,6 +13,19 @@ var distribute_job_timer : Timer
 var jobs_active : Array # Array of the job ids that need clients (currently rendering jobs and queued jobs)
 var clients_available : Array # Array of the client ids that are free and can accept a job
 
+var dispatching_interval : int = 1
+var dispatching_response_timeout : int = 5
+
+# clients will be excluded from a job if they produced 10 errors within that job
+var max_error_count_clients : int = 10
+
+
+# This dictionary will hold all clients to which a job just has been dispatched, but that didn't respond yet.
+# So the next time jobs get dispatched those clients will still be blocked. 
+# The value of the "client" key is the remaining time in sec till the timeout. If it times out, the entry will be deleted and new jobs will be dispatched to that client.
+var blocked_clients : Dictionary
+
+var blocked_chunks : Dictionary
 
 
 
@@ -29,7 +42,7 @@ func _ready() -> void:
 	# create timer to constantly distribute the work across the connected clients 
 	distribute_job_timer = Timer.new()
 	distribute_job_timer.name = "Distribute Job Timer"
-	distribute_job_timer.wait_time = 1
+	distribute_job_timer.wait_time = dispatching_interval
 	distribute_job_timer.connect("timeout",self,"distribute_jobs")
 	var root_node : Node = get_tree().get_root().get_node("RaptorRenderMainScene")
 	if root_node != null:
@@ -47,6 +60,23 @@ func distribute_jobs() -> void:
 	if get_tree().has_network_peer():
 		if get_tree().is_network_server():
 			
+			# handle dispatching response timeouts (clients)
+			for client in blocked_clients.keys():
+				if blocked_clients[client] > 0:
+					blocked_clients[client] = blocked_clients[client] - dispatching_interval
+				else:
+					blocked_clients.erase(client)
+			
+			# handle dispatching response timeouts (chunks)
+			for job in blocked_chunks.keys():
+				for chunk in blocked_chunks[job].keys():
+					if blocked_chunks[job][chunk] > 0:
+						blocked_chunks[job][chunk] = blocked_chunks[job][chunk] - dispatching_interval
+					else:
+						blocked_chunks[job].erase(chunk)
+						if blocked_chunks.keys().size() == 0:
+							blocked_chunks.erase(job)
+			
 			# update the jobs_active array, so that we know, if there is some work to do
 			jobs_active = []
 			for job in RaptorRender.rr_data.jobs.keys():
@@ -58,13 +88,14 @@ func distribute_jobs() -> void:
 			if jobs_active.size() > 0:
 				
 				# are there resources to wake over lan that can help?
-				# to be implemnted 
+				# to be implemented 
 				
 				# update the clients_available array
 				clients_available = []
 				for client in RaptorRender.rr_data.clients.keys():
 					if RaptorRender.rr_data.clients[client].status == RRStateScheme.client_available:
-						clients_available.append(client)
+						if not blocked_clients.has(client):
+							clients_available.append(client)
 				
 				
 				# are there any available clients to distribute the work to?
@@ -86,65 +117,74 @@ func distribute_jobs() -> void:
 					
 					
 					# assign a job to each available client
-					for client in clients_available:
+					for client_id in clients_available:
 						
 						# go through the priority sorted jobs and take the first one that uses a JobType supported by the client
 						for job in jobs_active_sort_array:
 							
+							var job_id : int = job[0]
+							
 							# check if job can be processed by this client
+							
+							# check error counts
+							var error_count_ok : bool = true
+							if RaptorRender.rr_data.jobs[job_id].erroneous_clients.has(client_id):
+								if RaptorRender.rr_data.jobs[job_id].erroneous_clients[client_id] >= max_error_count_clients:
+									error_count_ok = false
 							
 							# check pools
 							var pools_are_matching : bool = true
-							if RaptorRender.rr_data.jobs[job[0]].pools.size() > 0:
+							if RaptorRender.rr_data.jobs[job_id].pools.size() > 0:
 								pools_are_matching = false
-								for pool in RaptorRender.rr_data.jobs[job[0]].pools:
-									if RaptorRender.rr_data.clients[client].pools.has(pool):
+								for pool in RaptorRender.rr_data.jobs[job_id].pools:
+									if RaptorRender.rr_data.clients[client_id].pools.has(pool):
 										pools_are_matching = true
 							
 							# check enabled software
 							
-							if pools_are_matching and true:
+							if error_count_ok and pools_are_matching and true:
 								
 								# assign a chunk
-								for chunk in RaptorRender.rr_data.jobs[job[0]].chunks.keys():
-									if RaptorRender.rr_data.jobs[job[0]].chunks[chunk].status == RRStateScheme.chunk_queued:
-										
-										# add a new try
-										var current_tries_count : int = RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries
-										var new_try_data : Dictionary = {
-											"cmd" : "",
-											"status" : RRStateScheme.try_rendering,
-											"client" : client,
-											"time_started" : OS.get_unix_time(),
-											"time_stopped" : 0
-											}
+								for chunk_id in RaptorRender.rr_data.jobs[job_id].chunks.keys():
+									if RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status == RRStateScheme.chunk_queued:
 										
 										
-										RRNetworkManager.rpc("add_try", job[0], chunk, current_tries_count + 1, new_try_data)
-										#RaptorRender.rr_data.jobs[job[0]].chunks[chunk].tries[current_tries_count + 1] = new_try_data
-										#RaptorRender.rr_data.jobs[job[0]].chunks[chunk].number_of_tries += 1
-										
-										# start this chunk on the client
-										JobExecutionManager.start_chunk( job[0] , chunk, current_tries_count + 1)
-										
-										# eliminate priority boost, as now at least one chunk is rendering
-										RaptorRender.rr_data.jobs[job[0]].priority_boost = false
-										
-										# set "current_job" and "last_render_log" information for the client
-										RaptorRender.rr_data.clients[client].current_job_id = job[0]
-										RaptorRender.rr_data.clients[client].last_render_log = [job[0], chunk, current_tries_count + 1]
-										
-										
-										RaptorRender.rr_data.jobs[job[0]].status = RRStateScheme.job_rendering
-										
-										RaptorRender.rr_data.jobs[job[0]].chunks[chunk].status = RRStateScheme.chunk_rendering
-										
-										
-										RaptorRender.rr_data.clients[client].status = RRStateScheme.client_rendering
-										
-										break
 								
-							
+										# break if this chunk is currently blocked
+										var chunk_blocked : bool = false
+										if blocked_chunks.has(job_id):
+											if blocked_chunks[job_id].has(chunk_id):
+												chunk_blocked = true
+										
+										if not chunk_blocked:
+											
+											# get peer id of that client
+											var peer_id : int = -1
+											for peer in RRNetworkManager.peer_id_client_id_dict:
+												if RRNetworkManager.peer_id_client_id_dict[peer] == client_id:
+													peer_id = peer
+											
+											# get try id
+											var current_tries_count : int = RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].number_of_tries
+											var try_id : int = current_tries_count + 1
+											
+											# start render process on that peer
+											if peer_id != -1:
+												RRNetworkManager.rpc_id(peer_id, "start_render", job_id, chunk_id, try_id)
+											
+											# add that client to the blocked list
+											blocked_clients[client_id] = dispatching_response_timeout
+											
+											# add that chunk to the blocked list
+											if not blocked_chunks.has(job_id):
+												blocked_chunks[job_id] = {}
+											blocked_chunks[job_id][chunk_id] = dispatching_response_timeout
+											
+											# make sure to leave that chunk for loop, so no other chunks get assigned to that client
+											break
+								
+								# make sure to leave the job for loop, so no chunks of other jobs get assigned to the client
+								break
 							
 				
 			else:

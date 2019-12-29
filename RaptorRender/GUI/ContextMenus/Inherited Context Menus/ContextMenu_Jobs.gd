@@ -137,8 +137,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_rendering_paused_deferred)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_job_states", selected_ids, RRStateScheme.job_rendering_paused_deferred)
 			
 			RaptorRender.JobsTable.refresh()
 			
@@ -148,8 +148,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_paused)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_job_states", selected_ids, RRStateScheme.job_paused)
 			
 			RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
@@ -160,8 +160,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_queued)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_job_states", selected_ids, RRStateScheme.job_queued)
 			
 			RaptorRender.JobsTable.refresh()
 			
@@ -175,8 +175,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 		4:  # Cancel Job Permanently
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_job_states", selected_ids, RRStateScheme.job_cancelled)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_job_states", selected_ids, RRStateScheme.job_cancelled)
 				
 			RaptorRender.JobsTable.refresh()
 			RaptorRender.ClientsTable.refresh()
@@ -286,5 +286,5 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids().duplicate()  # duplicate of array needed because the reference would change as rows get deleted...
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "remove_jobs", selected_ids)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "remove_jobs", selected_ids)

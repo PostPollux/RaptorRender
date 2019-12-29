@@ -610,6 +610,7 @@ func create_new_job() -> void:
 								"status": RRStateScheme.job_paused if StartPausedCheckBox.pressed else RRStateScheme.job_queued,
 								"note": NoteLineEdit.text,
 								"errors": 0,
+								"erroneous_clients": {},
 								"pools": selected_pools,
 								"scene_path" : SceneFileLineEdit.text,
 								"output_dirs_and_file_name_patterns" : [],

@@ -13,6 +13,9 @@ const MAX_CLIENTS = 4095 # 4095 is max. If we use 4096 there will be an error an
 # Network Id "1" is always the server. We want to be sure that the server receives ALL updates, so we add 1 by default.
 puppetsync var management_gui_clients : Array  = [1]
 
+# This will hold the corresponding client_id to each connected peer (network id)
+puppetsync var peer_id_client_id_dict : Dictionary
+
 var server_is_also_client : bool = true
 
 
@@ -45,10 +48,13 @@ func create_server() -> void:
 	host.set_always_ordered(true)
 	get_tree().set_network_peer(host)
 	
-	# add the server to the clients table, too, if desired
+	# add the server to the clients table and to the id dict, too, if desired
 	if server_is_also_client:
-		for client in management_gui_clients:
-			rpc_id(client, "add_client", GetSystemInformation.own_client_id, GetSystemInformation.get_machine_properties())
+		for peer in management_gui_clients:
+			rpc_id(peer, "add_client", GetSystemInformation.own_client_id, GetSystemInformation.get_machine_properties())
+		
+		add_entry_to_id_dict(get_tree().get_network_unique_id(), GetSystemInformation.own_client_id)
+
 
 
 func connect_to_server() -> void:
@@ -73,8 +79,9 @@ func connect_to_server() -> void:
 # Callback from SceneTree, called when client connects
 func _client_connected(id) -> void:
 	print("New Client connected (", id, ")")
-
-
+	
+	if get_tree().is_network_server():
+		rpc_id(id, "set_rr_data", RaptorRender.rr_data)
 
 
 
@@ -82,11 +89,23 @@ func _client_connected(id) -> void:
 func _client_disconnected(id) -> void:
 	print("Client disconnected (", id, ")")
 	
+	
 	if get_tree().is_network_server():
+		
+		# remove the peer id from the "managemen_gui_clients"
 		if id != 1:
 			management_gui_clients.erase(id)
 			rset("management_gui_clients", management_gui_clients)
-	
+		
+		# set status of corresponding client to offline
+		var client_id : int = peer_id_client_id_dict[id]
+		for peer in management_gui_clients:
+			rpc_id(peer, "update_client_status", client_id, RRStateScheme.client_offline)
+		
+		# remove the peer id from the ids dict
+		peer_id_client_id_dict.erase(id)
+
+
 
 
 
@@ -98,8 +117,11 @@ func _connected_ok() -> void:
 	rpc_id(1, "login_management_gui", get_tree().get_network_unique_id())
 	
 	# add client to the clients dict
-	for client in management_gui_clients:
-		rpc_id(client, "add_client", GetSystemInformation.own_client_id, GetSystemInformation.get_machine_properties())
+	for peer in management_gui_clients:
+		rpc_id(peer, "add_client", GetSystemInformation.own_client_id, GetSystemInformation.get_machine_properties())
+	
+	# add the id to the dict on the server
+	rpc_id(1, "add_entry_to_id_dict", get_tree().get_network_unique_id(), GetSystemInformation.own_client_id)
 
 
 
@@ -123,6 +145,12 @@ func _connected_fail() -> void:
 
 
 
+# add entry to the peer_id_client_id dictionary
+master func add_entry_to_id_dict(peer_id : int, client_id : int) -> void:
+	peer_id_client_id_dict[peer_id] = client_id
+	rset("peer_id_client_id_dict", peer_id_client_id_dict)
+
+
 # this will add the given network id to the "management_gui_clients" array on the master. Then the master syncs this variable to all puppets
 master func login_management_gui(network_id : int) -> void:
 	if not management_gui_clients.has(network_id):
@@ -141,6 +169,10 @@ master func logout_management_gui(network_id : int) -> void:
 
 
 ######## Remote Procedures ########
+
+puppet func set_rr_data(data : Dictionary) -> void:
+	RaptorRender.rr_data = data
+
 
 remotesync func add_job(job_id : int, job : Dictionary) -> void:
 	RaptorRender.rr_data.jobs[job_id] = job
@@ -201,11 +233,11 @@ remotesync func update_job_priority(job_id : int, priority : int) -> void:
 
 remotesync func update_job_states(job_ids : Array, desired_status : String) -> void:
 	for job in job_ids:
-		update_job_state(job, desired_status)
+		update_job_status(job, desired_status)
 
 
 
-remotesync func update_job_state(job_id : int, desired_status : String) -> void:
+remotesync func update_job_status(job_id : int, desired_status : String) -> void:
 	
 	if RaptorRender.rr_data.jobs.has(job_id):
 		
@@ -327,11 +359,11 @@ remotesync func update_job_state(job_id : int, desired_status : String) -> void:
 
 remotesync func update_chunk_states(job_id : int, chunk_ids : Array, desired_status : String) -> void:
 	for chunk in chunk_ids:
-		update_chunk_state(job_id, chunk, desired_status)
+		update_chunk_status(job_id, chunk, desired_status)
 
 
 
-remotesync func update_chunk_state(job_id : int, chunk_id : int, desired_status : String) -> void:
+remotesync func update_chunk_status(job_id : int, chunk_id : int, desired_status : String) -> void:
 	
 	if RaptorRender.rr_data.jobs.has(job_id):
 		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
@@ -342,6 +374,7 @@ remotesync func update_chunk_state(job_id : int, chunk_id : int, desired_status 
 				
 				# desired state "rendering"
 				RRStateScheme.chunk_rendering:
+					
 					if current_status != RRStateScheme.chunk_cancelled and current_status != RRStateScheme.chunk_finished:
 						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = desired_status
 				
@@ -469,13 +502,18 @@ remotesync func chunk_finished_successfully(job_id : int, chunk_id : int, try_id
 
 
 
-remotesync func chunk_error(job_id : int, chunk_id : int, try_id : int, time_stopped : int) -> void:
+remotesync func chunk_error(client_id : int, job_id : int, chunk_id : int, try_id : int, time_stopped : int) -> void:
 	if RaptorRender.rr_data.jobs.has(job_id):
 		if RaptorRender.rr_data.jobs[job_id].chunks.has(chunk_id):
 			if RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries.has(try_id):
 				
 				RaptorRender.rr_data.jobs[job_id].errors += 1
 				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].errors += 1
+				RaptorRender.rr_data.clients[client_id].error_count += 1
+				if RaptorRender.rr_data.jobs[job_id].erroneous_clients.has(client_id):
+					RaptorRender.rr_data.jobs[job_id].erroneous_clients[client_id] += 1
+				else: 
+					RaptorRender.rr_data.jobs[job_id].erroneous_clients[client_id] = 1
 				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].status = RRStateScheme.try_error
 				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].tries[try_id].time_stopped = time_stopped
 				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = RRStateScheme.chunk_queued
@@ -509,8 +547,8 @@ remotesync func add_client(client_id : int, machine_properties : Dictionary) -> 
 			RaptorRender.rr_data.clients[client_id] = new_client
 			
 			# now send it to all connected management guis
-			for client in management_gui_clients:
-				rpc_id(client, "copy_client", client_id, new_client)
+			for peer in management_gui_clients:
+				rpc_id(peer, "copy_client", client_id, new_client)
 
 
 
@@ -636,6 +674,15 @@ remotesync func update_client_hw_stats(client_id : int, cpu_usage : int, memory_
 
 
 
+# This will update the hardware statistics like cpu usage etc. for a given client
+remotesync func update_client_current_job(client_id : int, job_id : int, chunk_id : int, try_id : int) -> void:
+	
+	if RaptorRender.rr_data.clients.has(client_id):
+		RaptorRender.rr_data.clients[client_id].current_job_id = job_id
+		RaptorRender.rr_data.clients[client_id].last_render_log = [job_id, chunk_id, try_id]
+
+
+
 remotesync func update_pools(pools : Dictionary) -> void:
 	
 	RaptorRender.rr_data.pools = pools
@@ -664,10 +711,59 @@ remotesync func update_pools(pools : Dictionary) -> void:
 
 
 
-# start chunk
+# this is meant to only be executed on the client that renders that job, not the whole network.
+remotesync func start_render(job_id : int, chunk_id : int, try_id : int ) -> void:
+	
+	# add a new try
+	var new_try_data : Dictionary = {
+		"cmd" : "",
+		"status" : RRStateScheme.try_rendering,
+		"client" : GetSystemInformation.own_client_id,
+		"time_started" : OS.get_unix_time(),
+		"time_stopped" : 0
+		}
+	
+	# add the try
+	for peer in management_gui_clients:
+		rpc_id(peer,"add_try", job_id, chunk_id, try_id, new_try_data)
+	
+	# start this chunk on the client
+	JobExecutionManager.start_chunk( job_id, chunk_id, try_id)
+	
+	# set "current_job" and "last_render_log" information for the client
+	for peer in management_gui_clients:
+		rpc_id(peer, "update_client_current_job", GetSystemInformation.own_client_id, job_id, chunk_id, try_id)
+	
+	# set job state to rendering
+	for peer in management_gui_clients:
+		rpc_id(peer, "update_job_status", job_id, RRStateScheme.job_rendering)
+	
+	# set chunk state to rendering
+	for peer in management_gui_clients:
+		rpc_id(peer, "update_chunk_status", job_id, chunk_id, RRStateScheme.chunk_rendering)
+		
+	# set client state to rendering
+	for peer in management_gui_clients:
+		rpc_id(peer, "update_client_status", GetSystemInformation.own_client_id, RRStateScheme.client_rendering)
+	
+	# wait one second
+	yield(get_tree().create_timer(1.0), "timeout")
+	
+	# let the server know that the dispatched job has been accepted
+	rpc_id(1, "dispatch_response", GetSystemInformation.own_client_id, job_id, chunk_id)
+
+
+
+# this removes the clients / chunks from the blocked list in the distribution manager
+master func dispatch_response(client_id : int, job_id : int, chunk_id : int) -> void:
+	JobDistributionManager.blocked_clients.erase(client_id)
+	
+	if JobDistributionManager.blocked_chunks.has(job_id):
+		JobDistributionManager.blocked_chunks[job_id].erase(chunk_id)
+		if JobDistributionManager.blocked_chunks[job_id].keys().size() == 0:
+			JobDistributionManager.blocked_chunks.erase(job_id)
+
 
 # new image_directory detected
 
 # reset error counts
-
-# mark chunk as rendering

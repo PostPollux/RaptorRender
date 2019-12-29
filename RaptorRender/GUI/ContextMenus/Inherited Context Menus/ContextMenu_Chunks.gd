@@ -86,8 +86,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.ChunksTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_chunk_states", RaptorRender.current_job_id_for_job_info_panel, selected_ids, RRStateScheme.chunk_queued)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_chunk_states", RaptorRender.current_job_id_for_job_info_panel, selected_ids, RRStateScheme.chunk_queued)
 			
 			
 			
@@ -95,8 +95,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.ChunksTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "mark_chunks_as_finished", RaptorRender.current_job_id_for_job_info_panel, selected_ids)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "mark_chunks_as_finished", RaptorRender.current_job_id_for_job_info_panel, selected_ids)
 			
 	
 	

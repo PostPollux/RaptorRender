@@ -108,8 +108,8 @@ func apply_changes() -> void:
 		pool_iterator += 1
 	
 	# override the rr_data pool dict with the local one
-	for client in RRNetworkManager.management_gui_clients:
-		RRNetworkManager.rpc_id(client, "update_pools", pools_dict_with_new_ids_in_correct_order.duplicate())
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "update_pools", pools_dict_with_new_ids_in_correct_order.duplicate())
 	
 	emit_signal("changes_applied_successfully")
 

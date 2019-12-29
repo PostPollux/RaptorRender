@@ -170,8 +170,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_client_states", selected_ids, RRStateScheme.client_available)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_client_states", selected_ids, RRStateScheme.client_available)
 			
 			RaptorRender.ClientsTable.refresh()
 			
@@ -181,8 +181,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_client_states", selected_ids, RRStateScheme.client_rendering_disabled_deferred)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_client_states", selected_ids, RRStateScheme.client_rendering_disabled_deferred)
 				
 			RaptorRender.ClientsTable.refresh()
 			
@@ -192,8 +192,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_client_states", selected_ids, RRStateScheme.client_disabled)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_client_states", selected_ids, RRStateScheme.client_disabled)
 			
 			RaptorRender.ClientsTable.refresh()
 			
@@ -358,8 +358,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			for selected in selected_ids:
 				RaptorRender.rr_data.pools[RaptorRender.clients_pool_filter].clients.erase(selected)
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "update_pools", RaptorRender.rr_data.pools)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "update_pools", RaptorRender.rr_data.pools)
 		
 		
 		16:  # Separator
@@ -377,8 +377,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 				if status == RRStateScheme.client_offline:
 					final_selected_ids.append(selected)
 			
-			for client in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(client, "remove_clients", final_selected_ids)
+			for peer in RRNetworkManager.management_gui_clients:
+				RRNetworkManager.rpc_id(peer, "remove_clients", final_selected_ids)
 
 
 
@@ -390,8 +390,8 @@ func pool_submenu_item_selected(pool_id : int) -> void:
 		if not RaptorRender.rr_data.pools[pool_id].clients.has(selected):
 			RaptorRender.rr_data.pools[pool_id].clients.append(selected)
 	
-	for client in RRNetworkManager.management_gui_clients:
-		RRNetworkManager.rpc_id(client, "update_pools", RaptorRender.rr_data.pools)
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "update_pools", RaptorRender.rr_data.pools)
 
 
 
