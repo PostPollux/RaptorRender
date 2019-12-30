@@ -123,6 +123,8 @@ func enable_disable_items() -> void:
 			self.set_item_disabled(2, false) # diable client immediately
 			self.set_item_disabled(4, false) # configure client
 			self.set_item_disabled(6, false) # reset client error count
+			self.set_item_disabled(9, false) # shutdown computer
+			self.set_item_disabled(10, false) # reboot computer
 			self.set_item_disabled(12, false) # execute command
 		
 		if status == RRStateScheme.client_available:
@@ -137,6 +139,8 @@ func enable_disable_items() -> void:
 			self.set_item_disabled(1, false) # diable client deffered
 			self.set_item_disabled(2, false) # diable client immediately
 			self.set_item_disabled(6, false) # reset client error count
+			self.set_item_disabled(9, false) # shutdown computer
+			self.set_item_disabled(10, false) # reboot computer
 			self.set_item_disabled(12, false) # execute command
 		
 		if status == RRStateScheme.client_disabled:
@@ -211,7 +215,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 		
 		5:  # Separator
-			pass		
+			pass
 			
 			
 			
@@ -220,7 +224,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
 			
 			for selected in selected_ids:
-				RaptorRender.rr_data.clients[selected].error_count = 0
+				for peer in RRNetworkManager.management_gui_clients:
+					RRNetworkManager.rpc_id(peer, "reset_client_errors", selected)
 			
 			RaptorRender.ClientsTable.refresh()
 			
@@ -304,32 +309,63 @@ func _on_ContextMenu_index_pressed(index) -> void:
 				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_2"), 9) # Your machine should wake up soon, if it supports WakeOnLan!
 			
 			
-		9:  # Shutdown Client
-			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
 			
-#			# Linux
-#			var arguments = ["-P", "now", "Raptor Render shuts down your System!"]
-#			var result = []
-#			OS.execute("shutdown", arguments, false, result)
-
-#			# Windows
-#			var arguments = ["-s", "-t", "0"]
-#			var result = []
-#			OS.execute("shutdown", arguments, false, result)
+		9:  # Shutdown Client
+			
+			var selected_ids : Array = RaptorRender.ClientsTable.get_selected_ids()
+			var final_selected_ids : Array = []
+			
+			for selected in selected_ids:
+				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
+					final_selected_ids.append(selected)
+			
+			var selected_id_size : int = final_selected_ids.size()
+			
+			for selected in final_selected_ids:
+				
+				for peer in RRNetworkManager.peer_id_client_id_dict:
+					if RRNetworkManager.peer_id_client_id_dict[peer] == selected:
+						if peer != 1:
+							RRNetworkManager.rpc_id(peer, "shutdown")
+						else:
+							selected_id_size -= 1
+							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_7"), 8) # For safety reasons the server can't be shut down this way.
+						break
+			
+			if selected_id_size > 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(selected_id_size) + " " + tr("MSG_INFO_6"), 8) # x machines will shut down in a few seconds...
+			elif selected_id_size == 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_5").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # {client_name} will shut down in a few seconds...
+			
 			
 			
 		10:  # Reboot Client
-			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
+			var selected_ids : Array = RaptorRender.ClientsTable.get_selected_ids()
+			var final_selected_ids : Array = []
 			
-#			# Linux 
-#			var arguments = ["-r", "now", "Raptor Render reboots your System!"]
-#			var result = []
-#			OS.execute("shutdown", arguments, false, result)
+			for selected in selected_ids:
+				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
+					final_selected_ids.append(selected)
 			
-#			# Windows
-#			var arguments = ["-r", "-t","0"]
-#			var result = []
-#			OS.execute("shutdown", arguments, false, result)
+			var selected_id_size : int = final_selected_ids.size()
+			
+			for selected in final_selected_ids:
+				
+				for peer in RRNetworkManager.peer_id_client_id_dict:
+					if RRNetworkManager.peer_id_client_id_dict[peer] == selected:
+						if peer != 1:
+							RRNetworkManager.rpc_id(peer, "reboot")
+						else:
+							selected_id_size -= 1
+							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_10"), 8) # For safety reasons the server can't be rebooted this way.
+						break
+			
+			if selected_id_size > 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(selected_id_size) + " " + tr("MSG_INFO_9"), 8) # x machines will reboot in a few seconds...
+			elif selected_id_size == 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_8").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # {client_name} will reboot in a few seconds...
+			
+			
 			
 		11:  # Separator
 			pass
@@ -337,8 +373,26 @@ func _on_ContextMenu_index_pressed(index) -> void:
 		
 		
 		12:  # Execute Command
-			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_ERROR_2"), 5) # Not implemented yet
-		
+			var selected_ids : Array = RaptorRender.ClientsTable.get_selected_ids()
+			var final_selected_ids : Array = []
+			
+			var command : String = "brave"
+			
+			for selected in selected_ids:
+				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
+					final_selected_ids.append(selected)
+			
+			var selected_id_size : int = final_selected_ids.size()
+			
+			for selected in final_selected_ids:
+				for peer in RRNetworkManager.peer_id_client_id_dict:
+					if RRNetworkManager.peer_id_client_id_dict[peer] == selected:
+						RRNetworkManager.rpc_id(peer, "execute_command", command)
+				
+			if selected_id_size > 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(selected_id_size) + " " + tr("MSG_INFO_12").replace("{command}", command).replace("{number}", String(selected_id_size)), 8) # The command "{command}" has been executed on {number} computers.
+			elif selected_id_size == 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_11").replace("{command}", command).replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # The command "{command}" has been executed on {client_name}.
 		
 		
 		13:  # Separator

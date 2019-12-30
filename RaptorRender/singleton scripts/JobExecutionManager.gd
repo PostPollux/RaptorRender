@@ -88,6 +88,8 @@ func critical_error_detected() -> void:
 	
 	for peer in RRNetworkManager.management_gui_clients:
 		RRNetworkManager.rpc_id(peer, "chunk_error", GetSystemInformation.own_client_id, current_processing_job, current_processing_chunk, current_processing_try, OS.get_unix_time())
+	
+	reactivate_client()
 
 
 
@@ -238,6 +240,10 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int) -> void:
 	var cmd_string : String = ""
 	var log_file_name : String = ""
 	
+	# build a reasonable log file name
+	log_file_name = "chunk_" + String(chunk_id) + "_try_" + String(try_id)
+	current_log_file_path = RRPaths.get_job_log_path(job_id) + log_file_name + ".txt"
+	
 	
 	# Load correct job type settings for setting up the command line string
 	var job_type_settings : ConfigFile = ConfigFile.new()
@@ -245,8 +251,12 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int) -> void:
 	var job_type_version : String = RaptorRender.rr_data.jobs[job_id].type_version
 	
 	var settings_file_path : String =  RRPaths.job_types_default_path + job_type + "/" + job_type_version + ".cfg"
-	job_type_settings.load( settings_file_path )
+	var load_job_type_settings_ok : int = job_type_settings.load( settings_file_path )
 	
+	if load_job_type_settings_ok != 0: # 0 means loading was successful
+		print("loading job type settings failed")
+		critical_error_detected()
+		return
 	
 	# load the standard commandline defined in the .cfg file
 	cmd_string = job_type_settings.get_value("JobTypeSettings", "commandline", "")
@@ -311,19 +321,18 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int) -> void:
 			
 			
 	
-	# build a reasonable log file name
-	log_file_name = "chunk_" + String(chunk_id) + "_try_" + String(try_id)
-	current_log_file_path = RRPaths.get_job_log_path(job_id) + log_file_name + ".txt"
-	
 	# load the correct job type settings file for the validation of the coming render process
-	RenderLogValidator.load_job_type_settings_CRP(job_type, job_type_version)
-	
-	# add cmd value to try information
-	RRNetworkManager.rpc("update_try_cmd", job_id, chunk_id, try_id, cmd_string)
-	
-	# when we want to kill a process later on we will have to search in the pids for this command line string. As the path can change, for example if the executable is a shell script that links to another location, we should rather search for a string without the executable path.
-	var cmd_string_without_executable : String = cmd_string.replace(job_type_settings.get_value("JobTypeSettings", "path_executable", ""), "").dedent()
-	
-	# now invoke the render process with the freshly created commandline string
-	CommandLineManager.start_render_process(job_id, cmd_string, cmd_string_without_executable, current_log_file_path)
+	if RenderLogValidator.load_job_type_settings_CRP(job_type, job_type_version):
+		
+		# add cmd value to try information
+		RRNetworkManager.rpc("update_try_cmd", job_id, chunk_id, try_id, cmd_string)
+		
+		# when we want to kill a process later on we will have to search in the pids for this command line string. As the path can change, for example if the executable is a shell script that links to another location, we should rather search for a string without the executable path.
+		var cmd_string_without_executable : String = cmd_string.replace(job_type_settings.get_value("JobTypeSettings", "path_executable", ""), "").dedent()
+		
+		# now invoke the render process with the freshly created commandline string
+		CommandLineManager.start_render_process(job_id, cmd_string, cmd_string_without_executable, current_log_file_path)
+		
+	else:
+		critical_error_detected()
 	

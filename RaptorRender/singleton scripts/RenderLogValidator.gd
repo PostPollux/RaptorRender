@@ -97,7 +97,7 @@ func _ready() -> void:
 
 
 
-func load_job_type_settings_CRP(job_type : String, job_type_version : String) -> void:
+func load_job_type_settings_CRP(job_type : String, job_type_version : String) -> bool:
 	
 	var settings_file_path : String =  RRPaths.job_types_default_path + job_type + "/" + job_type_version + ".cfg"
 	var file_check : File = File.new()
@@ -106,7 +106,7 @@ func load_job_type_settings_CRP(job_type : String, job_type_version : String) ->
 		var error_msg : String = tr("MSG_ERROR_11") + "\n" + job_type + "/" + job_type_version
 		if RaptorRender.NotificationSystem != null:
 			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_msg, 10) # The following job type configuration file could not be loaded:
-		return
+		return false
 	
 	
 	# reset software start success detected
@@ -146,11 +146,12 @@ func load_job_type_settings_CRP(job_type : String, job_type_version : String) ->
 	else:
 		var regex_str : String = job_type_settings_CRP.get_value("RenderLogValidation", "success_log", "").replace("''","\"" )
 		success_regex_CRP.compile( regex_str )
+		
+	return true
 
 
 
-
-func load_job_type_settings_HIGHLIGHT(job_type : String, job_type_version : String) -> void:
+func load_job_type_settings_HIGHLIGHT(job_type : String, job_type_version : String) -> bool:
 	
 	var settings_file_path : String =  RRPaths.job_types_default_path + job_type + "/" + job_type_version + ".cfg"
 	var file_check : File = File.new()
@@ -159,7 +160,7 @@ func load_job_type_settings_HIGHLIGHT(job_type : String, job_type_version : Stri
 		var error_msg : String = tr("MSG_ERROR_11") + "\n" + job_type + "/" + job_type_version
 		if RaptorRender.NotificationSystem != null:
 			RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_msg, 10) # The following job type configuration file could not be loaded:
-		return
+		return false
 	
 	# reset software start success detected
 	HIGHLIGHT_software_start_success_detected = false
@@ -207,7 +208,8 @@ func load_job_type_settings_HIGHLIGHT(job_type : String, job_type_version : Stri
 	else:
 		var regex_str : String = job_type_settings_HIGHLIGHT.get_value("RenderLogValidation", "success_log", "").replace("''","\"" )
 		success_regex_HIGHLIGHT.compile( regex_str )
-
+		
+	return true
 
 
 

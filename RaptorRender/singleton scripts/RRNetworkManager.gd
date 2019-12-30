@@ -519,7 +519,7 @@ remotesync func chunk_error(client_id : int, job_id : int, chunk_id : int, try_i
 				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = RRStateScheme.chunk_queued
 				
 				var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(job_id)
-					
+				
 				# set job status to "queued" if no active chunks are left
 				if chunk_counts[2] == 0:
 					RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_queued
@@ -731,20 +731,20 @@ remotesync func start_render(job_id : int, chunk_id : int, try_id : int ) -> voi
 	JobExecutionManager.start_chunk( job_id, chunk_id, try_id)
 	
 	# set "current_job" and "last_render_log" information for the client
-	for peer in management_gui_clients:
-		rpc_id(peer, "update_client_current_job", GetSystemInformation.own_client_id, job_id, chunk_id, try_id)
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "update_client_current_job", GetSystemInformation.own_client_id, job_id, chunk_id, try_id)
 	
 	# set job state to rendering
-	for peer in management_gui_clients:
-		rpc_id(peer, "update_job_status", job_id, RRStateScheme.job_rendering)
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "update_job_status", job_id, RRStateScheme.job_rendering)
 	
 	# set chunk state to rendering
-	for peer in management_gui_clients:
-		rpc_id(peer, "update_chunk_status", job_id, chunk_id, RRStateScheme.chunk_rendering)
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "update_chunk_status", job_id, chunk_id, RRStateScheme.chunk_rendering)
 		
 	# set client state to rendering
-	for peer in management_gui_clients:
-		rpc_id(peer, "update_client_status", GetSystemInformation.own_client_id, RRStateScheme.client_rendering)
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "update_client_status", GetSystemInformation.own_client_id, RRStateScheme.client_rendering)
 	
 	# wait one second
 	yield(get_tree().create_timer(1.0), "timeout")
@@ -764,6 +764,101 @@ master func dispatch_response(client_id : int, job_id : int, chunk_id : int) -> 
 			JobDistributionManager.blocked_chunks.erase(job_id)
 
 
+
+remotesync func reset_client_errors(client_id : int) -> void:
+	
+	# remove error counts from the client itself
+	RaptorRender.rr_data.clients[client_id].error_count = 0
+	
+	# remove the errors caused by this client from all jobs
+	for job in RaptorRender.rr_data.jobs.keys():
+		if RaptorRender.rr_data.jobs[job].erroneous_clients.has(client_id):
+			var errors_from_that_client : int = RaptorRender.rr_data.jobs[job].erroneous_clients[client_id]
+			RaptorRender.rr_data.jobs[job].erroneous_clients.erase(client_id)
+			RaptorRender.rr_data.jobs[job].errors -= errors_from_that_client
+
+
+
+remotesync func reset_job_errors(job_id : int) -> void:
+	
+	# remove error counts from the job itself
+	RaptorRender.rr_data.jobs[job_id].errors = 0
+	
+	# remove errors from all chunks
+	for chunk in RaptorRender.rr_data.jobs[job_id].chunks.keys():
+		RaptorRender.rr_data.jobs[job_id].chunks[chunk].errors = 0
+	
+	# remove the errors from clients that came from this job
+	for client in RaptorRender.rr_data.jobs[job_id].erroneous_clients.keys():
+		RaptorRender.rr_data.clients[client].error_count -= RaptorRender.rr_data.jobs[job_id].erroneous_clients[client]
+		RaptorRender.rr_data.jobs[job_id].erroneous_clients.erase(client)
+
+
+
+
+puppet func shutdown () -> void:
+	
+	match OS.get_name():
+		
+		# Linux
+		"X11" : 
+			
+			var arguments = ["-P", "now", "Raptor Render shuts down your System!"]
+			var result = []
+			OS.execute("shutdown", arguments, false, result)
+		
+		
+		# Windows
+		"Windows" :
+			
+			var arguments = ["-s", "-t", "0"]
+			var result = []
+			OS.execute("shutdown", arguments, false, result)
+
+
+
+puppet func reboot () -> void:
+	
+	match OS.get_name():
+		
+		# Linux
+		"X11" : 
+			
+			var arguments = ["-r", "now", "Raptor Render reboots your System!"]
+			var result = []
+			OS.execute("shutdown", arguments, false, result)
+		
+		
+		# Windows
+		"Windows" :
+			
+			var arguments = ["-r", "-t","0"]
+			var result = []
+			OS.execute("shutdown", arguments, false, result)
+
+
+
+remote func execute_command (command : String) -> void:
+	
+	match OS.get_name():
+		
+		# Linux
+		"X11" : 
+			
+			var output : Array = []
+			var arguments : Array = ["-c", command]
+			OS.execute("bash", arguments, false, output)
+		
+		
+		# Windows
+		"Windows" :
+			
+			var output : Array = []
+			var arguments : Array = ['/C', command]
+			OS.execute('CMD.exe', arguments, false, output)
+
+
+
 # new image_directory detected
 
-# reset error counts
+

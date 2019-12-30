@@ -72,7 +72,8 @@ func add_info_notification(heading : String, message : String, self_destruction_
 	add_child(InfoNotification)
 	
 	move_all_notifications_down( InfoNotification.height )
-
+	
+	print ("INFO: ", message)
 
 
 func add_error_notification(heading : String, message : String, self_destruction_time : int) -> void:
@@ -84,7 +85,8 @@ func add_error_notification(heading : String, message : String, self_destruction
 	add_child(ErrorNotification)
 	
 	move_all_notifications_down( ErrorNotification.height )
-
+	
+	print ("ERROR: ", message)
 
 
 

@@ -198,7 +198,8 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			for selected in selected_ids:
 				
-				RaptorRender.rr_data.jobs[selected].errors = 0
+				for peer in RRNetworkManager.management_gui_clients:
+					RRNetworkManager.rpc_id(peer, "reset_job_errors", selected)
 				
 			RaptorRender.JobsTable.refresh()
 			
