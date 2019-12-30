@@ -279,7 +279,9 @@ remotesync func update_job_status(job_id : int, desired_status : String) -> void
 					for chunk in RaptorRender.rr_data.jobs[job_id].chunks.keys():
 						if RaptorRender.rr_data.jobs[job_id].chunks[chunk].status == RRStateScheme.chunk_paused:
 							RaptorRender.rr_data.jobs[job_id].chunks[chunk].status = RRStateScheme.chunk_queued
-			
+				
+				if current_status == RRStateScheme.job_rendering_paused_deferred:
+					RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_rendering
 			
 			# desired state "error"
 			RRStateScheme.job_error:  
@@ -289,7 +291,7 @@ remotesync func update_job_status(job_id : int, desired_status : String) -> void
 			# desired state "paused"
 			RRStateScheme.job_paused:  
 				
-				if current_status == RRStateScheme.job_rendering or current_status == RRStateScheme.job_queued or current_status == RRStateScheme.job_error:
+				if current_status == RRStateScheme.job_rendering or current_status == RRStateScheme.job_rendering_paused_deferred or current_status == RRStateScheme.job_queued or current_status == RRStateScheme.job_error:
 					
 					# cancel render if needed
 					if JobExecutionManager.current_processing_job == job_id and CommandLineManager.currently_rendering:

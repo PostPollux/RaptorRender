@@ -98,6 +98,12 @@ func enable_disable_items() -> void:
 			self.set_item_disabled(4, false) # cancel job permanently
 			self.set_item_disabled(7, false) # reset job error count
 		
+		if status == RRStateScheme.job_rendering_paused_deferred:
+			self.set_item_disabled(1, false) # pause job immediately
+			self.set_item_disabled(2, false) # resume job
+			self.set_item_disabled(4, false) # cancel job permanently
+			self.set_item_disabled(7, false) # reset job error count
+		
 		if status == RRStateScheme.job_queued:
 			self.set_item_disabled(1, false) # pause job immediately
 			self.set_item_disabled(4, false) # cancel job permanently
