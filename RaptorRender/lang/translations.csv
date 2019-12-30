@@ -209,19 +209,19 @@ UNKNOWN,unknown,unbekannt
 ,,
 ,,
 MSG_INFO_1,Info,Info
-MSG_INFO_2,"Your machine should wake up soon, if it supports WakeOnLan…","Ihr Computer sollte in kürze hochfahren, falls er WakeOnLan unterstützt…"
-MSG_INFO_3,"machines should wake up soon, if they support WakeOnLan…","Computer sollten in kürze hochfahren, falls sie WakeOnLan unterstützen…"
+MSG_INFO_2,"""{client_name}"" should wake up soon, if it supports WakeOnLan.","""{client_name}"" sollte in kürze hochfahren, falls ""WakeOnLan"" unterstützt wird."
+MSG_INFO_3,"{number} machines should wake up soon, if they support WakeOnLan.","{number} Computer sollten in kürze hochfahren, falls sie ""WakeOnLan"" unterstützen."
 MSG_INFO_4,Selection has been copied to clipboard!,Selektierter Text wurde in die Zwischenablage kopiert!
-MSG_INFO_5,"""{client_name}"" will shut down in a few seconds...","""{client_name} "" wird in ein paar Sekunden herunterfahren..."
-MSG_INFO_6,machines will shut down in a few seconds...,Computer werden in ein paar Sekunden herunterfahren...
-MSG_INFO_7,For safety reasons the server can't be shut down this way.,Der Server kann auf diese Weise nicht heruntergefahren werden...
-MSG_INFO_8,"""{client_name}"" will reboot in a few seconds...","""{client_name} "" wird in ein paar Sekunden neugestartet..."
-MSG_INFO_9,machines will reboot in a few seconds...,Computer werden in ein paar Sekunden neugestartet...
-MSG_INFO_10,For safety reasons the server can't be rebooted this way.,Der Server kann auf diese Weise nicht neugestartet werden...
+MSG_INFO_5,"""{client_name}"" should shut down in a few seconds.","""{client_name} "" sollte in ein paar Sekunden herunterfahren."
+MSG_INFO_6,{number} machines should shut down in a few seconds.,{number} Computer sollten in ein paar Sekunden herunterfahren.
+MSG_INFO_7,"For safety reasons the server ""{server_name}"" can't be shut down this way.","Der Server ""{server_name}"" kann auf diese Weise nicht heruntergefahren werden."
+MSG_INFO_8,"""{client_name}"" should reboot in a few seconds.","""{client_name} "" sollte in ein paar Sekunden neugestartet werden."
+MSG_INFO_9,{number} machines should reboot in a few seconds.,{number} Computer sollten in ein paar Sekunden neugestartet werden.
+MSG_INFO_10,"For safety reasons the server ""{server_name}""can't be rebooted this way.","Der Server ""{server_name}"" kann auf diese Weise nicht neugestartet werden."
 MSG_INFO_11,"The command ""{command}"" has been executed on ""{client_name}"".","Der Befehl ""{command}"" wurde auf ""{client_name}""  ausgeführt."
 MSG_INFO_12,"The command ""{command}"" has been executed on {number} computers.","Der Befehl ""{command}"" wurde auf {number} Computer ausgeführt."
-"","",""
-"","",""
+,,
+,,
 POPUP_BUTTON_CANCEL,Cancel,Abbrechen
 POPUP_BUTTON_OK,Ok,Ok
 ,,

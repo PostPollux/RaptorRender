@@ -242,19 +242,23 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			# first six bytes are all 255 in hex so "FF" -> FF FF FF FF FF FF
 			# next 96 bytes are 16 repetitions of the destination Mac adress (which are also 6 bytes in hex each)
 			
-			var amount_of_computer_tried_to_wake_up = 0
 			var mac_addresses = []
 			
 			# fill the mac_addresses array with all the mac addresssess that are supposed to recieve a WOL package
 			var selected_ids = RaptorRender.ClientsTable.get_selected_ids()
+			var final_selected_ids : Array = []
 			
 			for selected in selected_ids:
 				if RaptorRender.rr_data.clients[selected].status == RRStateScheme.client_offline:
-					amount_of_computer_tried_to_wake_up  += 1
-					var mac_addresses_of_selected = RaptorRender.rr_data.clients[selected].mac_addresses
-					for mac_address_of_selected in mac_addresses_of_selected:
-						mac_address_of_selected = mac_address_of_selected.replace(":","")  # remove ":"
-						mac_addresses.append(mac_address_of_selected)
+					final_selected_ids.append(selected)
+			
+			var final_selected_ids_size : int = final_selected_ids.size()
+			
+			for selected in final_selected_ids:
+				var mac_addresses_of_selected = RaptorRender.rr_data.clients[selected].machine_properties.mac_addresses
+				for mac_address_of_selected in mac_addresses_of_selected:
+					mac_address_of_selected = mac_address_of_selected.replace(":","")  # remove ":"
+					mac_addresses.append(mac_address_of_selected)
 			
 			
 			# create an UDP Socket
@@ -303,10 +307,10 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			# close UDP Socket
 			socketUDP.close()
 			
-			if amount_of_computer_tried_to_wake_up > 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(amount_of_computer_tried_to_wake_up) + " " +  tr("MSG_INFO_3"), 9) # x machines should wake up soon, if they supports WakeOnLan…
+			if final_selected_ids_size > 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_3").replace("{number}", String(final_selected_ids_size)), 9) # {number} machines should wake up soon, if they supports WakeOnLan…
 			else:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_2"), 9) # Your machine should wake up soon, if it supports WakeOnLan!
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_2").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 9) # "{client_name}" should wake up soon, if it supports WakeOnLan!
 			
 			
 			
@@ -319,7 +323,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
 					final_selected_ids.append(selected)
 			
-			var selected_id_size : int = final_selected_ids.size()
+			var final_selected_ids_size : int = final_selected_ids.size()
 			
 			for selected in final_selected_ids:
 				
@@ -328,13 +332,13 @@ func _on_ContextMenu_index_pressed(index) -> void:
 						if peer != 1:
 							RRNetworkManager.rpc_id(peer, "shutdown")
 						else:
-							selected_id_size -= 1
-							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_7"), 8) # For safety reasons the server can't be shut down this way.
+							final_selected_ids_size -= 1
+							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_7").replace("{server_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # For safety reasons the server "{server_name}" can't be shut down this way.
 						break
 			
-			if selected_id_size > 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(selected_id_size) + " " + tr("MSG_INFO_6"), 8) # x machines will shut down in a few seconds...
-			elif selected_id_size == 1:
+			if final_selected_ids_size > 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_6").replace("{number}", String(final_selected_ids_size)), 8) # {number} machines will shut down in a few seconds...
+			elif final_selected_ids_size == 1:
 				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_5").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # {client_name} will shut down in a few seconds...
 			
 			
@@ -347,7 +351,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
 					final_selected_ids.append(selected)
 			
-			var selected_id_size : int = final_selected_ids.size()
+			var final_selected_ids_size : int = final_selected_ids.size()
 			
 			for selected in final_selected_ids:
 				
@@ -356,13 +360,13 @@ func _on_ContextMenu_index_pressed(index) -> void:
 						if peer != 1:
 							RRNetworkManager.rpc_id(peer, "reboot")
 						else:
-							selected_id_size -= 1
-							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_10"), 8) # For safety reasons the server can't be rebooted this way.
+							final_selected_ids_size -= 1
+							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_10").replace("{server_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # For safety reasons the server "{server_name}" can't be rebooted this way.
 						break
 			
-			if selected_id_size > 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(selected_id_size) + " " + tr("MSG_INFO_9"), 8) # x machines will reboot in a few seconds...
-			elif selected_id_size == 1:
+			if final_selected_ids_size > 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_9").replace("{number}", String(final_selected_ids_size)), 8) # {number} machines will reboot in a few seconds...
+			elif final_selected_ids_size == 1:
 				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_8").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # {client_name} will reboot in a few seconds...
 			
 			
@@ -382,16 +386,16 @@ func _on_ContextMenu_index_pressed(index) -> void:
 				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
 					final_selected_ids.append(selected)
 			
-			var selected_id_size : int = final_selected_ids.size()
+			var final_selected_ids_size : int = final_selected_ids.size()
 			
 			for selected in final_selected_ids:
 				for peer in RRNetworkManager.peer_id_client_id_dict:
 					if RRNetworkManager.peer_id_client_id_dict[peer] == selected:
 						RRNetworkManager.rpc_id(peer, "execute_command", command)
 				
-			if selected_id_size > 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), String(selected_id_size) + " " + tr("MSG_INFO_12").replace("{command}", command).replace("{number}", String(selected_id_size)), 8) # The command "{command}" has been executed on {number} computers.
-			elif selected_id_size == 1:
+			if final_selected_ids_size > 1:
+				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_12").replace("{command}", command).replace("{number}", String(final_selected_ids_size)), 8) # The command "{command}" has been executed on {number} computers.
+			elif final_selected_ids_size == 1:
 				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_11").replace("{command}", command).replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # The command "{command}" has been executed on {client_name}.
 		
 		
