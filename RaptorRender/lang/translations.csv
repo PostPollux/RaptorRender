@@ -218,12 +218,14 @@ MSG_INFO_7,"For safety reasons the server ""{server_name}"" can't be shut down t
 MSG_INFO_8,"""{client_name}"" should reboot in a few seconds.","""{client_name} "" sollte in ein paar Sekunden neugestartet werden."
 MSG_INFO_9,{number} machines should reboot in a few seconds.,{number} Computer sollten in ein paar Sekunden neugestartet werden.
 MSG_INFO_10,"For safety reasons the server ""{server_name}""can't be rebooted this way.","Der Server ""{server_name}"" kann auf diese Weise nicht neugestartet werden."
-MSG_INFO_11,"The command ""{command}"" has been executed on ""{client_name}"".","Der Befehl ""{command}"" wurde auf ""{client_name}""  ausgeführt."
+MSG_INFO_11,"The command ""{command}"" has been executed on ""{client_name}"".","Der Befehl ""{command}"" wurde auf ""{client_name}"" ausgeführt."
 MSG_INFO_12,"The command ""{command}"" has been executed on {number} computers.","Der Befehl ""{command}"" wurde auf {number} Computer ausgeführt."
 ,,
 ,,
 POPUP_BUTTON_CANCEL,Cancel,Abbrechen
 POPUP_BUTTON_OK,Ok,Ok
+POPUP_BUTTON_EXECUTE,Execute,Ausführen
+"","",""
 ,,
 POPUP_SUBMIT_JOB_1,Submit Job,Job abschicken
 POPUP_SUBMIT_JOB_2,Job Type:,Job Typ:
@@ -271,3 +273,7 @@ POPUP_POOLMANAGER_7,Clients in pool,Clients in diesem Pool
 POPUP_POOLMANAGER_8,Clients available for pool,Verfügbare Clients
 ,,
 ,,
+POPUP_EXECUTE_COMMAND_1,Execute command,Befehl ausführen
+POPUP_EXECUTE_COMMAND_2,Command:,Befehl:
+"","",""
+"","",""

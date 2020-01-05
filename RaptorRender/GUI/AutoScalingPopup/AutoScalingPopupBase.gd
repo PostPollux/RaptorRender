@@ -9,7 +9,7 @@ class_name AutoScalingPopup
 signal cancel_pressed
 signal ok_pressed
 signal popup_shown
-signal popup_hided
+signal popup_hidden
 
 ### ONREADY VARIABLES
 onready var TitleLabel : Label = $"MainBGPanel/VBoxContainer/Header/HeaderColorRect/HeadingLabel"
@@ -36,8 +36,10 @@ export (float) var margin_right_percent : float = 10
 export (float) var margin_top_percent : float  = 5
 export (float) var margin_bottom_percent : float = 5
 
-### VARIABLES
+export (bool) var auto_destroy_on_close : bool = true
 
+### VARIABLES
+var content : Node
 
 
 
@@ -65,6 +67,11 @@ func _ready() -> void:
 	HeaderBg.color = RRColorScheme.bg_0
 	ButtonsBg.color = RRColorScheme.bg_0
 	
+	ContentContainer.popup_base = self
+	
+	if content != null and ContentContainer.get_child_count() == 0:
+		ContentContainer.add_child( content )
+	
 	# set margins
 	MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
 	MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
@@ -75,22 +82,40 @@ func _ready() -> void:
 	connect("cancel_pressed", ContentContainer, "cancel_pressed")
 	connect("ok_pressed", ContentContainer, "ok_pressed")
 	connect("popup_shown", ContentContainer, "popup_shown")
-	connect("popup_hided", ContentContainer, "popup_hided")
+	connect("popup_hidden", ContentContainer, "popup_hidden")
+
+
+
+func set_content(popup_content : Node) -> void:
+	content = popup_content
+	if is_instance_valid(ContentContainer):
+		ContentContainer.add_child( popup_content )
+
+func set_title(new_tilte : String) -> void:
+	title = new_tilte
+	if is_instance_valid(TitleLabel):
+		TitleLabel.text = title
+
+
+func set_button_texts (cancel_button : String, ok_button : String) -> void:
+	cancel_button_string = cancel_button
+	ok_button_string = ok_button
 	
-	hide_popup()
-
-
-
-func set_content(child : Node) -> void:
-	ContentContainer.add_child( child )
+	if is_instance_valid(CancelButton):
+		CancelButton.text = cancel_button_string
+	if is_instance_valid(OkButton):
+		OkButton.text = ok_button_string
 
 
 func hide_popup() -> void:
 	self.visible = false
-	emit_signal("popup_hided")
+	emit_signal("popup_hidden")
+	
+	if auto_destroy_on_close:
+		queue_free()
+
 
 func show_popup() -> void:
-	
 	# set margins
 	MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
 	MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
@@ -119,3 +144,12 @@ func _on_CancelButton_pressed() -> void:
 func _on_OkButton_pressed() -> void:
 	emit_signal("ok_pressed")
 	
+
+
+func _on_AutoScalingPopup_item_rect_changed() -> void:
+	# set margins
+	if is_instance_valid(MainBg):
+		MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
+		MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
+		MainBg.margin_top = get_viewport_rect().size.y * (margin_top_percent / 100)
+		MainBg.margin_bottom = -get_viewport_rect().size.y * (margin_bottom_percent / 100)

@@ -99,6 +99,7 @@ margin_bottom = 25.0
 rect_min_size = Vector2( 75, 25 )
 custom_styles/normal = ExtResource( 4 )
 text = "Ok"
+[connection signal="item_rect_changed" from="." to="." method="_on_AutoScalingPopup_item_rect_changed"]
 [connection signal="gui_input" from="TransparentBackground" to="." method="_on_TransparentBackground_gui_input"]
 [connection signal="pressed" from="MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer/CancelButton" to="." method="_on_CancelButton_pressed"]
 [connection signal="pressed" from="MainBGPanel/VBoxContainer/PopupButtons/ColorRect/CenterContainer/HBoxContainer/OkButton" to="." method="_on_OkButton_pressed"]

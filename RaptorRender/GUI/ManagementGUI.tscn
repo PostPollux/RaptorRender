@@ -13,7 +13,6 @@
 [ext_resource path="res://RaptorRender/GUI/ClientsTabContainer.gd" type="Script" id=11]
 [ext_resource path="res://RaptorRender/GUI/ManagementGUI.gd" type="Script" id=12]
 
-
 [node name="GUI" type="Node"]
 script = ExtResource( 12 )
 
@@ -185,6 +184,7 @@ margin_left_percent = 25.0
 margin_right_percent = 25.0
 margin_top_percent = 10.0
 margin_bottom_percent = 10.0
+auto_destroy_on_close = false
 
 [node name="PoolManagerPopup" parent="Control" instance=ExtResource( 9 )]
 visible = false
@@ -192,6 +192,7 @@ popup_id = "poolmanager"
 title = "POPUP_POOLMANAGER_1"
 margin_top_percent = 10.0
 margin_bottom_percent = 10.0
+auto_destroy_on_close = false
 
 [node name="NotificationSystem" parent="." instance=ExtResource( 10 )]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/CreateJobButton" to="." method="_on_CreateJobButton_pressed"]

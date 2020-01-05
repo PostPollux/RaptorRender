@@ -1,6 +1,8 @@
 extends PopupMenu
 
 ### PRELOAD RESOURCES
+var AutoScalingPopupBasRes = preload("res://RaptorRender/GUI/AutoScalingPopup/AutoScalingPopupBase.tscn")
+var ExecuteCommandPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/ExecuteCommandPopupContent/ExecuteCommandPopupContent.tscn")
 
 ### SIGNALS
 
@@ -380,23 +382,26 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			var selected_ids : Array = RaptorRender.ClientsTable.get_selected_ids()
 			var final_selected_ids : Array = []
 			
-			var command : String = "brave"
-			
 			for selected in selected_ids:
 				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
 					final_selected_ids.append(selected)
 			
-			var final_selected_ids_size : int = final_selected_ids.size()
+			var root : Node = get_tree().get_root()
+			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
+			popup.margin_left_percent = 30
+			popup.margin_right_percent = 30
+			popup.margin_top_percent = 40
+			popup.margin_bottom_percent = 40
+			popup.set_title("POPUP_EXECUTE_COMMAND_1")
+			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_EXECUTE")
 			
-			for selected in final_selected_ids:
-				for peer in RRNetworkManager.peer_id_client_id_dict:
-					if RRNetworkManager.peer_id_client_id_dict[peer] == selected:
-						RRNetworkManager.rpc_id(peer, "execute_command", command)
-				
-			if final_selected_ids_size > 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_12").replace("{command}", command).replace("{number}", String(final_selected_ids_size)), 8) # The command "{command}" has been executed on {number} computers.
-			elif final_selected_ids_size == 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_11").replace("{command}", command).replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # The command "{command}" has been executed on {client_name}.
+			var popup_content = ExecuteCommandPopupContentRes.instance()
+			popup_content.set_clients(final_selected_ids)
+			
+			popup.set_content(popup_content)
+			
+			root.add_child(popup)
+		
 		
 		
 		13:  # Separator

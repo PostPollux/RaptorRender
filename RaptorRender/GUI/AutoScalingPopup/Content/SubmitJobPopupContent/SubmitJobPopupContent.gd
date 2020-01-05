@@ -299,8 +299,10 @@ func load_type_mask() -> void:
 	specific_input_fields.clear()
 	
 	# create all the specific job settings
-	var specific_job_type_settings : Array = job_type_config.get_section_keys( "SpecificJobSettings" ) 
-	
+	var specific_job_type_settings : Array = [] 
+	if job_type_config.has_section("SpecificJobSettings"):
+		specific_job_type_settings  = job_type_config.get_section_keys( "SpecificJobSettings" ) 
+		
 	for specific_setting in specific_job_type_settings:
 		if specific_setting.find("__") == -1:
 			

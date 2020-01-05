@@ -550,7 +550,8 @@ remotesync func add_client(client_id : int, machine_properties : Dictionary) -> 
 			
 			# now send it to all connected management guis
 			for peer in management_gui_clients:
-				rpc_id(peer, "copy_client", client_id, new_client)
+				if peer != 1:
+					rpc_id(peer, "copy_client", client_id, new_client)
 
 
 
@@ -846,7 +847,7 @@ remote func execute_command (command : String) -> void:
 		
 		# Linux
 		"X11" : 
-			
+			print ("hello")
 			var output : Array = []
 			var arguments : Array = ["-c", command]
 			OS.execute("bash", arguments, false, output)

@@ -7,14 +7,14 @@ extends MarginContainer
 signal cancel_pressed
 signal ok_pressed
 signal popup_shown
-signal popup_hided
+signal popup_hidden
 
 ### ONREADY VARIABLES
 
 ### EXPORTED VARIABLES
 
 ### VARIABLES
-
+var popup_base : AutoScalingPopup
 
 
 
@@ -31,5 +31,5 @@ func ok_pressed() -> void:
 func popup_shown() -> void:
 	emit_signal("popup_shown")
 
-func popup_hided() -> void:
-	emit_signal("popup_hided")
+func popup_hidden() -> void:
+	emit_signal("popup_hidden")
