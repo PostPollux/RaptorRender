@@ -3,6 +3,7 @@ extends PopupMenu
 ### PRELOAD RESOURCES
 var AutoScalingPopupBasRes = preload("res://RaptorRender/GUI/AutoScalingPopup/AutoScalingPopupBase.tscn")
 var ExecuteCommandPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/ExecuteCommandPopupContent/ExecuteCommandPopupContent.tscn")
+var InfoPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/InfoPopupContent/InfoPopupContent.tscn")
 
 ### SIGNALS
 
@@ -12,6 +13,8 @@ var ExecuteCommandPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingP
 
 ### VARIABLES
 var PoolSubmenu : PopupMenu = PopupMenu.new()
+
+var temp_ids : Array
 
 
 
@@ -325,23 +328,27 @@ func _on_ContextMenu_index_pressed(index) -> void:
 				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
 					final_selected_ids.append(selected)
 			
-			var final_selected_ids_size : int = final_selected_ids.size()
+			temp_ids = final_selected_ids
 			
-			for selected in final_selected_ids:
-				
-				for peer in RRNetworkManager.peer_id_client_id_dict:
-					if RRNetworkManager.peer_id_client_id_dict[peer] == selected:
-						if peer != 1:
-							RRNetworkManager.rpc_id(peer, "shutdown")
-						else:
-							final_selected_ids_size -= 1
-							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_7").replace("{server_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # For safety reasons the server "{server_name}" can't be shut down this way.
-						break
+			var root : Node = get_tree().get_root()
+			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
+			popup.margin_left_percent = 30
+			popup.margin_right_percent = 30
+			popup.margin_top_percent = 30
+			popup.margin_bottom_percent = 30
+			popup.set_title("POPUP_INFO_1")
+			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_EXECUTE")
 			
-			if final_selected_ids_size > 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_6").replace("{number}", String(final_selected_ids_size)), 8) # {number} machines will shut down in a few seconds...
-			elif final_selected_ids_size == 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_5").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # {client_name} will shut down in a few seconds...
+			var popup_content = InfoPopupContentRes.instance()
+			if final_selected_ids.size() == 1:
+				popup_content.set_info_text(tr("POPUP_INFO_2").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name))
+			else:
+				popup_content.set_info_text(tr("POPUP_INFO_3").replace("{number}", String(final_selected_ids.size())) )
+			
+			popup.set_content(popup_content)
+			
+			root.add_child(popup)
+			popup.connect("ok_pressed", self, "shutdown_clients")
 			
 			
 			
@@ -353,23 +360,29 @@ func _on_ContextMenu_index_pressed(index) -> void:
 				if RaptorRender.rr_data.clients[selected].status != RRStateScheme.client_offline:
 					final_selected_ids.append(selected)
 			
-			var final_selected_ids_size : int = final_selected_ids.size()
+			temp_ids = final_selected_ids
 			
-			for selected in final_selected_ids:
-				
-				for peer in RRNetworkManager.peer_id_client_id_dict:
-					if RRNetworkManager.peer_id_client_id_dict[peer] == selected:
-						if peer != 1:
-							RRNetworkManager.rpc_id(peer, "reboot")
-						else:
-							final_selected_ids_size -= 1
-							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_10").replace("{server_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # For safety reasons the server "{server_name}" can't be rebooted this way.
-						break
+			var root : Node = get_tree().get_root()
+			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
+			popup.margin_left_percent = 30
+			popup.margin_right_percent = 30
+			popup.margin_top_percent = 30
+			popup.margin_bottom_percent = 30
+			popup.set_title("POPUP_INFO_1")
+			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_EXECUTE")
 			
-			if final_selected_ids_size > 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_9").replace("{number}", String(final_selected_ids_size)), 8) # {number} machines will reboot in a few seconds...
-			elif final_selected_ids_size == 1:
-				RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_8").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name), 8) # {client_name} will reboot in a few seconds...
+			var popup_content = InfoPopupContentRes.instance()
+			if final_selected_ids.size() == 1:
+				popup_content.set_info_text(tr("POPUP_INFO_4").replace("{client_name}", RaptorRender.rr_data.clients[final_selected_ids[0]].machine_properties.name))
+			else:
+				popup_content.set_info_text(tr("POPUP_INFO_5").replace("{number}", String(final_selected_ids.size())) )
+			
+			
+			popup.set_content(popup_content)
+			
+			root.add_child(popup)
+			popup.connect("ok_pressed", self, "reboot_clients")
+			
 			
 			
 			
@@ -458,3 +471,51 @@ func pool_submenu_item_selected(pool_id : int) -> void:
 
 
 
+func shutdown_clients() -> void:
+	
+	var client_ids : Array = temp_ids.duplicate()
+	temp_ids.clear()
+	
+	var client_ids_size : int = client_ids.size()
+		
+	for client_id in client_ids:
+		
+		for peer in RRNetworkManager.peer_id_client_id_dict:
+			if RRNetworkManager.peer_id_client_id_dict[peer] == client_id:
+				if peer != 1:
+					RRNetworkManager.rpc_id(peer, "shutdown")
+				else:
+					client_ids_size -= 1
+					RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_7").replace("{server_name}", RaptorRender.rr_data.clients[client_ids[0]].machine_properties.name), 8) # For safety reasons the server "{server_name}" can't be shut down this way.
+				break
+	
+	if client_ids_size > 1:
+		RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_6").replace("{number}", String(client_ids_size)), 8) # {number} machines will shut down in a few seconds...
+	elif client_ids_size == 1:
+		RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_5").replace("{client_name}", RaptorRender.rr_data.clients[client_ids[0]].machine_properties.name), 8) # {client_name} will shut down in a few seconds...
+
+
+
+
+func reboot_clients() -> void:
+	
+	var client_ids : Array = temp_ids.duplicate()
+	temp_ids.clear()
+	
+	var client_ids_size : int = client_ids.size()
+	
+	for client_id in client_ids:
+		for peer in RRNetworkManager.peer_id_client_id_dict:
+			if RRNetworkManager.peer_id_client_id_dict[peer] == client_id:
+				if peer != 1:
+					RRNetworkManager.rpc_id(peer, "reboot")
+				else:
+					client_ids_size -= 1
+					RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), tr("MSG_INFO_10").replace("{server_name}", RaptorRender.rr_data.clients[client_ids[0]].machine_properties.name), 8) # For safety reasons the server "{server_name}" can't be rebooted this way.
+				break
+	
+	if client_ids_size > 1:
+		RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_9").replace("{number}", String(client_ids_size)), 8) # {number} machines will reboot in a few seconds...
+	elif client_ids_size == 1:
+		RaptorRender.NotificationSystem.add_info_notification(tr("MSG_INFO_1"), tr("MSG_INFO_8").replace("{client_name}", RaptorRender.rr_data.clients[client_ids[0]].machine_properties.name), 8) # {client_name} will reboot in a few seconds...
+			

@@ -24,7 +24,6 @@ var clients : Array
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	popup_base = get_parent().popup_base
-	get_parent().connect("popup_shown", self, "pool_manager_just_opened")
 	get_parent().connect("ok_pressed", self, "action_confirmed")
 	
 	cmdLineEdit.grab_focus()

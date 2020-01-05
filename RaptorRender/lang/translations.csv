@@ -212,7 +212,7 @@ MSG_INFO_1,Info,Info
 MSG_INFO_2,"""{client_name}"" should wake up soon, if it supports WakeOnLan.","""{client_name}"" sollte in kürze hochfahren, falls ""WakeOnLan"" unterstützt wird."
 MSG_INFO_3,"{number} machines should wake up soon, if they support WakeOnLan.","{number} Computer sollten in kürze hochfahren, falls sie ""WakeOnLan"" unterstützen."
 MSG_INFO_4,Selection has been copied to clipboard!,Selektierter Text wurde in die Zwischenablage kopiert!
-MSG_INFO_5,"""{client_name}"" should shut down in a few seconds.","""{client_name} "" sollte in ein paar Sekunden herunterfahren."
+MSG_INFO_5,"""{client_name}"" should shut down in a few seconds.","""{client_name}"" sollte in ein paar Sekunden herunterfahren."
 MSG_INFO_6,{number} machines should shut down in a few seconds.,{number} Computer sollten in ein paar Sekunden herunterfahren.
 MSG_INFO_7,"For safety reasons the server ""{server_name}"" can't be shut down this way.","Der Server ""{server_name}"" kann auf diese Weise nicht heruntergefahren werden."
 MSG_INFO_8,"""{client_name}"" should reboot in a few seconds.","""{client_name} "" sollte in ein paar Sekunden neugestartet werden."
@@ -225,6 +225,14 @@ MSG_INFO_12,"The command ""{command}"" has been executed on {number} computers."
 POPUP_BUTTON_CANCEL,Cancel,Abbrechen
 POPUP_BUTTON_OK,Ok,Ok
 POPUP_BUTTON_EXECUTE,Execute,Ausführen
+"","",""
+"","",""
+POPUP_INFO_1,Warning,Warnung
+POPUP_INFO_2,"Are you sure you want to shutdown ""{client_name}""?","Sind sie sicher, dass sie ""{client_name}"" herunterfahren möchten?"
+POPUP_INFO_3,Are you sure you want to shutdown those {number} computers?,"Sind sie sicher, dass sie diese {number} Computer herunterfahren möchten?"
+POPUP_INFO_4,"Are you sure you want to reboot ""{client_name}""?","Sind sie sicher, dass sie ""{client_name}"" neustarten möchten?"
+POPUP_INFO_5,Are you sure you want to reboot those {number} computers?,"Sind sie sicher, dass sie diese {number} Computer neustarten möchten?"
+"","",""
 "","",""
 ,,
 POPUP_SUBMIT_JOB_1,Submit Job,Job abschicken
