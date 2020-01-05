@@ -31,6 +31,8 @@ export (String) var title : String = "title"
 export (String) var cancel_button_string : String = "POPUP_BUTTON_CANCEL"
 export (String) var ok_button_string : String = "POPUP_BUTTON_OK"
 
+export (bool) var shrinks_to_content_size : bool = false
+
 export (float) var margin_left_percent : float = 10
 export (float) var margin_right_percent : float = 10
 export (float) var margin_top_percent : float  = 5
@@ -72,11 +74,12 @@ func _ready() -> void:
 	if content != null and ContentContainer.get_child_count() == 0:
 		ContentContainer.add_child( content )
 	
-	# set margins
-	MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
-	MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
-	MainBg.margin_top = get_viewport_rect().size.y * (margin_top_percent / 100)
-	MainBg.margin_bottom = -get_viewport_rect().size.y * (margin_bottom_percent / 100)
+	if not shrinks_to_content_size:
+		# set margins
+		MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
+		MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
+		MainBg.margin_top = get_viewport_rect().size.y * (margin_top_percent / 100)
+		MainBg.margin_bottom = -get_viewport_rect().size.y * (margin_bottom_percent / 100)
 	
 	# connect signals (this will ensure that the "Content" container will also emit these signals emitted by the popup buttons. This will make it easier for the conntent to subscribe to that signals)
 	connect("cancel_pressed", ContentContainer, "cancel_pressed")
@@ -86,8 +89,12 @@ func _ready() -> void:
 
 
 
+
 func set_content(popup_content : Node) -> void:
 	content = popup_content
+	if shrinks_to_content_size:
+		content.connect("resized", self, "shrink_to_content_size")
+	
 	if is_instance_valid(ContentContainer):
 		ContentContainer.add_child( popup_content )
 
@@ -116,17 +123,34 @@ func hide_popup() -> void:
 
 
 func show_popup() -> void:
-	# set margins
-	MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
-	MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
-	MainBg.margin_top = get_viewport_rect().size.y * (margin_top_percent / 100)
-	MainBg.margin_bottom = -get_viewport_rect().size.y * (margin_bottom_percent / 100)
-	
-	print (get_viewport_rect())
-	print (get_viewport_rect().size.x * (margin_left_percent / 100))
+	if not shrinks_to_content_size:
+		# set margins
+		MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
+		MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
+		MainBg.margin_top = get_viewport_rect().size.y * (margin_top_percent / 100)
+		MainBg.margin_bottom = -get_viewport_rect().size.y * (margin_bottom_percent / 100)
 	
 	self.visible = true
 	emit_signal("popup_shown")
+
+
+
+func shrink_to_content_size() -> void:
+	
+	if is_instance_valid(ContentContainer.get_child(0)):
+		
+		var content : Control = ContentContainer.get_child(0)
+		
+		content.size_flags_horizontal = SIZE_SHRINK_CENTER
+		content.size_flags_vertical = SIZE_SHRINK_CENTER
+		
+		var needed_popup_size_x : int = content.rect_size.x
+		var needed_popup_size_y : int = content.rect_size.y + 100 # (80 from header + footer and 20 for some extra spacing)
+		
+		MainBg.margin_left = (get_viewport_rect().size.x - needed_popup_size_x) / 2
+		MainBg.margin_right = -MainBg.margin_left
+		MainBg.margin_top = (get_viewport_rect().size.y - needed_popup_size_y) / 2
+		MainBg.margin_bottom = -MainBg.margin_top
 
 
 
@@ -149,7 +173,9 @@ func _on_OkButton_pressed() -> void:
 func _on_AutoScalingPopup_item_rect_changed() -> void:
 	# set margins
 	if is_instance_valid(MainBg):
-		MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
-		MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
-		MainBg.margin_top = get_viewport_rect().size.y * (margin_top_percent / 100)
-		MainBg.margin_bottom = -get_viewport_rect().size.y * (margin_bottom_percent / 100)
+		if not shrinks_to_content_size:
+			# set margins
+			MainBg.margin_left = get_viewport_rect().size.x * (margin_left_percent / 100)
+			MainBg.margin_right = -get_viewport_rect().size.x * (margin_right_percent / 100)
+			MainBg.margin_top = get_viewport_rect().size.y * (margin_top_percent / 100)
+			MainBg.margin_bottom = -get_viewport_rect().size.y * (margin_bottom_percent / 100)

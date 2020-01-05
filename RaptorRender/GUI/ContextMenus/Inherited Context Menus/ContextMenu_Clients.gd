@@ -332,10 +332,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var root : Node = get_tree().get_root()
 			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
-			popup.margin_left_percent = 30
-			popup.margin_right_percent = 30
-			popup.margin_top_percent = 30
-			popup.margin_bottom_percent = 30
+			popup.shrinks_to_content_size = true
 			popup.set_title("POPUP_INFO_1")
 			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_EXECUTE")
 			
@@ -364,10 +361,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			
 			var root : Node = get_tree().get_root()
 			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
-			popup.margin_left_percent = 30
-			popup.margin_right_percent = 30
-			popup.margin_top_percent = 30
-			popup.margin_bottom_percent = 30
+			popup.shrinks_to_content_size = true
 			popup.set_title("POPUP_INFO_1")
 			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_EXECUTE")
 			
