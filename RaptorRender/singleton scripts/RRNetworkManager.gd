@@ -496,11 +496,13 @@ remotesync func chunk_finished_successfully(job_id : int, chunk_id : int, try_id
 					if chunk_counts[0] == chunk_counts[1]:
 						RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_finished
 					else:
-						RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_queued
+						# set job status to "paused" if it had been "paused_defferd" before
+						if RaptorRender.rr_data.jobs[job_id].status == RRStateScheme.job_rendering_paused_deferred:
+							RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_paused
+						else:
+							RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_queued
 					
-				# set job status to "paused" if all active chunks of a "paused deffered" job have finished
-				if RaptorRender.rr_data.jobs[job_id].status == RRStateScheme.job_rendering_paused_deferred and chunk_counts[2] == 0:
-					RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_paused
+				
 
 
 

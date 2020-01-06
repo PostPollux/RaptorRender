@@ -270,56 +270,60 @@ func start_chunk(job_id : int, chunk_id : int, try_id : int) -> void:
 	
 	cmd_string = cmd_string.replace( "$(CPUs)", "0" ) # TODO
 	
-	var specific_job_type_settings : Array = job_type_settings.get_section_keys( "SpecificJobSettings" ) 
+	var specific_job_type_settings : Array = []
 	
-	for specific_setting in specific_job_type_settings:
+	if job_type_settings.has_section("SpecificJobSettings"):
 		
-		var specific_setting_value : String
+		specific_job_type_settings = job_type_settings.get_section_keys( "SpecificJobSettings" ) 
 		
-		if specific_setting.find("__") == -1 :
+		for specific_setting in specific_job_type_settings:
 			
-			if RaptorRender.rr_data.jobs[job_id].SpecificJobSettings.has(specific_setting):
+			var specific_setting_value : String
+			
+			if specific_setting.find("__") == -1 :
 				
-				specific_setting_value = String(RaptorRender.rr_data.jobs[job_id].SpecificJobSettings[specific_setting]).to_lower()
-				
-				if RaptorRender.rr_data.jobs[job_id].SpecificJobSettings.has(specific_setting + "__cmd_value"):
-					var __cmd_value : String = String(RaptorRender.rr_data.jobs[job_id].SpecificJobSettings[specific_setting + "__cmd_value"])
-					var __cmd_values : Array = __cmd_value.split(";;", true)
+				if RaptorRender.rr_data.jobs[job_id].SpecificJobSettings.has(specific_setting):
 					
-					if __cmd_values.size() == 3:
-						var replacement : String = ""
-							
-						if specific_setting_value == "true":
-							# use prefix + value
-							if __cmd_values[0] == "":
-								replacement = __cmd_values[1]
-							else:
-								replacement = __cmd_values[0] + " " + __cmd_values[1]
-						else:
-							# use substitue
-							replacement = __cmd_values[2]
-							
-						cmd_string = cmd_string.replace( "$(" + specific_setting + ")", replacement)
+					specific_setting_value = String(RaptorRender.rr_data.jobs[job_id].SpecificJobSettings[specific_setting]).to_lower()
+					
+					if RaptorRender.rr_data.jobs[job_id].SpecificJobSettings.has(specific_setting + "__cmd_value"):
+						var __cmd_value : String = String(RaptorRender.rr_data.jobs[job_id].SpecificJobSettings[specific_setting + "__cmd_value"])
+						var __cmd_values : Array = __cmd_value.split(";;", true)
 						
+						if __cmd_values.size() == 3:
+							var replacement : String = ""
+								
+							if specific_setting_value == "true":
+								# use prefix + value
+								if __cmd_values[0] == "":
+									replacement = __cmd_values[1]
+								else:
+									replacement = __cmd_values[0] + " " + __cmd_values[1]
+							else:
+								# use substitue
+								replacement = __cmd_values[2]
+								
+							cmd_string = cmd_string.replace( "$(" + specific_setting + ")", replacement)
+							
+						else:
+							# error msg: "Each __cmd_value string has to be splittable into 3 parts. Make sure prefix, value and substitute are correctly devided by „;;“. Problematic definition:"
+							var error_message : String = tr("MSG_ERROR_15") + "\n\n" + specific_setting + "__cmd_value"
+							RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10)
+							return
+							
 					else:
-						# error msg: "Each __cmd_value string has to be splittable into 3 parts. Make sure prefix, value and substitute are correctly devided by „;;“. Problematic definition:"
-						var error_message : String = tr("MSG_ERROR_15") + "\n\n" + specific_setting + "__cmd_value"
+						# error msg: "The __cmd_value definition is missing in your job. It‘s mandatory that you define this for each specific setting. Missing:"
+						var error_message : String = tr("MSG_ERROR_14") + "\n\n" + specific_setting + "__cmd_value"
 						RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10)
 						return
 						
 				else:
-					# error msg: "The __cmd_value definition is missing in your job. It‘s mandatory that you define this for each specific setting. Missing:"
-					var error_message : String = tr("MSG_ERROR_14") + "\n\n" + specific_setting + "__cmd_value"
+					# error msg: "The following specific job setting is defined in your job type configuration file, but it is not present in your job you are trying to run:"
+					var error_message : String = tr("MSG_ERROR_13") + "\n\n" + specific_setting
 					RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10)
 					return
-					
-			else:
-				# error msg: "The following specific job setting is defined in your job type configuration file, but it is not present in your job you are trying to run:"
-				var error_message : String = tr("MSG_ERROR_13") + "\n\n" + specific_setting
-				RaptorRender.NotificationSystem.add_error_notification(tr("MSG_ERROR_1"), error_message, 10)
-				return
-			
-			
+				
+				
 	
 	# load the correct job type settings file for the validation of the coming render process
 	if RenderLogValidator.load_job_type_settings_CRP(job_type, job_type_version):
