@@ -25,7 +25,7 @@ func _ready() -> void:
 	
 	PriorityLabel.text = String ( RaptorRender.rr_data.jobs[job_id].priority )
 	
-	disable_if_needed()
+	disable_or_enable_if_needed()
 
 
 
@@ -34,12 +34,14 @@ func set_text(priority : String) -> void:
 		PriorityLabel.text = priority
 
 
-func disable_if_needed() -> void:
+func disable_or_enable_if_needed() -> void:
 	var status = RaptorRender.rr_data.jobs[job_id].status
 	if status == RRStateScheme.job_finished or status == RRStateScheme.job_cancelled:
 		PlusButton.disabled = true
 		MinusButton.disabled = true
-
+	else:
+		PlusButton.disabled = false
+		MinusButton.disabled = false
 
 
 func _on_plus_pressed() -> void:

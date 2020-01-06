@@ -458,7 +458,22 @@ remotesync func mark_chunk_as_finished(job_id : int, chunk_id : int) -> void:
 			
 			if current_status == RRStateScheme.chunk_paused or current_status == RRStateScheme.chunk_error or current_status == RRStateScheme.chunk_queued:
 				RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = RRStateScheme.chunk_finished
-
+			
+			# Now also handle job state in case it has to be changed as well
+			var chunk_counts : Array = JobFunctions.get_chunk_counts_TotalFinishedActive(job_id)
+				
+			# change status only, if there are no active chunks left
+			if chunk_counts[2] == 0:
+			
+				# set job status to "finished" if all chunks are finished
+				if chunk_counts[0] == chunk_counts[1]:
+					RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_finished
+				else:
+					# set job status to "paused" if it had been "paused_defferd" before
+					if RaptorRender.rr_data.jobs[job_id].status == RRStateScheme.job_rendering_paused_deferred:
+						RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_paused
+					else:
+						RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_queued
 
 
 # add a new try
@@ -504,8 +519,8 @@ remotesync func chunk_finished_successfully(job_id : int, chunk_id : int, try_id
 							RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_paused
 						else:
 							RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_queued
-					
-				
+
+
 
 
 

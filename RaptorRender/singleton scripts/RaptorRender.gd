@@ -1424,7 +1424,7 @@ func update_or_create_job_row(job : int, jobs_iterator : int) -> void:
 		var ChildNode : Node = priority_cell.get_child(0)
 		if ChildNode is PriorityControl:
 			
-			ChildNode.disable_if_needed()
+			ChildNode.disable_or_enable_if_needed()
 			ChildNode.set_text(String( rr_data.jobs[job].priority )) 
 			
 			# update sort_value
