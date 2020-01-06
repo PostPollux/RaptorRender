@@ -65,7 +65,6 @@ func enable_disable_items() -> void:
 			self.set_item_disabled(1, false) # mark as finsihed
 		
 		if status == RRStateScheme.chunk_paused:
-			self.set_item_disabled(0, false) # requeue chunk
 			self.set_item_disabled(1, false) # mark as finsihed
 		
 		if status == RRStateScheme.chunk_finished:

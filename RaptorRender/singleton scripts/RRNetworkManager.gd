@@ -401,7 +401,10 @@ remotesync func update_chunk_status(job_id : int, chunk_id : int, desired_status
 					
 					if current_status == RRStateScheme.chunk_paused or current_status == RRStateScheme.chunk_finished or current_status == RRStateScheme.chunk_error:
 						RaptorRender.rr_data.jobs[job_id].chunks[chunk_id].status = desired_status
-				
+						
+						# requeue a finished job if a chunk gets queued again
+						if RaptorRender.rr_data.jobs[job_id].status == RRStateScheme.job_finished:
+							RaptorRender.rr_data.jobs[job_id].status = RRStateScheme.job_queued
 				
 				# desired state "error"
 				RRStateScheme.chunk_error:  
