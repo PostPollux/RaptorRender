@@ -225,15 +225,19 @@ MSG_INFO_12,"The command ""{command}"" has been executed on {number} computers."
 POPUP_BUTTON_CANCEL,Cancel,Abbrechen
 POPUP_BUTTON_OK,Ok,Ok
 POPUP_BUTTON_EXECUTE,Execute,Ausführen
+POPUP_BUTTON_CONTINUE,Continue,Forfahren
 "","",""
-"","",""
-POPUP_INFO_1,Warning,Warnung
-POPUP_INFO_2,"Are you sure you want to shutdown ""{client_name}""?","Sind sie sicher, dass sie ""{client_name}"" herunterfahren möchten?"
-POPUP_INFO_3,Are you sure you want to shutdown those {number} computers?,"Sind sie sicher, dass sie diese {number} Computer herunterfahren möchten?"
-POPUP_INFO_4,"Are you sure you want to reboot ""{client_name}""?","Sind sie sicher, dass sie ""{client_name}"" neustarten möchten?"
-POPUP_INFO_5,Are you sure you want to reboot those {number} computers?,"Sind sie sicher, dass sie diese {number} Computer neustarten möchten?"
-"","",""
-"","",""
+,,
+,,
+POPUP_INFO_1,Caution,Achtung
+POPUP_INFO_2,"Are you sure you want to shutdown ""{client_name}""?","Sind Sie sicher, dass Sie ""{client_name}"" herunterfahren möchten?"
+POPUP_INFO_3,Are you sure you want to shutdown those {number} computers?,"Sind Sie sicher, dass Sie diese {number} Computer herunterfahren möchten?"
+POPUP_INFO_4,"Are you sure you want to reboot ""{client_name}""?","Sind Sie sicher, dass Sie ""{client_name}"" neustarten möchten?"
+POPUP_INFO_5,Are you sure you want to reboot those {number} computers?,"Sind Sie sicher, dass Sie diese {number} Computer neustarten möchten?"
+POPUP_INFO_6,"Are you sure you want to irrevocably delete the job ""{job_name}""?","Sind Sie sicher, dass Sie den Job ""{job_name}"" unwiderruflich löschen möchten?"
+POPUP_INFO_7,Are you sure you want to irrevocably delete those {number} jobs?,"Sind Sie sicher, dass Sie dise {number} Jobs unwiderruflich löschen möchten?"
+,,
+,,
 ,,
 POPUP_SUBMIT_JOB_1,Submit Job,Job abschicken
 POPUP_SUBMIT_JOB_2,Job Type:,Job Typ:
@@ -283,5 +287,5 @@ POPUP_POOLMANAGER_8,Clients available for pool,Verfügbare Clients
 ,,
 POPUP_EXECUTE_COMMAND_1,Execute command,Befehl ausführen
 POPUP_EXECUTE_COMMAND_2,Command:,Befehl:
-"","",""
-"","",""
+,,
+,,

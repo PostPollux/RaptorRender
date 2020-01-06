@@ -1,6 +1,8 @@
 extends PopupMenu
 
 ### PRELOAD RESOURCES
+var AutoScalingPopupBasRes = preload("res://RaptorRender/GUI/AutoScalingPopup/AutoScalingPopupBase.tscn")
+var InfoPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/InfoPopupContent/InfoPopupContent.tscn")
 
 ### SIGNALS
 
@@ -9,7 +11,7 @@ extends PopupMenu
 ### EXPORTED VARIABLES
 
 ### VARIABLES
-
+var temp_ids : Array
 
 
 
@@ -292,6 +294,32 @@ func _on_ContextMenu_index_pressed(index) -> void:
 		14:  # Remove Job
 			
 			var selected_ids = RaptorRender.JobsTable.get_selected_ids().duplicate()  # duplicate of array needed because the reference would change as rows get deleted...
+			temp_ids = selected_ids
 			
-			for peer in RRNetworkManager.management_gui_clients:
-				RRNetworkManager.rpc_id(peer, "remove_jobs", selected_ids)
+			# create and show popup
+			var root : Node = get_tree().get_root()
+			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
+			popup.shrinks_to_content_size = true
+			popup.set_title("POPUP_INFO_1")
+			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_CONTINUE")
+			
+			var popup_content = InfoPopupContentRes.instance()
+			if selected_ids.size() == 1:
+				popup_content.set_info_text(tr("POPUP_INFO_6").replace("{job_name}", RaptorRender.rr_data.jobs[selected_ids[0]].name))
+			else:
+				popup_content.set_info_text(tr("POPUP_INFO_7").replace("{number}", String(selected_ids.size())) )
+			
+			popup.set_content(popup_content)
+			
+			root.add_child(popup)
+			popup.connect("ok_pressed", self, "delete_jobs")
+			
+
+
+
+func delete_jobs() -> void:
+	
+	for peer in RRNetworkManager.management_gui_clients:
+		RRNetworkManager.rpc_id(peer, "remove_jobs", temp_ids)
+	
+	temp_ids.clear()

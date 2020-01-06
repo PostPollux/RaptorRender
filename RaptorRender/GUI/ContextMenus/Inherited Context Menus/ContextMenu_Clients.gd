@@ -334,7 +334,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
 			popup.shrinks_to_content_size = true
 			popup.set_title("POPUP_INFO_1")
-			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_EXECUTE")
+			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_CONTINUE")
 			
 			var popup_content = InfoPopupContentRes.instance()
 			if final_selected_ids.size() == 1:
@@ -363,7 +363,7 @@ func _on_ContextMenu_index_pressed(index) -> void:
 			var popup : AutoScalingPopup = AutoScalingPopupBasRes.instance()
 			popup.shrinks_to_content_size = true
 			popup.set_title("POPUP_INFO_1")
-			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_EXECUTE")
+			popup.set_button_texts("POPUP_BUTTON_CANCEL","POPUP_BUTTON_CONTINUE")
 			
 			var popup_content = InfoPopupContentRes.instance()
 			if final_selected_ids.size() == 1:
