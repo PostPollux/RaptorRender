@@ -19,13 +19,14 @@ onready var BoxBackgroundColorRect : ColorRect = $"BGColorRect"
 
 
 ### EXPORTED VARIABLES
+export (bool) var item_names_editable : bool = false
+export (bool) var items_dragable : bool = false
+
 
 ### VARIABLES
 var SelectedItems : Array = []
 var hovered : bool = false
 
-var item_names_editable : bool = false
-var items_dragable : bool = false
 var item_bg_color_normal : Color = RRColorScheme.bg_1
 var item_bg_color_selected : Color = RRColorScheme.selected
 
@@ -35,6 +36,10 @@ var item_bg_color_selected : Color = RRColorScheme.selected
 
 ########## FUNCTIONS ##########
 
+func _ready() -> void:
+	for item in ItemVBox.get_children():
+		item.name_editable = item_names_editable
+		item.dragable = items_dragable
 
 
 func _process(delta : float) -> void:

@@ -78,6 +78,12 @@ margin_right = 605.0
 margin_bottom = 22.0
 text = "Client"
 
+[node name="DefaultClientSettingsButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 615.0
+margin_right = 769.0
+margin_bottom = 22.0
+text = "Default Client Settings"
+
 [node name="MainHSplitContainer" type="HSplitContainer" parent="Control/VBoxContainer"]
 margin_top = 26.0
 margin_right = 1280.0
@@ -194,6 +200,13 @@ margin_top_percent = 10.0
 margin_bottom_percent = 10.0
 auto_destroy_on_close = false
 
+[node name="GeneralSettingsPopup" parent="Control" instance=ExtResource( 9 )]
+visible = false
+popup_id = "general_settings"
+title = "POPUP_GENERAL_SETTINGS_1"
+ok_button_string = "POPUP_BUTTON_APPLY"
+auto_destroy_on_close = false
+
 [node name="NotificationSystem" parent="." instance=ExtResource( 10 )]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/CreateJobButton" to="." method="_on_CreateJobButton_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/PoolManagerButton" to="." method="_on_PoolManagerButton_pressed"]
@@ -201,4 +214,5 @@ auto_destroy_on_close = false
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ColorizeRowsButton" to="." method="_on_ColorizeRowsButton_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ServerButton" to="." method="_on_ServerButton_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ClientButton" to="." method="_on_ClientButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/DefaultClientSettingsButton" to="." method="_on_GeneralSettingsButton_pressed"]
 [connection signal="tab_changed" from="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients" to="Control/VBoxContainer/MainHSplitContainer/MainVSplitContainer/TabContainerClients" method="_on_TabContainerClients_tab_changed"]

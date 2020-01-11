@@ -41,8 +41,11 @@ func _ready() -> void:
 	
 	BgColorRect.color = color_normal
 	
-	if item_name != "":
-		NameLabel.text = item_name
+	if item_name == "":
+		item_name = name
+	
+	NameLabel.text = item_name
+	
 	DragManager.connect("drag_ended", self, "drag_just_ended")
 
 
@@ -88,6 +91,7 @@ func remove_highlight() -> void:
 
 func select() -> void:
 	selected = true
+	
 	BgColorRect.color = color_selected
 	
 	var mouse_pos : Vector2 = get_viewport().get_mouse_position()

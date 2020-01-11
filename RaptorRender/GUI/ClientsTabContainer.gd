@@ -22,7 +22,6 @@ var tabs_pools_dict : Dictionary = { 0 : -1}
 func _ready() -> void:
 	update_tabs()
 
-
 func update_tabs() -> void:
 	
 	var current_tab_count : int = self.get_child_count()
@@ -42,8 +41,7 @@ func update_tabs() -> void:
 		else:
 			var Clients_SortableTable = Clients_SortableTableRes.instance()
 			var BaseTable : SortableTable = self.get_child(0).get_child(0)
-			Clients_SortableTable.column_names = BaseTable.column_names
-			Clients_SortableTable.column_widths = BaseTable.column_widths
+			Clients_SortableTable.set_columns(BaseTable.column_names, BaseTable.column_widths)
 			Clients_SortableTable.margin_bottom = 0
 			Clients_SortableTable.margin_left = 0
 			Clients_SortableTable.margin_right = 0
@@ -52,6 +50,8 @@ func update_tabs() -> void:
 			Clients_SortableTable.anchor_left = 0
 			Clients_SortableTable.anchor_right = 1
 			Clients_SortableTable.anchor_bottom = 1
+			
+			
 			
 			
 			var tab : Tabs = Tabs.new()

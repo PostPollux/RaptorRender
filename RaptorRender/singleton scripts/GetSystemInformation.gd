@@ -710,7 +710,7 @@ func get_platform_info() -> Array:
 			
 			OS.execute("uname", arguments, true, output)
 			
-			var position_to_split : Array = output[0].find_last("-")
+			var position_to_split : int = output[0].find_last("-")
 			
 			var kernel_version : String = output[0].left(position_to_split) # take the left part of the string
 			

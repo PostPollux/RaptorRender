@@ -88,6 +88,8 @@ func _ready() -> void:
 	connect("popup_hidden", ContentContainer, "popup_hidden")
 
 
+func get_popup_content() -> Node:
+	return ContentContainer.get_child(0)
 
 
 func set_content(popup_content : Node) -> void:

@@ -226,7 +226,7 @@ POPUP_BUTTON_CANCEL,Cancel,Abbrechen
 POPUP_BUTTON_OK,Ok,Ok
 POPUP_BUTTON_EXECUTE,Execute,Ausführen
 POPUP_BUTTON_CONTINUE,Continue,Forfahren
-"","",""
+POPUP_BUTTON_APPLY,APPLY,Anwenden
 ,,
 ,,
 POPUP_INFO_1,Caution,Achtung
@@ -288,4 +288,8 @@ POPUP_POOLMANAGER_8,Clients available for pool,Verfügbare Clients
 POPUP_EXECUTE_COMMAND_1,Execute command,Befehl ausführen
 POPUP_EXECUTE_COMMAND_2,Command:,Befehl:
 ,,
-,,
+"","",""
+POPUP_GENERAL_SETTINGS_1,General Settings,Allgemeine Einstellungen
+"","",""
+"","",""
+"","",""

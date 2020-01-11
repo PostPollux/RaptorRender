@@ -40,3 +40,9 @@ func _on_ClientButton_pressed() -> void:
 func _on_ServerButton_pressed() -> void:
 	RRNetworkManager.create_server()
 
+
+func _on_GeneralSettingsButton_pressed() -> void:
+	if RaptorRender.SettingsPopup.visible == false:
+		var SettingsPopup : AutoScalingPopup = RaptorRender.SettingsPopup
+		SettingsPopup.get_popup_content().settings_type = "default_client"
+		SettingsPopup.show_popup()

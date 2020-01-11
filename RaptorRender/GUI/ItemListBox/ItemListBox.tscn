@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://RaptorRender/GUI/ItemListBox/ItemListBox.gd" type="Script" id=1]
-[ext_resource path="res://RaptorRender/GUI/ItemListBox/ItemListBoxItem.tscn" type="PackedScene" id=2]
 
 [node name="ItemListBox" type="MarginContainer"]
 margin_right = 396.0
@@ -23,19 +22,5 @@ margin_bottom = 427.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
-
-[node name="Item" parent="ItemVBox" instance=ExtResource( 2 )]
-
-[node name="Item2" parent="ItemVBox" instance=ExtResource( 2 )]
-margin_top = 14.0
-margin_bottom = 28.0
-
-[node name="Item3" parent="ItemVBox" instance=ExtResource( 2 )]
-margin_top = 28.0
-margin_bottom = 42.0
-
-[node name="Item4" parent="ItemVBox" instance=ExtResource( 2 )]
-margin_top = 42.0
-margin_bottom = 56.0
 [connection signal="mouse_entered" from="." to="." method="_on_ItemListBox_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_ItemListBox_mouse_exited"]

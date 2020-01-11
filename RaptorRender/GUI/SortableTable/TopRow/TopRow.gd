@@ -66,9 +66,11 @@ func _process(delta) -> void:
 	
 	# small workaround needed since Godot 3.1 (it will resize the first collumn one time after the first draw then refresh all top buttons which will then show the little arrows)
 	if just_initialized:
-		ColumnButtons[0].rect_min_size.x = column_widths[0] - 1
-		column_widths[0] = column_widths[0] - 1
-		just_initialized = false
+		if ColumnButtons.size() > 0:
+			if is_instance_valid(ColumnButtons[0]):
+				ColumnButtons[0].rect_min_size.x = column_widths[0] - 1
+				column_widths[0] = column_widths[0] - 1
+				just_initialized = false
 
 
 
@@ -80,7 +82,10 @@ func generate_top_row() -> void:
 	
 	# delete existing nodes
 	for CurrentNode in $HBoxContainer.get_children():
-		CurrentNode.queue_free()
+		CurrentNode.free()
+	
+	ColumnButtons.clear()
+	Splitters.clear()
 	
 	var count : int = 1
 	

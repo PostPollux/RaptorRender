@@ -80,18 +80,6 @@ var shift_ctrl_plus_scroll : bool = false
 
 func _ready() -> void:
 	
-	register_table()
-	
-	RowContainerFilled.row_height = row_height
-	
-	# set up top row
-	set_top_row()
-	
-	# set up empty rows
-	RowContainerEmpty.row_height = row_height
-	RowContainerEmpty.create_initial_empty_rows()
-	
-
 	# connect signals
 	TopRow.connect("sort_invoked", self, "sort")
 	TopRow.connect("column_resized", self, "set_column_width")
@@ -99,7 +87,11 @@ func _ready() -> void:
 	TopRow.connect("primary_sort_column_updated", self, "update_primary_sort_column")
 	TopRow.connect("secondary_sort_column_updated", self, "update_secondary_sort_column")
 	RowContainerEmpty.connect("selection_cleared", self, "emit_selection_cleared_signal")
-
+	
+	register_table()
+	
+	generate_table()
+	
 
 
 func _input(event) -> void:
@@ -113,16 +105,43 @@ func _input(event) -> void:
 ### manage table
 ################
 
-func set_top_row() -> void:
-	TopRow.column_names = column_names
-	TopRow.column_widths = column_widths 
-	TopRow.sort_column_primary = sort_column_primary
-	TopRow.sort_column_primary_reversed = sort_column_primary_reversed
-	TopRow.sort_column_secondary = sort_column_secondary
-	TopRow.sort_column_secondary_reversed = sort_column_secondary_reversed
-	TopRow.columns_resizable = columns_resizable
+func set_columns (init_column_names : Array, init_column_widths : Array) -> void:
 	
-	TopRow.generate_top_row()
+	if init_column_names.size() == 0:
+		print ("Error. A Sortable Table needs at least one column.")
+	elif init_column_names.size() != init_column_widths.size():
+		print ("Error. Numbers of column names and respective column widhts does not match.")
+	else:
+		column_names = init_column_names.duplicate()
+		column_widths = init_column_widths.duplicate()
+		
+		if is_instance_valid(TopRow):
+			generate_table()
+
+
+func generate_table () -> void:
+	
+	if column_names.size() != 0:
+		
+		# set up row heights
+		RowContainerFilled.row_height = row_height
+		RowContainerEmpty.row_height = row_height
+		
+		# set top row
+		TopRow.column_names = column_names
+		TopRow.column_widths = column_widths 
+		TopRow.sort_column_primary = sort_column_primary
+		TopRow.sort_column_primary_reversed = sort_column_primary_reversed
+		TopRow.sort_column_secondary = sort_column_secondary
+		TopRow.sort_column_secondary_reversed = sort_column_secondary_reversed
+		TopRow.columns_resizable = columns_resizable
+		TopRow.generate_top_row()
+		
+		# add empty rows
+		RowContainerEmpty.create_initial_empty_rows()
+
+
+
 
 
 # register to RaptorRender script

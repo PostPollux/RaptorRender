@@ -7,6 +7,7 @@ var JobPriorityControlRes = preload("res://RaptorRender/GUI/SortableTable/specif
 var CurrentJobLinkRes = preload("res://RaptorRender/GUI/SortableTable/specific_sortable_table_cell_elements/CurrentJobLink/CurrentJobLink.tscn")
 var SubmitJobPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SubmitJobPopupContent/SubmitJobPopupContent.tscn")
 var PoolManagerPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/PoolManagerPopupContent/PoolManagerPopupContent.tscn")
+var SettingsPopupContentRes = preload("res://RaptorRender/GUI/AutoScalingPopup/Content/SettingsPopupContent/SettingsPopupContent.tscn")
 
 ### SIGNALS
 
@@ -35,6 +36,7 @@ var ContextMenu_Log : RRContextMenuBase
 
 var SubmitJobPopup : AutoScalingPopup
 var PoolManagerPopup : AutoScalingPopup
+var SettingsPopup : AutoScalingPopup
 
 var ClientInfoPanel : ClientInfoPanel
 var JobInfoPanel : JobInfoPanel
@@ -49,6 +51,11 @@ var current_try_id_for_job_info_panel : int = 0
 var refresh_interface_timer : Timer 
 
 var clients_pool_filter : int = -1
+
+enum SettingsType {
+	general,
+	default_client
+}
 
 var default_client : Dictionary = {
 		"machine_properties" : {
@@ -910,6 +917,28 @@ func _ready() -> void:
 				"clients" : [12,13,15],
 				"jobs" : []
 			}
+		},
+		
+		
+		"settings": {
+			
+			"general" : {
+				"software" : {
+					"category_name" : "Software Packages"
+				}
+			},
+			
+			"default_client" : {
+				"availibility" : {
+					"category_name" : "Availibility"
+				},
+				"paths" : {
+					"category_name" : "Paths"
+				},
+				"os_path_mapping" : {
+					"category_name" : "OS Path Mapping"
+				}
+			}
 		}
 	}
 	
@@ -950,36 +979,38 @@ func register_table(SortableTableInstance : SortableTable) -> void:
 			JobsTable.connect("selection_cleared", self, "job_selection_cleared")
 			JobsTable.connect("context_invoked", self, "jobs_context_menu_invoked")
 			
+			var column_names : Array = []
+			var column_widths : Array = []
+			
 			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
-			JobsTable.column_names.clear()
-			JobsTable.column_names.append("JOB_COLUMN_1") # Status
-			JobsTable.column_names.append("JOB_COLUMN_2") # Name
-			JobsTable.column_names.append("JOB_COLUMN_3") # Priority
-			JobsTable.column_names.append("JOB_COLUMN_4") # Clients
-			JobsTable.column_names.append("JOB_COLUMN_5") # Progress
-			JobsTable.column_names.append("JOB_COLUMN_6") # Type
-			JobsTable.column_names.append("JOB_COLUMN_7") # Creator
-			JobsTable.column_names.append("JOB_COLUMN_8") # Time Created
-			JobsTable.column_names.append("JOB_COLUMN_9") # Frame Range
-			JobsTable.column_names.append("JOB_COLUMN_10") # Errors
-			JobsTable.column_names.append("JOB_COLUMN_11") # Pools
-			JobsTable.column_names.append("JOB_COLUMN_12") # Note
+			column_names.append("JOB_COLUMN_1") # Status
+			column_names.append("JOB_COLUMN_2") # Name
+			column_names.append("JOB_COLUMN_3") # Priority
+			column_names.append("JOB_COLUMN_4") # Clients
+			column_names.append("JOB_COLUMN_5") # Progress
+			column_names.append("JOB_COLUMN_6") # Type
+			column_names.append("JOB_COLUMN_7") # Creator
+			column_names.append("JOB_COLUMN_8") # Time Created
+			column_names.append("JOB_COLUMN_9") # Frame Range
+			column_names.append("JOB_COLUMN_10") # Errors
+			column_names.append("JOB_COLUMN_11") # Pools
+			column_names.append("JOB_COLUMN_12") # Note
 			
 			# Set column widths
-			JobsTable.column_widths.clear()
-			JobsTable.column_widths.append(60)
-			JobsTable.column_widths.append(220)
-			JobsTable.column_widths.append(80)
-			JobsTable.column_widths.append(70)
-			JobsTable.column_widths.append(120)
-			JobsTable.column_widths.append(100)
-			JobsTable.column_widths.append(90)
-			JobsTable.column_widths.append(165)
-			JobsTable.column_widths.append(140)
-			JobsTable.column_widths.append(70)
-			JobsTable.column_widths.append(100)
-			JobsTable.column_widths.append(150)
+			column_widths.append(60)
+			column_widths.append(220)
+			column_widths.append(80)
+			column_widths.append(70)
+			column_widths.append(120)
+			column_widths.append(100)
+			column_widths.append(90)
+			column_widths.append(165)
+			column_widths.append(140)
+			column_widths.append(70)
+			column_widths.append(100)
+			column_widths.append(150)
 			
+			JobsTable.set_columns(column_names, column_widths)
 			
 		"chunks":
 			ChunksTable = SortableTableInstance
@@ -987,43 +1018,49 @@ func register_table(SortableTableInstance : SortableTable) -> void:
 			ChunksTable.connect("something_just_selected", self, "chunk_selected")
 			ChunksTable.connect("selection_cleared", self, "chunk_selection_cleared")
 			
+			var column_names : Array = []
+			var column_widths : Array = []
+			
 			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
-			ChunksTable.column_names.clear()
-			ChunksTable.column_names.append("CHUNK_COLUMN_1") # ID
-			ChunksTable.column_names.append("CHUNK_COLUMN_2") # Status
-			ChunksTable.column_names.append("CHUNK_COLUMN_3") # Frames
-			ChunksTable.column_names.append("CHUNK_COLUMN_4") # Client
-			ChunksTable.column_names.append("CHUNK_COLUMN_5") # Rendertime
-			ChunksTable.column_names.append("CHUNK_COLUMN_6") # Tries
-			ChunksTable.column_names.append("CHUNK_COLUMN_7") # Errors
-			ChunksTable.column_names.append("CHUNK_COLUMN_8") # Start
-			ChunksTable.column_names.append("CHUNK_COLUMN_9") # Finish
+			column_names.append("CHUNK_COLUMN_1") # ID
+			column_names.append("CHUNK_COLUMN_2") # Status
+			column_names.append("CHUNK_COLUMN_3") # Frames
+			column_names.append("CHUNK_COLUMN_4") # Client
+			column_names.append("CHUNK_COLUMN_5") # Rendertime
+			column_names.append("CHUNK_COLUMN_6") # Tries
+			column_names.append("CHUNK_COLUMN_7") # Errors
+			column_names.append("CHUNK_COLUMN_8") # Start
+			column_names.append("CHUNK_COLUMN_9") # Finish
 			
 			# Set column widths
-			ChunksTable.column_widths.clear()
-			ChunksTable.column_widths.append(40)
-			ChunksTable.column_widths.append(60)
-			ChunksTable.column_widths.append(100)
-			ChunksTable.column_widths.append(100)
-			ChunksTable.column_widths.append(100)
-			ChunksTable.column_widths.append(60)
-			ChunksTable.column_widths.append(60)
-			ChunksTable.column_widths.append(160)
-			ChunksTable.column_widths.append(160)
+			column_widths.append(40)
+			column_widths.append(60)
+			column_widths.append(100)
+			column_widths.append(100)
+			column_widths.append(100)
+			column_widths.append(60)
+			column_widths.append(60)
+			column_widths.append(160)
+			column_widths.append(160)
+			
+			ChunksTable.set_columns(column_names, column_widths)
+			
 			
 		"tries":
 			TriesTable = SortableTableInstance
 			TriesTable.connect("something_just_selected", self, "try_selected")
 			TriesTable.connect("selection_cleared", self, "try_selection_cleared")
 			
+			var column_names : Array = []
+			var column_widths : Array = []
+			
 			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
-			TriesTable.column_names.clear()
-			TriesTable.column_names.append("TRY_COLUMN_1") # Try
+			column_names.append("TRY_COLUMN_1") # Try
 			
 			# Set column widths
-			TriesTable.column_widths.clear()
-			TriesTable.column_widths.append(71)
-
+			column_widths.append(71)
+			
+			TriesTable.set_columns(column_names, column_widths)
 		
 		"clients": 
 			ClientsTable = SortableTableInstance
@@ -1032,33 +1069,37 @@ func register_table(SortableTableInstance : SortableTable) -> void:
 			ClientsTable.connect("selection_cleared", self, "client_selection_cleared")
 			ClientsTable.connect("context_invoked", self, "client_context_menu_invoked")
 			
-			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing nstring (translation key)
-			ClientsTable.column_names.clear()
-			ClientsTable.column_names.append("CLIENT_COLUMN_1") # Status
-			ClientsTable.column_names.append("CLIENT_COLUMN_2") # Name
-			ClientsTable.column_names.append("CLIENT_COLUMN_3") # Username
-			ClientsTable.column_names.append("CLIENT_COLUMN_4") # Platform
-			ClientsTable.column_names.append("CLIENT_COLUMN_5") # CPU
-			ClientsTable.column_names.append("CLIENT_COLUMN_6") # RAM
-			ClientsTable.column_names.append("CLIENT_COLUMN_7") # Current Job
-			ClientsTable.column_names.append("CLIENT_COLUMN_8") # Errors
-			ClientsTable.column_names.append("CLIENT_COLUMN_9") # Pools
-			ClientsTable.column_names.append("CLIENT_COLUMN_10") # Note
-			ClientsTable.column_names.append("CLIENT_COLUMN_11") # Version
+			var column_names : Array = []
+			var column_widths : Array = []
+			
+			# Set column names directly with the translation key. The label will change automatically and finding the position of the column in the refresh function is easier with a non changing string (translation key)
+			column_names.append("CLIENT_COLUMN_1") # Status
+			column_names.append("CLIENT_COLUMN_2") # Name
+			column_names.append("CLIENT_COLUMN_3") # Username
+			column_names.append("CLIENT_COLUMN_4") # Platform
+			column_names.append("CLIENT_COLUMN_5") # CPU
+			column_names.append("CLIENT_COLUMN_6") # RAM
+			column_names.append("CLIENT_COLUMN_7") # Current Job
+			column_names.append("CLIENT_COLUMN_8") # Errors
+			column_names.append("CLIENT_COLUMN_9") # Pools
+			column_names.append("CLIENT_COLUMN_10") # Note
+			column_names.append("CLIENT_COLUMN_11") # Version
 			
 			# Set column widths
-			ClientsTable.column_widths.clear()
-			ClientsTable.column_widths.append(60)
-			ClientsTable.column_widths.append(100)
-			ClientsTable.column_widths.append(100)
-			ClientsTable.column_widths.append(100)
-			ClientsTable.column_widths.append(100)
-			ClientsTable.column_widths.append(60)
-			ClientsTable.column_widths.append(150)
-			ClientsTable.column_widths.append(60)
-			ClientsTable.column_widths.append(200)
-			ClientsTable.column_widths.append(150)
-			ClientsTable.column_widths.append(90)
+			column_widths.clear()
+			column_widths.append(60)
+			column_widths.append(100)
+			column_widths.append(100)
+			column_widths.append(100)
+			column_widths.append(100)
+			column_widths.append(60)
+			column_widths.append(150)
+			column_widths.append(60)
+			column_widths.append(200)
+			column_widths.append(150)
+			column_widths.append(90)
+			
+			ClientsTable.set_columns(column_names, column_widths)
 			
 			if not is_instance_valid(PoolTabsContainer):
 				PoolTabsContainer = ClientsTable.get_parent().get_parent()
@@ -1098,6 +1139,13 @@ func register_popup(popup) -> void:
 			var PoolManagerPopupContent = PoolManagerPopupContentRes.instance()
 			PoolManagerPopupContent.connect("changes_applied_successfully", PoolManagerPopup, "hide_popup")
 			PoolManagerPopup.set_content(PoolManagerPopupContent )
+		
+		"general_settings":
+			SettingsPopup = popup
+			
+			var SettingsPopupContent = SettingsPopupContentRes.instance()
+			#SettingsPopupContent.connect("changes_applied_successfully", SettingsPopup, "hide_popup")
+			SettingsPopup.set_content(SettingsPopupContent )
 
 
 
@@ -1314,9 +1362,9 @@ func refresh_clients_table() -> void:
 		for pool in rr_data.pools.keys():
 			var num_of_clients_in_pool : int = rr_data.pools[pool].clients.size()
 			
-			var tabs_pools_dict : Dictionary = ClientsTabContainer.tabs_pools_dict.keys()
+			var tabs_pools_dict : Dictionary = ClientsTabContainer.tabs_pools_dict
 			
-			for tab in tabs_pools_dict:
+			for tab in tabs_pools_dict.keys():
 				if tabs_pools_dict[tab] == pool:
 					if is_instance_valid(ClientsTabContainer.get_child(tab)):
 						ClientsTabContainer.get_child(tab).name = rr_data.pools[pool].name +  " (" + String ( num_of_clients_in_pool ) + ")"
