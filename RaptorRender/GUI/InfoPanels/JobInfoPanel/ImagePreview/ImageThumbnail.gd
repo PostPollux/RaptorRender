@@ -33,7 +33,7 @@ var dir_index : int
 var thumbnail_scale_factor = 1.0
 var original_image_directory : String
 
-var LoadingImage : ImageTexture
+var LoadingImage : StreamTexture
 
 var selected : bool = false
 var hovered : bool = false
@@ -46,6 +46,7 @@ var hovered : bool = false
 func _ready() -> void:
 	
 	self.color = RRColorScheme.bg_2
+	
 	LoadingImage = load("res://RaptorRender/GUI/images/loading_thumbnail.png")
 	ImageName.text = ""
 	
@@ -56,6 +57,7 @@ func _ready() -> void:
 
 func load_image() -> void:
 	
+	# thumbnail is here untyped by intention. Because loading from file generates an ImageTexture, while loading from res generates a StreamTexture
 	var thumbnail = ImageTexture.new()
 	var file = File.new()
 	
