@@ -134,6 +134,10 @@ settings/fps/force_fps=30
 
 window/size/width=1280
 
+[editor_plugins]
+
+enabled=PoolStringArray( "zylann.translation_editor" )
+
 [input]
 
 ui_left_mouse_button={
